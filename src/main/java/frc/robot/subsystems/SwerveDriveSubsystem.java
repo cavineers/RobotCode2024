@@ -12,13 +12,26 @@ import edu.wpi.first.util.sendable.SendableBuilder.BackendKind;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.SPI;
+
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax.IdleMode;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 
 public class SwerveDriveSubsystem extends SubsystemBase {
+
+    public AutoBuilder autoBuilder;
+    Optional<Alliance> ally = DriverStation.getAlliance();
     private final SwerveModule frontLeft = new SwerveModule(
         DriveConstants.kFrontLeftDriveCanID, 
         DriveConstants.kFrontLeftTurningCanID, 
@@ -86,6 +99,14 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return backLeft.getAbsolutePosition();
     }
 
+    private Boolean flipField(){
+        if (ally.get() == DriverStation.Alliance.Red){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public SwerveDriveOdometry getNewOdometer(){
         return new SwerveDriveOdometry(
             m_kinematics, 
@@ -104,6 +125,23 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
+
+        // Configure the AutoBuilder last
+        AutoBuilder.configureHolonomic(
+            this::getPose, // Robot pose supplier
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::driveRelativeSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                4.5, // Max module speed, in m/s
+                0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                new ReplanningConfig() // Default path replanning config. See the API for the options here
+            ),
+            this::flipField, // Whether to flip the path
+            this // Reference to this subsystem to set requirements
+    );
     }
 
     public void zeroHeading() {
@@ -112,6 +150,21 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public Pose2d getPose() {
         return m_odometer.getPoseMeters();
+    }
+
+    private ChassisSpeeds getChassisSpeeds(){
+        return m_kinematics.toChassisSpeeds(
+            frontLeft.getState(),
+            frontRight.getState(),
+            backLeft.getState(),
+            backRight.getState()
+        );
+        // return ChassisSpeeds.fromFieldRelativeSpeeds(
+        //     speeds.vxMetersPerSecond,
+        //     speeds.vyMetersPerSecond,
+        //     speeds.omegaRadiansPerSecond,
+        //     getRotation2d()
+        // );
     }
 
     public SwerveModulePosition[] getPositions() {
@@ -138,17 +191,28 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeft.resetEncoders();
         backRight.resetEncoders();
     }
-
+ 
     public void periodic(){
         m_odometer.update(getRotation2d(), getPositions());
 
-        // SmartDashboard.putString("SwervePOSE", getPose()+"");
+        SmartDashboard.putNumber("Front Right Rel", this.frontRight.getTurningPosition());
+        SmartDashboard.putNumber("Front Right Abs", this.frontRight.getAbsolutePosition());
+        SmartDashboard.putNumber("Back Right Rel", this.backRight.getTurningPosition());
+        SmartDashboard.putNumber("Back Right Abs", this.backRight.getAbsolutePosition());
         SmartDashboard.putNumber("Heading", getHeading());
 
         SmartDashboard.putNumber("Roll", getRoll());
         SmartDashboard.putNumber("Pitch", getPitch());
     }
     
+    private void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
+        SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(relativeSpeeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+        frontLeft.setDesiredState(states[0]);
+        frontRight.setDesiredState(states[1]);
+        backLeft.setDesiredState(states[2]);
+        backRight.setDesiredState(states[3]);
+    }
 
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
