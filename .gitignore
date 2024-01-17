@@ -157,6 +157,11 @@ gradle-app.setting
 .project
 .settings/
 bin/
-*.class
+
 # Simulation GUI and other tools window save file
 *-window.json
+*.lock
+*.bin
+*.lock
+*.properties
+*.bin
