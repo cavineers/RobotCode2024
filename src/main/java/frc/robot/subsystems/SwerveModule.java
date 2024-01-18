@@ -1,10 +1,13 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
-import com.ctre.phoenix.sensors.CANCoder;
+
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.controller.PIDController;
@@ -30,7 +33,7 @@ public class SwerveModule {
 
     private final PIDController test; 
 
-    private final CANCoder absoluteEncoder;
+    private final CANcoder absoluteEncoder;
     private final double absoluteEncoderOffsetDeg;
     private final int id;
 
@@ -39,9 +42,16 @@ public class SwerveModule {
         
         this.id = absoluteEncoderId;
         this.absoluteEncoderOffsetDeg = absoluteEncoderOffset;
-        this.absoluteEncoder = new CANCoder(absoluteEncoderId);
+        this.absoluteEncoder = new CANcoder(absoluteEncoderId);
 
-        absoluteEncoder.configMagnetOffset(absoluteEncoderOffsetDeg);
+        // Configure the CANcoder for basic use
+        CANcoderConfiguration configs = new CANcoderConfiguration();
+        // This CANcoder should report absolute position from [-0.5, 0.5) rotations,
+        configs.MagnetSensor.MagnetOffset = absoluteEncoderOffset/360;
+        // Write these configs to the CANcoder
+        absoluteEncoder.getConfigurator().apply(configs);
+
+
         
         driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
         turningMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
@@ -70,16 +80,14 @@ public class SwerveModule {
     }
 
     public double getAbsolutePosition(){
-        return absoluteEncoder.getAbsolutePosition();
+        return absoluteEncoder.getAbsolutePosition().getValueAsDouble();
     }
 
     public double getEncoderPosition(){
         return turningEncoder.getPosition();
     }
 
-    public double getOffset() {
-        return absoluteEncoder.configGetMagnetOffset();
-    }
+  
 
     public double getDrivePosition() {
         return driveEncoder.getPosition();
@@ -117,10 +125,10 @@ public class SwerveModule {
     }
 
     private double getDistanceToHome(){ //Rotations
-        return Math.PI - absoluteEncoder.getAbsolutePosition() * (Math.PI/180);
+        return Math.PI - absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI; // Convert to radians
     }
 
-    public void setEncoder() {
+    public void setEncoder() { // Takes radians
         double distance = this.getDistanceToHome();
         turningEncoder.setPosition(distance);
     }

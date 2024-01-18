@@ -1,11 +1,12 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import java.lang.Math;
 import java.util.function.Supplier;
 
-import com.revrobotics.CANSparkMax.IdleMode;
+
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import frc.robot.Constants.DriveConstants;
@@ -14,7 +15,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SwerveCommand extends CommandBase {
+public class SwerveCommand extends Command {
 
     private final SwerveDriveSubsystem swerveSubsystem;
 
