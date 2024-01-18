@@ -47,7 +47,7 @@ public class SwerveModule {
         // Configure the CANcoder for basic use
         CANcoderConfiguration configs = new CANcoderConfiguration();
         // This CANcoder should report absolute position from [-0.5, 0.5) rotations,
-        configs.MagnetSensor.MagnetOffset = absoluteEncoderOffset;
+        configs.MagnetSensor.MagnetOffset = absoluteEncoderOffset/360;
         // Write these configs to the CANcoder
         absoluteEncoder.getConfigurator().apply(configs);
 
@@ -125,10 +125,10 @@ public class SwerveModule {
     }
 
     private double getDistanceToHome(){ //Rotations
-        return Math.PI - absoluteEncoder.getAbsolutePosition().getValueAsDouble() * (Math.PI/180);
+        return Math.PI - absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI; // Convert to radians
     }
 
-    public void setEncoder() {
+    public void setEncoder() { // Takes radians
         double distance = this.getDistanceToHome();
         turningEncoder.setPosition(distance);
     }
