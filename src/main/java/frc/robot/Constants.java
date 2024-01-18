@@ -91,5 +91,17 @@ public final class Constants {
         public static final double kDeadband = 0.1;
     }
 
+    public static final class Arm {
+
+    }
+
+    public static final class Climber {
+
+    }
+
+    public static final class ShooterIntake {
+
+    }
+
 }
 
