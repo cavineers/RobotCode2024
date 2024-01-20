@@ -102,6 +102,7 @@ public final class Constants {
     public static final class ShooterIntake {
         public static final int shooterCanID = 9; //TBD
         public static final int intakeCanID = 10; //TBD
+        public static final int feederCanID = 11; //TBD
             
     }
 
