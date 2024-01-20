@@ -17,14 +17,28 @@ public class ShooterIntake extends SubsystemBase {
         OFF,
     }
 
+    public enum IntakeMotorState {
+        ON,
+        OFF,
+        REVERSE
+    }
+
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.shooterCanID, MotorType.kBrushless);
+    public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.intakeCanID, MotorType.kBrushless);
+
     //public DigitalInput shooterMotor = new DigitalImput(Constants.DIO.shooterMotor);
+    // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
+
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
+    public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
    
     public ShooterIntake() {
        
         this.shooterMotor.setIdleMode(IdleMode.kBrake);
-        this.shooterMotor.setSmartCurrentLimit(30); //TBD
+        this.intakeMotor.setIdleMode(IdleMode.kBrake);
+
+        this.shooterMotor.setSmartCurrentLimit(41); //TBD
+        this.intakeMotor.setSmartCurrentLimit(41); //TBD
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
@@ -38,7 +52,7 @@ public class ShooterIntake extends SubsystemBase {
             break;
 
             case OFF:
-            this.shooterMotor.set(0);
+            this.shooterMotor.set(0.0);
             break;
 
             default:
@@ -46,12 +60,44 @@ public class ShooterIntake extends SubsystemBase {
         }
     }
 
-    public double getShooterMotorSpeed() {
-        return shooterMotor.get();
-    }
+    public void setIntakeMotorState(IntakeMotorState state) {
+        
+        this.intakeMotorState = state;
+    
+        switch (state) {
+            
+            case ON:
+            this.intakeMotor.set(50); //TBD
+            break;
+
+            case REVERSE:
+            this.intakeMotor.set(-50);
+            break;
+
+            case OFF:
+            this.intakeMotor.set(0.0);
+            break;
+            
+            default:
+            this.setIntakeMotorState(IntakeMotorState.OFF);
+
+        }
+    } 
 
     public ShooterMotorState getShooterMotorState() {
         return this.shooterMotorState;
+    }
+    
+    public IntakeMotorState getIntakeMotorState() {
+        return intakeMotorState;
+    }
+
+    public double getShooterMotorSpeed() {
+        return shooterMotor.get();
+    }
+    
+    public double getIntakeMotorSpeed() {
+        return this.intakeMotor.get();
     }
 
     public void periodic(){
