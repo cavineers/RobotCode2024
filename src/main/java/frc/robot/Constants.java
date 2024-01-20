@@ -100,8 +100,10 @@ public final class Constants {
     }
 
     public static final class ShooterIntake {
+    public static final int intakeCanID = 10; //TBD CanID Number
 
     }
+
 
 }
 
