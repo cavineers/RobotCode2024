@@ -96,6 +96,8 @@ public final class Constants {
     }
 
     public static final class Climber {
+        public static final int leftClimberMotor = 1; //TBD
+        public static final int rightClimberMotor = 2; //TBD
 
     }
 
