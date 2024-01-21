@@ -91,5 +91,12 @@ public final class Constants {
         public static final double kDeadband = 0.1;
     }
 
+    public static final class SampleSystem {
+
+        public static int SampleMotor = 1;
+        public static double SampleMotorForwardSpeed = 0.1;
+        public static double SampleMotorBackwardSpeed = -0.1;
+    }
+
 }
 
