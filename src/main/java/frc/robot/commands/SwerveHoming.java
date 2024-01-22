@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
-public class SwerveHoming extends CommandBase {
+public class SwerveHoming extends Command {
   
   private SwerveDriveSubsystem swerveSubsystem;
 
