@@ -104,6 +104,9 @@ public class ShooterIntake extends SubsystemBase {
             this.feederMotor.set(0.0);
             break;
 
+            case REVERSE:
+            this.feederMotor.set(5); //TBD
+
             default:
             this.setFeederMotorState(FeederMotorState.OFF);
         }
