@@ -68,7 +68,7 @@ public class LeftClimber extends SubsystemBase {
         this.leftClimberMotor.set(speed);
     }
 
-     //Get motor position (value returned in number of rotations)
+    //Get motor position (value returned in number of rotations)
     public double getLeftClimberMotorPosition() {
         return this.leftClimberMotor.getEncoder().getPosition();
     }

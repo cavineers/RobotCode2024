@@ -1,5 +1,5 @@
 package frc.robot.commands;
 
-public class ClimberCommand {
+public class RiseClimberCommand {
     //Accept two parameters - climberSide (string) and riseBot (boolean)
 }
