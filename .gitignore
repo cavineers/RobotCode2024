@@ -160,3 +160,11 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
+*.lock
+*.bin
+*.lock
+*.properties
+*.bin
+*.class
+*.lock
+*.bin
