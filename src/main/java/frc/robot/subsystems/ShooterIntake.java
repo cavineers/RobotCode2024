@@ -24,18 +24,20 @@ public class ShooterIntake extends SubsystemBase {
     }
     public enum FeederMotorState {
         ON,
-        OFF,
-        REVERSE
+        OFF
     }
+
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.shooterCanID, MotorType.kBrushless);
     public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.intakeCanID, MotorType.kBrushless);
     public CANSparkMax feederMotor = new CANSparkMax(Constants.ShooterIntake.feederCanID, MotorType.kBrushless);
+
     //public DigitalInput shooterMotor = new DigitalImput(Constants.DIO.shooterMotor);
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
     public FeederMotorState feederMotorState = FeederMotorState.OFF;
+
     public ShooterIntake() {
        
         this.shooterMotor.setIdleMode(IdleMode.kBrake);
@@ -119,9 +121,11 @@ public class ShooterIntake extends SubsystemBase {
     public IntakeMotorState getIntakeMotorState() {
         return intakeMotorState;
     }
+    
     public FeederMotorState getFeederMotorState() {
         return this.feederMotorState;
     }
+
     public double getShooterMotorSpeed() {
         return shooterMotor.get();
     }
@@ -129,9 +133,11 @@ public class ShooterIntake extends SubsystemBase {
     public double getIntakeMotorSpeed() {
         return this.intakeMotor.get();
     }
+
     public double getFeederMotorSpeed() {
         return this.feederMotor.get();
     }
+
     public void periodic(){
     
     }
