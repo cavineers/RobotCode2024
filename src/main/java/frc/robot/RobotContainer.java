@@ -9,6 +9,7 @@ import frc.robot.Constants.OIConstants;
 
 import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SwerveHoming;
 import frc.robot.Robot;
@@ -17,7 +18,7 @@ import frc.robot.Robot;
 public class RobotContainer {
 
     private final SwerveDriveSubsystem swerveSubsystem;
-
+    private final VisionSubsystem visionSubsystem;
 
     private final Joystick driverJoystick;
     private final JoystickButton button;
@@ -27,8 +28,9 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-        swerveSubsystem = new SwerveDriveSubsystem();
-
+        visionSubsystem = new VisionSubsystem();
+        swerveSubsystem = new SwerveDriveSubsystem(visionSubsystem);
+        
         swerveHomingCommand = new SwerveHoming(swerveSubsystem);
 
         driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
@@ -52,6 +54,9 @@ public class RobotContainer {
 
     public SwerveDriveSubsystem getSwerveSubsystem() {
         return this.swerveSubsystem;
+    }
+    public VisionSubsystem getVisionSubsystem() {
+        return this.visionSubsystem;
     }
 
 }
