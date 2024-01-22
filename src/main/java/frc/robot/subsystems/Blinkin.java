@@ -1,19 +1,21 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Blinkin {
+public class Blinkin extends SubsystemBase {
 	
 	Spark blinkin;
 
 	public Blinkin() {
 		blinkin = new Spark(0);
 	}
-		
-	/**
-	 * if the robot is not in hatMode and in normal drive, the LED turns solid white (0.93)
-	 */
-	public void lightsNormal() {
-		blinkin.set(0.93);
+
+	public void lightsRed() {
+		blinkin.set(0.61);
+	}
+
+	public void lightsWhite() {
+		blinkin.set(0.69);
 	}
 }

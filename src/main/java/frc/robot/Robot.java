@@ -4,6 +4,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Blinkin;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 /**
@@ -13,6 +14,9 @@ import com.revrobotics.CANSparkBase.IdleMode;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  public static Blinkin blinkin;
+
   private Command m_autonomousCommand;
 
   public static RobotContainer m_robotContainer;
@@ -24,6 +28,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
 
+    blinkin = new Blinkin();
   }
 
   @Override

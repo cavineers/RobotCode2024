@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.RedLED;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.commands.SwerveHoming;
@@ -14,6 +15,8 @@ import frc.robot.Robot;
 
 
 public class RobotContainer {
+
+    public Command redLED;
 
     public Joystick joy = new Joystick(0);
     public JoystickButton a_button = new JoystickButton(joy, 1);
@@ -44,6 +47,8 @@ public class RobotContainer {
 
     public RobotContainer() {
 
+        redLED = new RedLED();
+
         swerveSubsystem = new SwerveDriveSubsystem();
 
         swerveHomingCommand = new SwerveHoming(swerveSubsystem);
@@ -65,6 +70,12 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
+        this.a_button.onTrue(redLED);
+        this.a_button.onFalse(new InstantCommand() {
+            public void initialize() {
+                redLED.cancel();
+            }
+        });
     }   
 
     public SwerveDriveSubsystem getSwerveSubsystem() {
