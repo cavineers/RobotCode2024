@@ -91,13 +91,11 @@ public final class Constants {
         public static final double kDeadband = 0.1;
     }
 
-    public static final class SampleSystem {
+    public static final class LEDStrips {
 
-        public static int SampleMotor = 1;
-        public static double SampleMotorForwardSpeed = 0.1;
-        public static double SampleMotorBackwardSpeed = -0.1;
+        public static int LEDStrips = 1;
+        public static double LEDStripsPower = 0.1;
 
-        public static double SampleMotorMaxAmperage = 1000.0;
     }
 
 }
