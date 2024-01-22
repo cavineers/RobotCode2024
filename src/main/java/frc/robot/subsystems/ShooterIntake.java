@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -99,7 +99,7 @@ public class ShooterIntake extends SubsystemBase {
         switch(state) {
 
             case ON:
-            this.feederMotor.set(15); //TBD
+            this.feederMotor.set(5); //TBD
             break;
 
             case OFF:
@@ -107,7 +107,7 @@ public class ShooterIntake extends SubsystemBase {
             break;
 
             case REVERSE:
-            this.feederMotor.set(5); //TBD
+            this.feederMotor.set(-5); //TBD
 
             default:
             this.setFeederMotorState(FeederMotorState.OFF);
