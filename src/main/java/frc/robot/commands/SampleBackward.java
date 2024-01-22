@@ -12,15 +12,12 @@ public class SampleBackward extends Command {
     }
 
     @Override
-    public void initialize() {
-
-        Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.REVERSED);
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {
         
-        Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.OFF);
+        Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.REVERSED);
     }
 
     @Override

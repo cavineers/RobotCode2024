@@ -12,15 +12,12 @@ public class SampleForward extends Command {
     }
 
     @Override
-    public void initialize() {
-
-        Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.ON);
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {
         
-        Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.OFF);
+        Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.ON);
     }
 
     @Override
