@@ -9,7 +9,11 @@ import frc.robot.Constants;
 
 public class LeftClimber extends SubsystemBase {
 
-    public CANSparkMax leftClimberMotor = new CANSparkMax(Constants.Climber.leftClimberMotor, MotorType.kBrushless);
+    //Initialize the climber motor
+    public CANSparkMax leftClimberMotor = new CANSparkMax(Constants.Climber.LeftClimberMotor, MotorType.kBrushless);
+
+    //Initialize the limit switch
+    private DigitalInput leftClimberLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberLimitSwitch);
   
     //Motor states
     public enum LeftClimberMotorState {
@@ -26,18 +30,31 @@ public class LeftClimber extends SubsystemBase {
 
         this.leftClimberMotor.setInverted(false);
 
-        //Set the amp limit when specified - this needs to be changed
+        //Set the amp limit when specified - TBD
         this.leftClimberMotor.setSmartCurrentLimit(51);
     }
 
     //Allow for changing motor states
     public void setLeftClimberMotorState(LeftClimberMotorState state) {
 
+        //Set the current state
         this.leftClimberMotorState = state;
-
-        //If none of the states have been specified, set the motor state to OFF by default
-        if (state != LeftClimberMotorState.OFF && state != LeftClimberMotorState.ON && state != LeftClimberMotorState.REVERSED) {
-            this.setLeftClimberMotorState(LeftClimberMotorState.OFF);
+            
+        switch (state) {
+            case ON:
+                //On: Set the extension speed of the climber
+                this.leftClimberMotor.set(Constants.Climber.ClimberExtensionSpeed);
+                break;
+            case OFF:
+                //Off: Set the speed to zero
+                this.leftClimberMotor.set(0.0);
+                break;
+            case REVERSED:
+                //Reversed: Set the reversal speed of the climber
+                this.leftClimberMotor.set(Constants.Climber.ClimberExtensionSpeedRev);
+                break;
+            default:
+                this.setLeftClimberMotorState(LeftClimberMotorState.OFF);
         }
     }
 
@@ -66,17 +83,11 @@ public class LeftClimber extends SubsystemBase {
         return this.leftClimberMotorState;
     }
 
-    public void periodic() {
-        if (this.leftClimberMotorState == leftClimberMotorState.ON) {
-         
-        }
+    public void periodic(){
 
-        if (this.leftClimberMotorState == leftClimberMotorState.OFF) {
-         
-        }
-
-        if (this.leftClimberMotorState == leftClimberMotorState.REVERSED) {
-         
+        //Turn off the motor once it has hit the limit switch
+        if (this.leftClimberLimitSwitch.get() == true) {
+            leftClimberMotor.leftClimberMotorState = LeftClimberMotorState.OFF;
         }
     }
 }
