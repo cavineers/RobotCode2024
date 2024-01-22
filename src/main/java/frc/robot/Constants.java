@@ -27,7 +27,7 @@ public final class Constants {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-        public static final int kFrontLeftDriveCanID = 1;
+        public static final int kFrontLeftDriveCanID = 100;
         public static final int kBackLeftDriveCanID = 3;
         public static final int kFrontRightDriveCanID = 7;
         public static final int kBackRightDriveCanID = 5;
@@ -94,8 +94,8 @@ public final class Constants {
     public static final class SampleSystem {
 
         public static int SampleMotor = 1;
-        public static double SampleMotorForwardSpeed = 0.1;
-        public static double SampleMotorBackwardSpeed = -0.1;
+        public static double SampleMotorForwardSpeed = 0.5;
+        public static double SampleMotorBackwardSpeed = -0.5;
 
         public static double SampleMotorMaxAmperage = 1000.0;
     }
