@@ -61,4 +61,8 @@ public class SampleSystem extends SubsystemBase {
                 this.setSampleMotorState(MotorState.OFF);
         }
     }
+
+    public double getSampleMotorCurrent() {
+        return this.sampleMotor.getOutputCurrent();
+    }
 }

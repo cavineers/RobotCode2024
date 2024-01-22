@@ -96,6 +96,8 @@ public final class Constants {
         public static int SampleMotor = 1;
         public static double SampleMotorForwardSpeed = 0.1;
         public static double SampleMotorBackwardSpeed = -0.1;
+
+        public static double SampleMotorMaxAmperage = 1000.0;
     }
 
 }
