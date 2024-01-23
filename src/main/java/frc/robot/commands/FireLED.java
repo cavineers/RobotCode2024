@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Blinkin;
 
-public class RedLED extends Command {
+public class FireLED extends Command {
     
-    public RedLED() {
+    public FireLED() {
 
         this.addRequirements(Robot.blinkin);
     }
@@ -17,12 +17,12 @@ public class RedLED extends Command {
     @Override
     public void execute() {
         
-        Robot.blinkin.lightsRed();
+        Robot.blinkin.lightsFire();
     }
 
     @Override
     public void end(boolean interrupted) {
         
-        Robot.blinkin.lightsWhite();
+        Robot.blinkin.lightsFire();
     }
 }

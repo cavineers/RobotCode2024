@@ -11,11 +11,19 @@ public class Blinkin extends SubsystemBase {
 		blinkin = new Spark(0);
 	}
 
-	public void lightsRed() {
-		blinkin.set(0.61);
+	public void lightsRainbow() {
+		blinkin.set(-0.99);
 	}
 
-	public void lightsWhite() {
-		blinkin.set(0.69);
+	public void lightsFire() {
+		blinkin.set(-0.59);
+	}
+
+	public void lightsChase() {
+		blinkin.set(0.01);
+	}
+
+	public void lightsOcean() {
+		blinkin.set(-0.41);
 	}
 }

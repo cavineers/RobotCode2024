@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.RedLED;
+import frc.robot.commands.ChaseLED;
+import frc.robot.commands.FireLED;
+import frc.robot.commands.OceanLED;
+import frc.robot.commands.RainbowLED;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.commands.SwerveHoming;
@@ -16,7 +19,10 @@ import frc.robot.Robot;
 
 public class RobotContainer {
 
-    public Command redLED;
+    public Command chaseLED;
+    public Command fireLED;
+    public Command oceanLED;
+    public Command rainbowLED;
 
     public Joystick joy = new Joystick(0);
     public JoystickButton a_button = new JoystickButton(joy, 1);
@@ -47,7 +53,10 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-        redLED = new RedLED();
+        chaseLED = new ChaseLED();
+        fireLED = new FireLED();
+        oceanLED = new OceanLED();
+        rainbowLED = new RainbowLED();
 
         swerveSubsystem = new SwerveDriveSubsystem();
 
@@ -70,10 +79,31 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
-        this.a_button.onTrue(redLED);
+        this.a_button.onTrue(chaseLED);
         this.a_button.onFalse(new InstantCommand() {
             public void initialize() {
-                redLED.cancel();
+                chaseLED.cancel();
+            }
+        });
+
+        this.y_button.onTrue(fireLED);
+        this.y_button.onFalse(new InstantCommand() {
+            public void initialize() {
+                fireLED.cancel();
+            }
+        });
+
+        this.x_button.onTrue(oceanLED);
+        this.x_button.onFalse(new InstantCommand() {
+            public void initialize() {
+                oceanLED.cancel();
+            }
+        });
+
+        this.b_button.onTrue(rainbowLED);
+        this.b_button.onFalse(new InstantCommand() {
+            public void initialize() {
+                rainbowLED.cancel();
             }
         });
     }   
