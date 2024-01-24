@@ -8,8 +8,11 @@ import frc.robot.subsystems.RightClimber;
 
 public class LowerClimberCommand extends CommandBase {
 
-    public LowerClimberCommand() {
+    private String climberSide;
+
+    public LowerClimberCommand(String side) {
         this.addRequirements(Robot.LeftClimber, Robot.RightClimber);
+        climberSide = side;
     }
 
     @Override
@@ -21,38 +24,40 @@ public class LowerClimberCommand extends CommandBase {
     @Override
     public void execute() {
 
-        //Left climber action
+        if (climberSide == "left") {
 
-        // Command uses a limit switch to turn the extension motor until the arm is fully retracted
-        if (Robot.LeftClimber.getLeftClimberMotorPosition() > Constants.Climber.ClimberLowerSpeedRotations){
-            Robot.LeftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.REVERSED);
-        } else if (Robot.LeftClimber.getLeftClimberMotorPosition() < Constants.Climber.ClimberLowerSpeedRotations) {
-            Robot.LeftClimber.getLeftClimberMotor().set(-0.25); //TBD
-        } else {
-            Robot.LeftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-        }
+             //Left climber action
+            // Command uses a limit switch to turn the extension motor until the arm is fully retracted
+            if (Robot.LeftClimber.getLeftClimberMotorPosition() > Constants.Climber.ClimberLowerSpeedRotations){
+                Robot.LeftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.REVERSED);
+            } else if (Robot.LeftClimber.getLeftClimberMotorPosition() < Constants.Climber.ClimberLowerSpeedRotations) {
+                Robot.LeftClimber.getLeftClimberMotor().set(-0.25); //TBD
+            } else {
+                Robot.LeftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
+            }
 
-        //Bottom software stop
-        if (Robot.LeftClimber.getLimitSwitch()){
-            Robot.LeftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-            this.leftlowered = true;
-        }
+            //Bottom software stop
+            if (Robot.LeftClimber.getLimitSwitch()){
+                Robot.LeftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
+                this.leftlowered = true;
+            }
+        } else if (climberSide == "right") {
 
-        //Right climber action
+             //Right climber action
+            // Command uses a limit switch to turn the extension motor until the arm is fully retracted
+            if (Robot.RightClimber.getRightClimberMotorPosition() > Constants.Climber.ClimberLowerSpeedRotations){
+                Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.REVERSED);
+            } else if (Robot.RightClimber.getRightClimberMotorPosition() < Constants.Climber.ClimberLowerSpeedRotations) {
+                Robot.RightClimber.getRightClimberMotor().set(-0.25); //TBD
+            } else {
+                Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
+            }
 
-        // Command uses a limit switch to turn the extension motor until the arm is fully retracted
-        if (Robot.RightClimber.getRightClimberMotorPosition() > Constants.Climber.ClimberLowerSpeedRotations){
-            Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.REVERSED);
-        } else if (Robot.RightClimber.getRightClimberMotorPosition() < Constants.Climber.ClimberLowerSpeedRotations) {
-            Robot.RightClimber.getRightClimberMotor().set(-0.25); //TBD
-        } else {
-            Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
-        }
-
-        //Bottom software stop
-        if (Robot.RightClimber.getLimitSwitch()){
-            Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
-            this.rightLowered = true;
+            //Bottom software stop
+            if (Robot.RightClimber.getLimitSwitch()){
+                Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
+                this.rightLowered = true;
+            }
         }
     }
     
