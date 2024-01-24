@@ -14,7 +14,8 @@ public class ShooterIntake extends SubsystemBase {
 
     public enum ShooterMotorState{
         ON,
-        OFF
+        OFF,
+        REVERSE
     }
 
     public enum IntakeMotorState {
@@ -23,31 +24,24 @@ public class ShooterIntake extends SubsystemBase {
         REVERSE
     }
 
-    public enum FeederMotorState {
-        ON,
-        OFF
-    }
+    
 
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.shooterCanID, MotorType.kBrushless);
     public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.intakeCanID, MotorType.kBrushless);
-    public CANSparkMax feederMotor = new CANSparkMax(Constants.ShooterIntake.feederCanID, MotorType.kBrushless);
-
+    
     //public DigitalInput shooterMotor = new DigitalImput(Constants.DIO.shooterMotor);
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
-    public FeederMotorState feederMotorState = FeederMotorState.OFF;
 
     public ShooterIntake() {
        
         this.shooterMotor.setIdleMode(IdleMode.kBrake);
         this.intakeMotor.setIdleMode(IdleMode.kBrake);
-        this.feederMotor.setIdleMode(IdleMode.kBrake);
 
         this.shooterMotor.setSmartCurrentLimit(41); //TBD
         this.intakeMotor.setSmartCurrentLimit(41); //TBD
-        this.feederMotor.setSmartCurrentLimit(41); //TBD
 
     }
 
@@ -64,6 +58,9 @@ public class ShooterIntake extends SubsystemBase {
             case OFF:
             this.shooterMotor.set(0.0);
             break;
+
+            case REVERSE:
+            this.shooterMotor.set(-20); //TBD
 
             default:
             this.setShooterMotorState(ShooterMotorState.OFF);
@@ -94,24 +91,6 @@ public class ShooterIntake extends SubsystemBase {
         }
     } 
 
-    public void setFeederMotorState(FeederMotorState state) {
-        
-        this.feederMotorState = state;
-        
-        switch(state) {
-
-            case ON:
-            this.feederMotor.set(5); //TBD
-            break;
-
-            case OFF:
-            this.feederMotor.set(0.0);
-            break;
-
-            default:
-            this.setFeederMotorState(FeederMotorState.OFF);
-        }
-    }
 
     public ShooterMotorState getShooterMotorState() {
         return this.shooterMotorState;
@@ -121,10 +100,6 @@ public class ShooterIntake extends SubsystemBase {
         return intakeMotorState;
     }
     
-    public FeederMotorState getFeederMotorState() {
-        return this.feederMotorState;
-    }
-
     public double getShooterMotorSpeed() {
         return shooterMotor.get();
     }
@@ -133,9 +108,7 @@ public class ShooterIntake extends SubsystemBase {
         return this.intakeMotor.get();
     }
 
-    public double getFeederMotorSpeed() {
-        return this.feederMotor.get();
-    }
+   
 
     public void periodic(){
     

@@ -10,7 +10,7 @@ import frc.robot.subsystems.ShooterIntake;
 public class Shoot extends CommandBase{
     
     private boolean isDone = false;
-    private double m_timestamp;
+    private double m_timestamp = Timer.getFPGATimestamp();
     private ShooterIntake shooterIntake;
 
     public Shoot(ShooterIntake shooterIntake) {
@@ -26,14 +26,19 @@ public class Shoot extends CommandBase{
 
     @Override
     public void execute() {
-        //Chris create command here
+
+        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REVERSE);
+        Timer.delay(.25);
+        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
+        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
+        Timer.delay(.5);
+        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
     }
 
     @Override
     public void end(boolean interrupted) {
         shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.OFF);
         shooterIntake.setShooterMotorState(ShooterIntake.ShooterMotorState.OFF);
-
     }
 
     @Override
@@ -44,4 +49,4 @@ public class Shoot extends CommandBase{
         return this.isDone;
     }
 
-}
+    }
