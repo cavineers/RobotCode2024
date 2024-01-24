@@ -1,59 +1,66 @@
-// Gantry Movement
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmBase extends SubsystemBase {
 
-// Motor State for Arm Base
-    public enum ArmBaseMotorState() {
+    public void periodic() {}
+
+     public enum MotorState {
         ON,
         OFF,
         REVERSED
     }
 
-// Starts Motor
-    public CANSparkMax m_armBaseMotor = new CANSparkMax(Constants.Arm.ArmBaseMotor, MotorType.kBrushless);
+    // Motor Initialization
+    public CANSparkMax baseMotor = new CANSparkMax(Constants.ArmBase.BaseMotor, MotorType.kBrushless);
+    
+    // Starts motors in their off state
+    public MotorState baseMotorState = MotorState.OFF;
 
-    public ArmBaseMotorState m_armBaseMotorState = ArmBaseMotorState.OFF;
+    // Motor sparkmax settings
+    public ArmBase() {
+        this.baseMotor.setIdleMode(IdleMode.kBrake);
 
-    public ArmBase(){
-        this.ArmBaseMotor.setIdleMode(IdleMode.kBrake);
-        this.ArmBaseMotor.setSmartCurrentLimit(41); ///TBD
+        this.baseMotor.setSmartCurrentLimit(51);
+       
     }
-
-    public void setArmBaseMotorState(ArmBaseMotorState state){
-        this.ArmBaseMotor = state;
-        switch(state){
+    
+    public void setBaseMotorState(MotorState state) {
+        // set the current state
+        this.baseMotorState = state;
+        
+        // set motor state
+        switch (state) {
             case ON:
-                this.ArmBaseMotor.set(Constants.Arm.ArmBaseForwardSpeed);
+                // On
+                this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedForwards);
                 break;
-            case OFF: 
-                this.ArmBaseMotor.set(speed: 0.0);
-            case REVERSED: 
-                this.ArmBaseMotor.set(Constants.Arm.ArmBaseBackwardsSpeed);
+            case OFF:
+                // Off
+                this.baseMotor.set(0);
+                
                 break;
-            default: 
-                this.setArmBaseMotorState(ArmBaseMotorState.OFF);
+            case REVERSED:
+                // Reversed
+                this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedBackwards);
+                break;
+            default:
+                this.setBaseMotorState(MotorState.OFF);
         }
     }
 
-    public ArmBaseMotorState getArmBaseMotorState(){
-        return this.ArmBaseMotorState;
-    }
-    public CANSparkMax getArmBaseMotor(){
-        return this.m_armBaseMotor.get();
+    public double getBaseMotorPosition() {
+        return this.baseMotor.getEncoder().getPosition();
     }
 
-    public void periodic(){
-        
+    public void setBaseMotorPosition(double position) {
+        this.baseMotor.getEncoder().setPosition(position);
     }
-
 }

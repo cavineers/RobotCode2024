@@ -4,55 +4,63 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmPivot extends SubsystemBase {
 
-// Motor State for Arm Pivot
-    public enum ArmPivotMotorState() {
+    public void periodic() {}
+
+     public enum MotorState {
         ON,
         OFF,
         REVERSED
     }
 
-// Starts Motor
-    public CANSparkMax m_armPivotMotor = new CANSparkMax(Constants.Arm.ArmPivotMotor, MotorType.kBrushless);
+    // Motor Initialization
+    public CANSparkMax pivotMotor = new CANSparkMax(Constants.ArmPivot.PivotMotor, MotorType.kBrushless);
+    
+    // Starts motors in their off state
+    public MotorState pivotMotorState = MotorState.OFF;
 
-    public ArmPivotMotorState m_armPivotMotorState = ArmPivotMotorState.OFF;
+    // Motor sparkmax settings
+    public ArmPivot() {
+        this.pivotMotor.setIdleMode(IdleMode.kBrake);
 
-    public ArmPivot(){
-        this.ArmPivotMotor.setIdleMode(IdleMode.kBrake);
-        this.ArmPivotMotor.setSmartCurrentLimit(41); ///TBD
+        this.pivotMotor.setSmartCurrentLimit(51);
+       
     }
-
-    public void setArmPivotMotorState(ArmPivotMotorState state){
-        this.ArmPivotMotor = state;
-        switch(state){
+    
+    public void setPivotMotorState(MotorState state) {
+        // set the current state
+        this.pivotMotorState = state;
+        
+        // set motor state
+        switch (state) {
             case ON:
-                this.ArmPivotMotor.set(Constants.Arm.ArmPivotForwardSpeed);
+                // On
+                this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedForwards);
                 break;
-            case OFF: 
-                this.ArmPivotMotor.set(speed: 0.0);
-            case REVERSED: 
-                this.ArmPivotMotor.set(Constants.Arm.ArmPivotBackwardsSpeed);
+            case OFF:
+                // Off
+                this.pivotMotor.set(0);
+                
                 break;
-            default: 
-                this.setArmPivotMotorState(ArmPivotMotorState.OFF);
+            case REVERSED:
+                // Reversed
+                this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedBackwards);
+                break;
+            default:
+                this.setPivotMotorState(MotorState.OFF);
         }
     }
 
-    public ArmPivotMotorState getArmPivotMotorState(){
-        return this.ArmPivotMotorState;
-    }
-    public CANSparkMax getArmPivotMotor(){
-        return this.m_armPivotMotor.get();
+    public double getPivotMotorPosition() {
+        return this.pivotMotor.getEncoder().getPosition();
     }
 
-    public void periodic(){
-        
+    public void setPivotMotorPosition(double position) {
+        this.pivotMotor.getEncoder().setPosition(position);
     }
-
 }

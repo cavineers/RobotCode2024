@@ -91,11 +91,22 @@ public final class Constants {
         public static final double kDeadband = 0.1;
     }
 
-    public static final class Arm {
-        public static final int ArmBaseForwardSpeed = 1; //TBD
-        public static final int ArmBaseBackwardsSpeed = -1; //TBD
-        public static final int ArmPivotForwardSpeed = 1; //TBD
-        public static final int ArmPivotBackwardsSpeed = -1; //TBD
+    public static final class ArmPivot {
+
+        public static final int PivotMotor = 1;
+
+        public static final double PivotMotorSpeedForwards = 0.1;
+        public static final double PivotMotorSpeedBackwards = 0.1;
+
+    }
+
+    public static final class ArmBase {
+
+        public static final int BaseMotor = 2;
+
+        public static final double BaseMotorSpeedForwards = 0.1;
+        public static final double BaseMotorSpeedBackwards = 0.1;
+
     }
 
     public static final class Climber {
