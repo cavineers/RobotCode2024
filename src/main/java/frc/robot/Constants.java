@@ -21,6 +21,7 @@ public final class Constants {
     public static final class DIO {
         public static int IntakeSwitch = 7;
         public static int LeftClimberLimitSwitch = 1; //TBD
+        public static int RightClimberLimitSwitch = 2; //TBD
     }
 
     public static final class DriveConstants {
@@ -101,6 +102,7 @@ public final class Constants {
         public static final int RightClimberMotor = 2; //TBD
         public static final double ClimberExtensionSpeed = 0.5 //TBD
         public static final double ClimberExtensionSpeedRev = 0.5; //TBD
+        public static final double ClimberLowerSpeedRotations= 0.5; //TBD
 
     }
 

@@ -58,6 +58,12 @@ public class LeftClimber extends SubsystemBase {
         }
     }
 
+    //Getters and setters 
+
+    public boolean getLimitSwitch() {
+        return this.leftClimberLimitSwitch.get();
+    }  
+
     //Set the motor's position (given in rotations)
     public void setLeftClimberMotorPosition(double position) {
         this.leftClimberMotor.getEncoder().setPosition(position);
@@ -83,11 +89,7 @@ public class LeftClimber extends SubsystemBase {
         return this.leftClimberMotorState;
     }
 
-    public void periodic(){
-
-        //Turn off the motor once it has hit the limit switch
-        if (this.leftClimberLimitSwitch.get() == true) {
-            leftClimberMotor.leftClimberMotorState = LeftClimberMotorState.OFF;
-        }
+    public CANSparkMax getLeftClimberMotor() {
+        return this.leftClimberMotor;
     }
 }
