@@ -12,9 +12,11 @@ public class LowerClimberCommand extends CommandBase {
         this.addRequirements(Robot.LeftClimber, Robot.RightClimber);
     }
 
-    /*@Override
+    @Override
     public void initialize() {
-    }*/
+        private boolean this.leftLowered = false;
+        private boolean this.rightLowered = false;
+    }
 
     @Override
     public void execute() {
@@ -33,13 +35,14 @@ public class LowerClimberCommand extends CommandBase {
         //Bottom software stop
         if (Robot.LeftClimber.getLimitSwitch()){
             Robot.LeftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
+            this.leftlowered = true;
         }
 
         //Right climber action
 
         // Command uses a limit switch to turn the extension motor until the arm is fully retracted
         if (Robot.RightClimber.getRightClimberMotorPosition() > Constants.Climber.ClimberLowerSpeedRotations){
-            Robot.RightClimber.setRightClimberMotorState(RightCLimber.RightClimberMotorState.REVERSED);
+            Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.REVERSED);
         } else if (Robot.RightClimber.getRightClimberMotorPosition() < Constants.Climber.ClimberLowerSpeedRotations) {
             Robot.RightClimber.getRightClimberMotor().set(-0.25); //TBD
         } else {
@@ -49,6 +52,7 @@ public class LowerClimberCommand extends CommandBase {
         //Bottom software stop
         if (Robot.RightClimber.getLimitSwitch()){
             Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
+            this.rightLowered = true;
         }
     }
     
@@ -58,9 +62,9 @@ public class LowerClimberCommand extends CommandBase {
         Robot.RightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
     }
 
-    /*@Override
+    @Override
     //Once the two climbers have been lowered, the command is finished
     public boolean isFinished() {
         return this.leftLowered && this.rightLowered;
-    }*/
+    }
 }
