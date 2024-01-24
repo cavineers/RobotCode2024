@@ -26,7 +26,7 @@ public class Intake extends CommandBase{
 
     @Override
     public void execute() {
-        //Nick create command here
+        shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.ON);
     }
 
     @Override
