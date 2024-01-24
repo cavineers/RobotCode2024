@@ -1,8 +1,9 @@
+// Gantry Movement
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,10 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmBase extends SubsystemBase {
-
-    public void periodic(){
-
-    }
 
 // Motor State for Arm Base
     public enum ArmBaseMotorState() {
@@ -23,7 +20,14 @@ public class ArmBase extends SubsystemBase {
     }
 
 // Starts Motor
-    public CANSparkMax m_armBaseMotor = new CANSparkMax(Constants.Arm.ArmBaseMotor, MotorType.kBrushless)
+    public CANSparkMax m_armBaseMotor = new CANSparkMax(Constants.Arm.ArmBaseMotor, MotorType.kBrushless);
+
+    public ArmBaseMotorState m_armBaseMotorState = ArmBaseMotorState.OFF;
+
+    public ArmBase(){
+        this.ArmBaseMotor.setIdleMode(IdleMode.kBrake);
+        this.ArmBaseMotor.setSmartCurrentLimit(41); ///TBD
+    }
 
     public void setArmBaseMotorState(ArmBaseMotorState state){
         this.ArmBaseMotor = state;
@@ -40,11 +44,16 @@ public class ArmBase extends SubsystemBase {
                 this.setArmBaseMotorState(ArmBaseMotorState.OFF);
         }
     }
+
     public ArmBaseMotorState getArmBaseMotorState(){
         return this.ArmBaseMotorState;
     }
     public CANSparkMax getArmBaseMotor(){
-        return this.m_armBaseMotor;
+        return this.m_armBaseMotor.get();
+    }
+
+    public void periodic(){
+        
     }
 
 }

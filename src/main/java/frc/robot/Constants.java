@@ -92,7 +92,10 @@ public final class Constants {
     }
 
     public static final class Arm {
-
+        public static final int ArmBaseForwardSpeed = 1; //TBD
+        public static final int ArmBaseBackwardsSpeed = -1; //TBD
+        public static final int ArmPivotForwardSpeed = 1; //TBD
+        public static final int ArmPivotBackwardsSpeed = -1; //TBD
     }
 
     public static final class Climber {
