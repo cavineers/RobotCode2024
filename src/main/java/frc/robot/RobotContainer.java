@@ -11,13 +11,24 @@ import frc.robot.Robot;
 
 public class RobotContainer {
 
+    public Command lowerLeftClimber = new LowerClimberCommand();
+    public Command riseLeftClimber = new RiseClimberCommand();
+
+    public Command lowerRightClimber = new LowerClimberCommand();
+    public Command riseRightClimber = new RiseClimberCommand();
+
 
     private final Joystick driverJoystick;
     private final JoystickButton button;
     public JoystickButton l_bump;
 
-    public RobotContainer() {
+    lowerLeftClimber = new LowerLeftClimber("left");
+    riseLeftClimber = new RiseLeftClimber("left");
+    lowerRightClimber = new LowerRightClimber("right");
+    riseRightClimber = new RiseRightClimber("right");
 
+    public RobotContainer() {
+        
         driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
         button = new JoystickButton(driverJoystick, 4);
         l_bump = new JoystickButton(driverJoystick, 5);
