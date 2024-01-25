@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends CommandBase{
     
@@ -27,6 +28,7 @@ public class Intake extends CommandBase{
     @Override
     public void execute() {
         shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.ON);
+
     }
 
     @Override

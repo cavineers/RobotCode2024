@@ -32,8 +32,6 @@ public class RobotContainer {
     public JoystickButton buttonY;
     public JoystickButton l_bump;
     public JoystickButton r_bump;
-    public JoystickButton l_trig;
-    public JoystickButton r_trig;
 
     // // Commands
     public Command intake;
@@ -56,8 +54,6 @@ public class RobotContainer {
         buttonY = new JoystickButton(driverJoystick, 4);
         l_bump = new JoystickButton(driverJoystick, 5);
         r_bump = new JoystickButton(driverJoystick, 6);
-        l_trig = new JoystickButton(driverJoystick, 7);
-        r_trig = new JoystickButton(driverJoystick, 8);
 
         // // Commands
         intake = new Intake(shooterIntake);
@@ -90,13 +86,11 @@ public class RobotContainer {
         });
 
         // // Shoot
-        r_trig.onTrue(shoot);
-        r_trig.onFalse(new InstantCommand() {
-            @Override
-            public void initialize() {
-                shoot.cancel();
-            }
-        });
+        if (driverJoystick.getRawAxis(Constants.OIConstants.kDriverRightTriggerAxis) >= Constants.OIConstants.kTriggerDeadzone) {
+            shoot.schedule();
+        } else {
+            shoot.cancel();
+        }
 
     }   
 

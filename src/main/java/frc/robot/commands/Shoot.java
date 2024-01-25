@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shoot extends CommandBase{
     
@@ -26,6 +27,8 @@ public class Shoot extends CommandBase{
 
     @Override
     public void execute() {
+
+        SmartDashboard.putString("Shooter", "Command Running");
 
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REVERSE);
         Timer.delay(.25);

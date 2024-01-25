@@ -27,7 +27,7 @@ public final class Constants {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-        public static final int kFrontLeftDriveCanID = 1;
+        public static final int kFrontLeftDriveCanID = 10;
         public static final int kBackLeftDriveCanID = 3;
         public static final int kFrontRightDriveCanID = 7;
         public static final int kBackRightDriveCanID = 5;
@@ -86,8 +86,11 @@ public final class Constants {
         public static final int kDriverYAxis = 1;
         public static final int kDriverXAxis = 0;
         public static final int kDriverRotAxis = 4;
+        public static final int kDriverLeftTriggerAxis = 5;
+        public static final int kDriverRightTriggerAxis = 6;
         public static final int kDriverFieldOrientedButtonIdx = 1;
-
+        
+        public static final double kTriggerDeadzone = 0.2;
         public static final double kDeadband = 0.1;
     }
 
@@ -101,7 +104,7 @@ public final class Constants {
 
     public static final class ShooterIntake {
         public static final int shooterCanID = 9; //TBD
-        public static final int intakeCanID = 10; //TBD
+        public static final int intakeCanID = 1; //TBD
         public static final int feederCanID = 11; //TBD
             
     }
