@@ -102,9 +102,7 @@ public final class Constants {
         public static final int RightClimberMotor = 2; //TBD
         public static final double ClimberExtensionSpeed = 0.5; //TBD
         public static final double ClimberExtensionSpeedRev = 0.5; //TBD
-        public static final double ClimberLowerSpeedRotations= 0.5; //TBD
-        public static final double ClimberRiseSpeedRotations = 0.5; //TBD
-
+        public static final double LowerClimberMaxRotations= 0.5; //TBD
     }
 
     public static final class ShooterIntake {

@@ -11,8 +11,8 @@ public class RiseClimberCommand extends Command{
 
     private String climberSide;
     
-    private boolean rightLimitReached = false;
-        private boolean leftLimitReached = false;
+    private boolean rightRaised = false;
+    private boolean leftRaise = false;
 
     public RiseClimberCommand(String side) {
         this.addRequirements(Robot.leftClimber, Robot.rightClimber);
@@ -30,39 +30,35 @@ public class RiseClimberCommand extends Command{
         if (climberSide == "left") {
             //Left climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
-            if (Robot.leftClimber.getLeftClimberMotorPosition() >= Constants.Climber.ClimberRiseSpeedRotations){
-                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-            } else if (Robot.leftClimber.getLeftClimberMotorPosition() < Constants.Climber.ClimberRiseSpeedRotations) {
-                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.ON);
-            } else {
-                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-                this.leftLimitReached = true;
-            }
-        } else if (climberSide == "right") {
+            if (Robot.leftClimber.getLimitSwitch()){
+                Robot.leftClimber.setLeftClimberMotorState(leftClimber.LeftClimberMotorState.OFF);
+                this.leftRaised = true;
+            } else if (!Robot.leftClimber.getLimitSwitch()) {
+                Robot.leftClimber.setLeftClimberMotorState(leftClimber.LeftClimberMotorState.ON);
+            } 
 
+        } else if (climberSide == "right") {
             //Right climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
-            if (Robot.rightClimber.getRightClimberMotorPosition() >= Constants.Climber.ClimberRiseSpeedRotations){
-                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
-            } else if (Robot.rightClimber.getRightClimberMotorPosition() < Constants.Climber.ClimberRiseSpeedRotations) {
+            if (Robot.rightClimber.getLimitSwitch()){
+                Robot.rightClimber.setRightClimberMotorState(rightClimber.RightClimberMotorState.OFF);
+                this.rightRaised = true;
+            } else if (!Robot.rightClimber.getLimitSwitch()) {
                 Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.ON);
-            } else {
-                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
-                this.rightLimitReached = true;
-            }
+            } 
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-        Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-        Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
+        Robot.leftClimber.setLeftClimberMotorState(leftClimber.LeftClimberMotorState.OFF);
+        Robot.rightClimber.setRightClimberMotorState(rightClimber.RightClimberMotorState.OFF);
     }
 
     @Override
     //Once the two climbers have reached their limit of rotations, the command is finished
     public boolean isFinished() {
-        return this.leftLimitReached && this.rightLimitReached;
+        return this.leftRaised && this.rightRaised;
     }
 
 }
