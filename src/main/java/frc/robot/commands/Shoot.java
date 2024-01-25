@@ -29,12 +29,10 @@ public class Shoot extends CommandBase{
     public void execute() {
 
         SmartDashboard.putString("Shooter", "Command Running");
-
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REVERSE);
-        Timer.delay(.25);
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
+        
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
         Timer.delay(.5);
+        shooterIntake.setFeederMotorState(shooterIntake.feederMotorState.ON);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
     }
 
