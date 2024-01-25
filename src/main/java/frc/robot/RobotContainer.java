@@ -6,8 +6,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.LowerClimberCommand;
-import frc.robot.commands.RiseClimberCommand;
 import frc.robot.Robot;
 
 
