@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj.DigitInput;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +20,11 @@ public class ArmBase extends SubsystemBase {
     
     // Motor Initialization
     public CANSparkMax baseMotor = new CANSparkMax(Constants.ArmBase.BaseMotor, MotorType.kBrushless);
-    
+
+    //Limit Switches
+    public DigitInput lowerGantryLimitSwitch = new DigitInput(Constants.ArmBase.lowerLimitSwitchPort);
+    public DigitInput higherGantryLimitSwitch = new DigitInput(Constants.ArmBase.higherLimitSwitchPort);
+
     // Starts motors in their off state
     public BaseMotorState baseMotorState = BaseMotorState.OFF;
     
@@ -38,7 +43,9 @@ public class ArmBase extends SubsystemBase {
         switch (state) {
             case ON:
             // On
-            this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedForwards);
+            if (higherGantryLimitSwitch.get() == false){
+                this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedForwards);
+            }
             break;
             
             case OFF:
@@ -48,7 +55,9 @@ public class ArmBase extends SubsystemBase {
             
             case REVERSED:
             // Reversed
-                this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedBackwards);
+                if (lowerGantryLimitSwitch.get() == false){
+                    this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedBackwards);
+                }
                 break;
 
                 default:

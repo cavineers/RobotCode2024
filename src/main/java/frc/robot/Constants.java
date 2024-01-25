@@ -103,6 +103,8 @@ public final class Constants {
     public static final class ArmBase {
 
         public static final int BaseMotor = 2;
+        public static final int lowerLimitSwitchPort = 1;
+        public static final int higherLimitSwitchPort = 0;
 
         public static final double BaseMotorSpeedForwards = 0.1;
         public static final double BaseMotorSpeedBackwards = 0.1;
