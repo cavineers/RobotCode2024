@@ -32,7 +32,7 @@ public final class Constants {
         public static final int kFrontRightDriveCanID = 7;
         public static final int kBackRightDriveCanID = 5;
 
-        public static final int kFrontLeftTurningCanID = 2;
+        public static final int kFrontLeftTurningCanID = 20;
         public static final int kBackLeftTurningCanID = 4;
         public static final int kFrontRightTurningCanID = 8;
         public static final int kBackRightTurningCanID = 6;
@@ -105,7 +105,7 @@ public final class Constants {
     public static final class ShooterIntake {
 
         public static final int shooterCanID = 9; //TBD
-        public static final int intakeCanID = 1; //TBD
+        public static final int intakeCanID = 10; //TBD
 
         public static final double shooterForwardSpeed = 50; //TBD
         public static final double shooterReverseSpeed = -10; //TBD
