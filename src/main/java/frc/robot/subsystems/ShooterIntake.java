@@ -21,7 +21,8 @@ public class ShooterIntake extends SubsystemBase {
     public enum IntakeMotorState {
         ON,
         OFF,
-        REVERSE
+        REVERSE,
+        RETRACT
     }
 
     
@@ -52,15 +53,16 @@ public class ShooterIntake extends SubsystemBase {
         switch(state) {
 
             case ON:
-            this.shooterMotor.set(40); //TBD
+            this.shooterMotor.set(Constants.ShooterIntake.shooterForwardSpeed);
+            break;
+
+            case REVERSE:
+            this.shooterMotor.set(Constants.ShooterIntake.shooterReverseSpeed);
             break;
 
             case OFF:
             this.shooterMotor.set(0.0);
             break;
-
-            case REVERSE:
-            this.shooterMotor.set(-20); //TBD
 
             default:
             this.setShooterMotorState(ShooterMotorState.OFF);
@@ -74,11 +76,15 @@ public class ShooterIntake extends SubsystemBase {
         switch (state) {
             
             case ON:
-            this.intakeMotor.set(50); //TBD
+            this.intakeMotor.set(Constants.ShooterIntake.intakeForwardSpeed);
             break;
 
             case REVERSE:
-            this.intakeMotor.set(-50);
+            this.intakeMotor.set(Constants.ShooterIntake.intakeReverseSpeed);
+            break;
+
+            case RETRACT:
+            this.intakeMotor.set(Constants.ShooterIntake.intakeRetractSpeed);
             break;
 
             case OFF:
@@ -97,11 +103,11 @@ public class ShooterIntake extends SubsystemBase {
     }
     
     public IntakeMotorState getIntakeMotorState() {
-        return intakeMotorState;
+        return this.intakeMotorState;
     }
     
     public double getShooterMotorSpeed() {
-        return shooterMotor.get();
+        return this.shooterMotor.get();
     }
     
     public double getIntakeMotorSpeed() {
