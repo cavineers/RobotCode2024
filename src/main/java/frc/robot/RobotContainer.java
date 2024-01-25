@@ -17,27 +17,26 @@ public class RobotContainer {
     public Command lowerRightClimber = new LowerClimberCommand();
     public Command riseRightClimber = new RiseClimberCommand();
 
-
-    private final Joystick driverJoystick;
-    private final JoystickButton button;
     public JoystickButton l_bump;
-
-    lowerLeftClimber = new LowerLeftClimber("left");
-    riseLeftClimber = new RiseLeftClimber("left");
-    lowerRightClimber = new LowerRightClimber("right");
-    riseRightClimber = new RiseRightClimber("right");
+    public JoystickButton r_bump;
 
     public RobotContainer() {
         
         driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
-        button = new JoystickButton(driverJoystick, 4);
         l_bump = new JoystickButton(driverJoystick, 5);
+        r_bump = new JoystickButton(driverJoystick, 5);
         
+        lowerLeftClimber = new LowerLeftClimber("left");
+        riseLeftClimber = new RiseLeftClimber("left");
+        lowerRightClimber = new LowerRightClimber("right");
+        riseRightClimber = new RiseRightClimber("right");
+
         configureButtonBindings();
     };
 
     private void configureButtonBindings() {
-
+        this.l_bump.onTrue(raiseLeftClimber);
+        this.r_bump.onTrue(raiseRightClimber);
     }   
 
 }
