@@ -85,12 +85,14 @@ public class RobotContainer {
             }
         });
 
-        // // Shoot
-        if (driverJoystick.getRawAxis(Constants.OIConstants.kDriverRightTriggerAxis) >= Constants.OIConstants.kTriggerDeadzone) {
-            shoot.schedule();
-        } else {
-            shoot.cancel();
-        }
+        // // Outtake
+        buttonA.onTrue(shoot);
+        buttonA.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                shoot.cancel();
+            }
+        });
 
     }   
 
