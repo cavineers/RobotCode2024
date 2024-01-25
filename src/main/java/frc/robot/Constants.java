@@ -19,7 +19,7 @@ public final class Constants {
     }
     
     public static final class DIO {
-        public static int IntakeSwitch = 7;
+        public static int noteSensor = 0;
     }
 
     public static final class DriveConstants {
@@ -82,7 +82,7 @@ public final class Constants {
 
     public static final class OIConstants {
         public static final int kDriverJoystickPort = 0;
-
+        
         public static final int kDriverYAxis = 1;
         public static final int kDriverXAxis = 0;
         public static final int kDriverRotAxis = 4;
@@ -111,9 +111,7 @@ public final class Constants {
         public static final double shooterReverseSpeed = -10; //TBD
         public static final double intakeForwardSpeed = 30; //TBD
         public static final double intakeReverseSpeed = -30; //TBD
-        public static final double intakeRetractSpeed = -5; //TBD
-
-             
+        public static final double intakeRetractSpeed = -5; //TBD     
     }
 
 }

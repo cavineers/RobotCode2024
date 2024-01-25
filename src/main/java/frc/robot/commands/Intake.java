@@ -27,7 +27,11 @@ public class Intake extends CommandBase{
 
     @Override
     public void execute() {
-        shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.ON);
+        if (shooterIntake.noteSensor.get() == false) {
+            shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.ON);
+        } else {
+            shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.OFF);
+        }
 
     }
 
