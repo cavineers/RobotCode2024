@@ -31,8 +31,6 @@ public class ShooterIntake extends SubsystemBase {
         REVERSE
     }
 
-    
-
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.shooterCanID, MotorType.kBrushless);
     public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.intakeCanID, MotorType.kBrushless);
     public CANSparkMax feederMotor = new CANSparkMax(Constants.ShooterIntake.feederCanID, MotorType.kBrushless);
@@ -114,19 +112,19 @@ public class ShooterIntake extends SubsystemBase {
         switch (state) {
             
             case ON:
-            this.intakeMotor.set(Constants.ShooterIntake.intakeForwardSpeed);
+            this.feederMotor.set(Constants.ShooterIntake.intakeForwardSpeed);
             break;
 
             case REVERSE:
-            this.intakeMotor.set(Constants.ShooterIntake.intakeReverseSpeed);
+            this.feederMotor.set(Constants.ShooterIntake.intakeReverseSpeed);
             break;
 
             case OFF:
-            this.intakeMotor.set(0.0);
+            this.feederMotor.set(0.0);
             break;
             
             default:
-            this.setIntakeMotorState(IntakeMotorState.OFF);
+            this.setFeederMotorState(FeederMotorState.OFF);
 
         }
     } 
