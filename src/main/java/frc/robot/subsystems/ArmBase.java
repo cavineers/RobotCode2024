@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import edu.wpi.first.wpilibj.DigitInput;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,8 +22,8 @@ public class ArmBase extends SubsystemBase {
     public CANSparkMax baseMotor = new CANSparkMax(Constants.ArmBase.BaseMotor, MotorType.kBrushless);
 
     //Limit Switches
-    public DigitInput lowerGantryLimitSwitch = new DigitInput(Constants.ArmBase.lowerLimitSwitchPort);
-    public DigitInput higherGantryLimitSwitch = new DigitInput(Constants.ArmBase.higherLimitSwitchPort);
+    public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.ArmBase.lowerLimitSwitchPort);
+    public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.ArmBase.higherLimitSwitchPort);
 
     // Starts motors in their off state
     public BaseMotorState baseMotorState = BaseMotorState.OFF;
