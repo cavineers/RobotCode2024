@@ -36,12 +36,15 @@ public class Shoot extends CommandBase{
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
         Timer.delay(.5);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
+        Timer.delay(2);
+        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
+        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.OFF);
-        shooterIntake.setShooterMotorState(ShooterIntake.ShooterMotorState.OFF);
+        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
+        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
     }
 
     @Override

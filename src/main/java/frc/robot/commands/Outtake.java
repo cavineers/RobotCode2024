@@ -26,12 +26,12 @@ public class Outtake extends CommandBase{
 
     @Override
     public void execute() {
-        shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.REVERSE);
+        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REVERSE);
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterIntake.setIntakeMotorState(ShooterIntake.IntakeMotorState.OFF);
+        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
     }
 
     @Override
