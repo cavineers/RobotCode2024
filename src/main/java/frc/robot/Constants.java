@@ -27,12 +27,12 @@ public final class Constants {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-        public static final int kFrontLeftDriveCanID = 10;
+        public static final int kFrontLeftDriveCanID = 1;
         public static final int kBackLeftDriveCanID = 3;
         public static final int kFrontRightDriveCanID = 7;
         public static final int kBackRightDriveCanID = 5;
 
-        public static final int kFrontLeftTurningCanID = 20;
+        public static final int kFrontLeftTurningCanID = 2;
         public static final int kBackLeftTurningCanID = 4;
         public static final int kFrontRightTurningCanID = 8;
         public static final int kBackRightTurningCanID = 6;
