@@ -98,6 +98,10 @@ public final class Constants {
         public static final double PivotMotorSpeedForwards = 0.1;
         public static final double PivotMotorSpeedBackwards = 0.1;
 
+        public static final double PivotMotorGroundRotations = -10;
+
+        public static final double ArmPivotEcoderDeadzone = 0.1;
+
     }
 
     public static final class ArmBase {
@@ -108,6 +112,10 @@ public final class Constants {
 
         public static final double BaseMotorSpeedForwards = 0.1;
         public static final double BaseMotorSpeedBackwards = 0.1;
+
+        public static final double BaseMotorGroundRotations = 10;
+
+        public static final double ArmBaseEcoderDeadzone = 0.1;
 
     }
 

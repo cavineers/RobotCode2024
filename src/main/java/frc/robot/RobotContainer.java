@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.OIConstants;
-
+import frc.robot.commands.ArmPreset;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.Constants.OIConstants;
@@ -18,6 +18,8 @@ public class RobotContainer {
 
     private final SwerveDriveSubsystem swerveSubsystem;
 
+    public Command groundPreset;
+
 
     private final Joystick driverJoystick;
     private final JoystickButton button;
@@ -26,6 +28,8 @@ public class RobotContainer {
     public SwerveHoming swerveHomingCommand;
 
     public RobotContainer() {
+
+        groundPreset = new ArmPreset(Constants.ArmBase.BaseMotorGroundRotations, Constants.ArmPivot.PivotMotorGroundRotations);
 
         swerveSubsystem = new SwerveDriveSubsystem();
 
