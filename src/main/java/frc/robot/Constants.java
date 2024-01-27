@@ -86,8 +86,8 @@ public final class Constants {
         public static final int kDriverYAxis = 1;
         public static final int kDriverXAxis = 0;
         public static final int kDriverRotAxis = 4;
-        public static final int kDriverLeftTriggerAxis = 5;
-        public static final int kDriverRightTriggerAxis = 6;
+        public static final int kDriverLeftTriggerAxis = 2;
+        public static final int kDriverRightTriggerAxis = 3;
         public static final int kDriverFieldOrientedButtonIdx = 1;
         
         public static final double kTriggerDeadzone = 0.2;
@@ -104,8 +104,8 @@ public final class Constants {
 
     public static final class ShooterIntake {
 
-        public static final int shooterCanID = 9; //TBD
-        public static final int intakeCanID = 10; //TBD
+        public static final int shooterCanID = 2; //TBD
+        public static final int intakeCanID = 3; //TBD
 
         public static final double shooterForwardSpeed = 50; //TBD
         public static final double shooterReverseSpeed = -10; //TBD

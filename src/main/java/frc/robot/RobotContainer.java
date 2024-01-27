@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 import frc.robot.subsystems.ShooterIntake;
 import frc.robot.commands.Intake;
@@ -99,13 +101,12 @@ public class RobotContainer {
         });
 
         // // Shoot Manual
-        buttonA.onTrue(shoot_manual);
-        buttonA.onFalse(new InstantCommand() {
-            @Override
-            public void initialize() {
-                shoot_manual.cancel();
-            }
-        });
+        if (driverJoystick.getRawAxis(Constants.OIConstants.kDriverRightTriggerAxis) > Constants.OIConstants.kTriggerDeadzone) {
+            shoot_manual.schedule();
+            SmartDashboard.putString("Shooter", "Recieving Input");
+        } else {
+            shoot_manual.cancel();
+        }
 
     }   
 
