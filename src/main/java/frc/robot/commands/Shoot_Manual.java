@@ -36,6 +36,8 @@ public class Shoot_Manual extends CommandBase{
 
         double shooterMotorSpeed = triggerValue.get();
 
+        shooterMotorSpeed = shooterMotorSpeed * Constants.ShooterIntake.shooterForwardSpeed;
+
         shooterIntake.shooterMotor.set(shooterMotorSpeed);
         
     }
