@@ -36,8 +36,8 @@ public class RobotContainer {
     };
 
     private void configureButtonBindings() {
-        this.l_bump.onTrue(new RiseClimberCommand("left"));
-        this.r_bump.onTrue(new RiseClimberCommand("right"));
+        r_bump.onTrue(new RiseClimberCommand("right"));
+        l_bump.onTrue(new RiseClimberCommand("left"));
     }   
 
 }

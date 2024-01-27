@@ -14,7 +14,7 @@ public class LeftClimber extends SubsystemBase {
     public CANSparkMax leftClimberMotor = new CANSparkMax(Constants.Climber.LeftClimberMotor, MotorType.kBrushless);
 
     //Initialize the limit switch
-    private DigitalInput leftClimberLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberLimitSwitch);
+    public DigitalInput leftClimberLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberLimitSwitch);
   
     //Motor states
     public enum LeftClimberMotorState {

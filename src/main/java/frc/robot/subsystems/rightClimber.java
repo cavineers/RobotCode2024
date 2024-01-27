@@ -14,7 +14,7 @@ public class RightClimber extends SubsystemBase {
     public CANSparkMax rightClimberMotor = new CANSparkMax(Constants.Climber.RightClimberMotor, MotorType.kBrushless);
 
     //Initialize the limit switch
-    private DigitalInput rightClimberLimitSwitch = new DigitalInput(Constants.DIO.RightClimberLimitSwitch);
+    public DigitalInput rightClimberLimitSwitch = new DigitalInput(Constants.DIO.RightClimberLimitSwitch);
   
     //Motor states
     public enum RightClimberMotorState {
@@ -40,7 +40,7 @@ public class RightClimber extends SubsystemBase {
 
         //Set the current state
         this.rightClimberMotorState = state;
-            
+        
         switch (state) {
             case ON:
                 System.out.println("right climber");
