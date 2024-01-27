@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -8,14 +10,16 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Shoot extends CommandBase{
+public class Shoot_Manual extends CommandBase{
     
     private boolean isDone = false;
     private double m_timestamp = Timer.getFPGATimestamp();
     private ShooterIntake shooterIntake;
+    private Supplier<Double> triggerValue;
 
-    public Shoot(ShooterIntake shooterIntake) {
+    public Shoot_Manual(ShooterIntake shooterIntake, Supplier<Double> triggerFunction) {
         this.shooterIntake = shooterIntake;
+        this.triggerValue = triggerFunction;
         this.addRequirements(shooterIntake);
     }
 
@@ -30,7 +34,9 @@ public class Shoot extends CommandBase{
 
         SmartDashboard.putString("Shooter", "Command Running Manual");
 
-        
+        double shooterMotorSpeed = triggerValue.get();
+
+        shooterIntake.shooterMotor.set(shooterMotorSpeed);
         
     }
 

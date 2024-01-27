@@ -116,8 +116,6 @@ public class ShooterIntake extends SubsystemBase {
         return this.intakeMotor.get();
     }
 
-   
-
     public void periodic(){
     
     }

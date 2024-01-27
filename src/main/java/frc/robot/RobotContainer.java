@@ -11,6 +11,8 @@ import frc.robot.subsystems.ShooterIntake;
 import frc.robot.commands.Intake;
 import frc.robot.commands.Outtake;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.Shoot_Manual;
+
 
 import frc.robot.Constants.OIConstants;
 
@@ -37,6 +39,7 @@ public class RobotContainer {
     public Command intake;
     public Command outtake;
     public Command shoot;
+    public Command shoot_manual;
 
     
     public RobotContainer() {
@@ -59,7 +62,7 @@ public class RobotContainer {
         intake = new Intake(shooterIntake);
         outtake = new Outtake(shooterIntake);
         shoot = new Shoot(shooterIntake);
-        shoot_manual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRawAxis(5));
+        shoot_manual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRawAxis(Constants.OIConstants.kDriverRightTriggerAxis));
 
         configureButtonBindings();
     };
@@ -86,12 +89,21 @@ public class RobotContainer {
             }
         });
 
-        // // Outtake
+        // // Shoot
         buttonA.onTrue(shoot);
         buttonA.onFalse(new InstantCommand() {
             @Override
             public void initialize() {
                 shoot.cancel();
+            }
+        });
+
+        // // Shoot Manual
+        buttonA.onTrue(shoot_manual);
+        buttonA.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                shoot_manual.cancel();
             }
         });
 
