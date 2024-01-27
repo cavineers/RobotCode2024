@@ -106,14 +106,18 @@ public final class Constants {
 
     public static final class ArmBase {
 
-        public static final int BaseMotor = 2;
+        public static final int BaseMotorCANID = 2;
         public static final int lowerLimitSwitchPort = 1;
         public static final int higherLimitSwitchPort = 0;
 
-        public static final double BaseMotorSpeedForwards = 0.1;
-        public static final double BaseMotorSpeedBackwards = 0.1;
+        public static final double SpeedForwards = 0.1;
+        public static final double SpeedBackwards = 0.1;
 
-        public static final double BaseMotorGroundRotations = 10;
+        public static final double MaxRotations = 10;
+        public static final double MinRotations = 0;
+
+        public static final double GroundPositionRotations = 10;
+        public static final double SpeakerPositionRotations = 10;
 
         public static final double ArmBaseEcoderDeadzone = 0.1;
 
