@@ -8,6 +8,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
+import frc.robot.subsystems.ShooterIntake.ShooterMotorState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shoot_Manual extends CommandBase{
@@ -37,6 +38,7 @@ public class Shoot_Manual extends CommandBase{
         double shooterMotorSpeed = triggerValue.get();
 
         shooterMotorSpeed = shooterMotorSpeed * Constants.ShooterIntake.shooterForwardSpeed;
+        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
 
         shooterIntake.shooterMotor.set(shooterMotorSpeed);
         
