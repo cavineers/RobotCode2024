@@ -29,6 +29,7 @@ public class ShooterIntake extends SubsystemBase {
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.shooterCanID, MotorType.kBrushless);
     public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.intakeCanID, MotorType.kBrushless);
     public CANSparkMax intake2Motor = new CANSparkMax(Constants.ShooterIntake.intake2CanID, MotorType.kBrushless);
+    public CANSparkMax shooter2Motor = new CANSparkMax(Constants.ShooterIntake.shooter2CanID, MotorType.kBrushless);
     
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.noteSensor);
     
@@ -42,13 +43,18 @@ public class ShooterIntake extends SubsystemBase {
         this.shooterMotor.setIdleMode(IdleMode.kBrake);
         this.intakeMotor.setIdleMode(IdleMode.kBrake);
         this.intake2Motor.setIdleMode(IdleMode.kBrake);
+        this.shooter2Motor.setIdleMode(IdleMode.kBrake);
 
         this.shooterMotor.setSmartCurrentLimit(41); //TBD
         this.intakeMotor.setSmartCurrentLimit(41); //TBD
         this.intake2Motor.setSmartCurrentLimit(41); //TBD
+        this.shooter2Motor.setSmartCurrentLimit(41); //TBD
 
         this.intake2Motor.setInverted(true);
         this.intake2Motor.follow(intakeMotor);
+
+        this.shooter2Motor.setInverted(true);
+        this.shooter2Motor.follow(shooterMotor);
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
