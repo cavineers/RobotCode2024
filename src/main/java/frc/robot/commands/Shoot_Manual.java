@@ -3,15 +3,13 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
-import frc.robot.subsystems.ShooterIntake.ShooterMotorState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Shoot_Manual extends CommandBase{
+public class Shoot_Manual extends Command{
     
     private boolean isDone = false;
     private double m_timestamp = Timer.getFPGATimestamp();
