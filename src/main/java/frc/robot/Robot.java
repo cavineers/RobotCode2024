@@ -18,12 +18,12 @@ public class Robot extends TimedRobot {
 
   public static RobotContainer m_robotContainer;
 
-  //public static LeftClimber leftClimber;
-  //public static RightClimber rightClimber;
+  public static LeftClimber leftClimber;
+  public static RightClimber rightClimber;
   
   public Robot() {
-    //leftClimber = new LeftClimber();
-    //rightClimber = new RightClimber();
+    leftClimber = new LeftClimber();
+    rightClimber = new RightClimber();
   }
   /**
    * This function is run when the robot is first started up and should be used for any

@@ -13,10 +13,6 @@ import frc.robot.subsystems.RightClimber;
 
 public class RobotContainer {
 
-    //Climber subsystems
-    private final LeftClimber leftClimberSubsystem;
-    private final RightClimber rightClimberSubsystem;
-
     //Climber commands
     private Command lowerLeftClimber;
     private Command riseLeftClimber;
@@ -30,14 +26,11 @@ public class RobotContainer {
 
 
     public RobotContainer() {
-        
-        leftClimberSubsystem = new LeftClimber();
-        rightClimberSubsystem = new RightClimber();
 
-        lowerLeftClimber = new LowerClimberCommand("left");
-        riseLeftClimber = new RiseClimberCommand("left");
-        lowerRightClimber = new LowerClimberCommand("right");
-        riseRightClimber = new RiseClimberCommand("right");
+        // lowerLeftClimber = new LowerClimberCommand("left");
+        // riseLeftClimber = new RiseClimberCommand("left");
+        // lowerRightClimber = new LowerClimberCommand("right");
+        // riseRightClimber = new RiseClimberCommand("right");
 
         configureButtonBindings();
     };
