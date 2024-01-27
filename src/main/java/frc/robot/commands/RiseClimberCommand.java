@@ -42,7 +42,7 @@ public class RiseClimberCommand extends Command{
 
         } else if (climberSide == "right") {
 
-            System.out.println("right climber");
+           
             //Right climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
             if (Robot.rightClimber.getLimitSwitch()){
