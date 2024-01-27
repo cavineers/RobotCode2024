@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.LeftClimber;
 import frc.robot.subsystems.RightClimber;
@@ -12,7 +11,7 @@ public class RiseClimberCommand extends Command{
     private String climberSide;
     
     private boolean rightRaised = false;
-    private boolean leftRaise = false;
+    private boolean leftRaised = false;
 
     public RiseClimberCommand(String side) {
         this.addRequirements(Robot.leftClimber, Robot.rightClimber);
@@ -31,17 +30,17 @@ public class RiseClimberCommand extends Command{
             //Left climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
             if (Robot.leftClimber.getLimitSwitch()){
-                Robot.leftClimber.setLeftClimberMotorState(leftClimber.LeftClimberMotorState.OFF);
+                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
                 this.leftRaised = true;
             } else if (!Robot.leftClimber.getLimitSwitch()) {
-                Robot.leftClimber.setLeftClimberMotorState(leftClimber.LeftClimberMotorState.ON);
+                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.ON);
             } 
 
         } else if (climberSide == "right") {
             //Right climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
             if (Robot.rightClimber.getLimitSwitch()){
-                Robot.rightClimber.setRightClimberMotorState(rightClimber.RightClimberMotorState.OFF);
+                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
                 this.rightRaised = true;
             } else if (!Robot.rightClimber.getLimitSwitch()) {
                 Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.ON);
@@ -51,8 +50,8 @@ public class RiseClimberCommand extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        Robot.leftClimber.setLeftClimberMotorState(leftClimber.LeftClimberMotorState.OFF);
-        Robot.rightClimber.setRightClimberMotorState(rightClimber.RightClimberMotorState.OFF);
+        Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
+        Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
     }
 
     @Override

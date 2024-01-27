@@ -41,7 +41,7 @@ public class LowerClimberCommand extends Command {
             //Right climber action
             //Stop the robot once it has winded down a maximum number of rotations
             if (Robot.rightClimber.getRightClimberMotorPosition() > Constants.Climber.LowerClimberMaxRotations){
-                Robot.rightClimber.setRightClimberMotorState(rightClimber.RightClimberMotorState.REVERSED);
+                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.REVERSED);
             } else if (Robot.rightClimber.getRightClimberMotorPosition() <= Constants.Climber.LowerClimberMaxRotations) {
                 Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
             } 
@@ -51,8 +51,8 @@ public class LowerClimberCommand extends Command {
     
     @Override
     public void end(boolean interrupted) {
-        Robot.leftClimber.setLeftClimberMotorState(leftClimber.LeftClimberMotorState.OFF);
-        Robot.rightClimber.setRightClimberMotorState(rightClimber.RightClimberMotorState.OFF);
+        Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
+        Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
     }
 
     @Override
