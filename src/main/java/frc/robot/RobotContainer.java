@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ArmPreset;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SwerveHoming;
+import frc.robot.commands.Arm.ArmPreset;
 import frc.robot.Robot;
 
 
@@ -29,7 +29,7 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-        groundPreset = new ArmPreset(Constants.ArmBase.BaseMotorGroundRotations, Constants.ArmPivot.PivotMotorGroundRotations);
+        groundPreset = new ArmPreset(Constants.ArmBase.GroundPositionRotations, Constants.ArmPivot.PivotMotorGroundRotations);
 
         swerveSubsystem = new SwerveDriveSubsystem();
 

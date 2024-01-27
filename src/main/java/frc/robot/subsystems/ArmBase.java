@@ -19,7 +19,7 @@ public class ArmBase extends SubsystemBase {
     }
     
     // Motor Initialization
-    public CANSparkMax baseMotor = new CANSparkMax(Constants.ArmBase.BaseMotor, MotorType.kBrushless);
+    public CANSparkMax baseMotor = new CANSparkMax(Constants.ArmBase.BaseMotorCANID, MotorType.kBrushless);
 
     //Limit Switches
     public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.ArmBase.lowerLimitSwitchPort);
@@ -44,7 +44,7 @@ public class ArmBase extends SubsystemBase {
             case ON:
             // On
             if (higherGantryLimitSwitch.get() == false){
-                this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedForwards);
+                this.baseMotor.set(Constants.ArmBase.SpeedForwards);
             }
             break;
             
@@ -56,7 +56,7 @@ public class ArmBase extends SubsystemBase {
             case REVERSED:
             // Reversed
                 if (lowerGantryLimitSwitch.get() == false){
-                    this.baseMotor.set(Constants.ArmBase.BaseMotorSpeedBackwards);
+                    this.baseMotor.set(Constants.ArmBase.SpeedBackwards);
                 }
                 break;
 
