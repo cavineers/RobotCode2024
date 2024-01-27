@@ -59,6 +59,7 @@ public class RobotContainer {
         intake = new Intake(shooterIntake);
         outtake = new Outtake(shooterIntake);
         shoot = new Shoot(shooterIntake);
+        shoot_manual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRawAxis(5));
 
         configureButtonBindings();
     };
