@@ -31,9 +31,11 @@ public class Shoot_Manual extends Command{
     @Override
     public void execute() {
 
-        SmartDashboard.putString("Shooter", "Command Running Manual");
-
+        SmartDashboard.putString("Shooter", "Shooting Manual");
+        
         double shooterMotorSpeed = triggerValue.get();
+
+        SmartDashboard.putNumber("RightTriggerValue", shooterMotorSpeed);
 
         shooterMotorSpeed = shooterMotorSpeed * Constants.ShooterIntake.shooterForwardSpeed;
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
@@ -48,12 +50,12 @@ public class Shoot_Manual extends Command{
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
     }
 
-    @Override
-    public boolean isFinished() {
-        if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 && Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
-            this.isDone = true;
-        }
-        return this.isDone;
-    }
+    // @Override
+    // public boolean isFinished() {
+    //     if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 && Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
+    //         this.isDone = true;
+    //     }
+    //     return this.isDone;
+    // }
 
     }

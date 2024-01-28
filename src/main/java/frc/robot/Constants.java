@@ -90,7 +90,7 @@ public final class Constants {
         public static final int kDriverRightTriggerAxis = 3;
         public static final int kDriverFieldOrientedButtonIdx = 1;
         
-        public static final double kTriggerDeadzone = 0.2;
+        public static final double kTriggerDeadzone = 0.1;
         public static final double kDeadband = 0.1;
     }
 
