@@ -76,13 +76,8 @@ public class ArmPivot extends SubsystemBase {
     public void setPivotMotorPosition(double position) {
         this.pivotMotor.getEncoder().setPosition(position);
     }
-<<<<<<< HEAD
-=======
 
-    
-    
     public void periodic() {}
->>>>>>> b331f94060317f3ed21a2d979b490efb67e08c29
 
     public double setEncoderDistance(){
         return throughBoreEncoderPivot.setDistancePerRotation(Constants.ArmPivot.);
