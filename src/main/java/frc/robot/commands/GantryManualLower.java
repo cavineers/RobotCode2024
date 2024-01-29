@@ -24,7 +24,7 @@ public class GantryManualLower extends Command {
 
     @Override
     public void execute() {
-        armBase.setBaseMotorState(armBase.baseMotorState.ON);
+        armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
         
 }
 

@@ -1,27 +1,21 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.SwerveCommand;
-import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.Constants.OIConstants;
-import frc.robot.commands.SwerveHoming;
-// import frc.robot.commands.Arm.ArmPreset;
-import frc.robot.Robot;
-import frc.robot.subsystems.ArmBase;
 import frc.robot.commands.GantryManualLower;
 import frc.robot.commands.GantryManualRaise;
+import frc.robot.commands.SwerveHoming;
+import frc.robot.subsystems.ArmBase;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 
 public class RobotContainer {
 
     //Subsystems
-    private final SwerveDriveSubsystem swerveSubsystem;
+    // private final SwerveDriveSubsystem swerveSubsystem;
     private final ArmBase armBase;
     
     public final CommandXboxController driverJoystick;
@@ -38,7 +32,7 @@ public class RobotContainer {
     public double l_joy_x;
     public double l_joy_y;
     
-    public SwerveHoming swerveHomingCommand;
+    // public SwerveHoming swerveHomingCommand;
     
     //Commands
     // public Command groundPreset;
@@ -49,7 +43,7 @@ public class RobotContainer {
 
         //Subsystems
         armBase = new ArmBase();
-        swerveSubsystem = new SwerveDriveSubsystem();
+        // swerveSubsystem = new SwerveDriveSubsystem();
 
         
         driverJoystick = new CommandXboxController(OIConstants.kDriverJoystickPort);
@@ -83,10 +77,26 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
+        buttonA.onTrue(gantryManualRaise);
+        buttonA.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                gantryManualRaise.cancel();
+            }
+        });
+
+        buttonB.onTrue(gantryManualLower);
+        buttonB.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                gantryManualLower.cancel();
+            }
+        });
+
     }   
 
-    public SwerveDriveSubsystem getSwerveSubsystem() {
-        return this.swerveSubsystem;
-    }
+    // public SwerveDriveSubsystem getSwerveSubsystem() {
+    //     return this.swerveSubsystem;
+    // }
 
 }
