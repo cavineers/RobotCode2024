@@ -77,33 +77,33 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.getEncoder().setPosition(position);
     }
 
-    public double setEncoderDistance(){
-        return throughBoreEncoderPivot.setDistancePerRotation(Constants.ArmPivot.);
-    }
+    // public double setEncoderDistance(){
+    //     return throughBoreEncoderPivot.setDistancePerRotation(Constants.ArmPivot.);
+    // }
 
-    public double getEncoderDistance(){
-        return throughBoreEncoderPivot.getDistance(Constants.ArmPivot.);
-    }
+    // public double getEncoderDistance(){
+    //     return throughBoreEncoderPivot.getDistance(Constants.ArmPivot.);
+    // }
 
-    public void isEncoderConnected(){
-        return throughBoreEncoderPivot.isConnected();
-    }
+    // public void isEncoderConnected(){
+    //     return throughBoreEncoderPivot.isConnected();
+    // }
 
-    public void resetEncoder(){
-        return throughBoreEncoderPivot.reset();
-    }
+    // public void resetEncoder(){
+    //     return throughBoreEncoderPivot.reset();
+    // }
 
-    public double getEncoderPositionOffset(){
-        return throughBoreEncoderPivot.getPositionOffset();
-    }
+    // public double getEncoderPositionOffset(){
+    //     return throughBoreEncoderPivot.getPositionOffset();
+    // }
 
-    public double setEncoderPositionOffset(){
-        return throughBoreEncoderPivot.setencoderPositionOffset();
-    }
+    // public double setEncoderPositionOffset(){
+    //     return throughBoreEncoderPivot.setencoderPositionOffset();
+    // }
 
-    public void setEncoder(){
-        return throughBoreEncoderPivot.setEncoder;
-    }
+    // public void setEncoder(){
+    //     return throughBoreEncoderPivot.setEncoder;
+    // }
 
     public void periodic() {}
 }
