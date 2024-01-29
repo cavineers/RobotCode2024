@@ -12,7 +12,7 @@ public class GantryManualLower extends Command {
     private ArmBase armBase;
 
     public GantryManualLower(ArmBase armBase) {
-        this.ArmBase = armBase;
+        this.armBase = armBase;
         this.addRequirements(armBase);
     }
 
@@ -24,12 +24,13 @@ public class GantryManualLower extends Command {
 
     @Override
     public void execute() {
-        armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
+        armBase.setBaseMotorState(armBase.baseMotorState.ON);
+        
 }
 
     @Override
     public void end(boolean interrupted) {
-        armBase.setBaseMotorState(armBase.armBase.OFF);
+        armBase.setBaseMotorState(armBase.baseMotorState.OFF);
     }
 
     /*@Override
