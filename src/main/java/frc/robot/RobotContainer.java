@@ -39,8 +39,8 @@ public class RobotContainer {
     public Trigger buttonY;
     public Trigger l_bump;
     public Trigger r_bump;
-    public Trigger lt;
-    public Trigger rt;
+    public Trigger l_trigger;
+    public Trigger r_trigger;
 
     // // Commands
     public Command intake;
@@ -64,8 +64,8 @@ public class RobotContainer {
         buttonY = driverJoystick.y();
         l_bump = driverJoystick.leftBumper();
         r_bump = driverJoystick.rightBumper();
-        lt = driverJoystick.leftTrigger(OIConstants.kTriggerDeadzone);
-        rt = driverJoystick.rightTrigger(OIConstants.kTriggerDeadzone);
+        l_trigger = driverJoystick.leftTrigger(OIConstants.kTriggerDeadzone);
+        r_trigger = driverJoystick.rightTrigger(OIConstants.kTriggerDeadzone);
 
         // // Commands
         intake = new Intake(shooterIntake);
@@ -109,8 +109,8 @@ public class RobotContainer {
         });
 
         // // Shoot Manual
-        rt.onTrue(shoot_manual);
-        buttonA.onFalse(new InstantCommand() {
+        r_trigger.onTrue(shoot_manual);
+        r_trigger.onFalse(new InstantCommand() {
             @Override
             public void initialize() {
                 shoot_manual.cancel();
