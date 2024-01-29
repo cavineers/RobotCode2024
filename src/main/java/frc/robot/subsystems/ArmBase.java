@@ -45,6 +45,8 @@ public class ArmBase extends SubsystemBase {
             // On
             if (higherGantryLimitSwitch.get() == false){
                 this.baseMotor.set(Constants.ArmBase.SpeedForwards);
+            } else {
+                this.baseMotor.set(0.0);
             }
             break;
             
@@ -57,6 +59,8 @@ public class ArmBase extends SubsystemBase {
             // Reversed
                 if (lowerGantryLimitSwitch.get() == false){
                     this.baseMotor.set(Constants.ArmBase.SpeedBackwards);
+                } else {
+                    this.baseMotor.set(0.0);
                 }
                 break;
 

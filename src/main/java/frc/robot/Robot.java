@@ -18,9 +18,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   public static RobotContainer m_robotContainer;
-
-  public static ArmBase armBase;
-  public static ArmPivot armPivot;
   
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -29,8 +26,6 @@ public class Robot extends TimedRobot {
 
    public Robot() {
 
-    armBase = new ArmBase();
-    armPivot = new ArmPivot();
    }
 
   @Override

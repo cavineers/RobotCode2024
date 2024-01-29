@@ -11,7 +11,7 @@ import frc.robot.commands.SwerveCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SwerveHoming;
-import frc.robot.commands.Arm.ArmPreset;
+// import frc.robot.commands.Arm.ArmPreset;
 import frc.robot.Robot;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.commands.GantryManualLower;
@@ -41,7 +41,7 @@ public class RobotContainer {
     public SwerveHoming swerveHomingCommand;
     
     //Commands
-    public Command groundPreset;
+    // public Command groundPreset;
     public Command gantryManualRaise;
     public Command gantryManualLower;
 
@@ -67,9 +67,7 @@ public class RobotContainer {
         l_joy_y = driverJoystick.getLeftY();
         
         //Commands
-        swerveHomingCommand = new SwerveHoming(swerveSubsystem);
-        
-        groundPreset = new ArmPreset(Constants.ArmBase.GroundPositionRotations, Constants.ArmPivot.PivotMotorGroundRotations);
+        // groundPreset = new ArmPreset(Constants.ArmBase.GroundPositionRotations, Constants.ArmPivot.PivotMotorGroundRotations);
         gantryManualRaise = new GantryManualRaise(armBase);
         gantryManualLower = new GantryManualLower(armBase);
 
