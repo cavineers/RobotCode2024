@@ -71,12 +71,12 @@ public class RobotContainer {
         gantryManualRaise = new GantryManualRaise(armBase);
         gantryManualLower = new GantryManualLower(armBase);
 
-        swerveSubsystem.setDefaultCommand(new SwerveCommand(
-            swerveSubsystem,
-            () -> -driverJoystick.getLeftY(),
-            () -> driverJoystick.getLeftX(),
-            () -> driverJoystick.getRightX(),
-            () -> !driverJoystick.leftTrigger(OIConstants.kDriverJoystickTriggerDeadzone)));
+        // swerveSubsystem.setDefaultCommand(new SwerveCommand(
+        //     swerveSubsystem,
+        //     () -> -driverJoystick.getLeftY(),
+        //     () -> driverJoystick.getLeftX(),
+        //     () -> driverJoystick.getRightX(),
+        //     () -> !driverJoystick.leftTrigger(OIConstants.kDriverJoystickTriggerDeadzone)));
 
         configureButtonBindings();
     };
