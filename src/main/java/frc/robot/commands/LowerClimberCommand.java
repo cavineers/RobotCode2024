@@ -15,7 +15,12 @@ public class LowerClimberCommand extends Command {
     private boolean rightRotationsReached = false;
 
     public LowerClimberCommand(String side) {
-        this.addRequirements(Robot.leftClimber, Robot.rightClimber);
+        if (side == "left") {
+            this.addRequirements(Robot.leftClimber);
+        } else {
+            this.addRequirements(Robot.rightClimber);
+        }
+
         climberSide = side;
     }
 
@@ -26,9 +31,6 @@ public class LowerClimberCommand extends Command {
 
     @Override
     public void execute() {
-
-        SmartDashboard.putNumber("Left motor position", Robot.leftClimber.getLeftClimberMotorPosition());
-        SmartDashboard.putNumber("Right motor position", Robot.rightClimber.getRightClimberMotorPosition());
 
         if (climberSide == "left") {
 
@@ -55,13 +57,25 @@ public class LowerClimberCommand extends Command {
     
     @Override
     public void end(boolean interrupted) {
-        Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-        Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
+
+        if (climberSide == "left") {
+            Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
+        } else {
+            Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
+        }
     }
 
     @Override
     //Once the two climbers have been lowered, the command is finished
     public boolean isFinished() {
-        return this.leftRotationsReached && this.rightRotationsReached;
+
+        boolean finish = false;
+
+        if (climberSide == "left") {
+            finish = this.leftRotationsReached;
+        } else {
+            finish = this.rightRotationsReached;
+        }
+        return finish;
     }
 }

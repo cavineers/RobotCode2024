@@ -14,7 +14,12 @@ public class RiseClimberCommand extends Command{
     private boolean leftRaised = false;
 
     public RiseClimberCommand(String side) {
-        this.addRequirements(Robot.leftClimber, Robot.rightClimber);
+        if (side == "left") {
+            this.addRequirements(Robot.leftClimber);
+        } else {
+            this.addRequirements(Robot.rightClimber);
+        }
+
         climberSide = side;
     }
 
@@ -63,6 +68,7 @@ public class RiseClimberCommand extends Command{
     @Override
     //Once the two climbers have reached their limit of rotations, the command is finished
     public boolean isFinished() {
+        
         boolean finish = false;
 
         if (climberSide == "left") {

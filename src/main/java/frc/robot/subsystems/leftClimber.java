@@ -43,6 +43,7 @@ public class LeftClimber extends SubsystemBase {
             
         switch (state) {
             case ON:
+                System.out.println("left climber");
                 //On: Set the extension speed of the climber
                 this.leftClimberMotor.set(Constants.Climber.ClimberExtensionSpeed);
                 break;

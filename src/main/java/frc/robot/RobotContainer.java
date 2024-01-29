@@ -39,5 +39,4 @@ public class RobotContainer {
         r_bump.onTrue(new RiseClimberCommand("right"));
         l_bump.onTrue(new RiseClimberCommand("left"));
     }   
-
 }
