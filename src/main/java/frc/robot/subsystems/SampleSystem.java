@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class SampleSystem extends SubsystemBase {
 
@@ -26,7 +27,7 @@ public class SampleSystem extends SubsystemBase {
     public CANSparkMax sampleMotor = new CANSparkMax(Constants.SampleSystem.SampleMotor, MotorType.kBrushless);
     
     // Starts motors in their off state
-    public MotorState sampleMotorState = MotorState.OFF;
+    public MotorState sampleMotorState = MotorState.ON;
 
     // Motor sparkmax settings
     public SampleSystem() {
@@ -51,7 +52,6 @@ public class SampleSystem extends SubsystemBase {
             case OFF:
                 // Off
                 this.sampleMotor.set(0);
-                
                 break;
             case REVERSED:
                 // Reversed
@@ -63,6 +63,6 @@ public class SampleSystem extends SubsystemBase {
     }
 
     public double getSampleMotorCurrent() {
-        return this.sampleMotor.getOutputCurrent();
+        return sampleMotor.getOutputCurrent();
     }
 }

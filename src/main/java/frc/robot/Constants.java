@@ -33,7 +33,7 @@ public final class Constants {
         public static final int kBackRightDriveCanID = 5;
 
         public static final int kFrontLeftTurningCanID = 2;
-        public static final int kBackLeftTurningCanID = 4;
+        public static final int kBackLeftTurningCanID = 400;
         public static final int kFrontRightTurningCanID = 8;
         public static final int kBackRightTurningCanID = 6;
 
@@ -93,11 +93,11 @@ public final class Constants {
 
     public static final class SampleSystem {
 
-        public static int SampleMotor = 1;
-        public static double SampleMotorForwardSpeed = 0.5;
-        public static double SampleMotorBackwardSpeed = -0.5;
+        public static int SampleMotor = 4;
+        public static double SampleMotorForwardSpeed = 0.05;
+        public static double SampleMotorBackwardSpeed = -0.05;
 
-        public static double SampleMotorMaxAmperage = 1000.0;
+        public static double SampleMotorMaxAmperage = 0.06;
     }
 
 }

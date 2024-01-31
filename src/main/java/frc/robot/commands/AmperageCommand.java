@@ -18,11 +18,12 @@ public class AmperageCommand extends Command {
     @Override
     public void execute() {
         
-        Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.ON);
-
         if(Robot.sampleSystem.getSampleMotorCurrent() > Constants.SampleSystem.SampleMotorMaxAmperage) {
             cancel();
+        } else {
+            Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.ON);
         }
+
     }
 
     @Override
