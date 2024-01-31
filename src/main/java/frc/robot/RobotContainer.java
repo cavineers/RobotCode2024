@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.GantryManualLower;
 import frc.robot.commands.GantryManualRaise;
+import frc.robot.commands.PivotManualRaise;
+import frc.robot.commands.PivotManualLower;
 import frc.robot.commands.SwerveHoming;
 import frc.robot.subsystems.ArmBase;
+import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
 
@@ -17,6 +20,7 @@ public class RobotContainer {
     //Subsystems
     // private final SwerveDriveSubsystem swerveSubsystem;
     private final ArmBase armBase;
+    private final ArmPivot armPivot;
     
     public final CommandXboxController driverJoystick;
     public Trigger buttonA;
@@ -38,11 +42,14 @@ public class RobotContainer {
     // public Command groundPreset;
     public Command gantryManualRaise;
     public Command gantryManualLower;
+    public Command pivotManualRaise;
+    public Command pivotManualLower;
 
     public RobotContainer() {
 
         //Subsystems
         armBase = new ArmBase();
+        armPivot = new ArmPivot();
         // swerveSubsystem = new SwerveDriveSubsystem();
 
         
@@ -64,6 +71,9 @@ public class RobotContainer {
         // groundPreset = new ArmPreset(Constants.ArmBase.GroundPositionRotations, Constants.ArmPivot.PivotMotorGroundRotations);
         gantryManualRaise = new GantryManualRaise(armBase);
         gantryManualLower = new GantryManualLower(armBase);
+        pivotManualRaise = new PivotManualRaise(armPivot);
+        pivotManualLower = new PivotManualLower(armPivot);
+
 
         // swerveSubsystem.setDefaultCommand(new SwerveCommand(
         //     swerveSubsystem,
@@ -76,6 +86,22 @@ public class RobotContainer {
     };
 
     private void configureButtonBindings() {
+        buttonX.onTrue(pivotManualRaise);
+        buttonX.onFalse(new InstantCommand(){
+        @Override
+        public void initialize(){
+            pivotManualRaise.cancel();
+        }
+    });
+        
+        buttonY.onTrue(pivotManualLower);
+        buttonY.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                pivotManualRaise.cancel();
+            }
+        });
+
 
         buttonA.onTrue(gantryManualRaise);
         buttonA.onFalse(new InstantCommand() {
