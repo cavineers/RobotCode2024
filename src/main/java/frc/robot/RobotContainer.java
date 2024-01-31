@@ -98,7 +98,7 @@ public class RobotContainer {
         buttonY.onFalse(new InstantCommand() {
             @Override
             public void initialize() {
-                pivotManualRaise.cancel();
+                pivotManualLower.cancel();
             }
         });
 

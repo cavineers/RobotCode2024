@@ -98,7 +98,7 @@ public final class Constants {
         public static final int PivotMotor = 3;
 
         public static final double PivotMotorSpeedForwards = 0.1;
-        public static final double PivotMotorSpeedBackwards = 0.1;
+        public static final double PivotMotorSpeedBackwards = -0.1;
 
         public static final double PivotMotorGroundRotations = -10;
 
@@ -113,7 +113,7 @@ public final class Constants {
         public static final int higherLimitSwitchPort = 0;
 
         public static final double SpeedForwards = 0.1;
-        public static final double SpeedBackwards = 0.1;
+        public static final double SpeedBackwards = -0.1;
 
         public static final double MaxRotations = 10;
         public static final double MinRotations = 0;
