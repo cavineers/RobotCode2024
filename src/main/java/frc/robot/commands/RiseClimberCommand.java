@@ -14,12 +14,14 @@ public class RiseClimberCommand extends Command{
     private boolean leftRaised = false;
 
     public RiseClimberCommand(String side) {
+     
         if (side == "left") {
             this.addRequirements(Robot.leftClimber);
         } else {
             this.addRequirements(Robot.rightClimber);
         }
 
+        //this.addRequirements(Robot.leftClimber, Robot.rightClimber);
         climberSide = side;
     }
 
@@ -40,7 +42,7 @@ public class RiseClimberCommand extends Command{
                 Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
                 this.leftRaised = true;
             } else if (!Robot.leftClimber.getLimitSwitch()) {
-                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.ON);
+                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.ON);                
             } 
             
         } else if (climberSide == "right") {
