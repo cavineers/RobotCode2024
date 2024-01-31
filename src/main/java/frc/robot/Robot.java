@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_robotContainer.swerveHomingCommand.schedule();
+    m_robotContainer.getAutonomousCommand().schedule();
   }
 
   /** This function is called periodically during autonomous. */
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
     }
     m_robotContainer.swerveHomingCommand.schedule();
     m_robotContainer.getSwerveSubsystem().toggleIdleMode(IdleMode.kCoast);
+    m_robotContainer.getSwerveSubsystem().zeroHeading();
   }
 
   /** This function is called periodically during operator control. */

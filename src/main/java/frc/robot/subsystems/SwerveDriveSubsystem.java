@@ -40,6 +40,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public VisionSubsystem visionSubsystem;
 
+    private double gyroZero;
     Optional<Alliance> ally = DriverStation.getAlliance();
     private final SwerveModule frontLeft = new SwerveModule(
         DriveConstants.kFrontLeftDriveCanID, 
@@ -75,6 +76,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP); 
 
+    private Pose2d updatedPose = new Pose2d();
     private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
         new Translation2d(DriveConstants.kTrackWidth / 2.0, DriveConstants.kWheelBase / 2.0),
         new Translation2d(DriveConstants.kTrackWidth / 2.0, -DriveConstants.kWheelBase / 2.0),
@@ -84,9 +86,21 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private final Field2d m_field = new Field2d();
 
+    private double changeRule(double val){
+        return 360 - val;
+    }
 
-    public double getHeading(){
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+    public double getHeading(){ // Right Hand Rule with Offset
+        double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
+        while (gyroAngle < 0){
+            gyroAngle += 360;
+        }
+        gyroAngle = changeRule(gyroAngle); // Right Hand Rule
+        gyroAngle = gyroAngle + gyroZero;
+        while (gyroAngle > 360){
+            gyroAngle -= 360;
+        }
+        return gyroAngle;
     }
 
     public Rotation2d getRotation2d(){
@@ -126,7 +140,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             return m_odometer.getPoseMeters();
     }
 
-   
+    private Optional<EstimatedRobotPose> getVisionPose(){
+        return visionSubsystem.getRobotPoseFieldRelative();
+    }
     private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
         m_kinematics,
         getRotation2d(),
@@ -138,25 +154,34 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         Pose2d currentPose = poseEstimator.update(getRotation2d(), getPositions());
         SmartDashboard.putNumber("PoseX1", currentPose.getX());
         SmartDashboard.putNumber("PoseY1", currentPose.getY());
-        Optional<EstimatedRobotPose> visionPose = visionSubsystem.getRobotPoseFieldRelative(currentPose);
+        Optional<EstimatedRobotPose> visionPose = this.getVisionPose();
         if (visionPose.isEmpty()) {
             SmartDashboard.putBoolean("Has Tags", false);
             return currentPose;
         }
+
+        zeroHeading();
         SmartDashboard.putBoolean("Has Tags", true);
         Pose2d visionPose2d = visionPose.get().estimatedPose.toPose2d();
         poseEstimator.addVisionMeasurement(visionPose2d, visionPose.get().timestampSeconds);
         SmartDashboard.putNumber("PoseX2", visionPose2d.getX());
         SmartDashboard.putNumber("PoseY2", visionPose2d.getY());
-        return poseEstimator.getEstimatedPosition();
+        SmartDashboard.putNumber("Rotation", visionPose2d.getRotation().getDegrees());
+        //For some reason the rotation aspect of vision is not working
+        var returnValue = poseEstimator.getEstimatedPosition();
+
+        //returnValue = new Pose2d(returnValue.getX(), returnValue.getY(), new Rotation2d(getHeading() * Math.PI / 180));
+        return returnValue;
     }
 
     public SwerveDriveSubsystem(VisionSubsystem visionSubsystem) {
         //Delay reset of navx for proper initialization
+        this.gyroZero = 0;
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
-                zeroHeading();
+                gyro.zeroYaw();
+                zeroHeading(); 
             } catch (Exception e) {
             }
         }).start();
@@ -182,7 +207,12 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public void zeroHeading() {
-        gyro.reset();
+        Optional<EstimatedRobotPose> currentPose = visionSubsystem.getRobotPoseFieldRelative(); 
+        if (currentPose.isEmpty() == false){
+            double angle = (currentPose.get().estimatedPose.toPose2d().getRotation().getDegrees());  // Check make sure this is signed
+            this.gyroZero = angle;
+            System.out.println("*******-------- NAVX VISION SUCCESS --------*******" + angle);
+        }//
     }
 
     
@@ -229,8 +259,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
  
     public void periodic(){
         m_odometer.update(getRotation2d(), getPositions());
-        updatePoseWithVision();
-        m_field.setRobotPose(this.updatePoseWithVision());
+        this.updatedPose = this.updatePoseWithVision();
+        m_field.setRobotPose(this.updatedPose);
         SmartDashboard.putData("Field", m_field);
         SmartDashboard.putNumber("Front Right Rel", this.frontRight.getTurningPosition());
         SmartDashboard.putNumber("Front Right Abs", this.frontRight.getAbsolutePosition());
