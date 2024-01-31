@@ -37,10 +37,21 @@ public class LowerClimberCommand extends Command {
         
         if (climberSide == "left") {
             //Left climber action
-            Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.REVERSED);  
+            if (Robot.leftClimber.getLimitSwitch("bottom")){
+                Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.OFF);
+                this.leftLowered = true;
+            } else if (!Robot.leftClimber.getLimitSwitch("bottom")) {
+                Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.REVERSED);                
+            } 
+
         } else if (climberSide == "right") {
             //Right climber action
-            Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.REVERSED);
+             if (Robot.rightClimber.getLimitSwitch("bottom")){
+                Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.OFF);
+                this.rightLowered = true;
+            } else if (!Robot.rightClimber.getLimitSwitch("bottom")) {
+                Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.REVERSED);                
+            } 
         }
     }
 
@@ -66,76 +77,4 @@ public class LowerClimberCommand extends Command {
         }
         return finish;
     }
-
-    /*private String climberSide;
-
-    private boolean leftRotationsReached = false;
-    private boolean rightRotationsReached = false;
-
-    public LowerClimberCommand(String side) {
-        if (side == "left") {
-            this.addRequirements(Robot.leftClimber);
-        } else {
-            this.addRequirements(Robot.rightClimber);
-        }
-
-        //this.addRequirements(Robot.leftClimber, Robot.rightClimber);
-
-        climberSide = side;
-    }
-
-    @Override
-    public void initialize() {
-        
-    }
-
-    @Override
-    public void execute() {
-
-        if (climberSide == "left") {
-
-             //Left climber action
-             //Stop the robot once it has winded down a maximum number of rotations
-            if (Robot.leftClimber.getLeftClimberMotorPosition() > Constants.Climber.LowerClimberMaxRotations){
-                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.REVERSED);
-            } else if (Robot.leftClimber.getLeftClimberMotorPosition() <= Constants.Climber.LowerClimberMaxRotations) {
-                Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-            } 
-            
-        } else if (climberSide == "right") {
-
-            //Right climber action
-            //Stop the robot once it has winded down a maximum number of rotations
-            if (Robot.rightClimber.getRightClimberMotorPosition() > Constants.Climber.LowerClimberMaxRotations){
-                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.REVERSED);
-            } else if (Robot.rightClimber.getRightClimberMotorPosition() <= Constants.Climber.LowerClimberMaxRotations) {
-                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
-            } 
-
-        }
-    }
-    
-    @Override
-    public void end(boolean interrupted) {
-
-        if (climberSide == "left") {
-            Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
-        } else {
-            Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
-        }
-    }
-
-    @Override
-    //Once the two climbers have been lowered, the command is finished
-    public boolean isFinished() {
-
-        boolean finish = false;
-
-        if (climberSide == "left") {
-            finish = this.leftRotationsReached;
-        } else {
-            finish = this.rightRotationsReached;
-        }
-        return finish;
-    }*/
 }
