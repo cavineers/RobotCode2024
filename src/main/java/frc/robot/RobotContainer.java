@@ -23,6 +23,8 @@ public class RobotContainer {
     private Joystick joy = new Joystick(0);
     private JoystickButton l_bump = new JoystickButton(joy,5);
     private JoystickButton r_bump = new JoystickButton(joy, 6);
+    private JoystickButton x_button = new JoystickButton(joy,3);
+    private JoystickButton b_button = new JoystickButton(joy, 2);
 
 
     public RobotContainer() {
@@ -36,7 +38,9 @@ public class RobotContainer {
     };
 
     private void configureButtonBindings() {
-        r_bump.onTrue(new RiseClimberCommand("right"));
-        l_bump.onTrue(new RiseClimberCommand("left"));
-    }   
+        r_bump.whileTrue(new RiseClimberCommand("right"));
+        l_bump.whileTrue(new RiseClimberCommand("left"));
+        x_button.whileTrue(new LowerClimberCommand("left"));
+        b_button.whileTrue(new LowerClimberCommand("right"));
+    }
 }
