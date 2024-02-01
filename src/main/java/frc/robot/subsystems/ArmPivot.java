@@ -26,7 +26,7 @@ public class ArmPivot extends SubsystemBase {
     public PivotMotorState pivotMotorState = PivotMotorState.OFF;
     
     //Through Bore Encoder
-    DutyCycleEncoder pivotThroughBoreEncoder = new DutyCycleEncoder(1);
+    //DutyCycleEncoder pivotThroughBoreEncoder = new DutyCycleEncoder(1);
 
     // Motor sparkmax settings
     public ArmPivot() {
@@ -77,7 +77,7 @@ public class ArmPivot extends SubsystemBase {
     public void setPivotMotorPosition(double position) {
         this.pivotMotor.getEncoder().setPosition(position);
     }
-
+/*
     public void setDistancePerRotation(double distance){
         this.pivotThroughBoreEncoder.setDistancePerRotation(1);
     }
@@ -101,6 +101,6 @@ public class ArmPivot extends SubsystemBase {
     public void setPositionOffset(double positionoffset){
         this.pivotThroughBoreEncoder.setPositionOffset(positionoffset);
     }
-
+*/
     public void periodic() {}
 }
