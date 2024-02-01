@@ -6,6 +6,8 @@ import frc.robot.Robot;
 import frc.robot.subsystems.SampleSystem;
 
 public class AmperageCommand extends Command {
+
+    public boolean waited = false;
     
     public AmperageCommand() {
 
@@ -18,10 +20,26 @@ public class AmperageCommand extends Command {
     @Override
     public void execute() {
         
-        if(Robot.sampleSystem.getSampleMotorCurrent() > Constants.SampleSystem.SampleMotorMaxAmperage) {
-            cancel();
+        if(waited = true) {
+            if(Robot.sampleSystem.getSampleMotorCurrent() > Constants.SampleSystem.SampleMotorMaxAmperage) {
+                cancel();
+            } else {
+                Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.ON);
+            }
         } else {
             Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.ON);
+        }
+
+        try {
+            // Wait for 1 second (1000 milliseconds)
+            Thread.sleep(50);
+
+            waited = true;
+            
+
+        } catch (InterruptedException e) {
+            // Handle the exception if necessary
+            e.printStackTrace();
         }
 
     }

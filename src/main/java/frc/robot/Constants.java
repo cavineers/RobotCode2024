@@ -94,10 +94,10 @@ public final class Constants {
     public static final class SampleSystem {
 
         public static int SampleMotor = 4;
-        public static double SampleMotorForwardSpeed = 0.05;
+        public static double SampleMotorForwardSpeed = 0.1;
         public static double SampleMotorBackwardSpeed = -0.05;
 
-        public static double SampleMotorMaxAmperage = 0.06;
+        public static double SampleMotorMaxAmperage = 0.07;
     }
 
 }
