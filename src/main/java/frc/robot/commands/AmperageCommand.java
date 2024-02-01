@@ -28,9 +28,8 @@ public class AmperageCommand extends Command {
             }
         } else {
             Robot.sampleSystem.setSampleMotorState(SampleSystem.MotorState.ON);
-        }
-
-        try {
+            
+            try {
             // Wait for 1 second (1000 milliseconds)
             Thread.sleep(50);
 
@@ -41,6 +40,9 @@ public class AmperageCommand extends Command {
             // Handle the exception if necessary
             e.printStackTrace();
         }
+        }
+
+        
 
     }
 
