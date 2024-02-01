@@ -103,6 +103,8 @@ public final class Constants {
         public static final double PivotMotorGroundRotations = -10;
 
         public static final double ArmPivotEcoderDeadzone = 0.1;
+        
+        public static final double DistancePerRotation = 1;
 
     }
 

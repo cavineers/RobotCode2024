@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmBase.BaseMotorState;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 public class ArmPivot extends SubsystemBase {
 
@@ -24,8 +25,8 @@ public class ArmPivot extends SubsystemBase {
     // Starts motors in their off state
     public PivotMotorState pivotMotorState = PivotMotorState.OFF;
     
-    // //Through Bore Encoder
-    // DutyCycleEncoder throughBoreEncoderPivot = new DutyCycleEncoder(0);
+    //Through Bore Encoder
+    DutyCycleEncoder pivotThroughBoreEncoder = new DutyCycleEncoder(1);
 
     // Motor sparkmax settings
     public ArmPivot() {
@@ -77,33 +78,29 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.getEncoder().setPosition(position);
     }
 
-    // public double setEncoderDistance(){
-    //     return throughBoreEncoderPivot.setDistancePerRotation(Constants.ArmPivot.);
-    // }
+    public void setDistancePerRotation(double distance){
+        this.pivotThroughBoreEncoder.setDistancePerRotation(1);
+    }
 
-    // public double getEncoderDistance(){
-    //     return throughBoreEncoderPivot.getDistance(Constants.ArmPivot.);
-    // }
+    public void getDistance(double distance){
+        this.pivotThroughBoreEncoder.getDistance();
+    }
 
-    // public void isEncoderConnected(){
-    //     return throughBoreEncoderPivot.isConnected();
-    // }
+    public void isConnected(boolean connection){
+        this.pivotThroughBoreEncoder.isConnected();
+    }
 
-    // public void resetEncoder(){
-    //     return throughBoreEncoderPivot.reset();
-    // }
+    public void reset(boolean reset){
+        this.pivotThroughBoreEncoder.reset();
+    }
 
-    // public double getEncoderPositionOffset(){
-    //     return throughBoreEncoderPivot.getPositionOffset();
-    // }
+    public void getPositionOffset(double positionoffset){
+        this.pivotThroughBoreEncoder.getPositionOffset();
+    }
 
-    // public double setEncoderPositionOffset(){
-    //     return throughBoreEncoderPivot.setencoderPositionOffset();
-    // }
-
-    // public void setEncoder(){
-    //     return throughBoreEncoderPivot.setEncoder;
-    // }
+    public void setPositionOffset(double positionoffset){
+        this.pivotThroughBoreEncoder.setPositionOffset(positionoffset);
+    }
 
     public void periodic() {}
 }
