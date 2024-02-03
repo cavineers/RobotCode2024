@@ -102,7 +102,7 @@ public final class Constants {
         public static final double PivotMotorSpeedBackwards = -0.1;
 
         public static final double PivotMotorLowerRotationLimit = -10;
-        public static final double PivotMotorUpperRotationLimit = -10;
+        public static final double PivotMotorUpperRotationLimit = 10;
 
         public static final double ArmPivotEcoderDeadzone = 0.1;
         
