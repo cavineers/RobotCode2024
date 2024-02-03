@@ -106,6 +106,7 @@ public final class Constants {
 
         public static final int shooterCanID = 2; //TBD
         public static final int intakeCanID = 3; //TBD
+        public static final int intake2ndCanID = 4; //TBD
 
         public static final double shooterForwardSpeed = 1; //TBD
         public static final double shooterReverseSpeed = -.5; //TBD
