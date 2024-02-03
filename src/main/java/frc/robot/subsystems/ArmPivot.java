@@ -4,11 +4,12 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmBase.BaseMotorState;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 public class ArmPivot extends SubsystemBase {
 
@@ -26,7 +27,7 @@ public class ArmPivot extends SubsystemBase {
     public PivotMotorState pivotMotorState = PivotMotorState.OFF;
     
     //Through Bore Encoder
-    //DutyCycleEncoder pivotThroughBoreEncoder = new DutyCycleEncoder(1);
+    public DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(Constants.ArmPivot.ArmPivotEncoder);
 
     // Motor sparkmax settings
     public ArmPivot() {
@@ -77,30 +78,16 @@ public class ArmPivot extends SubsystemBase {
     public void setPivotMotorPosition(double position) {
         this.pivotMotor.getEncoder().setPosition(position);
     }
-/*
-    public void setDistancePerRotation(double distance){
-        this.pivotThroughBoreEncoder.setDistancePerRotation(1);
+
+    public double getPivotEncoderPosition() {
+        return this.pivotEncoder.get();
     }
 
-    public void getDistance(double distance){
-        this.pivotThroughBoreEncoder.getDistance();
+    public double getPivotEncoderFrequency() {
+        return this.pivotEncoder.getFrequency();
     }
+    
+    public void periodic() {
 
-    public void isConnected(boolean connection){
-        this.pivotThroughBoreEncoder.isConnected();
     }
-
-    public void reset(boolean reset){
-        this.pivotThroughBoreEncoder.reset();
-    }
-
-    public void getPositionOffset(double positionoffset){
-        this.pivotThroughBoreEncoder.getPositionOffset();
-    }
-
-    public void setPositionOffset(double positionoffset){
-        this.pivotThroughBoreEncoder.setPositionOffset(positionoffset);
-    }
-*/
-    public void periodic() {}
 }

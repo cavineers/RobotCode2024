@@ -24,7 +24,11 @@ public class PivotManualRaise extends Command {
 
     @Override
     public void execute() {
-        armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
+        if (armPivot.getPivotEncoderPosition() < Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+            armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
+        } else {
+            armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+        }
 }
 
     @Override

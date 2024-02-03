@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmPivot;
 
 public class PivotManualLower extends Command {  
@@ -21,7 +22,11 @@ public class PivotManualLower extends Command {
 
     @Override
     public void execute() {
-        armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
+        if (armPivot.getPivotEncoderPosition() > Constants.ArmPivot.PivotMotorLowerRotationLimit) {
+            armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
+        } else {
+            armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+        }
         
 }
 
