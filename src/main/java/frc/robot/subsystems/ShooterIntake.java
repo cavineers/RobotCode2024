@@ -44,9 +44,11 @@ public class ShooterIntake extends SubsystemBase {
        
         this.shooterMotor.setIdleMode(IdleMode.kBrake);
         this.intakeMotor.setIdleMode(IdleMode.kBrake);
+        this.intakeMotor.setIdleMode(IdleMode.kBrake);
 
         this.shooterMotor.setSmartCurrentLimit(41); //TBD
         this.intakeMotor.setSmartCurrentLimit(41); //TBD
+        this.intake2ndMotor.setSmartCurrentLimit(41); //TBD
 
         this.intake2ndMotor.setInverted(true);
         this.intake2ndMotor.follow(intakeMotor);
