@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -67,8 +68,10 @@ public class LeftClimber extends SubsystemBase {
 
         if (orientation == "top") {
             switched = this.leftClimberTopLimitSwitch.get();
+            System.out.println("left top");
         } else {
             switched = this.leftClimberBottomLimitSwitch.get();
+            System.out.println("left bottom");
         }
 
         return switched;
@@ -101,5 +104,9 @@ public class LeftClimber extends SubsystemBase {
 
     public CANSparkMax getLeftClimberMotor() {
         return this.leftClimberMotor;
+    }
+
+    @Override
+    public void periodic() {
     }
 }

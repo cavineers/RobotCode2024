@@ -42,6 +42,7 @@ public class RiseClimberCommand extends Command{
                 Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
                 this.leftRaised = true;
             } else if (!Robot.leftClimber.getLimitSwitch("top")) {
+                System.out.println("Right raising");
                 Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.ON);                
             } 
             
@@ -50,10 +51,11 @@ public class RiseClimberCommand extends Command{
             //Right climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
             if (Robot.rightClimber.getLimitSwitch("top")){
-                Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.OFF);
+                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
                 this.rightRaised = true;
-            } else {
-                Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.ON);
+            } else if (!Robot.rightClimber.getLimitSwitch("top")) {
+                System.out.println("Left raising");
+                Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.ON);
             } 
         }
     }

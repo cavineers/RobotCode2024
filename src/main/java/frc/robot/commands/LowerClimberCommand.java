@@ -38,18 +38,22 @@ public class LowerClimberCommand extends Command {
         if (climberSide == "left") {
             //Left climber action
             if (Robot.leftClimber.getLimitSwitch("bottom")){
+                System.out.println("Left off");
                 Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.OFF);
                 this.leftLowered = true;
             } else if (!Robot.leftClimber.getLimitSwitch("bottom")) {
+                System.out.println("Left lowering");
                 Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.REVERSED);                
             } 
 
         } else if (climberSide == "right") {
             //Right climber action
              if (Robot.rightClimber.getLimitSwitch("bottom")){
+                System.out.println("Right off");
                 Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.OFF);
                 this.rightLowered = true;
             } else if (!Robot.rightClimber.getLimitSwitch("bottom")) {
+                System.out.println("Right lowering");
                 Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.REVERSED);                
             } 
         }
