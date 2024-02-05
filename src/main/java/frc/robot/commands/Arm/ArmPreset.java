@@ -1,46 +1,53 @@
-// package frc.robot.commands.Arm;
+package frc.robot.commands.Arm;
 
-// import edu.wpi.first.wpilibj.Timer;
-// import edu.wpi.first.wpilibj2.command.Command;
-// import frc.robot.Constants;
-// import frc.robot.Robot;
-// import frc.robot.subsystems.ArmBase;
-// import frc.robot.subsystems.ArmPivot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.ArmBase;
+import frc.robot.subsystems.ArmPivot;
 
-// public class ArmPreset extends Command {
+public class ArmPreset extends Command {
 
-//     public double gantryRotations;
-//     public double pivotRotations;
+    public double gantryRotations;
+    public double pivotRotations;
 
-//     public ArmPreset(double g, double p) {
-//         this.addRequirements(Robot.armBase, Robot.armPivot);
+    private ArmBase armBase;
+    private ArmPivot armPivot;
 
-//         gantryRotations = g;
-//         pivotRotations = p;
-//     }
+    public ArmPreset(ArmBase armBase, ArmPivot armPivot, double g, double p) {
+        this.addRequirements();
 
-//     // Set Motor State to ON / OFF
-//     @Override
-//     public void initialize() {
+        this.armBase = armBase;
+        this.armPivot = armPivot;
 
-//         if(Robot.armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEcoderDeadzone) {
-//             Robot.armBase.setBaseMotorState(ArmBase.BaseMotorState.REVERSED);
-//         } else if(Robot.armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
-//             Robot.armBase.setBaseMotorState(ArmBase.BaseMotorState.ON);
-//         } else if(Robot.armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-//             Robot.armPivot.setPivotMotorState(ArmPivot.PivotMotorState.REVERSED);
-//         } else if(Robot.armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-//             Robot.armPivot.setPivotMotorState(ArmPivot.PivotMotorState.ON);
-//         }
-//     }
-    
-//     @Override
-//     public void execute() {
- 
-//     }
+        gantryRotations = gantryRotations;
+        pivotRotations = pivotRotations;
+    }
 
-//     @Override
-//     public void end(boolean interrupted) {
+    // Set Motor State to ON / OFF
+    @Override
+    public void initialize() {
+
         
-//     }
-// }
+    }
+    
+    @Override
+    public void execute() {
+        if(armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEcoderDeadzone) {
+                armBase.setBaseMotorState(ArmBase.BaseMotorState.REVERSED);
+            } else if(armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
+                armBase.setBaseMotorState(ArmBase.BaseMotorState.ON);
+            } else if(armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
+                armPivot.setPivotMotorState(ArmPivot.PivotMotorState.REVERSED);
+            } else if(armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
+                armPivot.setPivotMotorState(ArmPivot.PivotMotorState.ON);
+            }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        
+    }
+}

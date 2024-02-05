@@ -95,7 +95,7 @@ public final class Constants {
 
     public static final class ArmPivot {
 
-        public static final int PivotMotor = 3;
+        public static final int PivotMotor = 4;
         public static final int ArmPivotEncoder = 1;
 
         public static final double PivotMotorSpeedForwards = 0.1;
@@ -108,11 +108,13 @@ public final class Constants {
         
         public static final double DistancePerRotation = 1;
 
+        public static final double GroundPickupRotations = 10;
+
     }
 
     public static final class ArmBase {
 
-        public static final int BaseMotorCANID = 2;
+        public static final int BaseMotorCANID = 3;
         public static final int lowerLimitSwitchPort = 1;
         public static final int higherLimitSwitchPort = 0;
 
@@ -126,6 +128,8 @@ public final class Constants {
         public static final double SpeakerPositionRotations = 10;
 
         public static final double ArmBaseEcoderDeadzone = 0.1;
+
+        public static final double GroundPickupRotations = 15;
 
     }
 

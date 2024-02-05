@@ -5,11 +5,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.GantryManualLower;
-import frc.robot.commands.GantryManualRaise;
-import frc.robot.commands.PivotManualRaise;
-import frc.robot.commands.PivotManualLower;
 import frc.robot.commands.SwerveHoming;
+import frc.robot.commands.Arm.ArmPreset;
+import frc.robot.commands.Arm.GantryManualLower;
+import frc.robot.commands.Arm.GantryManualRaise;
+import frc.robot.commands.Arm.PivotManualLower;
+import frc.robot.commands.Arm.PivotManualRaise;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -44,6 +45,7 @@ public class RobotContainer {
     public Command gantryManualLower;
     public Command pivotManualRaise;
     public Command pivotManualLower;
+    public Command armGroundPickupPreset;
 
     public RobotContainer() {
 
@@ -73,6 +75,7 @@ public class RobotContainer {
         gantryManualLower = new GantryManualLower(armBase);
         pivotManualRaise = new PivotManualRaise(armPivot);
         pivotManualLower = new PivotManualLower(armPivot);
+        armGroundPickupPreset = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
 
 
         // swerveSubsystem.setDefaultCommand(new SwerveCommand(
@@ -116,6 +119,14 @@ public class RobotContainer {
             @Override
             public void initialize() {
                 gantryManualLower.cancel();
+            }
+        });
+
+        l_bump.onTrue(armGroundPickupPreset);
+        l_bump.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                armGroundPickupPreset.cancel();
             }
         });
 
