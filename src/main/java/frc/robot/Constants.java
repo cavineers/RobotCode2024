@@ -114,7 +114,7 @@ public final class Constants {
 
     public static final class ArmBase {
 
-        public static final int BaseMotorCANID = 3;
+        public static final int BaseMotorCANID = 2;
         public static final int lowerLimitSwitchPort = 1;
         public static final int higherLimitSwitchPort = 0;
 

@@ -22,8 +22,8 @@ public class ArmPreset extends Command {
         this.armBase = armBase;
         this.armPivot = armPivot;
 
-        gantryRotations = gantryRotations;
-        pivotRotations = pivotRotations;
+        gantryRotations = g;
+        pivotRotations = p;
     }
 
     // Set Motor State to ON / OFF
@@ -36,14 +36,15 @@ public class ArmPreset extends Command {
     @Override
     public void execute() {
         if(armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEcoderDeadzone) {
-                armBase.setBaseMotorState(ArmBase.BaseMotorState.REVERSED);
-            } else if(armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
-                armBase.setBaseMotorState(ArmBase.BaseMotorState.ON);
-            } else if(armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-                armPivot.setPivotMotorState(ArmPivot.PivotMotorState.REVERSED);
-            } else if(armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-                armPivot.setPivotMotorState(ArmPivot.PivotMotorState.ON);
-            }
+            armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
+        } else if(armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
+            armBase.setBaseMotorState(armBase.baseMotorState.ON);
+        } else if(armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
+            armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
+        } else if(armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
+            armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
+        }
+
     }
 
     @Override
