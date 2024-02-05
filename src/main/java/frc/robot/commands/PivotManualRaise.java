@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.ArmPivot;
@@ -26,8 +27,11 @@ public class PivotManualRaise extends Command {
     public void execute() {
         if (armPivot.getPivotEncoderPosition() < Constants.ArmPivot.PivotMotorUpperRotationLimit) {
             armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
+            SmartDashboard.putString("Pivot State", "Raising");
         } else {
             armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+            SmartDashboard.putString("Pivot State", "Hit Limit");
+
         }
 }
 

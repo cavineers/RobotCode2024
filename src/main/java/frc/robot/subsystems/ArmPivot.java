@@ -32,8 +32,8 @@ public class ArmPivot extends SubsystemBase {
     // Motor sparkmax settings
     public ArmPivot() {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
-        
         this.pivotMotor.setSmartCurrentLimit(51);
+        this.pivotMotor.setInverted(false);
         
     }
     
@@ -46,16 +46,22 @@ public class ArmPivot extends SubsystemBase {
             case ON:
                 // On
                 this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedForwards);
+                SmartDashboard.putString("PivotMotorState", "On");
+
                 break;
 
             case OFF:
                 // Off
                 this.pivotMotor.set(0);
+                SmartDashboard.putString("PivotMotorState", "Off");
+
                 break;
 
             case REVERSED:
                 // Reversed
                 this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedBackwards);
+                SmartDashboard.putString("PivotMotorState", "Reversed");
+
                 break;
 
             default:
@@ -88,6 +94,10 @@ public class ArmPivot extends SubsystemBase {
     }
     
     public void periodic() {
+
+        SmartDashboard.putNumber("Throughbore Pos", getPivotEncoderPosition());
+        SmartDashboard.putNumber("PivotMotorSpeed", getPivotMotorSpeed());
+
 
     }
 }

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmPivot;
@@ -24,8 +25,11 @@ public class PivotManualLower extends Command {
     public void execute() {
         if (armPivot.getPivotEncoderPosition() > Constants.ArmPivot.PivotMotorLowerRotationLimit) {
             armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
+            SmartDashboard.putString("Pivot State", "Lowering");
+
         } else {
             armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+            SmartDashboard.putString("Pivot State", "Hit Limit");
         }
         
 }
