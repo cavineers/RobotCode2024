@@ -28,9 +28,9 @@ public class ShooterIntake extends SubsystemBase {
 
     
 
-    public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.shooterCanID, MotorType.kBrushless);
-    public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.intakeCanID, MotorType.kBrushless);
-    public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.ShooterIntake.intake2ndCanID, MotorType.kBrushless);
+    public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.ShooterCanID, MotorType.kBrushless);
+    public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.IntakeCanID, MotorType.kBrushless);
+    public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.ShooterIntake.Intake2ndCanID, MotorType.kBrushless);
     
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.noteSensor);
     
@@ -61,11 +61,11 @@ public class ShooterIntake extends SubsystemBase {
         switch(state) {
 
             case ON:
-            this.shooterMotor.set(Constants.ShooterIntake.shooterForwardSpeed);
+            this.shooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
             break;
 
             case REVERSE:
-            this.shooterMotor.set(Constants.ShooterIntake.shooterReverseSpeed);
+            this.shooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
             break;
 
             case OFF:
@@ -84,15 +84,15 @@ public class ShooterIntake extends SubsystemBase {
         switch (state) {
             
             case ON:
-            this.intakeMotor.set(Constants.ShooterIntake.intakeForwardSpeed);
+            this.intakeMotor.set(Constants.ShooterIntake.IntakeForwardSpeed);
             break;
 
             case REVERSE:
-            this.intakeMotor.set(Constants.ShooterIntake.intakeReverseSpeed);
+            this.intakeMotor.set(Constants.ShooterIntake.IntakeReverseSpeed);
             break;
 
             case RETRACT:
-            this.intakeMotor.set(Constants.ShooterIntake.intakeRetractSpeed);
+            this.intakeMotor.set(Constants.ShooterIntake.IntakeRetractSpeed);
             break;
 
             case OFF:

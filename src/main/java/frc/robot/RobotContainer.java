@@ -1,13 +1,7 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SelectCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -20,8 +14,6 @@ import frc.robot.commands.Shoot_Manual;
 
 
 import frc.robot.Constants.OIConstants;
-
-import frc.robot.Robot;
 
 
 public class RobotContainer {
@@ -37,10 +29,10 @@ public class RobotContainer {
     public Trigger buttonB;
     public Trigger buttonX;
     public Trigger buttonY;
-    public Trigger l_bump;
-    public Trigger r_bump;
-    public Trigger l_trigger;
-    public Trigger r_trigger;
+    public Trigger leftBump;
+    public Trigger rightBump;
+    public Trigger leftTrigger;
+    public Trigger rightTrigger;
 
     // // Commands
     public Command intake;
@@ -62,10 +54,10 @@ public class RobotContainer {
         buttonB = driverJoystick.b();
         buttonX = driverJoystick.x();
         buttonY = driverJoystick.y();
-        l_bump = driverJoystick.leftBumper();
-        r_bump = driverJoystick.rightBumper();
-        l_trigger = driverJoystick.leftTrigger(OIConstants.kTriggerDeadzone);
-        r_trigger = driverJoystick.rightTrigger(OIConstants.kTriggerDeadzone);
+        leftBump = driverJoystick.leftBumper();
+        rightBump = driverJoystick.rightBumper();
+        leftTrigger = driverJoystick.leftTrigger(OIConstants.kTriggerDeadzone);
+        rightTrigger = driverJoystick.rightTrigger(OIConstants.kTriggerDeadzone);
 
         // // Commands
         intake = new Intake(shooterIntake);
@@ -109,8 +101,8 @@ public class RobotContainer {
         });
 
         // // Shoot Manual
-        r_trigger.onTrue(shoot_manual);
-        r_trigger.onFalse(new InstantCommand() {
+        rightTrigger.onTrue(shoot_manual);
+        rightTrigger.onFalse(new InstantCommand() {
             @Override
             public void initialize() {
                 shoot_manual.cancel();

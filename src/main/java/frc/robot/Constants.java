@@ -104,15 +104,15 @@ public final class Constants {
 
     public static final class ShooterIntake {
 
-        public static final int shooterCanID = 2; //TBD
-        public static final int intakeCanID = 3; //TBD
-        public static final int intake2ndCanID = 4; //TBD
+        public static final int ShooterCanID = 2; //TBD
+        public static final int IntakeCanID = 3; //TBD
+        public static final int Intake2ndCanID = 4; //TBD
 
-        public static final double shooterForwardSpeed = 1; //TBD
-        public static final double shooterReverseSpeed = -.5; //TBD
-        public static final double intakeForwardSpeed = .3; //TBD
-        public static final double intakeReverseSpeed = -.3; //TBD
-        public static final double intakeRetractSpeed = -.05; //TBD     
+        public static final double ShooterForwardSpeed = 1; //TBD
+        public static final double ShooterReverseSpeed = -.5; //TBD
+        public static final double IntakeForwardSpeed = .3; //TBD
+        public static final double IntakeReverseSpeed = -.3; //TBD
+        public static final double IntakeRetractSpeed = -.05; //TBD     
     }
 
 }
