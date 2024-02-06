@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.SwerveHoming;
+// import frc.robot.commands.SwerveHoming;
 import frc.robot.commands.Arm.ArmPreset;
 import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
@@ -13,7 +13,7 @@ import frc.robot.commands.Arm.PivotManualLower;
 import frc.robot.commands.Arm.PivotManualRaise;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
-import frc.robot.subsystems.SwerveDriveSubsystem;
+// import frc.robot.subsystems.SwerveDriveSubsystem;
 
 
 public class RobotContainer {
@@ -28,10 +28,10 @@ public class RobotContainer {
     public Trigger buttonB;
     public Trigger buttonX;
     public Trigger buttonY;
-    public Trigger l_bump;
-    public Trigger r_bump;
-    public Trigger l_trigger;
-    public Trigger r_trigger;
+    public Trigger leftBump;
+    public Trigger rightBump;
+    public Trigger leftTrigger;
+    public Trigger rightTrigger;
     public double r_joy_x;
     public double r_joy_y;
     public double l_joy_x;
@@ -47,6 +47,7 @@ public class RobotContainer {
     public Command pivotManualLower;
     public Command armGroundPickupPreset;
 
+    
     public RobotContainer() {
 
         //Subsystems
@@ -60,10 +61,10 @@ public class RobotContainer {
         buttonB = driverJoystick.b();
         buttonX = driverJoystick.x();
         buttonY = driverJoystick.y();
-        l_bump = driverJoystick.leftBumper();
-        r_bump = driverJoystick.rightBumper();
-        l_trigger = driverJoystick.leftTrigger(OIConstants.kDriverJoystickTriggerDeadzone);
-        r_trigger = driverJoystick.rightTrigger(OIConstants.kDriverJoystickTriggerDeadzone);
+        leftBump = driverJoystick.leftBumper();
+        rightBump = driverJoystick.rightBumper();
+        leftTrigger = driverJoystick.leftTrigger(OIConstants.kDriverJoystickTriggerDeadzone);
+        rightTrigger = driverJoystick.rightTrigger(OIConstants.kDriverJoystickTriggerDeadzone);
         r_joy_x = driverJoystick.getRightX();
         r_joy_y = driverJoystick.getRightY();
         l_joy_x = driverJoystick.getLeftX();
@@ -86,6 +87,7 @@ public class RobotContainer {
         //     () -> !driverJoystick.leftTrigger(OIConstants.kDriverJoystickTriggerDeadzone)));
 
         configureButtonBindings();
+
     };
 
     private void configureButtonBindings() {
@@ -122,8 +124,8 @@ public class RobotContainer {
             }
         });
 
-        l_bump.onTrue(armGroundPickupPreset);
-        l_bump.onFalse(new InstantCommand() {
+        leftBump.onTrue(armGroundPickupPreset);
+        leftBump.onFalse(new InstantCommand() {
             @Override
             public void initialize() {
                 armGroundPickupPreset.cancel();

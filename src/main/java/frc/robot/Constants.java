@@ -19,7 +19,7 @@ public final class Constants {
     }
     
     public static final class DIO {
-        public static int IntakeSwitch = 7;
+        public static int noteSensor = 0;
     }
 
     public static final class DriveConstants {
@@ -82,12 +82,15 @@ public final class Constants {
 
     public static final class OIConstants {
         public static final int kDriverJoystickPort = 0;
-
+        
         public static final int kDriverYAxis = 1;
         public static final int kDriverXAxis = 0;
         public static final int kDriverRotAxis = 4;
+        public static final int kDriverLeftTriggerAxis = 2;
+        public static final int kDriverRightTriggerAxis = 3;
         public static final int kDriverFieldOrientedButtonIdx = 1;
-
+        
+        public static final double kTriggerDeadzone = 0.1;
         public static final double kDeadband = 0.1;
         public static final double kDriverJoystickTriggerDeadzone = 0.1;
 
@@ -139,6 +142,15 @@ public final class Constants {
 
     public static final class ShooterIntake {
 
+        public static final int ShooterCanID = 2; //TBD
+        public static final int IntakeCanID = 3; //TBD
+        public static final int Intake2ndCanID = 4; //TBD
+
+        public static final double ShooterForwardSpeed = 1; //TBD
+        public static final double ShooterReverseSpeed = -.5; //TBD
+        public static final double IntakeForwardSpeed = .3; //TBD
+        public static final double IntakeReverseSpeed = -.3; //TBD
+        public static final double IntakeRetractSpeed = -.05; //TBD     
     }
 
 }
