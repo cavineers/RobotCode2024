@@ -24,6 +24,8 @@ public final class Constants {
 
     public static final class DriveConstants {
 
+        public static final int kPigeonID = 23;
+
         public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 

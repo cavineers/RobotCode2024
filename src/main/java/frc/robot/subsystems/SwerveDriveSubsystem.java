@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 
 import org.photonvision.EstimatedRobotPose;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -74,7 +75,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         DriveConstants.kBackRightAbsoluteEncoderPort, 
         DriveConstants.kBackRightAbsoluteEncoderOffset);
 
-    private final AHRS gyro = new AHRS(SPI.Port.kMXP); 
+    private final Pigeon2 gyro = new Pigeon2(DriveConstants.kPigeonID);; 
 
     private Pose2d updatedPose = new Pose2d();
     private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics( // These should swap wheel base and track width
@@ -104,16 +105,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         //     gyroAngle += 360;
         // }
         // return gyroAngle; 
-        double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
-        gyroAngle = changeRule(gyroAngle); // Right Hand Rule
-        gyroAngle += gyroZero;
-        gyroAngle = Math.IEEEremainder(gyroAngle, 360); // Ensures the angle is between -180 and 180
+        // double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
+        // gyroAngle = changeRule(gyroAngle); // Right Hand Rule
+        // gyroAngle += gyroZero;
+        // gyroAngle = Math.IEEEremainder(gyroAngle, 360); // Ensures the angle is between -180 and 180
+        
+        double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360);
         return gyroAngle;
     }
 
     public Rotation2d getRotation2d(){
 
-        return Rotation2d.fromDegrees(getHeading());
+        return gyro.getRotation2d();
     }
 
     private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -188,7 +191,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
-                gyro.zeroYaw();
                 zeroHeading(); 
             } catch (Exception e) {
             }
@@ -283,8 +285,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Back Right Rel", this.backRight.getTurningPosition());
         SmartDashboard.putNumber("Back Right Abs", this.backRight.getAbsolutePosition());
         SmartDashboard.putNumber("Heading", getHeading());
-        SmartDashboard.putNumber("Roll", getRoll());
-        SmartDashboard.putNumber("Pitch", getPitch());
+
     }
     
     private void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
@@ -317,13 +318,5 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         backLeft.toggleIdleMode(mode);
         backRight.toggleIdleMode(mode);
 
-    }
-
-    public double getRoll(){
-        return gyro.getRoll();
-    }
-
-    public double getPitch(){
-        return gyro.getPitch();
     }
 }
