@@ -77,11 +77,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private final AHRS gyro = new AHRS(SPI.Port.kMXP); 
 
     private Pose2d updatedPose = new Pose2d();
-    private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
-        new Translation2d(DriveConstants.kTrackWidth / 2.0, DriveConstants.kWheelBase / 2.0),
-        new Translation2d(DriveConstants.kTrackWidth / 2.0, -DriveConstants.kWheelBase / 2.0),
-        new Translation2d(-DriveConstants.kTrackWidth / 2.0, DriveConstants.kWheelBase / 2.0),
-        new Translation2d(-DriveConstants.kTrackWidth / 2.0, -DriveConstants.kWheelBase / 2.0)
+    private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics( // These should swap wheel base and track width
+        new Translation2d(DriveConstants.kWheelBase / 2.0, DriveConstants.kTrackWidth / 2.0),
+        new Translation2d(DriveConstants.kWheelBase / 2.0, -DriveConstants.kTrackWidth / 2.0),
+        new Translation2d(-DriveConstants.kWheelBase / 2.0, DriveConstants.kTrackWidth / 2.0),
+        new Translation2d(-DriveConstants.kWheelBase / 2.0, -DriveConstants.kTrackWidth / 2.0)
     );
 
     private final Field2d m_field = new Field2d();
@@ -91,19 +91,28 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public double getHeading(){ // Right Hand Rule with Offset
+        // double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
+        // while (gyroAngle < 0){
+        //     gyroAngle += 360;
+        // }
+        // gyroAngle = changeRule(gyroAngle); // Right Hand Rule
+        // gyroAngle = gyroAngle + gyroZero;
+        // while (gyroAngle > 360){
+        //     gyroAngle -= 360;
+        // }
+        // while (gyroAngle < 0){
+        //     gyroAngle += 360;
+        // }
+        // return gyroAngle; 
         double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
-        while (gyroAngle < 0){
-            gyroAngle += 360;
-        }
-        gyroAngle = changeRule(gyroAngle); // Right Hand Rule
-        gyroAngle = gyroAngle + gyroZero;
-        while (gyroAngle > 360){
-            gyroAngle -= 360;
-        }
+        // gyroAngle = changeRule(gyroAngle); // Right Hand Rule
+        // gyroAngle += gyroZero;
+        // gyroAngle = Math.IEEEremainder(gyroAngle, 360); // Ensures the angle is between -180 and 180
         return gyroAngle;
     }
 
     public Rotation2d getRotation2d(){
+
         return Rotation2d.fromDegrees(getHeading());
     }
 
@@ -159,7 +168,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             SmartDashboard.putBoolean("Has Tags", false);
             return currentPose;
         }
-
         zeroHeading();
         SmartDashboard.putBoolean("Has Tags", true);
         Pose2d visionPose2d = visionPose.get().estimatedPose.toPose2d();
@@ -206,13 +214,21 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         );
     }
 
+    private boolean successZeroHeading = false;
     public void zeroHeading() {
+        if (successZeroHeading){
+            return;
+        }
         Optional<EstimatedRobotPose> currentPose = visionSubsystem.getRobotPoseFieldRelative(); 
         if (currentPose.isEmpty() == false){
+        
             double angle = (currentPose.get().estimatedPose.toPose2d().getRotation().getDegrees());  // Check make sure this is signed
             this.gyroZero = angle;
+            this.gyro.reset();
             System.out.println("*******-------- NAVX VISION SUCCESS --------*******" + angle);
+            successZeroHeading = true;
         }//
+        
     }
 
     
