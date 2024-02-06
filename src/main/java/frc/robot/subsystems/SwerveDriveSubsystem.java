@@ -105,9 +105,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         // }
         // return gyroAngle; 
         double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
-        // gyroAngle = changeRule(gyroAngle); // Right Hand Rule
-        // gyroAngle += gyroZero;
-        // gyroAngle = Math.IEEEremainder(gyroAngle, 360); // Ensures the angle is between -180 and 180
+        gyroAngle = changeRule(gyroAngle); // Right Hand Rule
+        gyroAngle += gyroZero;
+        gyroAngle = Math.IEEEremainder(gyroAngle, 360); // Ensures the angle is between -180 and 180
         return gyroAngle;
     }
 
