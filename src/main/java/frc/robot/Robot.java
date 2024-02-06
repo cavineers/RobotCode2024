@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
 
+
 import com.revrobotics.CANSparkBase.IdleMode;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -65,7 +66,9 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+
     // m_robotContainer.swerveHomingCommand.schedule();
+
   }
 
   /** This function is called periodically during autonomous. */
@@ -81,8 +84,10 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
     // m_robotContainer.swerveHomingCommand.schedule();
     // m_robotContainer.getSwerveSubsystem().toggleIdleMode(IdleMode.kCoast);
+
   }
 
   /** This function is called periodically during operator control. */
