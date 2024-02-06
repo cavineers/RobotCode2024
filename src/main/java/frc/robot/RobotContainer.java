@@ -1,57 +1,115 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+
+import frc.robot.subsystems.ShooterIntake;
+import frc.robot.commands.Intake;
+import frc.robot.commands.Outtake;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.Shoot_Manual;
+
 
 import frc.robot.Constants.OIConstants;
-
-import frc.robot.commands.SwerveCommand;
-import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.Constants.OIConstants;
-import frc.robot.commands.SwerveHoming;
-import frc.robot.Robot;
 
 
 public class RobotContainer {
 
-    private final SwerveDriveSubsystem swerveSubsystem;
+    // Declarations
 
+    // // Subsystems
+    private final ShooterIntake shooterIntake;
 
-    private final Joystick driverJoystick;
-    private final JoystickButton button;
-    public JoystickButton l_bump;
+    // // Buttons
+    public final CommandXboxController driverJoystick;
+    public Trigger buttonA;
+    public Trigger buttonB;
+    public Trigger buttonX;
+    public Trigger buttonY;
+    public Trigger leftBump;
+    public Trigger rightBump;
+    public Trigger leftTrigger;
+    public Trigger rightTrigger;
 
-    public SwerveHoming swerveHomingCommand;
+    // // Commands
+    public Command intake;
+    public Command outtake;
+    public Command shoot;
+    public Command shoot_manual;
 
+    
     public RobotContainer() {
 
-        swerveSubsystem = new SwerveDriveSubsystem();
+        // Initilizations
 
-        swerveHomingCommand = new SwerveHoming(swerveSubsystem);
+        // // Subsystems
+        shooterIntake = new ShooterIntake();
 
-        driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
-        button = new JoystickButton(driverJoystick, 4);
-        l_bump = new JoystickButton(driverJoystick, 5);
-        
+        // // Buttons
+        driverJoystick = new CommandXboxController(OIConstants.kDriverJoystickPort);
+        buttonA = driverJoystick.a();
+        buttonB = driverJoystick.b();
+        buttonX = driverJoystick.x();
+        buttonY = driverJoystick.y();
+        leftBump = driverJoystick.leftBumper();
+        rightBump = driverJoystick.rightBumper();
+        leftTrigger = driverJoystick.leftTrigger(OIConstants.kTriggerDeadzone);
+        rightTrigger = driverJoystick.rightTrigger(OIConstants.kTriggerDeadzone);
 
-        swerveSubsystem.setDefaultCommand(new SwerveCommand(
-            swerveSubsystem,
-            () -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
-            () -> driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
-            () -> driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
-            () -> !driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
+        // // Commands
+        intake = new Intake(shooterIntake);
+        outtake = new Outtake(shooterIntake);
+        shoot = new Shoot(shooterIntake);
+        shoot_manual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRightTriggerAxis());
 
         configureButtonBindings();
+
     };
 
     private void configureButtonBindings() {
+        
+        // Configure Commands
+
+        // // Intake
+        buttonX.onTrue(intake);
+        buttonX.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                intake.cancel();
+            }
+        });
+
+        // // Outtake
+        buttonB.onTrue(outtake);
+        buttonB.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                outtake.cancel();
+            }
+        });
+
+        // // Shoot
+        buttonA.onTrue(shoot);
+        buttonA.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                shoot.cancel();
+            }
+        });
+
+        // // Shoot Manual
+        rightTrigger.onTrue(shoot_manual);
+        rightTrigger.onFalse(new InstantCommand() {
+            @Override
+            public void initialize() {
+                shoot_manual.cancel();
+            }
+        });
+
 
     }   
-
-    public SwerveDriveSubsystem getSwerveSubsystem() {
-        return this.swerveSubsystem;
-    }
 
 }
