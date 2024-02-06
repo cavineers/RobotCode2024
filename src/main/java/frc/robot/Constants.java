@@ -92,9 +92,47 @@ public final class Constants {
         
         public static final double kTriggerDeadzone = 0.1;
         public static final double kDeadband = 0.1;
+        public static final double kDriverJoystickTriggerDeadzone = 0.1;
+
     }
 
-    public static final class Arm {
+    public static final class ArmPivot {
+
+        public static final int PivotMotor = 3;
+        public static final int ArmPivotEncoder = 9;
+
+        public static final double PivotMotorSpeedForwards = 1;
+        public static final double PivotMotorSpeedBackwards = -1;
+
+        public static final double PivotMotorLowerRotationLimit = -10;
+        public static final double PivotMotorUpperRotationLimit = 10;
+
+        public static final double ArmPivotEcoderDeadzone = 0.1;
+        
+        public static final double DistancePerRotation = 1;
+
+        public static final double GroundPickupRotations = 10;
+
+    }
+
+    public static final class ArmBase {
+
+        public static final int BaseMotorCANID = 1;
+        public static final int lowerLimitSwitchPort = 1;
+        public static final int higherLimitSwitchPort = 0;
+
+        public static final double SpeedForwards = 0.1;
+        public static final double SpeedBackwards = -0.1;
+
+        public static final double MaxRotations = 10;
+        public static final double MinRotations = 0;
+
+        public static final double GroundPositionRotations = 10;
+        public static final double SpeakerPositionRotations = 10;
+
+        public static final double ArmBaseEcoderDeadzone = 0.1;
+
+        public static final double GroundPickupRotations = 15;
 
     }
 
