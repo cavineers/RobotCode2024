@@ -8,8 +8,8 @@ import frc.robot.Robot;
 
 import frc.robot.commands.LowerClimberCommand;
 import frc.robot.commands.RiseClimberCommand;
-import frc.robot.subsystems.LeftClimber;
-import frc.robot.subsystems.RightClimber;
+import frc.robot.subsystems.ClimberLeft;
+import frc.robot.subsystems.ClimberRight;
 
 public class RobotContainer {
 
@@ -29,10 +29,10 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-        // lowerLeftClimber = new LowerClimberCommand("left");
-        // riseLeftClimber = new RiseClimberCommand("left");
-        // lowerRightClimber = new LowerClimberCommand("right");
-        // riseRightClimber = new RiseClimberCommand("right");
+        // lowerClimberLeft = new LowerClimberCommand("left");
+        // riseClimberLeft = new RiseClimberCommand("left");
+        // lowerClimberRight = new LowerClimberCommand("right");
+        // riseClimberRight = new RiseClimberCommand("right");
 
         configureButtonBindings();
     };

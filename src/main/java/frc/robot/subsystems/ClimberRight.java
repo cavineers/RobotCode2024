@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class RightClimber extends SubsystemBase {
+public class ClimberRight extends SubsystemBase {
 
     //Initialize the climber motor
     public CANSparkMax rightClimberMotor = new CANSparkMax(Constants.Climber.RightClimberMotor, MotorType.kBrushless);
@@ -29,7 +29,7 @@ public class RightClimber extends SubsystemBase {
     //Initial Motor State
     public RightClimberMotorState rightClimberMotorState = RightClimberMotorState.OFF;
 
-    public RightClimber() {
+    public ClimberRight() {
         this.rightClimberMotor.setIdleMode(IdleMode.kBrake);
 
         this.rightClimberMotor.setInverted(false);

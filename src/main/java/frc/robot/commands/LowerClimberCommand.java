@@ -4,8 +4,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.LeftClimber;
-import frc.robot.subsystems.RightClimber;
+import frc.robot.subsystems.ClimberLeft;
+import frc.robot.subsystems.ClimberRight;
+
 
 public class LowerClimberCommand extends Command {
 
@@ -62,9 +63,9 @@ public class LowerClimberCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         if (climberSide == "left") {
-            Robot.leftClimber.setLeftClimberMotorState(LeftClimber.LeftClimberMotorState.OFF);
+            Robot.leftClimber.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
         } else if (climberSide == "right") {
-            Robot.rightClimber.setRightClimberMotorState(RightClimber.RightClimberMotorState.OFF);
+            Robot.rightClimber.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
         }
     }
 
