@@ -39,8 +39,13 @@
 # Compiled class file
 *.class
 
-# Log file
-*.log
+# Directory-based cache files
+**/cache/
+**/*.lock
+**/*.bin
+
+# Ignore all log files
+**/*.log
 
 # BlueJ files
 *.ctxt
@@ -168,3 +173,6 @@ bin/
 *.class
 *.lock
 *.bin
+*.bin
+*.lock
+.gradle/file-system.probe
