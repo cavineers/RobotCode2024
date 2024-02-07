@@ -31,10 +31,6 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-   public Robot() {
-
-   }
-
   @Override
   public void robotInit() {
 

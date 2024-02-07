@@ -38,6 +38,8 @@ public class RobotContainer {
     private final ArmBase armBase;
     private final ArmPivot armPivot;
     private final ShooterIntake shooterIntake;
+    private final ClimberLeft climberLeft;
+    private final ClimberRight climberRight;
 
     // // Buttons
     public final CommandXboxController driverJoystick;
@@ -64,6 +66,12 @@ public class RobotContainer {
     public Command pivotManualRaise;
     public Command pivotManualLower;
     public Command armGroundPickupPreset;
+    public Command lowerClimberCommand;
+    public Command riseClimberCommand;
+    public Command lowerLeftClimber;
+    public Command riseLeftClimber;
+    public Command lowerRightClimber;
+    public Command riseRightClimber;
 
 
     // // Commands
@@ -79,14 +87,10 @@ public class RobotContainer {
         //Subsystems
         armBase = new ArmBase();
         armPivot = new ArmPivot();
+        climberLeft = new ClimberLeft();
+        climberRight = new ClimberRight();
         // swerveSubsystem = new SwerveDriveSubsystem();
 
-
-    //Climber commands
-    private Command lowerLeftClimber;
-    private Command riseLeftClimber;
-    private Command lowerRightClimber;
-    private Command riseRightClimber;
         shooterIntake = new ShooterIntake();
 
         // // Buttons
@@ -112,10 +116,10 @@ public class RobotContainer {
         pivotManualLower = new PivotManualLower(armPivot);
         armGroundPickupPreset = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
 
-        // lowerClimberLeft = new LowerClimberCommand("left");
-        // riseClimberLeft = new RiseClimberCommand("left");
-        // lowerClimberRight = new LowerClimberCommand("right");
-        // riseClimberRight = new RiseClimberCommand("right");
+        lowerLeftClimber= new LowerClimberCommand("left");
+        riseLeftClimber = new RiseClimberCommand("left");
+        lowerRightClimber = new LowerClimberCommand("right");
+        riseRightClimber = new RiseClimberCommand("right");
 
         // swerveSubsystem.setDefaultCommand(new SwerveCommand(
         //     swerveSubsystem,
@@ -139,10 +143,10 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
-//         r_bump.whileTrue(new RiseClimberCommand("right"));
-//         l_bump.whileTrue(new RiseClimberCommand("left"));
-//         x_button.whileTrue(new LowerClimberCommand("left"));
-//         b_button.whileTrue(new LowerClimberCommand("right"));
+        rightBump.whileTrue(new RiseClimberCommand("right"));
+        leftBump.whileTrue(new RiseClimberCommand("left"));
+        buttonX.whileTrue(new LowerClimberCommand("left"));
+        buttonY.whileTrue(new LowerClimberCommand("right"));
    
 
 
