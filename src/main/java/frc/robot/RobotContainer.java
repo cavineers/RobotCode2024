@@ -1,5 +1,17 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants.OIConstants;
+import frc.robot.Robot;
+
+import frc.robot.commands.LowerClimberCommand;
+import frc.robot.commands.RiseClimberCommand;
+import frc.robot.subsystems.ClimberLeft;
+import frc.robot.subsystems.ClimberRight;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -63,11 +75,18 @@ public class RobotContainer {
     
     public RobotContainer() {
 
+
         //Subsystems
         armBase = new ArmBase();
         armPivot = new ArmPivot();
         // swerveSubsystem = new SwerveDriveSubsystem();
 
+
+    //Climber commands
+    private Command lowerLeftClimber;
+    private Command riseLeftClimber;
+    private Command lowerRightClimber;
+    private Command riseRightClimber;
         shooterIntake = new ShooterIntake();
 
         // // Buttons
@@ -93,6 +112,10 @@ public class RobotContainer {
         pivotManualLower = new PivotManualLower(armPivot);
         armGroundPickupPreset = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
 
+        // lowerClimberLeft = new LowerClimberCommand("left");
+        // riseClimberLeft = new RiseClimberCommand("left");
+        // lowerClimberRight = new LowerClimberCommand("right");
+        // riseClimberRight = new RiseClimberCommand("right");
 
         // swerveSubsystem.setDefaultCommand(new SwerveCommand(
         //     swerveSubsystem,
@@ -110,12 +133,18 @@ public class RobotContainer {
         shoot = new Shoot(shooterIntake);
         shoot_manual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRightTriggerAxis());
 
-
         configureButtonBindings();
 
     };
 
     private void configureButtonBindings() {
+
+//         r_bump.whileTrue(new RiseClimberCommand("right"));
+//         l_bump.whileTrue(new RiseClimberCommand("left"));
+//         x_button.whileTrue(new LowerClimberCommand("left"));
+//         b_button.whileTrue(new LowerClimberCommand("right"));
+   
+
 
         //Arm Commands
     //     buttonX.onTrue(pivotManualRaise);
@@ -202,6 +231,5 @@ public class RobotContainer {
     // }
 
     }   
-
 
 }
