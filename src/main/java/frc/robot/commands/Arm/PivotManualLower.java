@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmPivot;
 
-public class PivotManualLower extends Command {  
+public class PivotManualLower extends Command {
     private boolean isDone = false;
     private double m_timestamp;
     private ArmPivot armPivot;
@@ -31,8 +31,8 @@ public class PivotManualLower extends Command {
             armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
             SmartDashboard.putString("Pivot State", "Hit Limit");
         }
-        
-}
+
+    }
 
     @Override
     public void end(boolean interrupted) {

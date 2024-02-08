@@ -9,8 +9,8 @@ import frc.robot.Robot;
 import frc.robot.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Shoot_Manual extends Command{
-    
+public class Shoot_Manual extends Command {
+
     private boolean isDone = false;
     private double m_timestamp = Timer.getFPGATimestamp();
     private ShooterIntake shooterIntake;
@@ -34,17 +34,17 @@ public class Shoot_Manual extends Command{
         SmartDashboard.putString("Shooter", "Shooting Manual");
 
         double shooterMotorSpeed = triggerValue.get();
-        
+
         SmartDashboard.putNumber("RightTriggerValue", shooterMotorSpeed);
         SmartDashboard.putNumber("ShooterMotorSpeed", shooterIntake.getShooterMotorSpeed());
         SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getIntakeMotorSpeed());
 
         shooterMotorSpeed = shooterMotorSpeed * Constants.ShooterIntake.ShooterForwardSpeed;
-        
+
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
-        
+
         shooterIntake.shooterMotor.set(shooterMotorSpeed);
-        
+
     }
 
     @Override
@@ -55,10 +55,11 @@ public class Shoot_Manual extends Command{
 
     // @Override
     // public boolean isFinished() {
-    //     if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 && Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
-    //         this.isDone = true;
-    //     }
-    //     return this.isDone;
+    // if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 &&
+    // Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
+    // this.isDone = true;
+    // }
+    // return this.isDone;
     // }
 
-    }
+}

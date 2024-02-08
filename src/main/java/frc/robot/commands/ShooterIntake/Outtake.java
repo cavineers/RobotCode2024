@@ -8,8 +8,8 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
 
-public class Outtake extends Command{
-    
+public class Outtake extends Command {
+
     private boolean isDone = false;
     private double m_timestamp;
     private ShooterIntake shooterIntake;
@@ -30,7 +30,6 @@ public class Outtake extends Command{
 
         SmartDashboard.putString("Intake", "Outtaking");
 
-
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REVERSE);
     }
 
@@ -41,10 +40,11 @@ public class Outtake extends Command{
 
     // @Override
     // public boolean isFinished() {
-    //     if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 && Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
-    //         this.isDone = true;
-    //     }
-    //     return this.isDone;
+    // if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 &&
+    // Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
+    // this.isDone = true;
+    // }
+    // return this.isDone;
     // }
 
 }

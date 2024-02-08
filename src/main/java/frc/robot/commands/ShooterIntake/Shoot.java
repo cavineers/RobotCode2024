@@ -8,8 +8,8 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Shoot extends Command{
-    
+public class Shoot extends Command {
+
     private boolean isDone = false;
     private double m_timestamp = Timer.getFPGATimestamp();
     private ShooterIntake shooterIntake;
@@ -49,10 +49,11 @@ public class Shoot extends Command{
 
     // @Override
     // public boolean isFinished() {
-    //     if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 && Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
-    //         this.isDone = true;
-    //     }
-    //     return this.isDone;
+    // if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 &&
+    // Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
+    // this.isDone = true;
+    // }
+    // return this.isDone;
     // }
 
-    }
+}

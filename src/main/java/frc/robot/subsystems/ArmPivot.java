@@ -13,20 +13,19 @@ import frc.robot.subsystems.ArmBase.BaseMotorState;
 
 public class ArmPivot extends SubsystemBase {
 
-    
     public enum PivotMotorState {
         ON,
-        OFF,
+        OFF, 
         REVERSED
     }
-    
+
     // Motor Initialization
     public CANSparkMax pivotMotor = new CANSparkMax(Constants.ArmPivot.PivotMotor, MotorType.kBrushless);
-    
+
     // Starts motors in their off state
     public PivotMotorState pivotMotorState = PivotMotorState.OFF;
-    
-    //Through Bore Encoder
+
+    // Through Bore Encoder
     public DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(Constants.ArmPivot.ArmPivotEncoder);
 
     // Motor sparkmax settings
@@ -34,38 +33,38 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
         this.pivotMotor.setSmartCurrentLimit(51);
         this.pivotMotor.setInverted(false);
-        
+
     }
-    
+
     public void setPivotMotorState(PivotMotorState state) {
         // set the current state
         this.pivotMotorState = state;
-        
+
         // set motor state
         switch (state) {
-            case ON:
-                // On
-                this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedForwards);
-                SmartDashboard.putString("PivotMotorState", "On");
+        case ON:
+            // On
+            this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedForwards);
+            SmartDashboard.putString("PivotMotorState", "On");
 
-                break;
+            break;
 
-            case OFF:
-                // Off
-                this.pivotMotor.set(0);
-                SmartDashboard.putString("PivotMotorState", "Off");
+        case OFF:
+            // Off
+            this.pivotMotor.set(0);
+            SmartDashboard.putString("PivotMotorState", "Off");
 
-                break;
+            break;
 
-            case REVERSED:
-                // Reversed
-                this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedBackwards);
-                SmartDashboard.putString("PivotMotorState", "Reversed");
+        case REVERSED:
+            // Reversed
+            this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedBackwards);
+            SmartDashboard.putString("PivotMotorState", "Reversed");
 
-                break;
+            break;
 
-            default:
-                this.setPivotMotorState(PivotMotorState.OFF);
+        default:
+            this.setPivotMotorState(PivotMotorState.OFF);
         }
     }
 
@@ -80,7 +79,7 @@ public class ArmPivot extends SubsystemBase {
     public PivotMotorState getPivotMotorState() {
         return this.pivotMotorState;
     }
-    
+
     public void setPivotMotorPosition(double position) {
         this.pivotMotor.getEncoder().setPosition(position);
     }
@@ -92,12 +91,11 @@ public class ArmPivot extends SubsystemBase {
     public double getPivotEncoderFrequency() {
         return this.pivotEncoder.getFrequency();
     }
-    
+
     public void periodic() {
 
         SmartDashboard.putNumber("Throughbore Pos", getPivotEncoderPosition());
         SmartDashboard.putNumber("PivotMotorSpeed", getPivotMotorSpeed());
-
 
     }
 }

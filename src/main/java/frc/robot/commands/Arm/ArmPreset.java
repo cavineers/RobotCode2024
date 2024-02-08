@@ -30,18 +30,17 @@ public class ArmPreset extends Command {
     @Override
     public void initialize() {
 
-        
     }
-    
+
     @Override
     public void execute() {
-        if(armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEcoderDeadzone) {
+        if (armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEcoderDeadzone) {
             armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
-        } else if(armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
+        } else if (armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
             armBase.setBaseMotorState(armBase.baseMotorState.ON);
-        } else if(armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
+        } else if (armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
             armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
-        } else if(armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
+        } else if (armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
             armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
         }
 
@@ -49,6 +48,6 @@ public class ArmPreset extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        
+
     }
 }

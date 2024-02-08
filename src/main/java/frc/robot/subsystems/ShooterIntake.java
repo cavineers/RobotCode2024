@@ -13,117 +13,113 @@ import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
 
-    public enum ShooterMotorState{
-        ON,
-        OFF,
+    public enum ShooterMotorState {
+        ON, 
+        OFF, 
         REVERSE
     }
 
     public enum IntakeMotorState {
-        ON,
-        OFF,
-        REVERSE,
+        ON, 
+        OFF, 
+        REVERSE, 
         RETRACT
     }
-
-    
 
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.ShooterCanID, MotorType.kBrushless);
     public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.IntakeCanID, MotorType.kBrushless);
     public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.ShooterIntake.Intake2ndCanID, MotorType.kBrushless);
-    
+
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.noteSensor);
-    
+
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
 
-
     public ShooterIntake() {
-       
+
         this.shooterMotor.setIdleMode(IdleMode.kBrake);
         this.intakeMotor.setIdleMode(IdleMode.kBrake);
         this.intakeMotor.setIdleMode(IdleMode.kBrake);
 
-        this.shooterMotor.setSmartCurrentLimit(41); //TBD
-        this.intakeMotor.setSmartCurrentLimit(41); //TBD
-        this.intake2ndMotor.setSmartCurrentLimit(41); //TBD
+        this.shooterMotor.setSmartCurrentLimit(41); // TBD
+        this.intakeMotor.setSmartCurrentLimit(41); // TBD
+        this.intake2ndMotor.setSmartCurrentLimit(41); // TBD
 
         this.intake2ndMotor.setInverted(true);
         this.intake2ndMotor.follow(intakeMotor);
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
-        
-        this.shooterMotorState = state;
-        
-        switch(state) {
 
-            case ON:
+        this.shooterMotorState = state;
+
+        switch (state) {
+
+        case ON:
             this.shooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
             break;
 
-            case REVERSE:
+        case REVERSE:
             this.shooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
             break;
 
-            case OFF:
+        case OFF:
             this.shooterMotor.set(0.0);
             break;
 
-            default:
+        default:
             this.setShooterMotorState(ShooterMotorState.OFF);
         }
     }
 
     public void setIntakeMotorState(IntakeMotorState state) {
-        
+
         this.intakeMotorState = state;
-    
+
         switch (state) {
-            
-            case ON:
+
+        case ON:
             this.intakeMotor.set(Constants.ShooterIntake.IntakeForwardSpeed);
             break;
 
-            case REVERSE:
+        case REVERSE:
             this.intakeMotor.set(Constants.ShooterIntake.IntakeReverseSpeed);
             break;
 
-            case RETRACT:
+        case RETRACT:
             this.intakeMotor.set(Constants.ShooterIntake.IntakeRetractSpeed);
             break;
 
-            case OFF:
+        case OFF:
             this.intakeMotor.set(0.0);
             break;
-            
-            default:
+
+        default:
             this.setIntakeMotorState(IntakeMotorState.OFF);
 
         }
-    } 
-
+    }
 
     public ShooterMotorState getShooterMotorState() {
         return this.shooterMotorState;
     }
-    
+
     public IntakeMotorState getIntakeMotorState() {
         return this.intakeMotorState;
     }
-    
+
     public double getShooterMotorSpeed() {
         return this.shooterMotor.get();
     }
-    
+
     public double getIntakeMotorSpeed() {
         return this.intakeMotor.get();
     }
 
-    public void periodic(){  
-        
+    public void periodic() {
+
     }
-    
+
 }

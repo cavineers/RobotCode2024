@@ -7,7 +7,6 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.ArmPivot;
 
-
 public class PivotManualRaise extends Command {
     private boolean isDone = false;
     private double m_timestamp;
@@ -33,7 +32,7 @@ public class PivotManualRaise extends Command {
             SmartDashboard.putString("Pivot State", "Hit Limit");
 
         }
-}
+    }
 
     @Override
     public void end(boolean interrupted) {

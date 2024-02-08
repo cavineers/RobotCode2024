@@ -6,7 +6,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.ArmBase;
 
-public class GantryManualRaise extends Command {  
+public class GantryManualRaise extends Command {
     private boolean isDone = false;
     private double m_timestamp;
     private ArmBase armBase;
@@ -25,20 +25,19 @@ public class GantryManualRaise extends Command {
     @Override
     public void execute() {
         armBase.setBaseMotorState(armBase.baseMotorState.ON);
-        
-}
+
+    }
 
     @Override
     public void end(boolean interrupted) {
         armBase.setBaseMotorState(armBase.baseMotorState.OFF);
     }
 
-    /*@Override
-    public boolean isFinished() {
-        if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 && Robot.m_robotContainer.joy.getRawButton(0)) {
-            this.isDone = true;
-        }
-        
-        return this.isDone;
-    }*/
+    /*
+     * @Override public boolean isFinished() { if (Timer.getFPGATimestamp() -
+     * this.m_timestamp >= 0 && Robot.m_robotContainer.joy.getRawButton(0)) {
+     * this.isDone = true; }
+     * 
+     * return this.isDone; }
+     */
 }

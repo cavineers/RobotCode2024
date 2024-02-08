@@ -11,21 +11,21 @@ import frc.robot.Constants;
 
 public class ClimberLeft extends SubsystemBase {
 
-    //Initialize the climber motor
+    // Initialize the climber motor
     public CANSparkMax leftClimberMotor = new CANSparkMax(Constants.Climber.LeftClimberMotor, MotorType.kBrushless);
 
-    //Initialize the limit switch
+    // Initialize the limit switch
     public DigitalInput leftClimberBottomLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberBottomLimitSwitch);
     public DigitalInput leftClimberTopLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberTopLimitSwitch);
-  
-    //Motor states
+
+    // Motor states
     public enum LeftClimberMotorState {
-        ON,
-        OFF,
+        ON, 
+        OFF, 
         REVERSED
     }
 
-    //Initial Motor State
+    // Initial Motor State
     public LeftClimberMotorState leftClimberMotorState = LeftClimberMotorState.OFF;
 
     public ClimberLeft() {
@@ -33,35 +33,35 @@ public class ClimberLeft extends SubsystemBase {
 
         this.leftClimberMotor.setInverted(false);
 
-        //Set the amp limit when specified - TBD
+        // Set the amp limit when specified - TBD
         this.leftClimberMotor.setSmartCurrentLimit(51);
     }
 
-    //Allow for changing motor states
+    // Allow for changing motor states
     public void setLeftClimberMotorState(LeftClimberMotorState state) {
 
-        //Set the current state
+        // Set the current state
         this.leftClimberMotorState = state;
-            
+
         switch (state) {
-            case ON:
-                //On: Set the extension speed of the climber
-                this.leftClimberMotor.set(Constants.Climber.ClimberExtensionSpeed);
-                break;
-            case OFF:
-                //Off: Set the speed to zero
-                this.leftClimberMotor.set(0.0);
-                break;
-            case REVERSED:
-                //Reversed: Set the reversal speed of the climber
-                this.leftClimberMotor.set(Constants.Climber.ClimberExtensionSpeedRev);
-                break;
-            default:
-                this.setLeftClimberMotorState(LeftClimberMotorState.OFF);
+        case ON:
+            // On: Set the extension speed of the climber
+            this.leftClimberMotor.set(Constants.Climber.ClimberExtensionSpeed);
+            break;
+        case OFF:
+            // Off: Set the speed to zero
+            this.leftClimberMotor.set(0.0);
+            break;
+        case REVERSED:
+            // Reversed: Set the reversal speed of the climber
+            this.leftClimberMotor.set(Constants.Climber.ClimberExtensionSpeedRev);
+            break;
+        default:
+            this.setLeftClimberMotorState(LeftClimberMotorState.OFF);
         }
     }
 
-    //Getters and setters 
+    // Getters and setters
 
     public boolean getLimitSwitch(String orientation) {
         boolean switched;
@@ -75,29 +75,29 @@ public class ClimberLeft extends SubsystemBase {
         }
 
         return switched;
-    }  
+    }
 
-    //Set the motor's position (given in rotations)
+    // Set the motor's position (given in rotations)
     public void setLeftClimberMotorPosition(double position) {
         this.leftClimberMotor.getEncoder().setPosition(position);
     }
 
-    //Set the motor's speed (value between -1 and 1)
+    // Set the motor's speed (value between -1 and 1)
     public void setLeftClimberMotorSpeed(double speed) {
         this.leftClimberMotor.set(speed);
     }
 
-    //Get motor position (value returned in number of rotations)
+    // Get motor position (value returned in number of rotations)
     public double getLeftClimberMotorPosition() {
         return this.leftClimberMotor.getEncoder().getPosition();
     }
-    
-    //Get motor speed (value between -1 and 1)
+
+    // Get motor speed (value between -1 and 1)
     public double getLeftClimberMotorSpeed() {
         return this.leftClimberMotor.get();
     }
 
-    //Get the current state of the motor
+    // Get the current state of the motor
     public LeftClimberMotorState getLeftClimberMotorState() {
         return this.leftClimberMotorState;
     }

@@ -89,7 +89,7 @@ public class RobotContainer {
 	public Command intake;
 	public Command outtake;
 	public Command shoot;
-	public Command shootManual; 
+	public Command shootManual;
 	// public SwerveHoming swerveHomingCommand;
 
 	public RobotContainer() {
@@ -146,7 +146,7 @@ public class RobotContainer {
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
-		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right"); 
+		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right");
 
 		intake = new Intake(shooterIntake);
 		outtake = new Outtake(shooterIntake);
@@ -169,66 +169,66 @@ public class RobotContainer {
 
 		// Arm Commands
 		dPadRight.onTrue(gantryManualRaise);
-		dPadRight.onFalse(new InstantCommand(){
+		dPadRight.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				gantryManualRaise.cancel();
 			}
 		});
 
 		dPadLeft.onTrue(gantryManualLower);
-		dPadLeft.onFalse(new InstantCommand(){
+		dPadLeft.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				gantryManualLower.cancel();
 			}
 		});
 
 		buttonA.onTrue(pivotManualLower);
-		buttonA.onFalse(new InstantCommand(){
+		buttonA.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				pivotManualLower.cancel();
 			}
 		});
 
 		buttonY.onTrue(pivotManualRaise);
-		buttonY.onFalse(new InstantCommand(){
+		buttonY.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				pivotManualRaise.cancel();
 			}
 		});
 
 		// Shooter-Intake Commands
 		leftBump.onTrue(outtake);
-		leftBump.onFalse(new InstantCommand(){
+		leftBump.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				outtake.cancel();
 			}
 		});
 
 		rightBump.onTrue(intake);
-		rightBump.onFalse(new InstantCommand(){
+		rightBump.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				intake.cancel();
 			}
 		});
 
 		rightTrigger.onTrue(shootManual);
-		rightTrigger.onFalse(new InstantCommand(){
+		rightTrigger.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				shootManual.cancel();
 			}
 		});
 
 		secondRightBump.onTrue(shoot);
-		secondRightBump.onFalse(new InstantCommand(){
+		secondRightBump.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				shoot.cancel();
 			}
 		});
@@ -236,33 +236,33 @@ public class RobotContainer {
 		// ClimberCommands
 
 		secondButtonA.onTrue(lowerLeftClimber);
-		secondButtonA.onFalse(new InstantCommand(){
+		secondButtonA.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				lowerLeftClimber.cancel();
 			}
 		});
 
 		secondButtonY.onTrue(riseLeftClimber);
-		secondButtonY.onFalse(new InstantCommand(){
+		secondButtonY.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				riseLeftClimber.cancel();
 			}
 		});
 
 		secondButtonX.onTrue(lowerRightClimber);
-		secondButtonX.onFalse(new InstantCommand(){
+		secondButtonX.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				lowerRightClimber.cancel();
 			}
 		});
 
 		secondButtonB.onTrue(riseRightClimber);
-		secondButtonB.onFalse(new InstantCommand(){
+		secondButtonB.onFalse(new InstantCommand() {
 			@Override
-			public void initialize(){
+			public void initialize() {
 				riseRightClimber.cancel();
 			}
 		});

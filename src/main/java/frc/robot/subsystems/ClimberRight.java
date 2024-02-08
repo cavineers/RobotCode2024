@@ -11,22 +11,21 @@ import frc.robot.Constants;
 
 public class ClimberRight extends SubsystemBase {
 
-    //Initialize the climber motor
+    // Initialize the climber motor
     public CANSparkMax rightClimberMotor = new CANSparkMax(Constants.Climber.RightClimberMotor, MotorType.kBrushless);
 
-    //Initialize the limit switch
+    // Initialize the limit switch
     public DigitalInput rightClimberTopLimitSwitch = new DigitalInput(Constants.DIO.RightClimberTopLimitSwitch);
     public DigitalInput rightClimberBottomLimitSwitch = new DigitalInput(Constants.DIO.RightClimberBottomLimitSwitch);
 
-  
-    //Motor states
+    // Motor states
     public enum RightClimberMotorState {
-        ON,
-        OFF,
+        ON, 
+        OFF, 
         REVERSED
     }
 
-    //Initial Motor State
+    // Initial Motor State
     public RightClimberMotorState rightClimberMotorState = RightClimberMotorState.OFF;
 
     public ClimberRight() {
@@ -34,35 +33,35 @@ public class ClimberRight extends SubsystemBase {
 
         this.rightClimberMotor.setInverted(false);
 
-        //Set the amp limit when specified - TBD
+        // Set the amp limit when specified - TBD
         this.rightClimberMotor.setSmartCurrentLimit(51);
     }
 
-    //Allow for changing motor states
+    // Allow for changing motor states
     public void setRightClimberMotorState(RightClimberMotorState state) {
 
-        //Set the current state
+        // Set the current state
         this.rightClimberMotorState = state;
-        
+
         switch (state) {
-            case ON:
-                //On: Set the extension speed of the climber
-                this.rightClimberMotor.set(Constants.Climber.ClimberExtensionSpeed);
-                break;
-            case OFF:
-                //Off: Set the speed to zero
-                this.rightClimberMotor.set(0.0);
-                break;
-            case REVERSED:
-                //Reversed: Set the reversal speed of the climber
-                this.rightClimberMotor.set(Constants.Climber.ClimberExtensionSpeedRev);
-                break;
-            default:
-                this.setRightClimberMotorState(RightClimberMotorState.OFF);
+        case ON:
+            // On: Set the extension speed of the climber
+            this.rightClimberMotor.set(Constants.Climber.ClimberExtensionSpeed);
+            break;
+        case OFF:
+            // Off: Set the speed to zero
+            this.rightClimberMotor.set(0.0);
+            break;
+        case REVERSED:
+            // Reversed: Set the reversal speed of the climber
+            this.rightClimberMotor.set(Constants.Climber.ClimberExtensionSpeedRev);
+            break;
+        default:
+            this.setRightClimberMotorState(RightClimberMotorState.OFF);
         }
     }
 
-    //Getters and setters 
+    // Getters and setters
 
     public boolean getLimitSwitch(String orientation) {
         boolean switched;
@@ -77,29 +76,29 @@ public class ClimberRight extends SubsystemBase {
         }
 
         return switched;
-    }  
+    }
 
-    //Set the motor's position (given in rotations)
+    // Set the motor's position (given in rotations)
     public void setRightClimberMotorPosition(double position) {
         this.rightClimberMotor.getEncoder().setPosition(position);
     }
 
-    //Set the motor's speed (value between -1 and 1)
+    // Set the motor's speed (value between -1 and 1)
     public void setRightClimberMotorSpeed(double speed) {
         this.rightClimberMotor.set(speed);
     }
 
-    //Get motor position (value returned in number of rotations)
+    // Get motor position (value returned in number of rotations)
     public double getRightClimberMotorPosition() {
         return this.rightClimberMotor.getEncoder().getPosition();
     }
-    
-    //Get motor speed (value between -1 and 1)
+
+    // Get motor speed (value between -1 and 1)
     public double getRightClimberMotorSpeed() {
         return this.rightClimberMotor.get();
     }
 
-    //Get the current state of the motor
+    // Get the current state of the motor
     public RightClimberMotorState getRightClimberMotorState() {
         return this.rightClimberMotorState;
     }
@@ -108,7 +107,7 @@ public class ClimberRight extends SubsystemBase {
         return this.rightClimberMotor;
     }
 
-     @Override
+    @Override
     public void periodic() {
     }
 }
