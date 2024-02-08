@@ -1,20 +1,16 @@
-package frc.robot.commands;
+package frc.robot.commands.ShooterIntake;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterIntake;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Outtake extends Command{
+public class Intake extends Command{
     
     private boolean isDone = false;
     private double m_timestamp;
     private ShooterIntake shooterIntake;
 
-    public Outtake(ShooterIntake shooterIntake) {
+    public Intake(ShooterIntake shooterIntake) {
         this.shooterIntake = shooterIntake;
         this.addRequirements(shooterIntake);
     }
@@ -28,10 +24,14 @@ public class Outtake extends Command{
     @Override
     public void execute() {
 
-        SmartDashboard.putString("Intake", "Outtaking");
+        SmartDashboard.putString("Intake", "Intaking");
 
+        if (shooterIntake.noteSensor.get() == false) {
+            shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
+        } else {
+            shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
+        }
 
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REVERSE);
     }
 
     @Override

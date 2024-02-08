@@ -18,16 +18,16 @@ import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.ClimberLeft;
 import frc.robot.subsystems.ClimberRight;
-import frc.robot.commands.Intake;
-import frc.robot.commands.Outtake;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.Shoot_Manual;
 import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
 import frc.robot.commands.Arm.PivotManualLower;
 import frc.robot.commands.Arm.PivotManualRaise;
-import frc.robot.commands.LowerClimberCommand;
-import frc.robot.commands.RiseClimberCommand;
+import frc.robot.commands.Climber.LowerClimberCommand;
+import frc.robot.commands.Climber.RiseClimberCommand;
+import frc.robot.commands.ShooterIntake.Intake;
+import frc.robot.commands.ShooterIntake.Outtake;
+import frc.robot.commands.ShooterIntake.Shoot;
+import frc.robot.commands.ShooterIntake.Shoot_Manual;
 
 public class RobotContainer {
 
@@ -143,10 +143,10 @@ public class RobotContainer {
 		pivotManualRaise = new PivotManualRaise(armPivot);
 		pivotManualLower = new PivotManualLower(armPivot);
 
-		lowerLeftClimber = new LowerClimberCommand("left");
-		riseLeftClimber = new RiseClimberCommand("left");
-		lowerRightClimber = new LowerClimberCommand("right");
-		riseRightClimber = new RiseClimberCommand("right"); 
+		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
+		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
+		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
+		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right"); 
 
 		intake = new Intake(shooterIntake);
 		outtake = new Outtake(shooterIntake);

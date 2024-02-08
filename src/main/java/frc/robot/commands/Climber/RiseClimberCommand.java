@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Climber;
 
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,15 +13,19 @@ public class RiseClimberCommand extends Command{
     private boolean rightRaised = false;
     private boolean leftRaised = false;
 
-    public RiseClimberCommand(String side) {
-     
+    private ClimberLeft climberLeft;
+    private ClimberRight climberRight;
+
+    public RiseClimberCommand(ClimberLeft climberLeft, ClimberRight climberRight, String side) {
+        this.climberLeft = climberLeft;
+        this.climberRight = climberRight;
+
         if (side == "left") {
-            this.addRequirements(Robot.leftClimber);
+            this.addRequirements(climberLeft);
         } else {
-            this.addRequirements(Robot.rightClimber);
+            this.addRequirements(climberRight);
         }
 
-        //this.addRequirements(Robot.leftClimber, Robot.rightClimber);
         climberSide = side;
     }
 
@@ -38,24 +42,24 @@ public class RiseClimberCommand extends Command{
             
             //Left climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
-            if (Robot.leftClimber.getLimitSwitch("top")){
-                Robot.leftClimber.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
+            if (climberLeft.getLimitSwitch("top")){
+                climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
                 this.leftRaised = true;
-            } else if (!Robot.leftClimber.getLimitSwitch("top")) {
+            } else if (!climberLeft.getLimitSwitch("top")) {
                 System.out.println("Right raising");
-                Robot.leftClimber.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.ON);                
+                climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.ON);                
             } 
             
         } else if (climberSide == "right") {
             
             //Right climber action
             // Command uses a limit switch to turn the extension motor until the arm is fully retracted
-            if (Robot.rightClimber.getLimitSwitch("top")){
-                Robot.rightClimber.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
+            if (climberRight.getLimitSwitch("top")){
+                climberRight.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
                 this.rightRaised = true;
-            } else if (!Robot.rightClimber.getLimitSwitch("top")) {
+            } else if (!climberRight.getLimitSwitch("top")) {
                 System.out.println("Left raising");
-                Robot.rightClimber.setRightClimberMotorState(ClimberRight.RightClimberMotorState.ON);
+                climberRight.setRightClimberMotorState(ClimberRight.RightClimberMotorState.ON);
             } 
         }
     }
@@ -63,9 +67,9 @@ public class RiseClimberCommand extends Command{
     @Override
     public void end(boolean interrupted) {
         if (climberSide == "left") {
-            Robot.leftClimber.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
+            climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
         } else if (climberSide == "right") {
-            Robot.rightClimber.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
+            climberRight.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
         }
     }
 

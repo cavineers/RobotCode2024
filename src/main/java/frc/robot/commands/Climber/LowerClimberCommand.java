@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -7,6 +7,7 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ClimberLeft;
 import frc.robot.subsystems.ClimberRight;
+import frc.robot.subsystems.ShooterIntake;
 
 
 public class LowerClimberCommand extends Command {
@@ -16,15 +17,19 @@ public class LowerClimberCommand extends Command {
     private boolean rightLowered = false;
     private boolean leftLowered = false;
 
-    public LowerClimberCommand(String side) {
-     
+    private ClimberLeft climberLeft;
+    private ClimberRight climberRight;
+
+    public LowerClimberCommand(ClimberLeft climberLeft, ClimberRight climberRight, String side) {
+        this.climberLeft = climberLeft;
+        this.climberRight = climberRight;
+
         if (side == "left") {
-            this.addRequirements(Robot.leftClimber);
+            this.addRequirements(climberLeft);
         } else {
-            this.addRequirements(Robot.rightClimber);
+            this.addRequirements(climberRight);
         }
 
-        //this.addRequirements(Robot.leftClimber, Robot.rightClimber);
         climberSide = side;
     }
 
@@ -39,24 +44,24 @@ public class LowerClimberCommand extends Command {
         
         if (climberSide == "left") {
             //Left climber action
-            if (Robot.leftClimber.getLimitSwitch("bottom")){
+            if (climberLeft.getLimitSwitch("bottom")){
                 System.out.println("Left off");
-                Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.OFF);
+                climberLeft.setLeftClimberMotorState(climberLeft.leftClimberMotorState.OFF);
                 this.leftLowered = true;
-            } else if (!Robot.leftClimber.getLimitSwitch("bottom")) {
+            } else if (!climberLeft.getLimitSwitch("bottom")) {
                 System.out.println("Left lowering");
-                Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.REVERSED);                
+                climberLeft.setLeftClimberMotorState(climberLeft.leftClimberMotorState.REVERSED);                
             } 
 
         } else if (climberSide == "right") {
             //Right climber action
-             if (Robot.rightClimber.getLimitSwitch("bottom")){
+             if (climberRight.getLimitSwitch("bottom")){
                 System.out.println("Right off");
-                Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.OFF);
+                climberRight.setRightClimberMotorState(climberRight.rightClimberMotorState.OFF);
                 this.rightLowered = true;
-            } else if (!Robot.rightClimber.getLimitSwitch("bottom")) {
+            } else if (!climberRight.getLimitSwitch("bottom")) {
                 System.out.println("Right lowering");
-                Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.REVERSED);                
+                climberRight.setRightClimberMotorState(climberRight.rightClimberMotorState.REVERSED);                
             } 
         }
     }
@@ -64,9 +69,9 @@ public class LowerClimberCommand extends Command {
     @Override
     public void end(boolean interrupted) {
         if (climberSide == "left") {
-            Robot.leftClimber.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
+            climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
         } else if (climberSide == "right") {
-            Robot.rightClimber.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
+            climberRight.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
         }
     }
 

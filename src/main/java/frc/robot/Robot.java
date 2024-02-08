@@ -18,13 +18,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   public static RobotContainer m_robotContainer;
-
-  public static ClimberLeft leftClimber;
-  public static ClimberRight rightClimber;
   
   public Robot() {
-    leftClimber = new ClimberLeft();
-    rightClimber = new ClimberRight();
+
   }
   /**
    * This function is run when the robot is first started up and should be used for any
