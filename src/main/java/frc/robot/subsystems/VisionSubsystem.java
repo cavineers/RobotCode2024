@@ -41,7 +41,9 @@ public class VisionSubsystem extends SubsystemBase {
 
     public Optional<EstimatedRobotPose> getRobotPoseFieldRelative(){
         //photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-        return photonPoseEstimator.update(); 
+        //return photonPoseEstimator.update(); 
+        // if testing without april tags set up
+        return Optional.empty();
     }
     
     public void periodic() {

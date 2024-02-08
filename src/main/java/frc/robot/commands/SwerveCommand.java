@@ -69,10 +69,12 @@ public class SwerveCommand extends Command {
         // Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
         
-        chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-            xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+        // Field relative Speeds
+        // chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+        //     xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
 
-         // chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+        // Robot Relative Speeds
+        chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
         
         // Convert chassis speeds to individual module states
         SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);

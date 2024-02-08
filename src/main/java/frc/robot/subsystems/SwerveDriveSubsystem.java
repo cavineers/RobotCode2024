@@ -164,19 +164,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private Pose2d updatePoseWithVision(){
 
         Pose2d currentPose = poseEstimator.update(getRotation2d(), getPositions());
-        SmartDashboard.putNumber("PoseX1", currentPose.getX());
-        SmartDashboard.putNumber("PoseY1", currentPose.getY());
         Optional<EstimatedRobotPose> visionPose = this.getVisionPose();
         if (visionPose.isEmpty()) {
             SmartDashboard.putBoolean("Has Tags", false);
             return currentPose;
         }
+        // Put all of the cancoder absolute readings on the dashboard
+
+
         zeroHeading();
         SmartDashboard.putBoolean("Has Tags", true);
         Pose2d visionPose2d = visionPose.get().estimatedPose.toPose2d();
         poseEstimator.addVisionMeasurement(visionPose2d, visionPose.get().timestampSeconds);
-        SmartDashboard.putNumber("PoseX2", visionPose2d.getX());
-        SmartDashboard.putNumber("PoseY2", visionPose2d.getY());
         SmartDashboard.putNumber("Rotation", visionPose2d.getRotation().getDegrees());
         //For some reason the rotation aspect of vision is not working
         var returnValue = poseEstimator.getEstimatedPosition();
@@ -218,6 +217,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private boolean successZeroHeading = false;
     public void zeroHeading() {
+        successZeroHeading = true; // Remove if have april tags
         if (successZeroHeading){
             return;
         }
@@ -280,10 +280,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         this.updatedPose = this.updatePoseWithVision();
         m_field.setRobotPose(this.updatedPose);
         SmartDashboard.putData("Field", m_field);
-        SmartDashboard.putNumber("Front Right Rel", this.frontRight.getTurningPosition());
-        SmartDashboard.putNumber("Front Right Abs", this.frontRight.getAbsolutePosition());
-        SmartDashboard.putNumber("Back Right Rel", this.backRight.getTurningPosition());
-        SmartDashboard.putNumber("Back Right Abs", this.backRight.getAbsolutePosition());
+        SmartDashboard.putNumber("Front Left", frontLeft.getAbsolutePosition());
+        SmartDashboard.putNumber("Front Right", frontRight.getAbsolutePosition());
+        SmartDashboard.putNumber("Back Left", backLeft.getAbsolutePosition());
+        SmartDashboard.putNumber("Back Right", backRight.getAbsolutePosition());
         SmartDashboard.putNumber("Heading", getHeading());
 
     }

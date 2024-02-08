@@ -47,7 +47,7 @@ public class SwerveModule {
         // Configure the CANcoder for basic use
         CANcoderConfiguration configs = new CANcoderConfiguration();
         // This CANcoder should report absolute position from [-0.5, 0.5) rotations,
-        configs.MagnetSensor.MagnetOffset = absoluteEncoderOffset/360;
+        configs.MagnetSensor.MagnetOffset = absoluteEncoderOffset;
         // Write these configs to the CANcoder
         absoluteEncoder.getConfigurator().apply(configs);
 
