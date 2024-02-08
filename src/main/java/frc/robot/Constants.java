@@ -39,9 +39,9 @@ public final class Constants {
         // public static final int kBackRightDriveCanID = 5;
 
         // public static final int kFrontLeftTurningCanID = 2;
-        public static final int kBackLeftTurningCanID = 4;
-        public static final int kFrontRightTurningCanID = 8;
-        public static final int kBackRightTurningCanID = 6;
+        // public static final int kBackLeftTurningCanID = 4;
+        // public static final int kFrontRightTurningCanID = 8;
+        // public static final int kBackRightTurningCanID = 6;
 
         public static final int kFrontLeftAbsoluteEncoderPort = 12;
         public static final int kBackLeftAbsoluteEncoderPort = 9;
@@ -105,7 +105,7 @@ public final class Constants {
 
     public static final class ArmPivot {
 
-        public static final int PivotMotor = 3;
+        public static final int PivotMotor = 2;
         public static final int ArmPivotEncoder = 9;
 
         public static final double PivotMotorSpeedForwards = 1;
@@ -125,8 +125,8 @@ public final class Constants {
     public static final class ArmBase {
 
         public static final int BaseMotorCANID = 1;
-        public static final int lowerLimitSwitchPort = 1;
-        public static final int higherLimitSwitchPort = 0;
+        public static final int lowerLimitSwitchPort = 5;
+        public static final int higherLimitSwitchPort = 6;
 
         public static final double SpeedForwards = 0.1;
         public static final double SpeedBackwards = -0.1;
@@ -144,8 +144,8 @@ public final class Constants {
     }
 
     public static final class Climber {
-        public static final int LeftClimberMotor = 1; // TBD
-        public static final int RightClimberMotor = 2; // TBD
+        public static final int LeftClimberMotor = 3; // TBD
+        public static final int RightClimberMotor = 4; // TBD
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
         public static final double LowerClimberMaxRotations = 4; // TBD
@@ -153,9 +153,9 @@ public final class Constants {
 
     public static final class ShooterIntake {
 
-        public static final int ShooterCanID = 2; // TBD
-        public static final int IntakeCanID = 3; // TBD
-        public static final int Intake2ndCanID = 4; // TBD
+        public static final int ShooterCanID = 200; // TBD
+        public static final int IntakeCanID = 300; // TBD
+        public static final int Intake2ndCanID = 400; // TBD
 
         public static final double ShooterForwardSpeed = 1; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
