@@ -71,15 +71,16 @@ public final class Constants {
         public static final double kBackRightAbsoluteEncoderOffset = .150; //58.79 //-58.79
         
         // Distance between right and left wheels
-        public static final double kTrackWidth = Units.inchesToMeters(30); 
+        public static final double kTrackWidth = Units.inchesToMeters(25); 
         // Distance between front and back wheels
-        public static final double kWheelBase = Units.inchesToMeters(30);
-       
-        public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-                new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-                new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-                new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
-                new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
+        public static final double kWheelBase = Units.inchesToMeters(25);
+        
+     
+        public static final SwerveDriveKinematics SwerveKinematics = new SwerveDriveKinematics(
+            new Translation2d(DriveConstants.kWheelBase / 2.0, -DriveConstants.kTrackWidth / 2.0),
+            new Translation2d(DriveConstants.kWheelBase / 2.0, DriveConstants.kTrackWidth / 2.0),
+            new Translation2d(-DriveConstants.kWheelBase / 2.0, -DriveConstants.kTrackWidth / 2.0),
+            new Translation2d(-DriveConstants.kWheelBase / 2.0, DriveConstants.kTrackWidth / 2.0));
     }
 
     public static final class OIConstants {
