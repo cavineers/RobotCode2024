@@ -18,6 +18,7 @@ import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.ClimberLeft;
 import frc.robot.subsystems.ClimberRight;
+import frc.robot.commands.Arm.ArmPreset;
 import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
 import frc.robot.commands.Arm.PivotManualLower;
@@ -80,6 +81,11 @@ public class RobotContainer {
 	public Command gantryManualLower;
 	public Command pivotManualRaise;
 	public Command pivotManualLower;
+	public Command groundPickup;
+	public Command shootPosition;
+	public Command sourcePosition;
+	public Command ampPosition;
+	public Command restPosition;
 
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
@@ -142,6 +148,11 @@ public class RobotContainer {
 		gantryManualLower = new GantryManualLower(armBase);
 		pivotManualRaise = new PivotManualRaise(armPivot);
 		pivotManualLower = new PivotManualLower(armPivot);
+		groundPickup = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
+		shootPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootRotations);
+		sourcePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.SourceRotations, Constants.ArmPivot.SourceRotations);
+		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
+		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
 
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
@@ -200,6 +211,12 @@ public class RobotContainer {
 			}
 		});
 
+		secondDPadDown.onTrue(groundPickup);
+		secondDPadUp.onTrue(shootPosition);
+		secondDPadLeft.onTrue(ampPosition);
+		secondDPadRight.onTrue(sourcePosition);
+		secondLeftBump.onTrue(restPosition);
+
 		// Shooter-Intake Commands
 		leftBump.onTrue(outtake);
 		leftBump.onFalse(new InstantCommand() {
@@ -234,7 +251,6 @@ public class RobotContainer {
 		});
 
 		// ClimberCommands
-
 		secondButtonA.onTrue(lowerLeftClimber);
 		secondButtonA.onFalse(new InstantCommand() {
 			@Override

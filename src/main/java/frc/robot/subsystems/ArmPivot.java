@@ -94,8 +94,7 @@ public class ArmPivot extends SubsystemBase {
 
     public void periodic() {
 
-        SmartDashboard.putNumber("Throughbore Pos", getPivotEncoderPosition());
-        SmartDashboard.putNumber("PivotMotorSpeed", getPivotMotorSpeed());
+        SmartDashboard.putNumber("PivotRot", getPivotMotorPosition());
 
     }
 }

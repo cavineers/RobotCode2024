@@ -105,26 +105,30 @@ public final class Constants {
 
     public static final class ArmPivot {
 
-        public static final int PivotMotor = 2;
+        public static final int PivotMotor = 4;
         public static final int ArmPivotEncoder = 9;
 
-        public static final double PivotMotorSpeedForwards = 1;
-        public static final double PivotMotorSpeedBackwards = -1;
+        public static final double PivotMotorSpeedForwards = 0.1;
+        public static final double PivotMotorSpeedBackwards = -0.1;
 
         public static final double PivotMotorLowerRotationLimit = -10;
         public static final double PivotMotorUpperRotationLimit = 10;
 
-        public static final double ArmPivotEcoderDeadzone = 0.1;
+        public static final double ArmPivotEcoderDeadzone = 0.4;
 
         public static final double DistancePerRotation = 1;
 
         public static final double GroundPickupRotations = 10;
+        public static final double RestRotations = 15;
+        public static final double ShootRotations = 20;
+        public static final double SourceRotations = 30;
+        public static final double AmpRotations = 40;
 
     }
 
     public static final class ArmBase {
 
-        public static final int BaseMotorCANID = 1;
+        public static final int BaseMotorCANID = 3;
         public static final int lowerLimitSwitchPort = 5;
         public static final int higherLimitSwitchPort = 6;
 
@@ -134,18 +138,22 @@ public final class Constants {
         public static final double MaxRotations = 10;
         public static final double MinRotations = 0;
 
-        public static final double GroundPositionRotations = 10;
-        public static final double SpeakerPositionRotations = 10;
+        public static final double ArmBaseEcoderDeadzone = 0.4;
 
-        public static final double ArmBaseEcoderDeadzone = 0.1;
+        public static final double BaseMotorEaseFactor = 0.1;
 
         public static final double GroundPickupRotations = 15;
+        public static final double RestRotations = 20;
+        public static final double ShootRotations = 25;
+        public static final double SourceRotations = 35;
+        public static final double AmpRotations = 45;
+        
 
     }
 
     public static final class Climber {
-        public static final int LeftClimberMotor = 3; // TBD
-        public static final int RightClimberMotor = 4; // TBD
+        public static final int LeftClimberMotor = 1; // TBD
+        public static final int RightClimberMotor = 2; // TBD
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
         public static final double LowerClimberMaxRotations = 4; // TBD
