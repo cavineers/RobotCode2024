@@ -18,11 +18,11 @@ public class ArmBase extends SubsystemBase {
     }
 
     // Motor Initialization
-    public CANSparkMax baseMotor = new CANSparkMax(Constants.ArmBase.BaseMotorCANID, MotorType.kBrushless);
+    public CANSparkMax baseMotor = new CANSparkMax(Constants.CanIDs.GantryCANID, MotorType.kBrushless);
 
     // Limit Switches
-    public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.ArmBase.lowerLimitSwitchPort);
-    public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.ArmBase.higherLimitSwitchPort);
+    public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
+    public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
 
     // Starts motors in their off state
     public BaseMotorState baseMotorState = BaseMotorState.OFF;

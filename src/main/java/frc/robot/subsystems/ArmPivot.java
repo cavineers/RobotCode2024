@@ -20,13 +20,13 @@ public class ArmPivot extends SubsystemBase {
     }
 
     // Motor Initialization
-    public CANSparkMax pivotMotor = new CANSparkMax(Constants.ArmPivot.PivotMotor, MotorType.kBrushless);
+    public CANSparkMax pivotMotor = new CANSparkMax(Constants.CanIDs.PivotCanID, MotorType.kBrushless);
 
     // Starts motors in their off state
     public PivotMotorState pivotMotorState = PivotMotorState.OFF;
 
     // Through Bore Encoder
-    public DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(Constants.ArmPivot.ArmPivotEncoder);
+    public DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(Constants.DIO.ArmBoreEncoder);
 
     // Motor sparkmax settings
     public ArmPivot() {

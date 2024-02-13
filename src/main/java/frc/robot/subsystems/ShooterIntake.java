@@ -26,11 +26,11 @@ public class ShooterIntake extends SubsystemBase {
         RETRACT
     }
 
-    public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.ShooterCanID, MotorType.kBrushless);
-    public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.IntakeCanID, MotorType.kBrushless);
-    public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.ShooterIntake.Intake2ndCanID, MotorType.kBrushless);
+    public CANSparkMax shooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
+    public CANSparkMax intakeMotor = new CANSparkMax(Constants.CanIDs.IntakeCanID, MotorType.kBrushless);
+    public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.CanIDs.Intake2ndCanID, MotorType.kBrushless);
 
-    public DigitalInput noteSensor = new DigitalInput(Constants.DIO.noteSensor);
+    public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
 
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 

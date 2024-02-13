@@ -18,30 +18,49 @@ public final class Constants {
         public static final double kPTurning = 0.5;
     }
 
-    public static final class DIO {
+    public static final class CanIDs {
+        
+        public static final int kFrontLeftDriveCanID = 1;
+        public static final int kBackLeftDriveCanID = 3;
+        public static final int kFrontRightDriveCanID = 7;
+        public static final int kBackRightDriveCanID = 5;
 
-        public static int IntakeSwitch = 7;
-        public static int LeftClimberTopLimitSwitch = 1; // TBD
-        public static int RightClimberTopLimitSwitch = 2; // TBD
-        public static int LeftClimberBottomLimitSwitch = 3; // TBD
-        public static int RightClimberBottomLimitSwitch = 4; // TBD
-        public static int noteSensor = 0;
+        public static final int kFrontLeftTurningCanID = 2;
+        public static final int kBackLeftTurningCanID = 4;
+        public static final int kFrontRightTurningCanID = 8;
+        public static final int kBackRightTurningCanID = 6;
+
+        public static final int PivotCanID = 9;
+        public static final int GantryCANID = 10;
+
+        public static final int LeftClimberCanID = 11; 
+        public static final int RightClimberCanID = 12; 
+
+        public static final int ShooterCanID = 13; 
+        public static final int IntakeCanID = 14; 
+        public static final int Intake2ndCanID = 15; 
+    }
+
+    public static final class DIO {
+        
+        public static final int ArmBoreEncoder = 0;
+        public static final int GantryLowerLimitSwitch = 1;
+        public static final int GantryHigherLimitSwitch = 2;
+        
+        public static final int LeftClimberTopLimitSwitch = 3; 
+        public static final int RightClimberTopLimitSwitch = 4; 
+        public static final int LeftClimberBottomLimitSwitch = 5; 
+        public static final int RightClimberBottomLimitSwitch = 6;
+
+        public static final int NoteSensor = 7;
+        public static final int IntakeSwitch = 8;
+
     }
 
     public static final class DriveConstants {
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
-
-        // public static final int kFrontLeftDriveCanID = 1;
-        // public static final int kBackLeftDriveCanID = 3;
-        // public static final int kFrontRightDriveCanID = 7;
-        // public static final int kBackRightDriveCanID = 5;
-
-        // public static final int kFrontLeftTurningCanID = 2;
-        // public static final int kBackLeftTurningCanID = 4;
-        // public static final int kFrontRightTurningCanID = 8;
-        // public static final int kBackRightTurningCanID = 6;
 
         public static final int kFrontLeftAbsoluteEncoderPort = 12;
         public static final int kBackLeftAbsoluteEncoderPort = 9;
@@ -105,9 +124,6 @@ public final class Constants {
 
     public static final class ArmPivot {
 
-        public static final int PivotMotor = 4;
-        public static final int ArmPivotEncoder = 9;
-
         public static final double PivotMotorSpeedForwards = 0.1;
         public static final double PivotMotorSpeedBackwards = -0.1;
 
@@ -128,10 +144,6 @@ public final class Constants {
 
     public static final class ArmBase {
 
-        public static final int BaseMotorCANID = 3;
-        public static final int lowerLimitSwitchPort = 5;
-        public static final int higherLimitSwitchPort = 6;
-
         public static final double SpeedForwards = 0.1;
         public static final double SpeedBackwards = -0.1;
 
@@ -147,23 +159,17 @@ public final class Constants {
         public static final double ShootRotations = 25;
         public static final double SourceRotations = 35;
         public static final double AmpRotations = 45;
-        
 
     }
 
     public static final class Climber {
-        public static final int LeftClimberMotor = 1; // TBD
-        public static final int RightClimberMotor = 2; // TBD
+
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
         public static final double LowerClimberMaxRotations = 4; // TBD
     }
 
     public static final class ShooterIntake {
-
-        public static final int ShooterCanID = 8; // TBD
-        public static final int IntakeCanID = 9; // TBD
-        public static final int Intake2ndCanID = 10; // TBD
 
         public static final double ShooterForwardSpeed = 1; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD

@@ -12,7 +12,7 @@ import frc.robot.Constants;
 public class ClimberLeft extends SubsystemBase {
 
     // Initialize the climber motor
-    public CANSparkMax leftClimberMotor = new CANSparkMax(Constants.Climber.LeftClimberMotor, MotorType.kBrushless);
+    public CANSparkMax leftClimberMotor = new CANSparkMax(Constants.CanIDs.LeftClimberCanID, MotorType.kBrushless);
 
     // Initialize the limit switch
     public DigitalInput leftClimberBottomLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberBottomLimitSwitch);
