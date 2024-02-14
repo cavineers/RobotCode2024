@@ -70,10 +70,10 @@ public final class Constants {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-        public static final int kFrontLeftAbsoluteEncoderPort = 12;
-        public static final int kBackLeftAbsoluteEncoderPort = 9;
-        public static final int kFrontRightAbsoluteEncoderPort = 11;
-        public static final int kBackRightAbsoluteEncoderPort = 10;
+        // public static final int kFrontLeftAbsoluteEncoderPort = 12;
+        // public static final int kBackLeftAbsoluteEncoderPort = 9;
+        // public static final int kFrontRightAbsoluteEncoderPort = 11;
+        // public static final int kBackRightAbsoluteEncoderPort = 10;
 
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;

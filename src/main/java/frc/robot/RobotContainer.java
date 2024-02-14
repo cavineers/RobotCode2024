@@ -127,8 +127,9 @@ public class RobotContainer {
 		shooterIntake = new ShooterIntake();
 
 		visionSubsystem = new VisionSubsystem();
+		
 		swerveSubsystem = new SwerveDriveSubsystem(visionSubsystem);
-
+		swerveHomingCommand = new SwerveHoming(swerveSubsystem);
 		// First Driver Buttons
 		driverJoystick = new CommandXboxController(OIConstants.kDriverJoystickPort);
 		buttonA = driverJoystick.a();

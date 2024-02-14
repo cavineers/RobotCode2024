@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.SPI;
 import frc.robot.RobotContainer;
 import java.util.Optional;
 import java.util.function.Supplier;
-
+import frc.robot.Constants.CanIDs;
 import org.photonvision.EstimatedRobotPose;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
@@ -45,38 +45,38 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private double gyroZero;
     Optional<Alliance> ally = DriverStation.getAlliance();
     private final SwerveModule frontLeft = new SwerveModule(
-        DriveConstants.kFrontLeftDriveCanID, 
-        DriveConstants.kFrontLeftTurningCanID, 
+        CanIDs.kFrontLeftDriveCanID, 
+        CanIDs.kFrontLeftTurningCanID, 
         DriveConstants.kFrontLeftDriveEncoderReversed, 
         DriveConstants.kFrontLeftTurningEncoderReversed,
-        DriveConstants.kFrontLeftAbsoluteEncoderPort, 
+        CanIDs.kFrontLeftAbsoluteEncoderPort, 
         DriveConstants.kFrontLeftAbsoluteEncoderOffset);
     
     private final SwerveModule frontRight = new SwerveModule(
-        DriveConstants.kFrontRightDriveCanID, 
-        DriveConstants.kFrontRightTurningCanID, 
+        CanIDs.kFrontRightDriveCanID, 
+        CanIDs.kFrontRightTurningCanID, 
         DriveConstants.kFrontRightDriveEncoderReversed, 
         DriveConstants.kFrontRightTurningEncoderReversed,
-        DriveConstants.kFrontRightAbsoluteEncoderPort, 
+        CanIDs.kFrontRightAbsoluteEncoderPort, 
         DriveConstants.kFrontRightAbsoluteEncoderOffset);
 
     private final SwerveModule backLeft = new SwerveModule(
-        DriveConstants.kBackLeftDriveCanID, 
-        DriveConstants.kBackLeftTurningCanID, 
+        CanIDs.kBackLeftDriveCanID, 
+        CanIDs.kBackLeftTurningCanID, 
         DriveConstants.kBackLeftDriveEncoderReversed, 
         DriveConstants.kBackLeftTurningEncoderReversed,
-        DriveConstants.kBackLeftAbsoluteEncoderPort, 
+        CanIDs.kBackLeftAbsoluteEncoderPort, 
         DriveConstants.kBackLeftAbsoluteEncoderOffset);
 
     private final SwerveModule backRight = new SwerveModule(
-        DriveConstants.kBackRightDriveCanID, 
-        DriveConstants.kBackRightTurningCanID, 
+        CanIDs.kBackRightDriveCanID, 
+        CanIDs.kBackRightTurningCanID, 
         DriveConstants.kBackRightDriveEncoderReversed, 
         DriveConstants.kBackRightTurningEncoderReversed,
-        DriveConstants.kBackRightAbsoluteEncoderPort, 
+        CanIDs.kBackRightAbsoluteEncoderPort, 
         DriveConstants.kBackRightAbsoluteEncoderOffset);
 
-    private final Pigeon2 gyro = new Pigeon2(DriveConstants.kPigeonID);
+    private final Pigeon2 gyro = new Pigeon2(CanIDs.kPigeonID);
     
 
 
