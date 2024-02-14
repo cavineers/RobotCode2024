@@ -22,8 +22,8 @@ import java.util.function.Supplier;
 
 import org.photonvision.EstimatedRobotPose;
 
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -76,8 +76,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         DriveConstants.kBackRightAbsoluteEncoderPort, 
         DriveConstants.kBackRightAbsoluteEncoderOffset);
 
-    private final Pigeon2 gyro = new Pigeon2(DriveConstants.kPigeonID);; 
+    private final Pigeon2 gyro = new Pigeon2(DriveConstants.kPigeonID);
+    
 
+
+    
     private Pose2d updatedPose = new Pose2d();
 
     private final Field2d m_field = new Field2d();
@@ -87,25 +90,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     public double getHeading(){ // Right Hand Rule with Offset
-        // double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
-        // while (gyroAngle < 0){
-        //     gyroAngle += 360;
-        // }
-        // gyroAngle = changeRule(gyroAngle); // Right Hand Rule
-        // gyroAngle = gyroAngle + gyroZero;
-        // while (gyroAngle > 360){
-        //     gyroAngle -= 360;
-        // }
-        // while (gyroAngle < 0){
-        //     gyroAngle += 360;
-        // }
-        // return gyroAngle; 
-        // double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360); // Left Hand Rule
-        // gyroAngle = changeRule(gyroAngle); // Right Hand Rule
-        // gyroAngle += gyroZero;
-        // gyroAngle = Math.IEEEremainder(gyroAngle, 360); // Ensures the angle is between -180 and 180
         
-        double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360);
+        double gyroAngle = Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
         return gyroAngle;
     }
 
@@ -177,6 +163,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public SwerveDriveSubsystem(VisionSubsystem visionSubsystem) {
         //Delay reset of navx for proper initialization
+
         this.gyroZero = 0;
         new Thread(() -> {
             try {
@@ -196,7 +183,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             this::driveRelativeSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                 new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                new PIDConstants(1.0, 0.0, 0.0), // Rotation PID constants
+                new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
                 4.5, // Max module speed, in m/s
                 Units.inchesToMeters(17.68), // Drive base radius in meters. Distance from robot center to furthest module.
                 new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -208,9 +195,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private boolean successZeroHeading = false;
     public void zeroHeading() {
-        // if (successZeroHeading){
-        //     return;
-        // }
         gyro.reset();
         
         // Optional<EstimatedRobotPose> currentPose = visionSubsystem.getRobotPoseFieldRelative(); 
@@ -274,28 +258,24 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         this.updatedPose = this.updatePoseWithVision();
         m_field.setRobotPose(this.updatedPose);
         SmartDashboard.putData("Field", m_field);
-        SmartDashboard.putNumber("Roll", gyro.getRoll().getValueAsDouble());
-        SmartDashboard.putNumber("Pitch", gyro.getPitch().getValueAsDouble());
         SmartDashboard.putNumber("Heading", getHeading());
-
+        SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());
+        SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
+        SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
+        SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
     }
     
-    private void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
+    public void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
         SwerveModuleState[] states = DriveConstants.SwerveKinematics.toSwerveModuleStates(relativeSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+        SmartDashboard.putString("StateFL", states[0].toString());
+        
         frontLeft.setDesiredState(states[0]);
         frontRight.setDesiredState(states[1]);
         backLeft.setDesiredState(states[2]);
         backRight.setDesiredState(states[3]);
     }
 
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
-        frontLeft.setDesiredState(desiredStates[0]);
-        frontRight.setDesiredState(desiredStates[1]);
-        backLeft.setDesiredState(desiredStates[2]);
-        backRight.setDesiredState(desiredStates[3]);
-    }
 
     public void setEncoders() {
         frontLeft.setEncoder();

@@ -77,10 +77,7 @@ public class SwerveCommand extends Command {
         // chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
         
         // Convert chassis speeds to individual module states
-        SwerveModuleState[] moduleStates = DriveConstants.SwerveKinematics.toSwerveModuleStates(chassisSpeeds);
-        
-        // Output each module states to wheels
-        swerveSubsystem.setModuleStates(moduleStates);
+        swerveSubsystem.driveRelativeSpeeds(chassisSpeeds);
     }
 
     @Override
