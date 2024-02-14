@@ -1,11 +1,22 @@
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import frc.robot.commands.SwerveCommand;
+import frc.robot.commands.SwerveHoming;
+import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.Constants.OIConstants;
+
+import frc.robot.Robot;
 import frc.robot.subsystems.ShooterIntake;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
@@ -23,18 +34,25 @@ import frc.robot.commands.ShooterIntake.Outtake;
 import frc.robot.commands.ShooterIntake.Shoot;
 import frc.robot.commands.ShooterIntake.Shoot_Manual;
 
+
+
+
+
 public class RobotContainer {
 
 	// Declarations
 	private final ArmBase armBase;
 	private final ArmPivot armPivot;
 
+	private final SwerveDriveSubsystem swerveSubsystem;
+    private final VisionSubsystem visionSubsystem;
+
 	private final ShooterIntake shooterIntake;
+
 
 	private final ClimberLeft climberLeft;
 	private final ClimberRight climberRight;
 
-	// private final SwerveDriveSubsystem swerveSubsystem;
 
 	// Main Controller Buttons Init
 	public final CommandXboxController driverJoystick;
@@ -50,6 +68,7 @@ public class RobotContainer {
 	public Trigger rightBump;
 	public Trigger leftTrigger;
 	public Trigger rightTrigger;
+
 
 	public double r_joy_x;
 	public double r_joy_y;
@@ -69,6 +88,7 @@ public class RobotContainer {
 	public Trigger secondLeftBump;
 	public Trigger secondRightBump;
 
+
 	// Commands
 	public Command gantryManualRaise;
 	public Command gantryManualLower;
@@ -80,6 +100,7 @@ public class RobotContainer {
 	public Command ampPosition;
 	public Command restPosition;
 
+        
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
@@ -89,7 +110,9 @@ public class RobotContainer {
 	public Command outtake;
 	public Command shoot;
 	public Command shootManual;
-	// public SwerveHoming swerveHomingCommand;
+	public SwerveHoming swerveHomingCommand;
+
+
 
 	public RobotContainer() {
 
@@ -97,12 +120,16 @@ public class RobotContainer {
 		armBase = new ArmBase();
 		armPivot = new ArmPivot();
 
+
 		climberLeft = new ClimberLeft();
 		climberRight = new ClimberRight();
 
 		shooterIntake = new ShooterIntake();
-		// swerveSubsystem = new SwerveDriveSubsystem();
 
+		visionSubsystem = new VisionSubsystem();
+		
+		swerveSubsystem = new SwerveDriveSubsystem(visionSubsystem);
+		swerveHomingCommand = new SwerveHoming(swerveSubsystem);
 		// First Driver Buttons
 		driverJoystick = new CommandXboxController(OIConstants.kDriverJoystickPort);
 		buttonA = driverJoystick.a();
@@ -118,10 +145,6 @@ public class RobotContainer {
 		leftTrigger = driverJoystick.leftTrigger(OIConstants.kTriggerDeadzone);
 		rightTrigger = driverJoystick.rightTrigger(OIConstants.kTriggerDeadzone);
 
-		r_joy_x = driverJoystick.getRightX();
-		r_joy_y = driverJoystick.getRightY();
-		l_joy_x = driverJoystick.getLeftX();
-		l_joy_y = driverJoystick.getLeftY();
 
 		// Second Driver Buttons
 		secondDriverJoystick = new CommandXboxController(OIConstants.kSecondDriverJoystickPort);
@@ -157,14 +180,12 @@ public class RobotContainer {
 		shoot = new Shoot(shooterIntake);
 		shootManual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRightTriggerAxis());
 
-		// swerveSubsystem.setDefaultCommand(new SwerveCommand(
-		// swerveSubsystem,
-		// () -> -driverJoystick.getLeftY(),
-		// () -> driverJoystick.getLeftX(),
-		// () -> driverJoystick.getRightX(),
-		// () ->
-		// !driverJoystick.leftTrigger(OIConstants.kDriverJoystickTriggerDeadzone)));
-
+		swerveSubsystem.setDefaultCommand(new SwerveCommand(
+					swerveSubsystem,
+					() -> -driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
+					() -> -driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
+					() -> -driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
+					() -> false));
 		configureButtonBindings();
 
 	};
@@ -281,5 +302,15 @@ public class RobotContainer {
 		// }
 
 	}
+	public SwerveDriveSubsystem getSwerveSubsystem() {
+        return this.swerveSubsystem;
+    }
+    public VisionSubsystem getVisionSubsystem() {
+        return this.visionSubsystem;
+    }
+    public Command getAutonomousCommand() {
+        return new PathPlannerAuto("TestAutoNow");
+    }
+
 
 }

@@ -1,0 +1,95 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.5,
+        "y": 5.541512620062277
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.0,
+        "y": 5.541512620062277
+      },
+      "isLocked": false,
+      "linkedName": "CenterClose"
+    },
+    {
+      "anchor": {
+        "x": 2.8918155152694487,
+        "y": 6.604871311790646
+      },
+      "prevControl": {
+        "x": 2.8918155152694487,
+        "y": 6.004871311790646
+      },
+      "nextControl": {
+        "x": 2.8918155152694487,
+        "y": 6.654871311790646
+      },
+      "isLocked": false,
+      "linkedName": "CenterLeftRotate90"
+    },
+    {
+      "anchor": {
+        "x": 2.8918155152694487,
+        "y": 6.604871311790646
+      },
+      "prevControl": {
+        "x": 2.8919883978133334,
+        "y": 6.654871012906013
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 90.0,
+      "rotateFast": true
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.4,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "MoveArmDown"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "StartIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 30.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "CenterToLeft3PiecePaths",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
