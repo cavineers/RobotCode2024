@@ -1,9 +1,6 @@
 package frc.robot.commands.Arm;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.subsystems.ArmBase;
 
 public class GantryManualLower extends Command {

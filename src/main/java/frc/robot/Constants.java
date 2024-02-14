@@ -123,23 +123,23 @@ public final class Constants {
     }
 
     public static final class ArmPivot {
-
+    
         public static final double PivotMotorSpeedForwards = 0.1;
         public static final double PivotMotorSpeedBackwards = -0.1;
-
+    
         public static final double PivotMotorLowerRotationLimit = -10;
         public static final double PivotMotorUpperRotationLimit = 10;
-
+    
         public static final double ArmPivotEcoderDeadzone = 0.4;
-
+    
         public static final double DistancePerRotation = 1;
-
+    
         public static final double GroundPickupRotations = 10;
         public static final double RestRotations = 15;
         public static final double ShootRotations = 20;
         public static final double SourceRotations = 30;
         public static final double AmpRotations = 40;
-
+    
     }
 
     public static final class ArmBase {
