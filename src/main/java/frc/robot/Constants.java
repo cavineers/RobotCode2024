@@ -24,12 +24,12 @@ public final class Constants {
 
         public static final int kFrontLeftDriveCanID = 2;
         public static final int kBackLeftDriveCanID = 8;
-        public static final int kFrontRightDriveCanID = 4;
+        public static final int kFrontRightDriveCanID = 25;
         public static final int kBackRightDriveCanID = 6;
 
         public static final int kFrontLeftTurningCanID = 1;
         public static final int kBackLeftTurningCanID = 7;
-        public static final int kFrontRightTurningCanID = 3;
+        public static final int kFrontRightTurningCanID = 24;
         public static final int kBackRightTurningCanID = 5;
 
         public static final int kFrontLeftAbsoluteEncoderPort = 9;
@@ -43,8 +43,8 @@ public final class Constants {
         public static final int RightClimberCanID = 22; 
 
         public static final int ShooterCanID = 23; 
-        public static final int IntakeCanID = 24; 
-        public static final int Intake2ndCanID = 25; 
+        public static final int IntakeCanID = 4; 
+        public static final int Intake2ndCanID = 3; 
     }
 
         
