@@ -26,8 +26,6 @@ public class ShooterIntake extends SubsystemBase {
         RETRACT
     }
 
-    
-
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.ShooterCanID, MotorType.kBrushless);
     public CANSparkMax intakeMotor = new CANSparkMax(Constants.ShooterIntake.IntakeCanID, MotorType.kBrushless);
     public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.ShooterIntake.Intake2ndCanID, MotorType.kBrushless);
@@ -50,8 +48,8 @@ public class ShooterIntake extends SubsystemBase {
         this.intakeMotor.setSmartCurrentLimit(41); //TBD
         this.intake2ndMotor.setSmartCurrentLimit(41); //TBD
 
-        this.intake2ndMotor.setInverted(true);
-        this.intake2ndMotor.follow(intakeMotor);
+        this.intakeMotor.setInverted(true);
+        this.intake2ndMotor.follow(intakeMotor, true);
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
