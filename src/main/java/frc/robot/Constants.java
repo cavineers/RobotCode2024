@@ -22,14 +22,14 @@ public final class Constants {
     public static final class CanIDs{
         public static final int kPigeonID = 23;
 
-        public static final int kFrontLeftDriveCanID = 2;
+        public static final int kFrontLeftDriveCanID = 24;
         public static final int kBackLeftDriveCanID = 8;
         public static final int kFrontRightDriveCanID = 25;
         public static final int kBackRightDriveCanID = 6;
 
-        public static final int kFrontLeftTurningCanID = 1;
+        public static final int kFrontLeftTurningCanID = 3;
         public static final int kBackLeftTurningCanID = 7;
-        public static final int kFrontRightTurningCanID = 24;
+        public static final int kFrontRightTurningCanID = 13;
         public static final int kBackRightTurningCanID = 5;
 
         public static final int kFrontLeftAbsoluteEncoderPort = 9;
@@ -42,9 +42,9 @@ public final class Constants {
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 22; 
 
-        public static final int ShooterCanID = 23; 
-        public static final int IntakeCanID = 4; 
-        public static final int Intake2ndCanID = 3; 
+        public static final int ShooterCanID = 4; 
+        public static final int IntakeCanID = 1; 
+        public static final int Intake2ndCanID = 2; 
     }
 
         
@@ -179,7 +179,7 @@ public final class Constants {
 
         public static final double ShooterForwardSpeed = 1; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
-        public static final double IntakeForwardSpeed = .3; // TBD
+        public static final double IntakeForwardSpeed = 1; // TBD
         public static final double IntakeReverseSpeed = -.3; // TBD
         public static final double IntakeRetractSpeed = -.05; // TBD
     }

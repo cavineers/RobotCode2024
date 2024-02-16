@@ -209,13 +209,13 @@ public class RobotContainer {
 			}
 		});
 
-		buttonA.onTrue(pivotManualLower);
-		buttonA.onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				pivotManualLower.cancel();
-			}
-		});
+		// buttonA.onTrue(pivotManualLower);
+		// buttonA.onFalse(new InstantCommand() {
+		// 	@Override
+		// 	public void initialize() {
+		// 		pivotManualLower.cancel();
+		// 	}
+		// });
 
 		buttonY.onTrue(pivotManualRaise);
 		buttonY.onFalse(new InstantCommand() {
@@ -256,8 +256,8 @@ public class RobotContainer {
 			}
 		});
 
-		secondRightBump.onTrue(shoot);
-		secondRightBump.onFalse(new InstantCommand() {
+		buttonA.onTrue(shoot);
+		buttonA.onFalse(new InstantCommand() {
 			@Override
 			public void initialize() {
 				shoot.cancel();
