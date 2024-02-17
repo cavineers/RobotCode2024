@@ -24,7 +24,13 @@ public class ShooterIntake extends SubsystemBase {
         OFF,
         REVERSE,
         RETRACT,
-        SLOW
+    }
+
+    public enum Intake2ndMotorState{
+        ON,
+        OFF,
+        REVERSE,
+        RETRACT
     }
 
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.ShooterIntake.ShooterCanID, MotorType.kBrushless);
@@ -37,7 +43,7 @@ public class ShooterIntake extends SubsystemBase {
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
-
+    public Intake2ndMotorState intake2ndMotorState = Intake2ndMotorState.OFF;
 
     public ShooterIntake() {
        
@@ -48,9 +54,6 @@ public class ShooterIntake extends SubsystemBase {
         this.shooterMotor.setSmartCurrentLimit(41); //TBD
         this.intakeMotor.setSmartCurrentLimit(41); //TBD
         this.intake2ndMotor.setSmartCurrentLimit(41); //TBD
-
-        this.intakeMotor.setInverted(true);
-        this.intake2ndMotor.follow(intakeMotor, true);
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
@@ -94,9 +97,6 @@ public class ShooterIntake extends SubsystemBase {
             this.intakeMotor.set(Constants.ShooterIntake.IntakeRetractSpeed);
             break;
 
-            case SLOW:
-            this.intakeMotor.set(Constants.ShooterIntake.IntakeSlowSpeed);
-
             case OFF:
             this.intakeMotor.set(0.0);
             break;
@@ -106,6 +106,32 @@ public class ShooterIntake extends SubsystemBase {
 
         }
     } 
+    
+    public void setIntake2ndMotorState(Intake2ndMotorState state) {
+        
+        this.intake2ndMotorState = state;
+
+        switch (state) {
+            case ON:
+             this.intake2ndMotor.set(Constants.ShooterIntake.Intake2ndForwardSpeed);
+             break;
+
+            case OFF:
+            this.intake2ndMotor.set(0);
+            break;
+
+            case REVERSE:
+            this.intake2ndMotor.set(Constants.ShooterIntake.Intake2ndReverseSpeed);
+            break;
+
+            case RETRACT:
+            this.intake2ndMotor.set(Constants.ShooterIntake.Intake2ndRetractSpeed);
+            break;
+
+            default:
+            this.setIntake2ndMotorState(Intake2ndMotorState.OFF);
+        }
+    }
 
 
     public ShooterMotorState getShooterMotorState() {
@@ -115,6 +141,10 @@ public class ShooterIntake extends SubsystemBase {
     public IntakeMotorState getIntakeMotorState() {
         return this.intakeMotorState;
     }
+
+    public Intake2ndMotorState getIntake2ndMotorState() {
+        return this.intake2ndMotorState;
+    }
     
     public double getShooterMotorSpeed() {
         return this.shooterMotor.get();
@@ -122,6 +152,10 @@ public class ShooterIntake extends SubsystemBase {
     
     public double getIntakeMotorSpeed() {
         return this.intakeMotor.get();
+    }
+
+    public double getIntake2ndMotorSpeed() {
+        return this.intake2ndMotor.get();
     }
 
     public void periodic(){  
