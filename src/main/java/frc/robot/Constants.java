@@ -157,6 +157,11 @@ public final class Constants {
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
         public static final double LowerClimberMaxRotations = 4; // TBD
+        public static final double kP = 10; //TBD
+        public static final double kD = 10; //TBD
+        public static final double kI = 10; //TBD
+
+
     }
 
     public static final class ShooterIntake {
