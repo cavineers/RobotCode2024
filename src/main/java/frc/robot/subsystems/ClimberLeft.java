@@ -68,10 +68,8 @@ public class ClimberLeft extends SubsystemBase {
 
         if (orientation == "top") {
             switched = this.leftClimberTopLimitSwitch.get();
-            System.out.println("left top");
         } else {
             switched = this.leftClimberBottomLimitSwitch.get();
-            System.out.println("left bottom");
         }
 
         return switched;

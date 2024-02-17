@@ -45,7 +45,6 @@ public class RiseClimberCommand extends Command {
                 climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
                 this.leftRaised = true;
             } else if (!climberLeft.getLimitSwitch("top")) {
-                System.out.println("Right raising");
                 climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.ON);
             }
 
