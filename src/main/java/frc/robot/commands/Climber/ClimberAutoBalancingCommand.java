@@ -16,26 +16,20 @@ public class ClimberAutoBalancingCommand extends Command {
 	private double setpoint;
 
 	private boolean isBalanced;
-	private String side;
     private ClimberLeft climberLeft;
     private ClimberRight climberRight;
 
-	public ClimberAutoBalancingCommand(ClimberLeft climberLeft, ClimberRight climberRight, String side){
+	public ClimberAutoBalancingCommand(ClimberLeft climberLeft, ClimberRight climberRight){
 
 		gyro = new AHRS(SPI.Port.kMXP);
 		roll = gyro.getRoll();
 		setpoint = 0;
-		PIDController pidController = new PIDController(frc.robot.Constants.Climber.kP, frc.robot.Constants.Climber.kI, frc.robot.Constants.Climber.kD);
+		pidController = new PIDController(frc.robot.Constants.Climber.kP, frc.robot.Constants.Climber.kI, frc.robot.Constants.Climber.kD);
 
 		isBalanced = false;
 		this.climberLeft = climberLeft;
         this.climberRight = climberRight;
-
-		if (side == "left") {
-			this.addRequirements(climberLeft);
-		} else {
-			this.addRequirements(climberRight);
-		}
+		this.addRequirements(climberLeft, climberRight);
 	}
 
 	@Override
@@ -46,16 +40,18 @@ public class ClimberAutoBalancingCommand extends Command {
 		if (roll > 0) {
 			//Apply a PID loop to the right climber
 			isBalanced = false;
-			climberRight.rightClimberMotor.set(pidController.calculate());
+			climberRight.rightClimberMotor.set(pidController.calculate(roll, setpoint));
 
 		} else if (roll < 0) {
 			//Apply a PID loop to the left climber
 			isBalanced = false;
-			climberLeft.leftClimberMotor.set(pidController.calculate());
+			climberLeft.leftClimberMotor.set(pidController.calculate(roll, setpoint));
 		} else {
 			isBalanced = true;
 		}
 	}
+
+	//Set tolerance 
 
 	@Override
     public void end(boolean interrupted) {
