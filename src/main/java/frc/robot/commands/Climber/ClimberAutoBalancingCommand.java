@@ -46,12 +46,12 @@ public class ClimberAutoBalancingCommand extends Command {
 		if (roll > 0) {
 			//Apply a PID loop to the right climber
 			isBalanced = false;
-			climberRight.rightClimberMotor.set(pidController.calculate(climberRight.rightClimberMotor.getEncoder().getDistance(), setpoint));
+			climberRight.rightClimberMotor.set(pidController.calculate());
 
 		} else if (roll < 0) {
 			//Apply a PID loop to the left climber
 			isBalanced = false;
-			climberLeft.leftClimberMotor.set(pidController.calculate(climberLeft.leftClimberMotor.getEncoder().getDistance(), setpoint));
+			climberLeft.leftClimberMotor.set(pidController.calculate());
 		} else {
 			isBalanced = true;
 		}
