@@ -34,7 +34,7 @@ public class ClimberAutoBalancingCommand extends Command {
 		if (side == "left") {
 			this.addRequirements(climberLeft);
 		} else {
-			this.addRequirements(climberLeft);
+			this.addRequirements(climberRight);
 		}
 	}
 
