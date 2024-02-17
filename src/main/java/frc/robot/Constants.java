@@ -61,7 +61,8 @@ public final class Constants {
         public static final int RightClimberBottomLimitSwitch = 6;
 
         public static final int NoteSensor = 7;
-        public static final int IntakeSwitch = 8;
+        public static final int NoteSensor2 = 8;
+        public static final int IntakeSwitch = 9;
 
     }
 

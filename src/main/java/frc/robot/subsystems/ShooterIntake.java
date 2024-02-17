@@ -28,6 +28,7 @@ public class ShooterIntake extends SubsystemBase {
     public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.CanIDs.Intake2ndCanID, MotorType.kBrushless);
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
+    public DigitalInput noteSensor2 = new DigitalInput(Constants.DIO.NoteSensor2);
 
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
@@ -117,6 +118,13 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public void periodic() {
+        if (noteSensor2.get() == false) {
+            this.intakeMotor.setIdleMode(IdleMode.kBrake);
+            this.intakeMotor.setIdleMode(IdleMode.kBrake);
+        } else {
+            this.intakeMotor.setIdleMode(IdleMode.kCoast);
+            this.intakeMotor.setIdleMode(IdleMode.kCoast);
+        }
 
     }
 
