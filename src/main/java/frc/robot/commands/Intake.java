@@ -29,8 +29,14 @@ public class Intake extends Command{
         if (shooterIntake.noteSensor.get() == false) {
             shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
         } else {
+            shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.SLOW);
+        }
+        if (shooterIntake.noteSensor2.get() == false) {
+            shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
+        } else {
             shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
         }
+
 
     }
 

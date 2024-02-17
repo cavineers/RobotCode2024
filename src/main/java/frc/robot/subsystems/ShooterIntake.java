@@ -23,7 +23,8 @@ public class ShooterIntake extends SubsystemBase {
         ON,
         OFF,
         REVERSE,
-        RETRACT
+        RETRACT,
+        SLOW
     }
 
     
@@ -33,7 +34,7 @@ public class ShooterIntake extends SubsystemBase {
     public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.ShooterIntake.Intake2ndCanID, MotorType.kBrushless);
     
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.noteSensor);
-    
+    public DigitalInput noteSensor2 = new DigitalInput(Constants.DIO.noteSensor2);
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
@@ -94,6 +95,9 @@ public class ShooterIntake extends SubsystemBase {
             case RETRACT:
             this.intakeMotor.set(Constants.ShooterIntake.IntakeRetractSpeed);
             break;
+
+            case SLOW:
+            this.intakeMotor.set(Constants.ShooterIntake.IntakeSlowSpeed);
 
             case OFF:
             this.intakeMotor.set(0.0);

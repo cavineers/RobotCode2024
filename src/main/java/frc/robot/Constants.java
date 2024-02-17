@@ -20,6 +20,7 @@ public final class Constants {
     
     public static final class DIO {
         public static int noteSensor = 0;
+        public static int noteSensor2 = 1;
     }
 
     public static final class DriveConstants {
@@ -112,7 +113,8 @@ public final class Constants {
         public static final double ShooterReverseSpeed = -.5; //TBD
         public static final double IntakeForwardSpeed = .3; //TBD
         public static final double IntakeReverseSpeed = -.3; //TBD
-        public static final double IntakeRetractSpeed = -.05; //TBD     
+        public static final double IntakeRetractSpeed = -.05; //TBD 
+        public static final double IntakeSlowSpeed = .23;    
     }
 
 }
