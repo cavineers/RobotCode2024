@@ -111,10 +111,9 @@ public final class Constants {
 
         public static final double ShooterForwardSpeed = 1; //TBD
         public static final double ShooterReverseSpeed = -.5; //TBD
-        public static final double IntakeForwardSpeed = .3; //TBD
-        public static final double IntakeReverseSpeed = -.3; //TBD
-        public static final double IntakeRetractSpeed = -.05; //TBD 
-        public static final double IntakeSlowSpeed = .23;    
+        public static final double IntakeForwardSpeed = .8; //TBD
+        public static final double IntakeReverseSpeed = -.8; //TBD
+        public static final double IntakeRetractSpeed = -.05; //TBD     
     }
 
 }

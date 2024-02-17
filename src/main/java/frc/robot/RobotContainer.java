@@ -74,41 +74,16 @@ public class RobotContainer {
         // Configure Commands
 
         // // Intake
-        buttonX.onTrue(intake);
-        buttonX.onFalse(new InstantCommand() {
-            @Override
-            public void initialize() {
-                intake.cancel();
-            }
-        });
+        buttonX.whileTrue(intake);
 
         // // Outtake
-        buttonB.onTrue(outtake);
-        buttonB.onFalse(new InstantCommand() {
-            @Override
-            public void initialize() {
-                outtake.cancel();
-            }
-        });
+        buttonB.whileTrue(outtake);
 
         // // Shoot
-        buttonA.onTrue(shoot);
-        buttonA.onFalse(new InstantCommand() {
-            @Override
-            public void initialize() {
-                shoot.cancel();
-            }
-        });
+        buttonA.whileTrue(shoot);
 
         // // Shoot Manual
-        rightTrigger.onTrue(shoot_manual);
-        rightTrigger.onFalse(new InstantCommand() {
-            @Override
-            public void initialize() {
-                shoot_manual.cancel();
-            }
-        });
-
+        rightTrigger.whileTrue(shoot_manual);
 
     }   
 
