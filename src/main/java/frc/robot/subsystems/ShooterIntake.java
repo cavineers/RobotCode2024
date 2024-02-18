@@ -45,7 +45,7 @@ public class ShooterIntake extends SubsystemBase {
         this.intake2ndMotor.setSmartCurrentLimit(80); // TBD
 
         this.shooterMotor.setInverted(true);
-        this.intakeMotor.setInverted(false);
+        this.intakeMotor.setInverted(true);
         this.intake2ndMotor.follow(intakeMotor, true);
     }
 
@@ -106,6 +106,10 @@ public class ShooterIntake extends SubsystemBase {
 
     public IntakeMotorState getIntakeMotorState() {
         return this.intakeMotorState;
+    }
+
+    public double getShooterMotorRPM() {
+        return shooterMotor.getEncoder().getVelocity();
     }
 
     public double getShooterMotorSpeed() {

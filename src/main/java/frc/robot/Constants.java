@@ -18,7 +18,6 @@ public final class Constants {
         public static final double kPTurning = 0.5;
     }
 
-
     public static final class CanIDs{
         public static final int kPigeonID = 23;
 
@@ -43,8 +42,8 @@ public final class Constants {
         public static final int RightClimberCanID = 22; 
 
         public static final int ShooterCanID = 4; 
-        public static final int IntakeCanID = 1; 
-        public static final int Intake2ndCanID = 2; 
+        public static final int IntakeCanID = 2; 
+        public static final int Intake2ndCanID = 1; 
     }
 
         
@@ -179,7 +178,7 @@ public final class Constants {
 
         public static final double ShooterForwardSpeed = 1; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
-        public static final double IntakeForwardSpeed = 1; // TBD
+        public static final double IntakeForwardSpeed = .7; // TBD
         public static final double IntakeReverseSpeed = -.3; // TBD
         public static final double IntakeRetractSpeed = -.05; // TBD
     }
