@@ -42,11 +42,13 @@ public class ArmBase extends SubsystemBase {
         switch (state) {
         case ON:
             // On
-            if (higherGantryLimitSwitch.get() == false) {
+            // if (higherGantryLimitSwitch.get() == false) {
                 this.baseMotor.set(Constants.ArmBase.SpeedForwards);
-            } else {
-                this.baseMotor.set(0.0);
-            }
+            // } else {
+            //     this.baseMotor.set(0.0);
+            // }
+                if (this.getBaseMotorPosition() >= Constants.ArmBase.MaxRotations)
+                    this.baseMotor.set(0);
             break;
 
         case OFF:
@@ -56,11 +58,13 @@ public class ArmBase extends SubsystemBase {
 
         case REVERSED:
             //Reversed
-            if (lowerGantryLimitSwitch.get() == false) {
+            // if (lowerGantryLimitSwitch.get() == false) {
                 this.baseMotor.set(Constants.ArmBase.SpeedBackwards);
-            } else {
-                this.baseMotor.set(0.0);
-            }
+            // } else {
+            //     this.baseMotor.set(0.0);
+            // }
+            if (this.getBaseMotorPosition() <= Constants.ArmBase.MinRotations)
+                this.baseMotor.set(0);
             break;
 
         default:

@@ -30,7 +30,7 @@ public class ArmPivot extends SubsystemBase {
     public ArmPivot() {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
         this.pivotMotor.setSmartCurrentLimit(51);
-        this.pivotMotor.setInverted(false);
+        this.pivotMotor.setInverted(true);
 
     }
 
@@ -45,6 +45,9 @@ public class ArmPivot extends SubsystemBase {
             this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedForwards);
             SmartDashboard.putString("PivotMotorState", "On");
 
+            if (this.getPivotMotorPosition() >= Constants.ArmPivot.PivotMotorUpperRotationLimit)
+                this.pivotMotor.set(0);
+
             break;
 
         case OFF:
@@ -58,6 +61,9 @@ public class ArmPivot extends SubsystemBase {
             // Reversed
             this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedBackwards);
             SmartDashboard.putString("PivotMotorState", "Reversed");
+
+            if (this.getPivotMotorPosition() <= Constants.ArmPivot.PivotMotorLowerRotationLimit)
+                this.pivotMotor.set(0);
 
             break;
 
@@ -83,7 +89,8 @@ public class ArmPivot extends SubsystemBase {
     }
 
     public double getPivotEncoderPosition() {
-        return this.pivotEncoder.get();
+        //return this.pivotEncoder.get();
+        return this.pivotMotor.getEncoder().getPosition();
     }
 
     public double getPivotEncoderFrequency() {

@@ -38,9 +38,9 @@ public class ArmPreset extends Command {
     public void execute() {
 
 
-        if (armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEcoderDeadzone) {
+        if (armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEncoderDeadzone) {
             armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
-        } else if (armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
+        } else if (armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEncoderDeadzone) {
             armBase.setBaseMotorState(armBase.baseMotorState.ON);
         } else {
             armBase.setBaseMotorState(armBase.baseMotorState.OFF);

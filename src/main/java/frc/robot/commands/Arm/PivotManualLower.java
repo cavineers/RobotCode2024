@@ -23,14 +23,8 @@ public class PivotManualLower extends Command {
 
     @Override
     public void execute() {
-        if (armPivot.getPivotEncoderPosition() > Constants.ArmPivot.PivotMotorLowerRotationLimit) {
-            armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
-            SmartDashboard.putString("Pivot State", "Lowering");
 
-        } else {
-            armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
-            SmartDashboard.putString("Pivot State", "Hit Limit");
-        }
+            armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
 
     }
 

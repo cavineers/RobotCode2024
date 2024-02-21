@@ -129,11 +129,11 @@ public final class Constants {
 
     public static final class ArmPivot {
     
-        public static final double PivotMotorSpeedForwards = 0.1;
+        public static final double PivotMotorSpeedForwards = 0.3;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
-        public static final double PivotMotorLowerRotationLimit = -10;
-        public static final double PivotMotorUpperRotationLimit = 10;
+        public static final double PivotMotorLowerRotationLimit = 0;
+        public static final double PivotMotorUpperRotationLimit = 27;
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
@@ -149,13 +149,13 @@ public final class Constants {
 
     public static final class ArmBase {
 
-        public static final double SpeedForwards = 0.1;
-        public static final double SpeedBackwards = -0.1;
+        public static final double SpeedForwards = 0.2;
+        public static final double SpeedBackwards = -0.15;
 
-        public static final double MaxRotations = 10;
+        public static final double MaxRotations = 95;
         public static final double MinRotations = 0;
 
-        public static final double ArmBaseEcoderDeadzone = 0.4;
+        public static final double ArmBaseEncoderDeadzone = 0.4;
 
         public static final double BaseMotorEaseFactor = 0.1;
 

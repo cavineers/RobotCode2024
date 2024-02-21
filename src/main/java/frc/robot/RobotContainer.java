@@ -209,13 +209,13 @@ public class RobotContainer {
 			}
 		});
 
-		// buttonA.onTrue(pivotManualLower);
-		// buttonA.onFalse(new InstantCommand() {
-		// 	@Override
-		// 	public void initialize() {
-		// 		pivotManualLower.cancel();
-		// 	}
-		// });
+		driverJoystick.a().onTrue(pivotManualLower);
+		buttonA.onFalse(new InstantCommand() {
+			@Override
+			public void initialize() {
+				pivotManualLower.cancel();
+			}
+		});
 
 		buttonY.onTrue(pivotManualRaise);
 		buttonY.onFalse(new InstantCommand() {
@@ -256,13 +256,13 @@ public class RobotContainer {
 			}
 		});
 
-		buttonA.onTrue(shoot);
-		buttonA.onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				shoot.cancel();
-			}
-		});
+		// buttonA.onTrue(shoot);
+		// buttonA.onFalse(new InstantCommand() {
+		// 	@Override
+		// 	public void initialize() {
+		// 		shoot.cancel();
+		// 	}
+		// });
 
 		// ClimberCommands
 		secondButtonA.onTrue(lowerLeftClimber);
