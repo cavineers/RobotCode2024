@@ -24,7 +24,7 @@ public class PivotManualLower extends Command {
     @Override
     public void execute() {
 
-        this.armPivot.setSetpoint(-.5);
+        this.armPivot.setSetpointAdd(-.5);
 
     }
 

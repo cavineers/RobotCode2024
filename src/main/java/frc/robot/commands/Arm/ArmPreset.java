@@ -38,34 +38,13 @@ public class ArmPreset extends Command {
     public void execute() {
 
 
-        // if (armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEncoderDeadzone) {
-        //     armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
-        // } else if (armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEncoderDeadzone) {
-        //     armBase.setBaseMotorState(armBase.baseMotorState.ON);
-        // } else {
-        //     armBase.setBaseMotorState(armBase.baseMotorState.OFF);
-        //     gantryDone = true;
-        // }
-        
-        // if (armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-        //     armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
-        // } else if (armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-        //     armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
-        // } else {
-        //     armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
-        //     pivotDone = true;
-        // }
-        
-        if (gantryDone == true && pivotDone == true) {
-            cancel();
-        }
+        this.armBase.setSetpoint(gantryRotations);
+        this.armPivot.setSetpoint(pivotRotations);
 
     }
 
     @Override
     public void end(boolean interrupted) {
 
-        // armBase.setBaseMotorState(armBase.baseMotorState.OFF);
-        // armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
     }
 }

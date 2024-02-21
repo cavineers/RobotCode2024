@@ -38,41 +38,6 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.setInverted(true);
     }
 
-    // public void setPivotMotorState(PivotMotorState state) {
-    //     // set the current state
-    //     this.pivotMotorState = state;
-
-    //     // set motor state
-    //     switch (state) {
-    //     case ON:
-    //         // On
-    //         this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedForwards);
-    //         SmartDashboard.putString("PivotMotorState", "On");
-
-    //         if (this.getPivotMotorPosition() >= Constants.ArmPivot.PivotMotorUpperRotationLimit)
-    //             this.pivotMotor.set(0);
-    //         break;
-
-    //     case OFF:
-    //         // Off
-    //         this.pivotMotor.set(0);
-    //         SmartDashboard.putString("PivotMotorState", "Off");
-    //         break;
-
-    //     case REVERSED:
-    //         // Reversed
-    //         this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedBackwards);
-    //         SmartDashboard.putString("PivotMotorState", "Reversed");
-
-    //         if (this.getPivotMotorPosition() <= Constants.ArmPivot.PivotMotorLowerRotationLimit)
-    //             this.pivotMotor.set(0);
-    //         break;
-
-    //     default:
-    //         this.setPivotMotorState(PivotMotorState.OFF);
-    //     }
-    // }
-
     public double getPivotMotorPosition() {
         return this.pivotMotor.getEncoder().getPosition();
     }
@@ -98,20 +63,38 @@ public class ArmPivot extends SubsystemBase {
         return this.pivotEncoder.getFrequency();
     }
 
-    public void setSetpoint(double s){
+    public void setSetpointAdd(double s){
         motorSetpoint += s;
+        if(this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+        }else if(this.motorSetpoint < Constants.ArmPivot.PivotMotorLowerRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        }
+        
+    }
+
+    public void setSetpoint(double s){
+        motorSetpoint = s;
+        if(this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+        }else if(this.motorSetpoint < Constants.ArmPivot.PivotMotorLowerRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        }
+        
     }
 
     public void periodic() {
 
         SmartDashboard.putNumber("PivotRot", getPivotMotorPosition());
 
-        if (this.motorSetpoint < Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint > Constants.ArmPivot.PivotMotorLowerRotationLimit){
-            pivotMotor.set(pivotPid.calculate(getPivotMotorPosition(), motorSetpoint));
-        }else if(this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-        }else if(this.motorSetpoint < Constants.ArmPivot.PivotMotorLowerRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        
+        if (this.motorSetpoint <= Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint >= Constants.ArmPivot.PivotMotorLowerRotationLimit){
+            pivotPid.setSetpoint(motorSetpoint);
+            double speed = pivotPid.calculate(getPivotMotorPosition());
+            SmartDashboard.putNumber("Speed", speed);
+    
+            pivotMotor.set(speed);
         }
+        SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
     }
 }
