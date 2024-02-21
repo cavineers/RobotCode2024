@@ -178,9 +178,12 @@ public final class Constants {
 
         public static final double ShooterForwardSpeed = 1; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
-        public static final double IntakeForwardSpeed = .7; // TBD
-        public static final double IntakeReverseSpeed = -.3; // TBD
-        public static final double IntakeRetractSpeed = -.05; // TBD
+        public static final double UpperIntakeForwardSpeed = .7; // TBD
+        public static final double LowerIntakeForwardSpeed = .7; // TBD
+        public static final double UpperIntakeReverseSpeed = -.3; // TBD
+        public static final double LowerIntakeReverseSpeed = -.3; // TBD
+        public static final double UpperIntakeRetractSpeed = -.05; // TBD
+        public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }
 
 }
