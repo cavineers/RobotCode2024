@@ -100,7 +100,7 @@ public class ShooterIntake extends SubsystemBase {
             break;
 
         default:
-            this.setUpperIntakeMotorState(UpperIntakeMotorState.OFF);
+            this.setIntakeMotorState(IntakeMotorState.OFF);
 
         }
     }
@@ -109,7 +109,7 @@ public class ShooterIntake extends SubsystemBase {
         return this.shooterMotorState;
     }
 
-    public UpperIntakeMotorState getIntakeMotorState() {
+    public IntakeMotorState getIntakeMotorState() {
         return this.intakeMotorState;
     }
 
