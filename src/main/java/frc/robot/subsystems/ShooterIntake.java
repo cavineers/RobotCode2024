@@ -23,12 +23,12 @@ public class ShooterIntake extends SubsystemBase {
         RETRACT
     }
 
-    public CANSparkMax shooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
+    public CANSparkMax upperShooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
+    public CANSparkMax lowerShooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
     public CANSparkMax upperIntakeMotor = new CANSparkMax(Constants.CanIDs.UpperIntakeCanID, MotorType.kBrushless);
     public CANSparkMax lowerIntakeMotor = new CANSparkMax(Constants.CanIDs.LowerIntakeCanID, MotorType.kBrushless);
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
-
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
@@ -36,15 +36,18 @@ public class ShooterIntake extends SubsystemBase {
 
     public ShooterIntake() {
 
-        this.shooterMotor.setIdleMode(IdleMode.kCoast);
+        this.upperShooterMotor.setIdleMode(IdleMode.kCoast);
+        this.lowerShooterMotor.setIdleMode(IdleMode.kCoast);
         this.upperIntakeMotor.setIdleMode(IdleMode.kCoast);
         this.lowerIntakeMotor.setIdleMode(IdleMode.kCoast);
 
-        this.shooterMotor.setSmartCurrentLimit(120); // TBD
+        this.upperShooterMotor.setSmartCurrentLimit(120); // TBD
+        this.lowerShooterMotor.setSmartCurrentLimit(120); //TBD
         this.upperIntakeMotor.setSmartCurrentLimit(80); // TBD
         this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
 
-        this.shooterMotor.setInverted(true);
+        this.upperShooterMotor.setInverted(true);
+        this.lowerShooterMotor.setInverted(true);
         this.upperIntakeMotor.setInverted(true);
         this.lowerIntakeMotor.setInverted(false);
         
@@ -57,18 +60,22 @@ public class ShooterIntake extends SubsystemBase {
         switch (state) {
 
         case ON:
-            this.shooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
+            this.upperShooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
+            this.lowerShooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
             break;
 
         case REVERSE:
-            this.shooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
+            this.upperShooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
+            this.lowerShooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
             break;
 
         case OFF:
-            this.shooterMotor.set(0.0);
+            this.upperShooterMotor.set(0.0);
+            this.upperShooterMotor.set(0);
             break;
 
         default:
+            this.setShooterMotorState(ShooterMotorState.OFF);
             this.setShooterMotorState(ShooterMotorState.OFF);
         }
     }
@@ -105,22 +112,29 @@ public class ShooterIntake extends SubsystemBase {
         }
     }
 
-    public ShooterMotorState getShooterMotorState() {
-        return this.shooterMotorState;
+    public ShooterMotorState getupperShooterMotorState() {
+        return this.getupperShooterMotorState();
+    }
+    public ShooterMotorState getlowerShooterMotorState() {
+        return this.getlowerShooterMotorState();
     }
 
     public IntakeMotorState getIntakeMotorState() {
         return this.intakeMotorState;
     }
 
-    public double getShooterMotorRPM() {
-        return shooterMotor.getEncoder().getVelocity();
+    public double getupperShooterMotorRPM() {
+        return upperShooterMotor.getEncoder().getVelocity();
     }
-
-    public double getShooterMotorSpeed() {
-        return this.shooterMotor.get();
+    public double getlowerShooterMotorRPM() {
+        return lowerShooterMotor.getEncoder().getVelocity();
     }
-
+    public double getupperShooterMotorSpeed() {
+        return this.upperShooterMotor.get();
+    }
+    public double getlowerShooterMotorSpeed() {
+        return this.lowerIntakeMotor.get();
+    }
     public double getUpperIntakeMotorSpeed() {
         return this.upperIntakeMotor.get();
     }
