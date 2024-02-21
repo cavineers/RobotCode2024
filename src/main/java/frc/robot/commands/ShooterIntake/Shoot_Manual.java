@@ -36,7 +36,8 @@ public class Shoot_Manual extends Command {
 
         SmartDashboard.putNumber("RightTriggerValue", shooterMotorSpeed);
         SmartDashboard.putNumber("ShooterMotorSpeed", shooterIntake.getShooterMotorSpeed());
-        SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getIntakeMotorSpeed());
+        SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getUpperIntakeMotorSpeed());
+        SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getLowerIntakeMotorSpeed());
 
         shooterMotorSpeed = shooterMotorSpeed * Constants.ShooterIntake.ShooterForwardSpeed;
 

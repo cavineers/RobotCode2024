@@ -24,8 +24,8 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
-    public CANSparkMax intakeMotor = new CANSparkMax(Constants.CanIDs.IntakeCanID, MotorType.kBrushless);
-    public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.CanIDs.Intake2ndCanID, MotorType.kBrushless);
+    public CANSparkMax upperIntakeMotor = new CANSparkMax(Constants.CanIDs.UpperIntakeCanID, MotorType.kBrushless);
+    public CANSparkMax lowerIntakeMotor = new CANSparkMax(Constants.CanIDs.LowerIntakeCanID, MotorType.kBrushless);
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
 
@@ -37,16 +37,17 @@ public class ShooterIntake extends SubsystemBase {
     public ShooterIntake() {
 
         this.shooterMotor.setIdleMode(IdleMode.kCoast);
-        this.intakeMotor.setIdleMode(IdleMode.kCoast);
-        this.intakeMotor.setIdleMode(IdleMode.kCoast);
+        this.upperIntakeMotor.setIdleMode(IdleMode.kCoast);
+        this.lowerIntakeMotor.setIdleMode(IdleMode.kCoast);
 
         this.shooterMotor.setSmartCurrentLimit(120); // TBD
-        this.intakeMotor.setSmartCurrentLimit(80); // TBD
-        this.intake2ndMotor.setSmartCurrentLimit(80); // TBD
+        this.upperIntakeMotor.setSmartCurrentLimit(80); // TBD
+        this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
 
         this.shooterMotor.setInverted(true);
-        this.intakeMotor.setInverted(true);
-        this.intake2ndMotor.follow(intakeMotor, true);
+        this.upperIntakeMotor.setInverted(true);
+        this.lowerIntakeMotor.setInverted(false);
+        
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
@@ -79,19 +80,23 @@ public class ShooterIntake extends SubsystemBase {
         switch (state) {
 
         case ON:
-            this.intakeMotor.set(Constants.ShooterIntake.IntakeForwardSpeed);
+            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeForwardSpeed);
+            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeForwardSpeed);
             break;
 
         case REVERSE:
-            this.intakeMotor.set(Constants.ShooterIntake.IntakeReverseSpeed);
+            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeReverseSpeed);
+            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeReverseSpeed);
             break;
 
         case RETRACT:
-            this.intakeMotor.set(Constants.ShooterIntake.IntakeRetractSpeed);
+            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeRetractSpeed);
+            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeRetractSpeed);
             break;
 
         case OFF:
-            this.intakeMotor.set(0.0);
+            this.upperIntakeMotor.set(0.0);
+            this.lowerIntakeMotor.set(0.0);
             break;
 
         default:
@@ -116,8 +121,12 @@ public class ShooterIntake extends SubsystemBase {
         return this.shooterMotor.get();
     }
 
-    public double getIntakeMotorSpeed() {
-        return this.intakeMotor.get();
+    public double getUpperIntakeMotorSpeed() {
+        return this.upperIntakeMotor.get();
+    }
+
+    public double getLowerIntakeMotorSpeed() {
+        return this.lowerIntakeMotor.get();
     }
 
     public void periodic() {
