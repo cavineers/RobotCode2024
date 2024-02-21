@@ -71,11 +71,10 @@ public class ShooterIntake extends SubsystemBase {
 
         case OFF:
             this.upperShooterMotor.set(0.0);
-            this.upperShooterMotor.set(0);
+            this.lowerShooterMotor.set(0.0);
             break;
 
         default:
-            this.setShooterMotorState(ShooterMotorState.OFF);
             this.setShooterMotorState(ShooterMotorState.OFF);
         }
     }
@@ -112,29 +111,30 @@ public class ShooterIntake extends SubsystemBase {
         }
     }
 
-    public ShooterMotorState getupperShooterMotorState() {
-        return this.getupperShooterMotorState();
-    }
-    public ShooterMotorState getlowerShooterMotorState() {
-        return this.getlowerShooterMotorState();
+    public ShooterMotorState getShooterMotorState() {
+        return this.shooterMotorState;
     }
 
     public IntakeMotorState getIntakeMotorState() {
         return this.intakeMotorState;
     }
 
-    public double getupperShooterMotorRPM() {
+    public double getUpperShooterMotorRPM() {
         return upperShooterMotor.getEncoder().getVelocity();
     }
-    public double getlowerShooterMotorRPM() {
+
+    public double getLowerShooterMotorRPM() {
         return lowerShooterMotor.getEncoder().getVelocity();
     }
-    public double getupperShooterMotorSpeed() {
+
+    public double getUpperShooterMotorSpeed() {
         return this.upperShooterMotor.get();
     }
-    public double getlowerShooterMotorSpeed() {
+
+    public double getLowerShooterMotorSpeed() {
         return this.lowerIntakeMotor.get();
     }
+
     public double getUpperIntakeMotorSpeed() {
         return this.upperIntakeMotor.get();
     }

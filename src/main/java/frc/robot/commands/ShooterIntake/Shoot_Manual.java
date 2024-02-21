@@ -35,7 +35,7 @@ public class Shoot_Manual extends Command {
         double shooterMotorSpeed = triggerValue.get();
 
         SmartDashboard.putNumber("RightTriggerValue", shooterMotorSpeed);
-        SmartDashboard.putNumber("ShooterMotorSpeed", shooterIntake.getShooterMotorSpeed());
+        SmartDashboard.putNumber("ShooterMotorSpeed", shooterIntake.getUpperShooterMotorSpeed());
         SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getUpperIntakeMotorSpeed());
         SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getLowerIntakeMotorSpeed());
 
@@ -43,7 +43,8 @@ public class Shoot_Manual extends Command {
 
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
 
-        shooterIntake.shooterMotor.set(shooterMotorSpeed);
+        shooterIntake.upperShooterMotor.set(shooterMotorSpeed);
+        shooterIntake.lowerShooterMotor.set(shooterMotorSpeed);
 
     }
 

@@ -26,7 +26,7 @@ public class Shoot extends Command {
     public void execute() {
 
         SmartDashboard.putString("Shooter", "Shooting");
-        SmartDashboard.putNumber("Shooter RPM", shooterIntake.getShooterMotorRPM());
+        SmartDashboard.putNumber("Shooter RPM", shooterIntake.getUpperShooterMotorRPM());
         
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
         Timer.delay(2.5);
