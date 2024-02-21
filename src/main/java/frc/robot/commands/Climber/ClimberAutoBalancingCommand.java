@@ -37,12 +37,12 @@ public class ClimberAutoBalancingCommand extends Command {
 
 		roll = gyro.getRoll();
 
-		if (roll > 0) {
+		if (roll > 0 && !climberRight.getLimitSwitch("top")) {
 			//Apply a PID loop to the right climber
 			isBalanced = false;
 			climberRight.rightClimberMotor.set(pidController.calculate(roll, setpoint));
 
-		} else if (roll < 0) {
+		} else if (roll < 0 && !climberLeft.getLimitSwitch("top")) {
 			//Apply a PID loop to the left climber
 			isBalanced = false;
 			climberLeft.leftClimberMotor.set(pidController.calculate(roll, setpoint));
@@ -52,7 +52,6 @@ public class ClimberAutoBalancingCommand extends Command {
 	}
 
 	//Set tolerance 
-
 	@Override
     public void end(boolean interrupted) {
 		climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);

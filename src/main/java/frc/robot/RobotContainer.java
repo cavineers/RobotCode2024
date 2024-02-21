@@ -25,6 +25,7 @@ import frc.robot.commands.Arm.PivotManualLower;
 import frc.robot.commands.Arm.PivotManualRaise;
 import frc.robot.commands.Climber.LowerClimberCommand;
 import frc.robot.commands.Climber.RiseClimberCommand;
+import frc.robot.commands.Climber.ClimberAutoBalancingCommand;
 import frc.robot.commands.ShooterIntake.Intake;
 import frc.robot.commands.ShooterIntake.Outtake;
 import frc.robot.commands.ShooterIntake.Shoot;
@@ -91,6 +92,7 @@ public class RobotContainer {
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
 	public Command riseRightClimber;
+	public Command balanceClimber;
 
 	public Command intake;
 	public Command outtake;
@@ -158,6 +160,7 @@ public class RobotContainer {
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
 		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right");
+		balanceClimber = new ClimberAutoBalancingCommand(climberLeft, climberRight);
 
 		intake = new Intake(shooterIntake);
 		outtake = new Outtake(shooterIntake);
@@ -267,19 +270,27 @@ public class RobotContainer {
 			}
 		});
 
-		secondButtonX.onTrue(lowerRightClimber);
-		secondButtonX.onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				lowerRightClimber.cancel();
-			}
-		});
+		// secondButtonX.onTrue(lowerRightClimber);
+		// secondButtonX.onFalse(new InstantCommand() {
+		// 	@Override
+		// 	public void initialize() {
+		// 		lowerRightClimber.cancel();
+		// 	}
+		// });
 
 		secondButtonB.onTrue(riseRightClimber);
 		secondButtonB.onFalse(new InstantCommand() {
 			@Override
 			public void initialize() {
 				riseRightClimber.cancel();
+			}
+		});
+
+		secondButtonX.onTrue(balanceClimber);
+		secondButtonX.onFalse(new InstantCommand() {
+			@Override
+			public void initialize() {
+				balanceClimber.cancel();
 			}
 		});
 
