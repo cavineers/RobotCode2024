@@ -23,12 +23,13 @@ public class PivotManualRaise extends Command {
     @Override
     public void execute() {
 
-        armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
+        this.armPivot.setSetpoint(+.5);
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+
     }
 
 }

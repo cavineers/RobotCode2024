@@ -26,7 +26,7 @@ public final class Constants {
         public static final int kFrontRightDriveCanID = 25;
         public static final int kBackRightDriveCanID = 6;
 
-        public static final int kFrontLeftTurningCanID = 3;
+        public static final int kFrontLeftTurningCanID = 300;
         public static final int kBackLeftTurningCanID = 7;
         public static final int kFrontRightTurningCanID = 13;
         public static final int kBackRightTurningCanID = 5;
@@ -35,13 +35,13 @@ public final class Constants {
         public static final int kBackLeftAbsoluteEncoderPort = 12;
         public static final int kFrontRightAbsoluteEncoderPort = 10;
         public static final int kBackRightAbsoluteEncoderPort = 11;
-        public static final int PivotCanID = 29;
-        public static final int GantryCANID = 30;
+        public static final int PivotCanID = 3;
+        public static final int GantryCANID = 4;
 
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 22; 
 
-        public static final int ShooterCanID = 4; 
+        public static final int ShooterCanID = 400; 
         public static final int IntakeCanID = 2; 
         public static final int Intake2ndCanID = 1; 
     }
@@ -144,6 +144,12 @@ public final class Constants {
         public static final double ShootRotations = 20;
         public static final double SourceRotations = 30;
         public static final double AmpRotations = 40;
+
+        public static final double ProportionalGain = .5; // strength of a correction
+        public static final double IntegralTerm = 0.00; // additive strength over time
+        public static final double DerivitiveTerm = 0.0;
+
+        public static double MotorSetPoint = 0;
     
     }
 
