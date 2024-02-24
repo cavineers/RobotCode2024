@@ -41,7 +41,7 @@ public final class Constants {
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 22; 
 
-        public static final int ShooterCanID = 4; 
+        public static final int ShooterCanID = 40; 
         public static final int UpperIntakeCanID = 2; 
         public static final int LowerIntakeCanID = 1; 
     }
