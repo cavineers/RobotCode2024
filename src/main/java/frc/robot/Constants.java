@@ -133,7 +133,7 @@ public final class Constants {
         public static final double PivotMotorSpeedBackwards = -0.1;
     
         public static final double PivotMotorLowerRotationLimit = 0;
-        public static final double PivotMotorUpperRotationLimit = 27;
+        public static final double PivotMotorUpperRotationLimit = 40;
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
@@ -145,7 +145,7 @@ public final class Constants {
         public static final double SourceRotations = 30;
         public static final double AmpRotations = 40;
 
-        public static final double ProportionalGain = .03; // strength of a correction
+        public static final double ProportionalGain = .06; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
