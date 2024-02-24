@@ -286,18 +286,7 @@ public class RobotContainer {
 			}
 		});
 
-		secondButtonX.onTrue(balanceClimber);
-		secondButtonX.onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				balanceClimber.cancel();
-			}
-		});
-
-		// public SwerveDriveSubsystem getSwerveSubsystem() {
-		// return this.swerveSubsystem;
-		// }
-
+		buttonX.onTrue(balanceClimber);
 	}
 
 }
