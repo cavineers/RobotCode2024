@@ -35,15 +35,15 @@ public final class Constants {
         public static final int kBackLeftAbsoluteEncoderPort = 12;
         public static final int kFrontRightAbsoluteEncoderPort = 10;
         public static final int kBackRightAbsoluteEncoderPort = 11;
-        public static final int PivotCanID = 3;
-        public static final int GantryCANID = 4;
+        public static final int PivotCanID = 30;
+        public static final int GantryCANID = 40;
 
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 22; 
 
-        public static final int ShooterCanID = 40; 
+        public static final int ShooterCanID = 3; 
         public static final int UpperIntakeCanID = 2; 
-        public static final int LowerIntakeCanID = 1; 
+        public static final int LowerIntakeCanID = 4; 
     }
 
         

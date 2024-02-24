@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
@@ -47,6 +48,8 @@ public class ShooterIntake extends SubsystemBase {
         this.shooterMotor.setInverted(true);
         this.upperIntakeMotor.setInverted(true);
         this.lowerIntakeMotor.setInverted(false);
+
+        this.shooterMotor.getEncoder().setMeasurementPeriod(64);
         
     }
 
@@ -130,7 +133,7 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public void periodic() {
-
+        System.out.println(getShooterMotorRPM());
     }
 
 }

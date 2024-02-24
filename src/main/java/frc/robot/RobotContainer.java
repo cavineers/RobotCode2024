@@ -33,7 +33,7 @@ import frc.robot.commands.ShooterIntake.Intake;
 import frc.robot.commands.ShooterIntake.Outtake;
 import frc.robot.commands.ShooterIntake.Shoot;
 import frc.robot.commands.ShooterIntake.Shoot_Manual;
-
+import frc.robot.commands.ShooterIntake.Shoot_Auto;
 
 
 
@@ -109,6 +109,7 @@ public class RobotContainer {
 	public Command intake;
 	public Command outtake;
 	public Command shoot;
+	public Command shootAuto;
 	public Command shootManual;
 	public SwerveHoming swerveHomingCommand;
 
@@ -179,6 +180,7 @@ public class RobotContainer {
 		outtake = new Outtake(shooterIntake);
 		shoot = new Shoot(shooterIntake);
 		shootManual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRightTriggerAxis());
+		shootAuto = new Shoot_Auto(shooterIntake);
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,
@@ -256,13 +258,13 @@ public class RobotContainer {
 			}
 		});
 
-		buttonA.onTrue(shoot);
-		buttonA.onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				shoot.cancel();
-			}
-		});
+		// buttonA.onTrue(shoot);
+		// buttonA.onFalse(new InstantCommand() {
+		// 	@Override
+		// 	public void initialize() {
+		// 		shoot.cancel();
+		// 	}
+		// });
 
 		// ClimberCommands
 		secondButtonA.onTrue(lowerLeftClimber);
@@ -300,6 +302,8 @@ public class RobotContainer {
 		// public SwerveDriveSubsystem getSwerveSubsystem() {
 		// return this.swerveSubsystem;
 		// }
+
+		driverJoystick.a().whileTrue(shootAuto);
 
 	}
 	public SwerveDriveSubsystem getSwerveSubsystem() {
