@@ -45,8 +45,8 @@ public class ShooterIntake extends SubsystemBase {
         this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
 
         this.shooterMotor.setInverted(true);
-        this.upperIntakeMotor.setInverted(true);
-        this.lowerIntakeMotor.setInverted(false);
+        this.upperIntakeMotor.setInverted(false);
+        this.lowerIntakeMotor.setInverted(true);
         
     }
 
