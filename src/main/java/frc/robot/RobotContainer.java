@@ -211,13 +211,13 @@ public class RobotContainer {
 			}
 		});
 
-		// driverJoystick.a().onTrue(pivotManualLower);
-		// buttonA.onFalse(new InstantCommand() {
-		// 	@Override
-		// 	public void initialize() {
-		// 		pivotManualLower.cancel();
-		// 	}
-		// });
+		buttonB.onTrue(pivotManualLower);
+		buttonB.onFalse(new InstantCommand() {
+			@Override
+			public void initialize() {
+				pivotManualLower.cancel();
+			}
+		});
 
 		buttonY.onTrue(pivotManualRaise);
 		buttonY.onFalse(new InstantCommand() {
