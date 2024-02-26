@@ -194,6 +194,11 @@ public final class Constants {
         public static final double LowerIntakeReverseSpeed = -.3; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
+
+        public static double kP = 0.00072; // Proportional
+        public static double kI = 0.0; // Integral
+        public static double kD = 0.0204; // Derivative
+        public static double kF = 0.000204; // Feed Forward
     }
 
 }

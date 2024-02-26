@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -30,10 +31,18 @@ public class ShooterIntake extends SubsystemBase {
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
 
+    public SparkPIDController shooterPID = shooterMotor.getPIDController();
+
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
+
+    private double shooterDistanceFromGround = 0;
+    private double shootingHeight = (2.0574 - shooterDistanceFromGround);
+    private double requiredShooterAngle;
+    private double requiredShooterVelocity;
+    private double requiredShooterRPM;
 
     public ShooterIntake() {
 
@@ -49,8 +58,15 @@ public class ShooterIntake extends SubsystemBase {
         this.upperIntakeMotor.setInverted(true);
         this.lowerIntakeMotor.setInverted(false);
 
-        this.shooterMotor.getEncoder().setMeasurementPeriod(64);
-        
+        this.shooterMotor.getEncoder().setMeasurementPeriod(8);
+
+        this.shooterPID.setIZone(0.0);
+        this.shooterPID.setOutputRange(-1.0, 1.0);
+        this.shooterPID.setP(Constants.ShooterIntake.kP);
+        this.shooterPID.setI(Constants.ShooterIntake.kI);
+        this.shooterPID.setD(Constants.ShooterIntake.kD);
+        this.shooterPID.setFF(Constants.ShooterIntake.kF);
+
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
@@ -108,6 +124,24 @@ public class ShooterIntake extends SubsystemBase {
         }
     }
 
+    public double calculateAngle(Double distance) {
+        requiredShooterAngle = (Math.atan(1/(distance/(2*shootingHeight))));
+
+        SmartDashboard.putNumber("Required Shooter Angle", requiredShooterAngle);
+
+        return requiredShooterAngle;
+    }
+
+    public double calculateVelocity(Double angle) {
+        requiredShooterVelocity = ((Math.sqrt(2*9.81*shootingHeight))/(Math.sin(angle)));
+        requiredShooterRPM = ((60*requiredShooterVelocity)/(.102*Math.PI));
+
+        SmartDashboard.putNumber("Required Shooter Velocity", requiredShooterVelocity);
+        SmartDashboard.putNumber("Required Shooter RPM", requiredShooterRPM);
+
+        return requiredShooterRPM;
+    }
+
     public ShooterMotorState getShooterMotorState() {
         return this.shooterMotorState;
     }
@@ -133,7 +167,7 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public void periodic() {
-        System.out.println(getShooterMotorRPM());
+        SmartDashboard.putNumber("Shooter RPM", getShooterMotorRPM());
     }
 
 }
