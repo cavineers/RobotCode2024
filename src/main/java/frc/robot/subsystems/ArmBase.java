@@ -13,7 +13,7 @@ import frc.robot.Constants;
 public class ArmBase extends SubsystemBase {
 
     PIDController basePid = new PIDController(Constants.ArmBase.ProportionalGain, Constants.ArmBase.IntegralTerm, Constants.ArmBase.DerivitiveTerm);
-
+    
     public enum BaseMotorState {
         ON, 
         OFF, 
@@ -37,6 +37,8 @@ public class ArmBase extends SubsystemBase {
         this.baseMotor.setIdleMode(IdleMode.kBrake);
 
         this.baseMotor.setSmartCurrentLimit(51);
+
+        this.basePid.setTolerance(frc.robot.Constants.ArmBase.ArmBaseEncoderTolerance);
     }
 
     public double getBaseMotorPosition() {
@@ -73,6 +75,14 @@ public class ArmBase extends SubsystemBase {
             this.motorSetpoint = Constants.ArmBase.MinRotations;
         }
         
+    }
+
+    public boolean statusPID(){
+        return basePid.atSetpoint();
+    }
+
+    public boolean systemEncoderCheck(){
+        return this.baseMotor.getEncoder() != null;
     }
 
     public void periodic() {

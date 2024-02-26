@@ -135,7 +135,7 @@ public final class Constants {
         public static final double PivotMotorLowerRotationLimit = 0;
         public static final double PivotMotorUpperRotationLimit = 40;
     
-        public static final double ArmPivotEcoderDeadzone = 0.4;
+        public static final double ArmPivotEncoderTolerance = 0.4;
     
         public static final double DistancePerRotation = 1;
     
@@ -161,7 +161,7 @@ public final class Constants {
         public static final double MaxRotations = 95;
         public static final double MinRotations = 0;
 
-        public static final double ArmBaseEncoderDeadzone = 0.4;
+        public static final double ArmBaseEncoderTolerance = 0.4;
 
         public static final double BaseMotorEaseFactor = 0.1;
 

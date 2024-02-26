@@ -36,6 +36,7 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
         this.pivotMotor.setSmartCurrentLimit(51);
         this.pivotMotor.setInverted(true);
+        this.pivotPid.setTolerance(Constants.ArmPivot.ArmPivotEncoderTolerance);
     }
 
     public double getPivotMotorPosition() {
@@ -81,6 +82,10 @@ public class ArmPivot extends SubsystemBase {
             this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
         }
         
+    }
+
+    public boolean statusPID(){
+        return pivotPid.atSetpoint();
     }
 
     public void periodic() {
