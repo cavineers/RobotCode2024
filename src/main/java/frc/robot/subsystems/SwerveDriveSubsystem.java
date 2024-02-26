@@ -76,7 +76,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         CanIDs.kBackRightAbsoluteEncoderPort, 
         DriveConstants.kBackRightAbsoluteEncoderOffset);
 
-    private final Pigeon2 gyro = new Pigeon2(CanIDs.kPigeonID);
+    // private final Pigeon2 gyro = new Pigeon2(CanIDs.kPigeonID);
     
 
 
@@ -91,8 +91,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public double getHeading(){ // Right Hand Rule with Offset
         
-        double gyroAngle = Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
-        return gyroAngle;
+        //double gyroAngle = Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
+        return 0;
     }
 
     public Rotation2d getRotation2d(){
@@ -177,7 +177,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         this.updatePoseWithVision();
         // Configure the AutoBuilder last
         AutoBuilder.configureHolonomic(
-            this::updatePoseWithVision, // Robot pose supplier
+            this::getPose, // Robot pose supplier
             this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRelativeSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
@@ -195,7 +195,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     private boolean successZeroHeading = false;
     public void zeroHeading() {
-        gyro.reset();
+        //gyro.reset();
         
         // Optional<EstimatedRobotPose> currentPose = visionSubsystem.getRobotPoseFieldRelative(); 
         // if (currentPose.isEmpty() == false){
@@ -251,6 +251,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         frontRight.resetEncoders();
         backLeft.resetEncoders();
         backRight.resetEncoders();
+    }
+
+    public Pose2d getPose(){
+        return this.updatedPose;
     }
  
     public void periodic(){
