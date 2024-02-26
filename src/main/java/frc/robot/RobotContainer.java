@@ -3,8 +3,10 @@ package frc.robot;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -12,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.commands.SwerveCommand;
 import frc.robot.commands.SwerveHoming;
+import frc.robot.commands.SystemsCheck;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.Constants.OIConstants;
@@ -112,6 +115,7 @@ public class RobotContainer {
 	public Command shootManual;
 	public SwerveHoming swerveHomingCommand;
 
+	public Command systemsCheck;
 
 
 	public RobotContainer() {
@@ -179,6 +183,8 @@ public class RobotContainer {
 		outtake = new Outtake(shooterIntake);
 		shoot = new Shoot(shooterIntake);
 		shootManual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRightTriggerAxis());
+		
+
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,
@@ -187,8 +193,13 @@ public class RobotContainer {
 					() -> -driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
 					() -> false));
 		configureButtonBindings();
-
+		configureSystemTestButton();
 	};
+
+	private void configureSystemTestButton(){
+		systemsCheck = new SystemsCheck(armBase, armPivot, climberLeft, climberRight, shooterIntake, swerveSubsystem, visionSubsystem);
+		SmartDashboard.putData("**RUN SYSTEMS CHECK**", systemsCheck);
+	}
 
 	private void configureButtonBindings() {
 
