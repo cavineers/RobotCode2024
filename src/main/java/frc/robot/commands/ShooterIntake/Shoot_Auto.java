@@ -47,7 +47,7 @@ public class Shoot_Auto extends Command {
         SmartDashboard.putString("Shooter", "Shooting");
 
         // Shooting Sequence
-        shooterIntake.shooterPID.setReference(shooterIntake.calculateVelocity(shooterIntake.calculateAngle(distanceMeters)), CANSparkMax.ControlType.kVelocity);
+        shooterIntake.setShooterPIDReference(distanceMeters);
         Timer.delay(2.5);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
         Timer.delay(.5);

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
@@ -39,7 +40,7 @@ public class ShooterIntake extends SubsystemBase {
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
 
     private double shooterDistanceFromGround = 0;
-    private double shootingHeight = (2.0574 - shooterDistanceFromGround);
+    private double shootingHeight;
     private double requiredShooterAngle;
     private double requiredShooterVelocity;
     private double requiredShooterRPM;
@@ -125,6 +126,9 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public double calculateAngle(Double distance) {
+
+        shootingHeight = (Constants.ShooterIntake.shootingVertexHeightMeters - shooterDistanceFromGround);
+
         requiredShooterAngle = (Math.atan(1/(distance/(2*shootingHeight))));
 
         SmartDashboard.putNumber("Required Shooter Angle", requiredShooterAngle);
@@ -140,6 +144,10 @@ public class ShooterIntake extends SubsystemBase {
         SmartDashboard.putNumber("Required Shooter RPM", requiredShooterRPM);
 
         return requiredShooterRPM;
+    }
+
+    public void setShooterPIDReference(Double distanceFromSpeaker) {
+        shooterPID.setReference(calculateVelocity(calculateAngle(distanceFromSpeaker)), CANSparkBase.ControlType.kVelocity);
     }
 
     public ShooterMotorState getShooterMotorState() {

@@ -199,6 +199,8 @@ public final class Constants {
         public static double kI = 0.0; // Integral
         public static double kD = 0.0204; // Derivative
         public static double kF = 0.000204; // Feed Forward
+
+        public static double shootingVertexHeightMeters = 2.0574;
     }
 
 }
