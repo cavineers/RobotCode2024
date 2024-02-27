@@ -190,10 +190,10 @@ public final class Constants {
 
         public static final double ShooterForwardSpeed = 1; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
-        public static final double UpperIntakeForwardSpeed = .7; // TBD
-        public static final double LowerIntakeForwardSpeed = .7; // TBD
-        public static final double UpperIntakeReverseSpeed = -.8; // TBD
-        public static final double LowerIntakeReverseSpeed = -.8; // TBD
+        public static final double UpperIntakeForwardSpeed = 1; // TBD
+        public static final double LowerIntakeForwardSpeed = 1; // TBD
+        public static final double UpperIntakeReverseSpeed = -1; // TBD
+        public static final double LowerIntakeReverseSpeed = -1; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }
