@@ -26,7 +26,7 @@ public final class Constants {
         public static final int kFrontRightDriveCanID = 25;
         public static final int kBackRightDriveCanID = 6;
 
-        public static final int kFrontLeftTurningCanID = 300;
+        public static final int kFrontLeftTurningCanID = 3010;
         public static final int kBackLeftTurningCanID = 7;
         public static final int kFrontRightTurningCanID = 13;
         public static final int kBackRightTurningCanID = 5;
@@ -35,15 +35,15 @@ public final class Constants {
         public static final int kBackLeftAbsoluteEncoderPort = 12;
         public static final int kFrontRightAbsoluteEncoderPort = 10;
         public static final int kBackRightAbsoluteEncoderPort = 11;
-        public static final int PivotCanID = 3;
-        public static final int GantryCANID = 4;
+        public static final int PivotCanID = 33;
+        public static final int GantryCANID = 44;
 
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 22; 
 
-        public static final int ShooterCanID = 4; 
-        public static final int UpperIntakeCanID = 2; 
-        public static final int LowerIntakeCanID = 1; 
+        public static final int ShooterCanID = 43; 
+        public static final int UpperIntakeCanID = 4; 
+        public static final int LowerIntakeCanID = 3; 
     }
 
         
@@ -188,10 +188,10 @@ public final class Constants {
 
         public static final double ShooterForwardSpeed = 1; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
-        public static final double UpperIntakeForwardSpeed = .7; // TBD
-        public static final double LowerIntakeForwardSpeed = .7; // TBD
-        public static final double UpperIntakeReverseSpeed = -.8; // TBD
-        public static final double LowerIntakeReverseSpeed = -.8; // TBD
+        public static final double UpperIntakeForwardSpeed = 1; // TBD
+        public static final double LowerIntakeForwardSpeed = 1; // TBD
+        public static final double UpperIntakeReverseSpeed = -1; // TBD
+        public static final double LowerIntakeReverseSpeed = -1; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }
