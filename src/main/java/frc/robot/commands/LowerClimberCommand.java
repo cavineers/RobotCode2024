@@ -28,33 +28,26 @@ public class LowerClimberCommand extends Command {
     }
 
     @Override
-    public void initialize() {
-        
-    }
-
-    @Override
     public void execute() {
 
         
         if (climberSide == "left") {
             //Left climber action
-            if (Robot.leftClimber.getLimitSwitch("bottom")){
-                System.out.println("Left off");
+            //If the number of rotations has exceeded the lower rotation limit, turn the motors off. Otherwise, continue lowering
+            if (Robot.leftClimber.getLeftClimberMotorPosition() <= Constants.Climber.LowerClimberMinRotations){
                 Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.OFF);
                 this.leftLowered = true;
-            } else if (!Robot.leftClimber.getLimitSwitch("bottom")) {
-                System.out.println("Left lowering");
+            } else {
                 Robot.leftClimber.setLeftClimberMotorState(Robot.leftClimber.leftClimberMotorState.REVERSED);                
             } 
 
         } else if (climberSide == "right") {
             //Right climber action
-             if (Robot.rightClimber.getLimitSwitch("bottom")){
-                System.out.println("Right off");
+            //If the number of rotations has exceeded the lower rotation limit, turn the motors off. Otherwise, continue lowering
+             if (Robot.rightClimber.getRightClimberMotorPosition() <= Constants.Climber.LowerClimberMinRotations){
                 Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.OFF);
                 this.rightLowered = true;
-            } else if (!Robot.rightClimber.getLimitSwitch("bottom")) {
-                System.out.println("Right lowering");
+            } else {
                 Robot.rightClimber.setRightClimberMotorState(Robot.rightClimber.rightClimberMotorState.REVERSED);                
             } 
         }

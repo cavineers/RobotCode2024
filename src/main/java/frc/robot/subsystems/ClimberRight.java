@@ -16,8 +16,6 @@ public class ClimberRight extends SubsystemBase {
 
     //Initialize the limit switch
     public DigitalInput rightClimberTopLimitSwitch = new DigitalInput(Constants.DIO.RightClimberTopLimitSwitch);
-    public DigitalInput rightClimberBottomLimitSwitch = new DigitalInput(Constants.DIO.RightClimberBottomLimitSwitch);
-
   
     //Motor states
     public enum RightClimberMotorState {
@@ -64,18 +62,9 @@ public class ClimberRight extends SubsystemBase {
 
     //Getters and setters 
 
-    public boolean getLimitSwitch(String orientation) {
+    public boolean getLimitSwitch() {
         boolean switched;
-
-        if (orientation == "top") {
-            switched = this.rightClimberTopLimitSwitch.get();
-            System.out.println("right top");
-
-        } else {
-            switched = this.rightClimberBottomLimitSwitch.get();
-            System.out.println("right bottom");
-        }
-
+        switched = this.rightClimberTopLimitSwitch.get();
         return switched;
     }  
 
