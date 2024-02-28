@@ -157,6 +157,11 @@ public final class Constants {
         public static final double armPivotJointAngleDegrees = 135; //TBD
         public static final double armPivotDistanceFromShooterMeters = Math.sqrt(Math.pow(armPivotBicepLengthMeters, 2) + Math.pow(armPivotForearmLengthMeters, 2) - 2 * (armPivotBicepLengthMeters) * (armPivotForearmLengthMeters) * Math.cos(Math.toRadians(armPivotJointAngleDegrees))); //Law of Cosines
         public static final double armPivotTriangleAngleFromPivotDegrees = Math.toDegrees(Math.asin((armPivotForearmLengthMeters * Math.sin(Math.toRadians(armPivotJointAngleDegrees))) / armPivotDistanceFromShooterMeters)); // Law of Sines
+        public static final double armPivotMinAngleDegrees = -10; //TBD
+        public static final double armPivotMaxAngleDegrees = 110; //TBD
+
+        public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
+        public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
     
     }
 
@@ -215,6 +220,9 @@ public final class Constants {
         public static double kF = 0.000204; // Feed Forward
 
         public static final double shootingVertexHeightMeters = 2.0574;
+
+        //Measuremetns
+        public static final double shooterAngleFromArmPivotDegrees = 180 - ArmPivot.armPivotJointAngleDegrees;
 
     }
 

@@ -26,6 +26,8 @@ public class Shoot_Auto extends Command {
     private double requiredShooterAngle;
     private double requiredShooterVelocity;
     private double requiredShooterRPM;
+    private double requiredArmPivotAngleDegrees;
+    private double currentShooterAngleFromBaseline;
 
     private double distanceMeters;
 
@@ -52,7 +54,7 @@ public class Shoot_Auto extends Command {
     @Override
     public void execute() {
 
-        shootingHeight = (Constants.ShooterIntake.shootingVertexHeightMeters - calculateShooterHeight());
+        shootingHeight = (Constants.ShooterIntake.shootingVertexHeightMeters - calculateCurrentShooterHeight());
         SmartDashboard.putNumber("Shooting Height", shootingHeight);
 
         distanceMeters = distanceEntry.getDouble(0);
@@ -60,11 +62,12 @@ public class Shoot_Auto extends Command {
         SmartDashboard.putString("Shooter", "Shooting");
 
         // Shooting Sequence
+        armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(calculateRequiredAngle(distanceMeters)));
         setShooterPIDReference(distanceMeters);
-        Timer.delay(2.5);
+        Timer.delay(1);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
         Timer.delay(.5);
-        Timer.delay(3);
+        Timer.delay(1.5);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
 
@@ -79,7 +82,7 @@ public class Shoot_Auto extends Command {
     }
 
     
-    public double calculateAngle(Double distance) {
+    public double calculateRequiredAngle(Double distance) {
 
         requiredShooterAngle = (Math.atan(1/(distance/(2*shootingHeight))));
 
@@ -88,7 +91,8 @@ public class Shoot_Auto extends Command {
         return requiredShooterAngle;
     }
 
-    public double calculateVelocity(Double angle) {
+    public double calculateRequiredVelocity(Double angle) {
+
         requiredShooterVelocity = ((Math.sqrt(2*9.81*shootingHeight))/(Math.sin(angle)));
         requiredShooterRPM = ((60*requiredShooterVelocity)/(.102*Math.PI));
 
@@ -98,16 +102,30 @@ public class Shoot_Auto extends Command {
         return requiredShooterRPM;
     }
 
-    public double calculateShooterHeight() {
+    public double calculateCurrentShooterHeight() {
 
         shooterDistanceFromGroundMeters = armBase.getGantryHeightMeters() + (Constants.ArmPivot.armPivotDistanceFromShooterMeters * Math.sin(Math.toRadians(armPivot.getArmPivotHypToBaseline())));
 
         return shooterDistanceFromGroundMeters;
     }
 
+    public double calculateCurrentShooterAngle() {
+
+        currentShooterAngleFromBaseline = 180 - (Constants.ArmPivot.armPivotJointAngleDegrees + armPivot.getArmPivotAngle());
+
+        return currentShooterAngleFromBaseline;
+    }
+
+    public double calculateRequiredArmPivotAngle(Double requiredShooterAngleDegrees) {
+         
+        requiredArmPivotAngleDegrees = 180 - (Constants.ArmPivot.armPivotJointAngleDegrees + armPivot.getArmPivotAngle());
+
+        return requiredArmPivotAngleDegrees;
+    }
+
     public void setShooterPIDReference(Double distanceFromSpeaker) {
-        shooterIntake.shooterPID.setReference(calculateVelocity(calculateAngle(distanceFromSpeaker)), CANSparkBase.ControlType.kVelocity);
-        SmartDashboard.putNumber("ShootPID Val", calculateVelocity(calculateAngle(distanceFromSpeaker)));
+        shooterIntake.shooterPID.setReference(calculateRequiredVelocity(calculateRequiredAngle(distanceFromSpeaker)), CANSparkBase.ControlType.kVelocity);
+        SmartDashboard.putNumber("ShootPID Val", calculateRequiredVelocity(calculateRequiredAngle(distanceFromSpeaker)));
     }
 
 

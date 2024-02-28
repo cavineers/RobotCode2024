@@ -31,6 +31,8 @@ public class ArmPivot extends SubsystemBase {
 
     private double motorSetpoint = 0;
 
+    private double currentArmPivotAngle;
+
     // Motor sparkmax settings
     public ArmPivot() {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
@@ -83,8 +85,16 @@ public class ArmPivot extends SubsystemBase {
         
     }
 
+    public void setArmPivotAngle(Double angle) {
+
+        motorSetpoint = (angle * Constants.ArmPivot.dRotations) / Constants.ArmPivot.dAngle;
+
+    }
+
     public double getArmPivotAngle() {
-        return 45; //TBD
+        currentArmPivotAngle = (Constants.ArmBase.dHeight * (motorSetpoint/Constants.ArmBase.dRotations)) + Constants.ArmBase.minGantryHeightMeters;
+
+        return currentArmPivotAngle;
     }
 
     public double getArmPivotHypToBaseline() {
