@@ -72,25 +72,21 @@ public class RobotContainer {
     public Command shoot;
     public Command shoot_manual;
 
+    private Command lowerLeftClimber;
+    private Command riseLeftClimber;
+    private Command lowerRightClimber;
+    private Command riseRightClimber;
     
     public RobotContainer() {
-
 
         //Subsystems
         armBase = new ArmBase();
         armPivot = new ArmPivot();
         // swerveSubsystem = new SwerveDriveSubsystem();
-
-
-    //Climber commands
-    private Command lowerLeftClimber;
-    private Command riseLeftClimber;
-    private Command lowerRightClimber;
-    private Command riseRightClimber;
+        
         shooterIntake = new ShooterIntake();
 
         // // Buttons
-
         driverJoystick = new CommandXboxController(OIConstants.kDriverJoystickPort);
         buttonA = driverJoystick.a();
         buttonB = driverJoystick.b();
@@ -112,10 +108,10 @@ public class RobotContainer {
         pivotManualLower = new PivotManualLower(armPivot);
         armGroundPickupPreset = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
 
-        // lowerClimberLeft = new LowerClimberCommand("left");
-        // riseClimberLeft = new RiseClimberCommand("left");
-        // lowerClimberRight = new LowerClimberCommand("right");
-        // riseClimberRight = new RiseClimberCommand("right");
+        lowerLeftClimber = new LowerClimberCommand("left");
+        riseLeftClimber = new RiseClimberCommand("left");
+        lowerRightClimber = new LowerClimberCommand("right");
+        riseRightClimber = new RiseClimberCommand("right");
 
         // swerveSubsystem.setDefaultCommand(new SwerveCommand(
         //     swerveSubsystem,
