@@ -83,10 +83,18 @@ public class ArmPivot extends SubsystemBase {
         
     }
 
+    public double getArmPivotAngle() {
+        return 45; //TBD
+    }
+
+    public double getArmPivotHypToBaseline() {
+        return (getArmPivotAngle() - Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
+    }
+
     public void periodic() {
 
         SmartDashboard.putNumber("PivotRot", getPivotMotorPosition());
-
+        SmartDashboard.putNumber("PivotHypToBaseline", getArmPivotHypToBaseline());
         
         if (this.motorSetpoint <= Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint >= Constants.ArmPivot.PivotMotorLowerRotationLimit){
             pivotPid.setSetpoint(motorSetpoint);

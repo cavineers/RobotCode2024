@@ -180,7 +180,7 @@ public class RobotContainer {
 		outtake = new Outtake(shooterIntake);
 		shoot = new Shoot(shooterIntake);
 		shootManual = new Shoot_Manual(shooterIntake, () -> driverJoystick.getRightTriggerAxis());
-		shootAuto = new Shoot_Auto(shooterIntake, armPivot);
+		shootAuto = new Shoot_Auto(shooterIntake, armPivot, armBase);
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,

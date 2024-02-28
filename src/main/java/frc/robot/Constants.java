@@ -150,6 +150,13 @@ public final class Constants {
         public static final double DerivitiveTerm = 0.0;
 
         public static double MotorSetPoint = 0;
+
+        //Measurements
+        public static final double armPivotBicepLengthMeters = 0.5; //TBD
+        public static final double armPivotForearmLengthMeters = 0.5; //TBD
+        public static final double armPivotJointAngleDegrees = 135; //TBD
+        public static final double armPivotDistanceFromShooterMeters = Math.sqrt(Math.pow(armPivotBicepLengthMeters, 2) + Math.pow(armPivotForearmLengthMeters, 2) - 2 * (armPivotBicepLengthMeters) * (armPivotForearmLengthMeters) * Math.cos(Math.toRadians(armPivotJointAngleDegrees))); //Law of Cosines
+        public static final double armPivotTriangleAngleFromPivotDegrees = Math.toDegrees(Math.asin((armPivotForearmLengthMeters * Math.sin(Math.toRadians(armPivotJointAngleDegrees))) / armPivotDistanceFromShooterMeters)); // Law of Sines
     
     }
 
@@ -174,6 +181,13 @@ public final class Constants {
         public static final double ProportionalGain = .03; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
+        
+        //Measurements
+        public static final double minGantryHeightMeters = 0.3; //TBD
+        public static final double maxGantryHeightMeters = 0.6; //TBD
+        
+        public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
+        public static final double dRotations = MaxRotations - MinRotations;
 
     }
 
@@ -195,12 +209,13 @@ public final class Constants {
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
 
-        public static double kP = 0.00072; // Proportional
-        public static double kI = 0.0; // Integral
-        public static double kD = 0.0204; // Derivative
+        public static double kP = 0.01; // Proportional
+        public static double kI = 0.3; // Integral
+        public static double kD = 0.01; // Derivative
         public static double kF = 0.000204; // Feed Forward
 
-        public static double shootingVertexHeightMeters = 2.0574;
+        public static final double shootingVertexHeightMeters = 2.0574;
+
     }
 
 }
