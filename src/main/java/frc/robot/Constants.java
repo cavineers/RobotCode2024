@@ -41,9 +41,9 @@ public final class Constants {
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 14; 
 
-        public static final int ShooterCanID = 22; 
-        public static final int UpperIntakeCanID = 16; 
-        public static final int LowerIntakeCanID = 77; 
+        public static final int ShooterCanID = 31; 
+        public static final int UpperIntakeCanID = 33; 
+        public static final int LowerIntakeCanID = 34; 
 
         public static final int kPigeonID = 23;
     }
@@ -188,12 +188,12 @@ public final class Constants {
 
     public static final class ShooterIntake {
 
-        public static final double ShooterForwardSpeed = 1; // TBD
+        public static final double ShooterForwardSpeed = .6; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
-        public static final double UpperIntakeForwardSpeed = 1; // TBD
-        public static final double LowerIntakeForwardSpeed = 1; // TBD
-        public static final double UpperIntakeReverseSpeed = -1; // TBD
-        public static final double LowerIntakeReverseSpeed = -1; // TBD
+        public static final double UpperIntakeForwardSpeed = .7; // TBD
+        public static final double LowerIntakeForwardSpeed = .7; // TBD
+        public static final double UpperIntakeReverseSpeed = -.7; // TBD
+        public static final double LowerIntakeReverseSpeed = -.7; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }
