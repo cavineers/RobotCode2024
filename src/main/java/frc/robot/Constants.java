@@ -19,31 +19,33 @@ public final class Constants {
     }
 
     public static final class CanIDs{
-        public static final int kPigeonID = 23;
 
-        public static final int kFrontLeftDriveCanID = 24;
+        public static final int kFrontLeftDriveCanID = 2;
         public static final int kBackLeftDriveCanID = 8;
-        public static final int kFrontRightDriveCanID = 25;
+        public static final int kFrontRightDriveCanID = 4;
         public static final int kBackRightDriveCanID = 6;
 
-        public static final int kFrontLeftTurningCanID = 300;
+        public static final int kFrontLeftTurningCanID = 1;
         public static final int kBackLeftTurningCanID = 7;
-        public static final int kFrontRightTurningCanID = 13;
+        public static final int kFrontRightTurningCanID = 3;
         public static final int kBackRightTurningCanID = 5;
 
-        public static final int kFrontLeftAbsoluteEncoderPort = 9;
-        public static final int kBackLeftAbsoluteEncoderPort = 12;
-        public static final int kFrontRightAbsoluteEncoderPort = 10;
-        public static final int kBackRightAbsoluteEncoderPort = 11;
-        public static final int PivotCanID = 4;
-        public static final int GantryCANID = 30;
+        public static final int kFrontLeftAbsoluteEncoderPort = 10;
+        public static final int kBackLeftAbsoluteEncoderPort = 11;
+        public static final int kFrontRightAbsoluteEncoderPort = 9;
+        public static final int kBackRightAbsoluteEncoderPort = 12;
+
+        public static final int PivotCanID = 15;
+        public static final int GantryCANID = 100000;
 
         public static final int LeftClimberCanID = 21; 
-        public static final int RightClimberCanID = 22; 
+        public static final int RightClimberCanID = 14; 
 
-        public static final int ShooterCanID = 3; 
-        public static final int UpperIntakeCanID = 2; 
-        public static final int LowerIntakeCanID = 40; 
+        public static final int ShooterCanID = 31; 
+        public static final int UpperIntakeCanID = 33; 
+        public static final int LowerIntakeCanID = 34; 
+
+        public static final int kPigeonID = 23;
     }
 
         
@@ -91,10 +93,10 @@ public final class Constants {
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
 
-        public static final double kFrontLeftAbsoluteEncoderOffset = .276; //.281 185.97 offset //-5.97 +80.63
-        public static final double kBackLeftAbsoluteEncoderOffset = -.479; //-.472 178.41 //-178.41 -224.03
-        public static final double kFrontRightAbsoluteEncoderOffset = .24; //170.94 //-170.94
-        public static final double kBackRightAbsoluteEncoderOffset = .648;
+        public static final double kFrontLeftAbsoluteEncoderOffset = -.0083+.5; //.281 185.97 offset //-5.97 +80.63
+        public static final double kBackLeftAbsoluteEncoderOffset = -0.0920+.5; //-.472 178.41 //-178.41 -224.03
+        public static final double kFrontRightAbsoluteEncoderOffset = -0.9697; //170.94 //-170.94
+        public static final double kBackRightAbsoluteEncoderOffset = -.723+.5;
          //58.79 //-58.79
         
         // Distance between right and left wheels
@@ -205,12 +207,12 @@ public final class Constants {
 
     public static final class ShooterIntake {
 
-        public static final double ShooterForwardSpeed = 1; // TBD
+        public static final double ShooterForwardSpeed = .6; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
         public static final double UpperIntakeForwardSpeed = .7; // TBD
         public static final double LowerIntakeForwardSpeed = .7; // TBD
-        public static final double UpperIntakeReverseSpeed = -.3; // TBD
-        public static final double LowerIntakeReverseSpeed = -.3; // TBD
+        public static final double UpperIntakeReverseSpeed = -.7; // TBD
+        public static final double LowerIntakeReverseSpeed = -.7; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
 
