@@ -26,11 +26,11 @@ public class Intake extends Command {
 
         SmartDashboard.putString("Intake", "Intaking");
 
-        // if (shooterIntake.noteSensor.get() == false) {
+        if (shooterIntake.noteSensor.get() == false) {
             shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
-        // } else {
-            // shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-        // }
+        } else {
+            shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
+        }
 
     }
 
