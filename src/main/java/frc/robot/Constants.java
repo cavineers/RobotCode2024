@@ -141,11 +141,11 @@ public final class Constants {
     
         public static final double DistancePerRotation = 1;
     
-        public static final double GroundPickupRotations = 10;
-        public static final double RestRotations = 15;
-        public static final double ShootRotations = 20;
-        public static final double SourceRotations = 30;
-        public static final double AmpRotations = 40;
+        public static final double GroundPickupRotations = 5;
+        public static final double RestRotations = 10;
+        public static final double ShootRotations = 15;
+        public static final double SourceRotations = 20;
+        public static final double AmpRotations = 25;
 
         public static final double ProportionalGain = .06; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
@@ -167,11 +167,11 @@ public final class Constants {
 
         public static final double BaseMotorEaseFactor = 0.1;
 
-        public static final double GroundPickupRotations = 15;
-        public static final double RestRotations = 20;
-        public static final double ShootRotations = 25;
-        public static final double SourceRotations = 35;
-        public static final double AmpRotations = 45;
+        public static final double GroundPickupRotations = 10;
+        public static final double RestRotations = 13;
+        public static final double ShootRotations = 18;
+        public static final double SourceRotations = 21;
+        public static final double AmpRotations = 25;
 
         public static final double ProportionalGain = .03; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time

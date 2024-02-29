@@ -169,11 +169,11 @@ public class RobotContainer {
 			}
 		});
 
-		// secondDPadDown.onTrue(groundPickup);
-		// secondDPadUp.onTrue(shootPosition);
-		// secondDPadLeft.onTrue(ampPosition);
-		// secondDPadRight.onTrue(sourcePosition);
-		// secondLeftBump.onTrue(restPosition);
+		xboxController1.povDown().onTrue(groundPickup);
+		xboxController1.povUp().onTrue(shootPosition);
+		xboxController1.povLeft().onTrue(ampPosition);
+		xboxController1.povRight().onTrue(sourcePosition);
+		xboxController1.leftBumper().onTrue(restPosition);
 
 		// Shooter-Intake Commands
 		xboxController0.leftBumper().onTrue(outtake);
