@@ -54,6 +54,7 @@ public class Shoot_Auto extends Command {
     @Override
     public void execute() {
 
+        
         shootingHeight = (Constants.ShooterIntake.shootingVertexHeightMeters - calculateCurrentShooterHeight());
         SmartDashboard.putNumber("Shooting Height", shootingHeight);
 

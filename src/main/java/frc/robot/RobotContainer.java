@@ -247,7 +247,7 @@ public class RobotContainer {
 		// return this.swerveSubsystem;
 		// }
 
-		driverJoystick.a().whileTrue(shootAuto);
+		xboxController0.a().whileTrue(shootAuto);
 
 	}
 	public SwerveDriveSubsystem getSwerveSubsystem() {
