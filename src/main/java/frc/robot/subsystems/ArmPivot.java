@@ -32,6 +32,7 @@ public class ArmPivot extends SubsystemBase {
     private double motorSetpoint = 0;
 
     private double currentArmPivotAngle;
+    private double requiredSetpoint;
 
     // Motor sparkmax settings
     public ArmPivot() {
@@ -87,12 +88,14 @@ public class ArmPivot extends SubsystemBase {
 
     public void setArmPivotAngle(Double angle) {
 
-        motorSetpoint = (angle * Constants.ArmPivot.dRotations) / Constants.ArmPivot.dAngle;
+        requiredSetpoint = (angle * Constants.ArmPivot.dRotations) / Constants.ArmPivot.dAngle;
+        setSetpoint(requiredSetpoint);
 
     }
 
     public double getArmPivotAngle() {
-        currentArmPivotAngle = (Constants.ArmBase.dHeight * (motorSetpoint/Constants.ArmBase.dRotations)) + Constants.ArmBase.minGantryHeightMeters;
+
+        currentArmPivotAngle = ((motorSetpoint* Constants.ArmPivot.dAngle) / Constants.ArmPivot.dRotations);
 
         return currentArmPivotAngle;
     }
@@ -114,5 +117,6 @@ public class ArmPivot extends SubsystemBase {
             pivotMotor.set(speed);
         }
         SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
+        SmartDashboard.putNumber("Arm Angle", getArmPivotAngle());
     }
 }

@@ -35,15 +35,15 @@ public final class Constants {
         public static final int kFrontRightAbsoluteEncoderPort = 9;
         public static final int kBackRightAbsoluteEncoderPort = 12;
 
-        public static final int PivotCanID = 15;
-        public static final int GantryCANID = 100000;
+        public static final int PivotCanID = 31;
+        public static final int GantryCANID = 32;
 
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 14; 
 
-        public static final int ShooterCanID = 31; 
+        public static final int ShooterCanID = 34; 
         public static final int UpperIntakeCanID = 33; 
-        public static final int LowerIntakeCanID = 34; 
+        public static final int LowerIntakeCanID = 310000; 
 
         public static final int kPigeonID = 23;
     }
@@ -156,7 +156,7 @@ public final class Constants {
         //Measurements
         public static final double armPivotBicepLengthMeters = 0.5; //TBD
         public static final double armPivotForearmLengthMeters = 0.5; //TBD
-        public static final double armPivotJointAngleDegrees = 135; //TBD
+        public static final double armPivotJointAngleDegrees = 108; //TBD
         public static final double armPivotDistanceFromShooterMeters = Math.sqrt(Math.pow(armPivotBicepLengthMeters, 2) + Math.pow(armPivotForearmLengthMeters, 2) - 2 * (armPivotBicepLengthMeters) * (armPivotForearmLengthMeters) * Math.cos(Math.toRadians(armPivotJointAngleDegrees))); //Law of Cosines
         public static final double armPivotTriangleAngleFromPivotDegrees = Math.toDegrees(Math.asin((armPivotForearmLengthMeters * Math.sin(Math.toRadians(armPivotJointAngleDegrees))) / armPivotDistanceFromShooterMeters)); // Law of Sines
         public static final double armPivotMinAngleDegrees = -10; //TBD

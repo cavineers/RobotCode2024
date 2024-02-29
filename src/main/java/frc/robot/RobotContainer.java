@@ -155,13 +155,13 @@ public class RobotContainer {
 			}
 		});
 
-		// driverJoystick.a().onTrue(pivotManualLower);
-		// buttonA.onFalse(new InstantCommand() {
-		// 	@Override
-		// 	public void initialize() {
-		// 		pivotManualLower.cancel();
-		// 	}
-		// });
+		xboxController0.x().onTrue(pivotManualLower);
+		xboxController0.x().onFalse(new InstantCommand() {
+			@Override
+			public void initialize() {
+				pivotManualLower.cancel();
+			}
+		});
 
 		xboxController0.y().onTrue(pivotManualRaise);
 		xboxController0.y().onFalse(new InstantCommand() {
@@ -202,13 +202,13 @@ public class RobotContainer {
 			}
 		});
 
-		xboxController0.a().onTrue(shoot);
-		xboxController0.a().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				shoot.cancel();
-			}
-		});
+		// xboxController0.a().onTrue(shoot);
+		// xboxController0.a().onFalse(new InstantCommand() {
+		// 	@Override
+		// 	public void initialize() {
+		// 		shoot.cancel();
+		// 	}
+		// });
 
 		// ClimberCommands
 		xboxController1.a().onTrue(lowerLeftClimber);
@@ -247,7 +247,7 @@ public class RobotContainer {
 		// return this.swerveSubsystem;
 		// }
 
-		xboxController0.a().whileTrue(shootAuto);
+		xboxController0.a().onTrue(shootAuto);
 
 	}
 	public SwerveDriveSubsystem getSwerveSubsystem() {

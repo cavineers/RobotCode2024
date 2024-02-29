@@ -11,7 +11,13 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.ShooterIntake;
+import frc.robot.subsystems.ShooterIntake.IntakeMotorState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+
 
 public class Shoot_Auto extends Command {
 
@@ -30,6 +36,7 @@ public class Shoot_Auto extends Command {
     private double currentShooterAngleFromBaseline;
 
     private double distanceMeters;
+    private SequentialCommandGroup autoShootGroup;
 
     ShuffleboardTab tab = Shuffleboard.getTab("Robot");
 
@@ -43,58 +50,92 @@ public class Shoot_Auto extends Command {
         this.armBase = armBase;
         this.addRequirements(shooterIntake);
         this.addRequirements(armPivot);
+        
     }
 
     // Set Motor State to ON / OFF
     @Override
     public void initialize() {
         this.isDone = false;
+
+        shootingHeight = (Constants.ShooterIntake.shootingVertexHeightMeters - calculateCurrentShooterHeight());
+        distanceMeters = distanceEntry.getDouble(0);
+
+        SmartDashboard.putNumber("Shooting Height", shootingHeight);
+        SmartDashboard.putString("Shooter", "Shooting");
+        this.autoShootGroup = new SequentialCommandGroup(
+            setPivotAngle(),
+            setShooterPID(),
+            new WaitCommand(1),
+            setIntakeState(IntakeMotorState.ON),
+            new WaitCommand(1),
+            setShooterState(shooterIntake.shooterMotorState.OFF),
+            setIntakeState(shooterIntake.intakeMotorState.OFF)
+        
+        );
+        this.autoShootGroup.schedule();
+
     }
 
     @Override
     public void execute() {
 
-        
-        shootingHeight = (Constants.ShooterIntake.shootingVertexHeightMeters - calculateCurrentShooterHeight());
-        SmartDashboard.putNumber("Shooting Height", shootingHeight);
-
-        distanceMeters = distanceEntry.getDouble(0);
-
-        SmartDashboard.putString("Shooter", "Shooting");
-
-        // Shooting Sequence
-        armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(calculateRequiredAngle(distanceMeters)));
-        setShooterPIDReference(distanceMeters);
-        Timer.delay(1);
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
-        Timer.delay(.5);
-        Timer.delay(1.5);
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
-
-        SmartDashboard.putString("Shooter", "Finished");
-        
     }
 
     @Override
     public void end(boolean interrupted) {
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
+        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);    
     }
 
+    public InstantCommand setPivotAngle(){
+        return new InstantCommand() {
+			@Override
+			public void initialize() {
+                armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(calculateRequiredAngle(distanceMeters), distanceMeters));
+			}
+		};
+    }
+
+    public InstantCommand setShooterPID() {
+        return new InstantCommand() {
+			@Override
+			public void initialize() {
+                setShooterPIDReference(distanceMeters);
+			}
+		};
+    }
+
+    public InstantCommand setIntakeState(ShooterIntake.IntakeMotorState state) {
+        return new InstantCommand() {
+			@Override
+			public void initialize() {
+                shooterIntake.setIntakeMotorState(state); 
+			}
+		};
+    }
+
+    public InstantCommand setShooterState(ShooterIntake.ShooterMotorState state) {
+        return new InstantCommand() {
+			@Override
+			public void initialize() {
+                shooterIntake.setShooterMotorState(state); 
+			}
+		};
+    }
     
     public double calculateRequiredAngle(Double distance) {
 
-        requiredShooterAngle = (Math.atan(1/(distance/(2*shootingHeight))));
+        requiredShooterAngle = Math.atan(1/(distance/(2*shootingHeight)));
 
-        SmartDashboard.putNumber("Required Shooter Angle", requiredShooterAngle);
+        SmartDashboard.putNumber("Required Shooter Angle", Math.toDegrees(requiredShooterAngle));
 
         return requiredShooterAngle;
     }
 
     public double calculateRequiredVelocity(Double angle) {
 
-        requiredShooterVelocity = ((Math.sqrt(2*9.81*shootingHeight))/(Math.sin(angle)));
+        requiredShooterVelocity = ((Math.sqrt(2*9.81*shootingHeight))/Math.sin((angle)));
         requiredShooterRPM = ((60*requiredShooterVelocity)/(.102*Math.PI));
 
         SmartDashboard.putNumber("Required Shooter Velocity", requiredShooterVelocity);
@@ -117,9 +158,11 @@ public class Shoot_Auto extends Command {
         return currentShooterAngleFromBaseline;
     }
 
-    public double calculateRequiredArmPivotAngle(Double requiredShooterAngleDegrees) {
+    public double calculateRequiredArmPivotAngle(Double requiredShooterAngleDegrees, Double distance) {
          
-        requiredArmPivotAngleDegrees = 180 - (Constants.ArmPivot.armPivotJointAngleDegrees + armPivot.getArmPivotAngle());
+        requiredArmPivotAngleDegrees = 180 - (Constants.ArmPivot.armPivotJointAngleDegrees + Math.toDegrees(calculateRequiredAngle(distance)));
+
+        SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 
         return requiredArmPivotAngleDegrees;
     }
@@ -130,13 +173,15 @@ public class Shoot_Auto extends Command {
     }
 
 
-    // @Override
-    // public boolean isFinished() {
-    // if (Timer.getFPGATimestamp() - this.m_timestamp >= 0 &&
-    // Robot.m_robotContainer.driverJoystick.getRawButton(0)) {
-    // this.isDone = true;
-    // }
-    // return this.isDone;
-    // }
+    @Override
+    public boolean isFinished() {
+        
+        // if (autoShootGroup.isFinished() == true) {
+        //     this.isDone = true;
+        //     SmartDashboard.putString("Shooter", "Finished");
+        // }
+
+        return true;
+    }
 
 }
