@@ -62,6 +62,10 @@ public class ClimberRight extends SubsystemBase {
         return this.rightClimberMotor.getEncoder().getPosition();
     }
 
+    public double getRightClimberMotorSetPoint() {
+        return this.motorSetpoint;
+    }
+
     // Get motor speed (value between -1 and 1)
     public double getRightClimberMotorSpeed() {
         return this.rightClimberMotor.get();
@@ -113,5 +117,9 @@ public class ClimberRight extends SubsystemBase {
         if(getLimitSwitch() == true) {
             setRightClimberMotorPosition(Constants.Climber.LowerClimberMaxRotations);
         }
+
+        SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
+        SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
+        SmartDashboard.putBoolean("rightClimberLimitSwitch", getLimitSwitch());
     }
 }
