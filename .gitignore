@@ -173,3 +173,6 @@ bin/
 *.class
 *.lock
 *.bin
+*.bin
+*.lock
+.gradle/file-system.probe

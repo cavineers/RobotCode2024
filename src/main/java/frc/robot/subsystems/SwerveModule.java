@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.CANSparkMax;
 
@@ -47,7 +48,9 @@ public class SwerveModule {
         // Configure the CANcoder for basic use
         CANcoderConfiguration configs = new CANcoderConfiguration();
         // This CANcoder should report absolute position from [-0.5, 0.5) rotations,
-        configs.MagnetSensor.MagnetOffset = absoluteEncoderOffset/360;
+        configs.MagnetSensor.MagnetOffset = absoluteEncoderOffset;
+        configs.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
+        configs.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
         // Write these configs to the CANcoder
         absoluteEncoder.getConfigurator().apply(configs);
 
@@ -61,6 +64,7 @@ public class SwerveModule {
 
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
+        
 
         driveEncoder = driveMotor.getEncoder();
         turningEncoder = turningMotor.getEncoder();
@@ -111,9 +115,6 @@ public class SwerveModule {
         driveMotor.setIdleMode(mode);
     }
 
-    public void lockWheels(){
-        driveMotor.setIdleMode(IdleMode.kBrake);
-    }
 
     public double getTurningVelocity() {
         return turningEncoder.getVelocity();
@@ -125,7 +126,7 @@ public class SwerveModule {
     }
 
     private double getDistanceToHome(){ //Rotations
-        return Math.PI - absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI; // Convert to radians
+        return absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI; // Convert to radians
     }
 
     public void setEncoder() { // Takes radians
