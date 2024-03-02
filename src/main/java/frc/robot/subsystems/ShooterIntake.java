@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
@@ -29,6 +31,8 @@ public class ShooterIntake extends SubsystemBase {
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
 
+    public SparkPIDController shooterPID = shooterMotor.getPIDController();
+
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
@@ -45,9 +49,18 @@ public class ShooterIntake extends SubsystemBase {
         this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
 
         this.shooterMotor.setInverted(true);
-        this.upperIntakeMotor.setInverted(false);
-        this.lowerIntakeMotor.setInverted(true);
-        
+        this.upperIntakeMotor.setInverted(true);
+        this.lowerIntakeMotor.setInverted(false);
+
+        this.shooterMotor.getEncoder().setMeasurementPeriod(8);
+
+        this.shooterPID.setIZone(0.0);
+        this.shooterPID.setOutputRange(-1.0, 1.0);
+        this.shooterPID.setP(Constants.ShooterIntake.kP);
+        this.shooterPID.setI(Constants.ShooterIntake.kI);
+        this.shooterPID.setD(Constants.ShooterIntake.kD);
+        this.shooterPID.setFF(Constants.ShooterIntake.kF);
+
     }
 
     public void setShooterMotorState(ShooterMotorState state) {
@@ -130,7 +143,8 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public void periodic() {
-
+        SmartDashboard.putNumber("Shooter RPM", getShooterMotorRPM());
+        SmartDashboard.putNumber("armPivotTriangleAngleFromPivotDegrees", Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
     }
 
 }

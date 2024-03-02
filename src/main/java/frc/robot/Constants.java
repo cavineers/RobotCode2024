@@ -35,15 +35,15 @@ public final class Constants {
         public static final int kFrontRightAbsoluteEncoderPort = 9;
         public static final int kBackRightAbsoluteEncoderPort = 12;
 
-        public static final int PivotCanID = 15;
-        public static final int GantryCANID = 100000;
+        public static final int PivotCanID = 31;
+        public static final int GantryCANID = 32;
 
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 14; 
 
-        public static final int ShooterCanID = 31; 
+        public static final int ShooterCanID = 34; 
         public static final int UpperIntakeCanID = 33; 
-        public static final int LowerIntakeCanID = 34; 
+        public static final int LowerIntakeCanID = 310000; 
 
         public static final int kPigeonID = 23;
     }
@@ -141,17 +141,29 @@ public final class Constants {
     
         public static final double DistancePerRotation = 1;
     
-        public static final double GroundPickupRotations = 10;
-        public static final double RestRotations = 15;
-        public static final double ShootRotations = 20;
-        public static final double SourceRotations = 30;
-        public static final double AmpRotations = 40;
+        public static final double GroundPickupRotations = 5;
+        public static final double RestRotations = 10;
+        public static final double ShootRotations = 15;
+        public static final double SourceRotations = 20;
+        public static final double AmpRotations = 25;
 
         public static final double ProportionalGain = .06; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
         public static double MotorSetPoint = 0;
+
+        //Measurements
+        public static final double armPivotBicepLengthMeters = 0.5; //TBD
+        public static final double armPivotForearmLengthMeters = 0.5; //TBD
+        public static final double armPivotJointAngleDegrees = 108; //TBD
+        public static final double armPivotDistanceFromShooterMeters = Math.sqrt(Math.pow(armPivotBicepLengthMeters, 2) + Math.pow(armPivotForearmLengthMeters, 2) - 2 * (armPivotBicepLengthMeters) * (armPivotForearmLengthMeters) * Math.cos(Math.toRadians(armPivotJointAngleDegrees))); //Law of Cosines
+        public static final double armPivotTriangleAngleFromPivotDegrees = Math.toDegrees(Math.asin((armPivotForearmLengthMeters * Math.sin(Math.toRadians(armPivotJointAngleDegrees))) / armPivotDistanceFromShooterMeters)); // Law of Sines
+        public static final double armPivotMinAngleDegrees = -10; //TBD
+        public static final double armPivotMaxAngleDegrees = 110; //TBD
+
+        public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
+        public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
     
     }
 
@@ -167,15 +179,22 @@ public final class Constants {
 
         public static final double BaseMotorEaseFactor = 0.1;
 
-        public static final double GroundPickupRotations = 15;
-        public static final double RestRotations = 20;
-        public static final double ShootRotations = 25;
-        public static final double SourceRotations = 35;
-        public static final double AmpRotations = 45;
+        public static final double GroundPickupRotations = 10;
+        public static final double RestRotations = 13;
+        public static final double ShootRotations = 18;
+        public static final double SourceRotations = 21;
+        public static final double AmpRotations = 25;
 
         public static final double ProportionalGain = .03; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
+        
+        //Measurements
+        public static final double minGantryHeightMeters = 0.3; //TBD
+        public static final double maxGantryHeightMeters = 0.6; //TBD
+        
+        public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
+        public static final double dRotations = MaxRotations - MinRotations;
 
     }
 
@@ -183,7 +202,13 @@ public final class Constants {
 
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
-        public static final double LowerClimberMaxRotations = 4; // TBD
+        public static final double LowerClimberMaxRotations = 0; // TBD
+        public static final double UpperClimberMaxRotations = 100; // TBD
+
+        public static final double ProportionalGain = .03;
+        public static final double IntegralTerm = 0.00;
+        public static final double DerivitiveTerm = 0.0;
+
     }
 
     public static final class ShooterIntake {
@@ -196,6 +221,17 @@ public final class Constants {
         public static final double LowerIntakeReverseSpeed = -.7; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
+
+        public static double kP = 0.01; // Proportional
+        public static double kI = 0.3; // Integral
+        public static double kD = 0.01; // Derivative
+        public static double kF = 0.000204; // Feed Forward
+
+        public static final double shootingVertexHeightMeters = 2.0574;
+
+        //Measuremetns
+        public static final double shooterAngleFromArmPivotDegrees = 180 - ArmPivot.armPivotJointAngleDegrees;
+
     }
 
 }

@@ -4,17 +4,20 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ClimberRight extends SubsystemBase {
 
+    PIDController rightClimberPID = new PIDController(Constants.Climber.ProportionalGain, Constants.Climber.IntegralTerm, Constants.Climber.DerivitiveTerm);
+
     // Initialize the climber motor
     public CANSparkMax rightClimberMotor = new CANSparkMax(Constants.CanIDs.RightClimberCanID, MotorType.kBrushless);
 
     // Initialize the limit switch
-    public DigitalInput rightClimberTopLimitSwitch = new DigitalInput(Constants.DIO.RightClimberTopLimitSwitch);
     public DigitalInput rightClimberBottomLimitSwitch = new DigitalInput(Constants.DIO.RightClimberBottomLimitSwitch);
 
     // Motor states
@@ -27,6 +30,8 @@ public class ClimberRight extends SubsystemBase {
     // Initial Motor State
     public RightClimberMotorState rightClimberMotorState = RightClimberMotorState.OFF;
 
+    private double motorSetpoint = 0;
+
     public ClimberRight() {
         this.rightClimberMotor.setIdleMode(IdleMode.kBrake);
 
@@ -36,44 +41,9 @@ public class ClimberRight extends SubsystemBase {
         this.rightClimberMotor.setSmartCurrentLimit(51);
     }
 
-    // Allow for changing motor states
-    public void setRightClimberMotorState(RightClimberMotorState state) {
-
-        // Set the current state
-        this.rightClimberMotorState = state;
-
-        switch (state) {
-        case ON:
-            // On: Set the extension speed of the climber
-            this.rightClimberMotor.set(Constants.Climber.ClimberExtensionSpeed);
-            break;
-        case OFF:
-            // Off: Set the speed to zero
-            this.rightClimberMotor.set(0.0);
-            break;
-        case REVERSED:
-            // Reversed: Set the reversal speed of the climber
-            this.rightClimberMotor.set(Constants.Climber.ClimberExtensionSpeedRev);
-            break;
-        default:
-            this.setRightClimberMotorState(RightClimberMotorState.OFF);
-        }
-    }
-
-    // Getters and setters
-
-    public boolean getLimitSwitch(String orientation) {
+    public boolean getLimitSwitch() {
         boolean switched;
-
-        if (orientation == "top") {
-            switched = this.rightClimberTopLimitSwitch.get();
-            System.out.println("right top");
-
-        } else {
-            switched = this.rightClimberBottomLimitSwitch.get();
-            System.out.println("right bottom");
-        }
-
+        switched = this.rightClimberBottomLimitSwitch.get();
         return switched;
     }
 
@@ -92,6 +62,10 @@ public class ClimberRight extends SubsystemBase {
         return this.rightClimberMotor.getEncoder().getPosition();
     }
 
+    public double getRightClimberMotorSetPoint() {
+        return this.motorSetpoint;
+    }
+
     // Get motor speed (value between -1 and 1)
     public double getRightClimberMotorSpeed() {
         return this.rightClimberMotor.get();
@@ -106,7 +80,47 @@ public class ClimberRight extends SubsystemBase {
         return this.rightClimberMotor;
     }
 
+    public double getRightClimberSetPoint() {
+        return this.motorSetpoint;
+    }
+
+    public void setSetpointAdd(double s){
+        motorSetpoint += s;
+        if(this.motorSetpoint > Constants.Climber.UpperClimberMaxRotations){
+            this.motorSetpoint = Constants.Climber.UpperClimberMaxRotations;
+        }else if(this.motorSetpoint < Constants.Climber.LowerClimberMaxRotations){
+            this.motorSetpoint = Constants.Climber.LowerClimberMaxRotations;
+        }
+        
+    }
+
+    public void setSetpoint(double s){
+        motorSetpoint = s;
+        if(this.motorSetpoint > Constants.Climber.UpperClimberMaxRotations){
+            this.motorSetpoint = Constants.Climber.UpperClimberMaxRotations;
+        }else if(this.motorSetpoint < Constants.Climber.LowerClimberMaxRotations){
+            this.motorSetpoint = Constants.Climber.LowerClimberMaxRotations;
+        }
+    }
+
     @Override
     public void periodic() {
+
+        if (this.motorSetpoint <= Constants.Climber.UpperClimberMaxRotations && this.motorSetpoint >= Constants.Climber.LowerClimberMaxRotations){
+            rightClimberPID.setSetpoint(motorSetpoint);
+            double speed = rightClimberPID.calculate(getRightClimberMotorPosition());
+            SmartDashboard.putNumber("Speed", speed);
+    
+            rightClimberMotor.set(speed);
+        }
+
+        if(getLimitSwitch() == true) {
+            setRightClimberMotorPosition(Constants.Climber.LowerClimberMaxRotations);
+            motorSetpoint = 0;
+        }
+
+        SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
+        SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
+        SmartDashboard.putBoolean("rightClimberLimitSwitch", getLimitSwitch());
     }
 }
