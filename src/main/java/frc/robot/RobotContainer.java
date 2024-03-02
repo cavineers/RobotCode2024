@@ -309,7 +309,7 @@ public class RobotContainer {
         return this.visionSubsystem;
     }
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("TestAutoNow");
+        return new PathPlannerAuto("Center2P");
     }
 
 

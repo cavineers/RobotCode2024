@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.326735019683838,
-      "y": 5.56
+      "x": 1.4010045528411863,
+      "y": 5.575
     },
-    "rotation": 4.092867180715585e-43
+    "rotation": -1.783163121889057e-31
   },
   "command": {
     "type": "sequential",
@@ -14,31 +14,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TestChoreoPath.1"
+            "pathName": "Middle2Piece.1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TestChoreoPath.2"
+            "pathName": "Middle2Piece.2"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "TestChoreoPath.3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TestChoreoPath.4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TestChoreoPath.5"
+            "waitTime": 2.5
           }
         }
       ]

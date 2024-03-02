@@ -76,7 +76,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         CanIDs.kBackRightAbsoluteEncoderPort, 
         DriveConstants.kBackRightAbsoluteEncoderOffset);
 
-    // private final Pigeon2 gyro = new Pigeon2(CanIDs.kPigeonID);
+    private final Pigeon2 gyro = new Pigeon2(CanIDs.kPigeonID);
     
 
 
@@ -91,8 +91,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public double getHeading(){ // Right Hand Rule with Offset
         
-        //double gyroAngle = Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
-        return 0;
+        double gyroAngle = Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
+        return gyroAngle;
     }
 
     public Rotation2d getRotation2d(){
@@ -126,13 +126,6 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         }
     }
 
-    SwerveDriveOdometry m_odometer = m_odometry;
-
-    // POSE ESTIMATOR
-    public Pose2d getOdometerPose() {
-            return m_odometer.getPoseMeters();
-    }
-
     private Optional<EstimatedRobotPose> getVisionPose(){
         return visionSubsystem.getRobotPoseFieldRelative();
     }
@@ -140,7 +133,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         DriveConstants.SwerveKinematics,
         getRotation2d(),
         getPositions(),
-        getOdometerPose());
+        new Pose2d()
+        );
 
     private Pose2d updatePoseWithVision(){
 
@@ -183,19 +177,28 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             this::driveRelativeSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                 new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                new PIDConstants(2.50, 0.0, 0.0), // Rotation PID constants
                 4.5, // Max module speed, in m/s
-                Units.inchesToMeters(17.68), // Drive base radius in meters. Distance from robot center to furthest module.
+                Units.inchesToMeters(17.25), // Drive base radius in meters. Distance from robot center to furthest module.
                 new ReplanningConfig() // Default path replanning config. See the API for the options here
             ),
-            this::flipField, // Whether to flip the path
+            () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+  
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                  return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;}, // Whether to flip the path
             this // Reference to this subsystem to set requirements
         );
     }
 
     private boolean successZeroHeading = false;
     public void zeroHeading() {
-        //gyro.reset();
+        gyro.reset();
         
         // Optional<EstimatedRobotPose> currentPose = visionSubsystem.getRobotPoseFieldRelative(); 
         // if (currentPose.isEmpty() == false){
@@ -235,7 +238,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
     public void resetOdometry(Pose2d pose) {
         System.out.println("**RESET ODOMETERY TO THE PRESET STARTING POSE**");
-        m_odometer.resetPosition(getRotation2d(), getPositions(), pose);
+
         poseEstimator.resetPosition(getRotation2d(), getPositions(), pose);
     }
 
@@ -258,9 +261,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
  
     public void periodic(){
-        m_odometer.update(getRotation2d(), getPositions());
+
         this.updatedPose = this.updatePoseWithVision();
-        m_field.setRobotPose(this.updatedPose);
+        m_field.setRobotPose(getPose());
         SmartDashboard.putData("Field", m_field);
         SmartDashboard.putNumber("Heading", getHeading());
         SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());

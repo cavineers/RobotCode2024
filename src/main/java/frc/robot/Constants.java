@@ -1,7 +1,10 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
@@ -20,8 +23,6 @@ public final class Constants {
 
 
     public static final class CanIDs{
-        public static final int kPigeonID = 23;
-
         public static final int kFrontLeftDriveCanID = 2;
         public static final int kBackLeftDriveCanID = 8;
         public static final int kFrontRightDriveCanID = 4;
@@ -32,19 +33,22 @@ public final class Constants {
         public static final int kFrontRightTurningCanID = 3;
         public static final int kBackRightTurningCanID = 5;
 
-        public static final int kFrontLeftAbsoluteEncoderPort = 9;
-        public static final int kBackLeftAbsoluteEncoderPort = 12;
-        public static final int kFrontRightAbsoluteEncoderPort = 10;
-        public static final int kBackRightAbsoluteEncoderPort = 11;
-        public static final int PivotCanID = 29;
-        public static final int GantryCANID = 30;
+        public static final int kFrontLeftAbsoluteEncoderPort = 10;
+        public static final int kBackLeftAbsoluteEncoderPort = 11;
+        public static final int kFrontRightAbsoluteEncoderPort = 9;
+        public static final int kBackRightAbsoluteEncoderPort = 12;
+
+        public static final int PivotCanID = 15;
+        public static final int GantryCANID = 100000;
 
         public static final int LeftClimberCanID = 21; 
-        public static final int RightClimberCanID = 22; 
+        public static final int RightClimberCanID = 14; 
 
-        public static final int ShooterCanID = 23; 
-        public static final int IntakeCanID = 24; 
-        public static final int Intake2ndCanID = 25; 
+        public static final int ShooterCanID = 22; 
+        public static final int UpperIntakeCanID = 16; 
+        public static final int LowerIntakeCanID = 77; 
+
+        public static final int kPigeonID = 23;
     }
 
         
@@ -67,7 +71,7 @@ public final class Constants {
 
     public static final class DriveConstants {
 
-        public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
+        public static final double kPhysicalMaxSpeedMetersPerSecond = 1;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
         // public static final int kFrontLeftAbsoluteEncoderPort = 12;
@@ -92,16 +96,16 @@ public final class Constants {
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
 
-        public static final double kFrontLeftAbsoluteEncoderOffset = .276; //.281 185.97 offset //-5.97 +80.63
-        public static final double kBackLeftAbsoluteEncoderOffset = -.479; //-.472 178.41 //-178.41 -224.03
-        public static final double kFrontRightAbsoluteEncoderOffset = .24; //170.94 //-170.94
-        public static final double kBackRightAbsoluteEncoderOffset = .648;
+        public static final double kFrontLeftAbsoluteEncoderOffset = -.0083+.5; //.281 185.97 offset //-5.97 +80.63
+        public static final double kBackLeftAbsoluteEncoderOffset = -0.0920+.5; //-.472 178.41 //-178.41 -224.03
+        public static final double kFrontRightAbsoluteEncoderOffset = -0.9697; //170.94 //-170.94
+        public static final double kBackRightAbsoluteEncoderOffset = -.723+.5;
          //58.79 //-58.79
         
         // Distance between right and left wheels
-        public static final double kTrackWidth = Units.inchesToMeters(25); 
+        public static final double kTrackWidth = Units.inchesToMeters(21.75); 
         // Distance between front and back wheels
-        public static final double kWheelBase = Units.inchesToMeters(25);
+        public static final double kWheelBase = Units.inchesToMeters(27.75);
         
      
         public static final SwerveDriveKinematics SwerveKinematics = new SwerveDriveKinematics(
@@ -123,13 +127,13 @@ public final class Constants {
         public static final int kDriverFieldOrientedButtonIdx = 1;
 
         public static final double kTriggerDeadzone = 0.1;
-        public static final double kDeadband = 0.1;
-        public static final double kDriverJoystickTriggerDeadzone = 0.1;
+        public static final double kDeadband = 0.01;
+        public static final double kDriverJoystickTriggerDeadzone = 0.01;
 
     }
 
     public static final class ArmPivot {
-    
+     
         public static final double PivotMotorSpeedForwards = 0.1;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
@@ -182,6 +186,17 @@ public final class Constants {
         public static final double IntakeForwardSpeed = .3; // TBD
         public static final double IntakeReverseSpeed = -.3; // TBD
         public static final double IntakeRetractSpeed = -.05; // TBD
+    }
+
+    public static final class VisionConstants {
+        public static final Transform3d LeftCamera = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-11.88), Units.inchesToMeters(-6.88), Units.inchesToMeters(31.09)),
+            new Rotation3d(0, Math.toRadians(10.62), Math.toRadians(-45)));
+        
+        public static final Transform3d RightCamera = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-11.88), Units.inchesToMeters(-6.88), Units.inchesToMeters(31.09)),
+            new Rotation3d(0, Math.toRadians(10.62), Math.toRadians(-45)));
+        
     }
 
 }

@@ -24,8 +24,8 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
-    public CANSparkMax intakeMotor = new CANSparkMax(Constants.CanIDs.IntakeCanID, MotorType.kBrushless);
-    public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.CanIDs.Intake2ndCanID, MotorType.kBrushless);
+    public CANSparkMax intakeMotor = new CANSparkMax(Constants.CanIDs.UpperIntakeCanID, MotorType.kBrushless);
+    public CANSparkMax intake2ndMotor = new CANSparkMax(Constants.CanIDs.LowerIntakeCanID, MotorType.kBrushless);
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
 
