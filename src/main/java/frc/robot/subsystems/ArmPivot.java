@@ -31,6 +31,9 @@ public class ArmPivot extends SubsystemBase {
 
     private double motorSetpoint = 0;
 
+    private double currentArmPivotAngle;
+    private double requiredSetpoint;
+
     // Motor sparkmax settings
     public ArmPivot() {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
@@ -83,10 +86,28 @@ public class ArmPivot extends SubsystemBase {
         
     }
 
+    public void setArmPivotAngle(Double angle) {
+
+        requiredSetpoint = (angle * Constants.ArmPivot.dRotations) / Constants.ArmPivot.dAngle;
+        setSetpoint(requiredSetpoint);
+
+    }
+
+    public double getArmPivotAngle() {
+
+        currentArmPivotAngle = ((motorSetpoint* Constants.ArmPivot.dAngle) / Constants.ArmPivot.dRotations);
+
+        return currentArmPivotAngle;
+    }
+
+    public double getArmPivotHypToBaseline() {
+        return (getArmPivotAngle() - Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
+    }
+
     public void periodic() {
 
         SmartDashboard.putNumber("PivotRot", getPivotMotorPosition());
-
+        SmartDashboard.putNumber("PivotHypToBaseline", getArmPivotHypToBaseline());
         
         if (this.motorSetpoint <= Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint >= Constants.ArmPivot.PivotMotorLowerRotationLimit){
             pivotPid.setSetpoint(motorSetpoint);
@@ -96,5 +117,6 @@ public class ArmPivot extends SubsystemBase {
             pivotMotor.set(speed);
         }
         SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
+        SmartDashboard.putNumber("Arm Angle", getArmPivotAngle());
     }
 }
