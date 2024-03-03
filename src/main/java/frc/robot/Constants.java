@@ -35,15 +35,17 @@ public final class Constants {
         public static final int kFrontRightAbsoluteEncoderPort = 9;
         public static final int kBackRightAbsoluteEncoderPort = 12;
 
-        public static final int PivotCanID = 15;
-        public static final int GantryCANID = 100000;
+        public static final int PivotCanID = 18;
+        public static final int GantryCANID = 15;
 
-        public static final int LeftClimberCanID = 21; 
-        public static final int RightClimberCanID = 14; 
+        public static final int LeftClimberCanID = 19; 
+        public static final int RightClimberCanID = 16; 
 
-        public static final int ShooterCanID = 31; 
-        public static final int UpperIntakeCanID = 33; 
-        public static final int LowerIntakeCanID = 34; 
+        public static final int PDHCanID = 17; 
+
+        public static final int ShooterCanID = 13; 
+        public static final int UpperIntakeCanID = 21; 
+        public static final int LowerIntakeCanID = 20; 
 
         public static final int kPigeonID = 23;
     }
@@ -52,17 +54,18 @@ public final class Constants {
 
     public static final class DIO {
         
-        public static final int ArmBoreEncoder = 0;
+        public static final int ArmBoreEncoder = 8;
+
         public static final int GantryLowerLimitSwitch = 1;
         public static final int GantryHigherLimitSwitch = 2;
 
         public static final int LeftClimberTopLimitSwitch = 3; 
         public static final int RightClimberTopLimitSwitch = 4; 
-        public static final int LeftClimberBottomLimitSwitch = 5; 
+        public static final int LeftClimberBottomLimitSwitch = 10; 
         public static final int RightClimberBottomLimitSwitch = 6;
 
-        public static final int NoteSensor = 7;
-        public static final int IntakeSwitch = 8;
+        public static final int NoteSensor = 5;
+        // public static final int IntakeSwitch = 8;
 
     }
 
@@ -134,8 +137,8 @@ public final class Constants {
         public static final double PivotMotorSpeedForwards = 0.3;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
-        public static final double PivotMotorLowerRotationLimit = 0;
-        public static final double PivotMotorUpperRotationLimit = 40;
+        public static final double PivotMotorLowerRotationLimit = .353;
+        public static final double PivotMotorUpperRotationLimit = 0.736;
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
@@ -147,7 +150,7 @@ public final class Constants {
         public static final double SourceRotations = 20;
         public static final double AmpRotations = 25;
 
-        public static final double ProportionalGain = .06; // strength of a correction
+        public static final double ProportionalGain = 1.75; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -160,7 +163,7 @@ public final class Constants {
         public static final double SpeedForwards = 0.2;
         public static final double SpeedBackwards = -0.15;
 
-        public static final double MaxRotations = 95;
+        public static final double MaxRotations = 150;
         public static final double MinRotations = 0;
 
         public static final double ArmBaseEncoderDeadzone = 0.4;

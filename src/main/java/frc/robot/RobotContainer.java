@@ -130,6 +130,9 @@ public class RobotContainer {
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverRotAxis),
 					() -> false));
+
+		armPivot.initializeDutyEncoder();
+		armBase.initializeEncoder();
 		configureButtonBindings();
 
 	};
@@ -153,13 +156,13 @@ public class RobotContainer {
 			}
 		});
 
-		// driverJoystick.a().onTrue(pivotManualLower);
-		// buttonA.onFalse(new InstantCommand() {
-		// 	@Override
-		// 	public void initialize() {
-		// 		pivotManualLower.cancel();
-		// 	}
-		// });
+		xboxController0.a().onTrue(pivotManualLower);
+		xboxController0.a().onFalse(new InstantCommand() {
+			@Override
+			public void initialize() {
+				pivotManualLower.cancel();
+			}
+		});
 
 		xboxController0.y().onTrue(pivotManualRaise);
 		xboxController0.y().onFalse(new InstantCommand() {
@@ -192,21 +195,21 @@ public class RobotContainer {
 			}
 		});
 
-		xboxController0.rightTrigger(OIConstants.kTriggerDeadzone).onTrue(shootManual);
-		xboxController0.rightTrigger(OIConstants.kTriggerDeadzone).onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				shootManual.cancel();
-			}
-		});
-
-		xboxController0.a().onTrue(shoot);
-		xboxController0.a().onFalse(new InstantCommand() {
+		xboxController0.b().onTrue(shoot);
+		xboxController0.b().onFalse(new InstantCommand() {
 			@Override
 			public void initialize() {
 				shoot.cancel();
 			}
 		});
+
+		// xboxController0.a().onTrue(shoot);
+		// xboxController0.a().onFalse(new InstantCommand() {
+		// 	@Override
+		// 	public void initialize() {
+		// 		shoot.cancel();
+		// 	}
+		// });
 
 		// ClimberCommands
 		xboxController1.a().onTrue(lowerLeftClimber);

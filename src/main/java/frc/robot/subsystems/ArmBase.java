@@ -39,6 +39,10 @@ public class ArmBase extends SubsystemBase {
         this.baseMotor.setSmartCurrentLimit(51);
     }
 
+    public void initializeEncoder(){
+        this.motorSetpoint = baseMotor.getEncoder().getPosition();
+    }
+
     public double getBaseMotorPosition() {
         return this.baseMotor.getEncoder().getPosition();
     }
@@ -56,28 +60,31 @@ public class ArmBase extends SubsystemBase {
     }
 
     public void setSetpointAdd(double s){
-        motorSetpoint += s;
-        if(this.motorSetpoint > Constants.ArmBase.MaxRotations){
+        if((this.motorSetpoint += s) > Constants.ArmBase.MaxRotations){
             this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if(this.motorSetpoint < Constants.ArmBase.MinRotations){
+        }else if((this.motorSetpoint += s)< Constants.ArmBase.MinRotations){
             this.motorSetpoint = Constants.ArmBase.MinRotations;
+        }else{
+            this.motorSetpoint += s;
         }
         
     }
 
     public void setSetpoint(double s){
-        motorSetpoint = s;
-        if(this.motorSetpoint > Constants.ArmBase.MaxRotations){
+       
+        if(s > Constants.ArmBase.MaxRotations){
             this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if(this.motorSetpoint < Constants.ArmBase.MinRotations){
+        }else if(s < Constants.ArmBase.MinRotations){
             this.motorSetpoint = Constants.ArmBase.MinRotations;
+        }else{
+            this.motorSetpoint = s;
         }
         
     }
 
     public void periodic() {
         SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
-
+        SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
         if (this.motorSetpoint <= Constants.ArmBase.MaxRotations && this.motorSetpoint >= Constants.ArmBase.MinRotations){
             basePid.setSetpoint(motorSetpoint);
             double speed = basePid.calculate(getBaseMotorPosition());

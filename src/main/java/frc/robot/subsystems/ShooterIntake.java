@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class ShooterIntake extends SubsystemBase {
@@ -28,8 +29,6 @@ public class ShooterIntake extends SubsystemBase {
     public CANSparkMax lowerIntakeMotor = new CANSparkMax(Constants.CanIDs.LowerIntakeCanID, MotorType.kBrushless);
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
-
-    // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
@@ -129,8 +128,12 @@ public class ShooterIntake extends SubsystemBase {
         return this.lowerIntakeMotor.get();
     }
 
-    public void periodic() {
+    public boolean getNoteSensor() {
+        return !this.noteSensor.get();
+    }
 
+    public void periodic() {
+        SmartDashboard.putBoolean("INTAKE IR", this.noteSensor.get());
     }
 
 }
