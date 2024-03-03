@@ -133,7 +133,7 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public void periodic() {
-        SmartDashboard.putBoolean("INTAKE IR", this.noteSensor.get());
+        SmartDashboard.putBoolean("INTAKE IR", getNoteSensor());
     }
 
 }
