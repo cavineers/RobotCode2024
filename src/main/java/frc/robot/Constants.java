@@ -196,7 +196,15 @@ public final class Constants {
         public static final Transform3d RightCamera = new Transform3d(
             new Translation3d(Units.inchesToMeters(-11.88), Units.inchesToMeters(-6.88), Units.inchesToMeters(31.09)),
             new Rotation3d(0, Math.toRadians(10.62), Math.toRadians(-45)));
+
+         public static final Transform3d FrontCamera = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-11.88), Units.inchesToMeters(-6.88), Units.inchesToMeters(31.09)),
+            new Rotation3d(0, Math.toRadians(10.62), Math.toRadians(-45)));
         
+        public static final double blueSpeakerX = Units.inchesToMeters(-1.5);
+        public static final double redSpeakerX = Units.inchesToMeters(652.73);
     }
+
+
 
 }
