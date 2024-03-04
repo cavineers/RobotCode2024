@@ -52,7 +52,7 @@ public class ShooterIntake extends SubsystemBase {
         this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
 
         this.upperShooterMotor.setInverted(true);
-        this.lowerShooterMotor.setInverted(true);
+        this.lowerShooterMotor.setInverted(false);
         this.upperIntakeMotor.setInverted(true);
         this.lowerIntakeMotor.setInverted(false);
 
@@ -75,17 +75,14 @@ public class ShooterIntake extends SubsystemBase {
 
         case ON:
             this.upperShooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
-            this.lowerShooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
             break;
 
         case REVERSE:
             this.upperShooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
-            this.lowerShooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
             break;
 
         case OFF:
             this.upperShooterMotor.set(0.0);
-            this.lowerShooterMotor.set(0.0);
             break;
 
         default:
@@ -100,18 +97,18 @@ public class ShooterIntake extends SubsystemBase {
         switch (state) {
 
         case ON:
-            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeForwardSpeed);
-            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeForwardSpeed);
+            this.upperIntakeMotor.set(Constants.ShooterIntake.IntakeForwardSpeed);
+            this.lowerIntakeMotor.set(Constants.ShooterIntake.IntakeForwardSpeed);
             break;
 
         case REVERSE:
-            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeReverseSpeed);
-            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeReverseSpeed);
+            this.upperIntakeMotor.set(Constants.ShooterIntake.IntakeReverseSpeed);
+            this.lowerIntakeMotor.set(Constants.ShooterIntake.IntakeReverseSpeed);
             break;
 
         case RETRACT:
-            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeRetractSpeed);
-            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeRetractSpeed);
+            this.upperIntakeMotor.set(Constants.ShooterIntake.IntakeRetractSpeed);
+            this.lowerIntakeMotor.set(Constants.ShooterIntake.IntakeRetractSpeed);
             break;
 
         case OFF:
