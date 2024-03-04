@@ -154,8 +154,8 @@ public final class Constants {
         public static double MotorSetPoint = 0;
 
         //Measurements
-        public static final double armPivotBicepLengthMeters = 0.5; //TBD
-        public static final double armPivotForearmLengthMeters = 0.5; //TBD
+        public static final double armPivotBicepLengthMeters = 0.292; //Meters
+        public static final double armPivotForearmLengthMeters = 0.127; //Meters
         public static final double armPivotJointAngleDegrees = 108; //TBD
         public static final double armPivotDistanceFromShooterMeters = Math.sqrt(Math.pow(armPivotBicepLengthMeters, 2) + Math.pow(armPivotForearmLengthMeters, 2) - 2 * (armPivotBicepLengthMeters) * (armPivotForearmLengthMeters) * Math.cos(Math.toRadians(armPivotJointAngleDegrees))); //Law of Cosines
         public static final double armPivotTriangleAngleFromPivotDegrees = Math.toDegrees(Math.asin((armPivotForearmLengthMeters * Math.sin(Math.toRadians(armPivotJointAngleDegrees))) / armPivotDistanceFromShooterMeters)); // Law of Sines
@@ -190,8 +190,8 @@ public final class Constants {
         public static final double DerivitiveTerm = 0.0;
         
         //Measurements
-        public static final double minGantryHeightMeters = 0.3; //TBD
-        public static final double maxGantryHeightMeters = 0.6; //TBD
+        public static final double minGantryHeightMeters = 0.025; //TBD
+        public static final double maxGantryHeightMeters = 0.533; //TBD
         
         public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
         public static final double dRotations = MaxRotations - MinRotations;
