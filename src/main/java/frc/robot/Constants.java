@@ -223,7 +223,8 @@ public final class Constants {
         public static final double LowerIntakeReverseSpeed = -.7; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
-
+        public static final double UpperToLowerShooterMotorSpeedRatio = 0.9;
+        
         public static double kP = 0.01; // Proportional
         public static double kI = 0.3; // Integral
         public static double kD = 0.01; // Derivative

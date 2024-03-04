@@ -125,6 +125,10 @@ public class ShooterIntake extends SubsystemBase {
         }
     }
 
+    public void LowerShooterMotorFollow() {
+        lowerShooterMotor.set(upperShooterMotor.get() * Constants.ShooterIntake.UpperToLowerShooterMotorSpeedRatio);
+    }
+
     public ShooterMotorState getShooterMotorState() {
         return this.shooterMotorState;
     }
@@ -166,6 +170,9 @@ public class ShooterIntake extends SubsystemBase {
         SmartDashboard.putNumber("Upper Shooter RPM", getUpperShooterMotorRPM());
         SmartDashboard.putNumber("Lower Shooter RPM", getLowerShooterMotorRPM());
         SmartDashboard.putNumber("armPivotTriangleAngleFromPivotDegrees", Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
+
+        LowerShooterMotorFollow();
+
     }
 
 }
