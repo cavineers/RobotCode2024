@@ -33,7 +33,8 @@ import frc.robot.commands.ShooterIntake.Intake;
 import frc.robot.commands.ShooterIntake.Outtake;
 import frc.robot.commands.ShooterIntake.Shoot;
 import frc.robot.commands.ShooterIntake.Shoot_Manual;
-
+import frc.robot.commands.ShooterIntake.Amp;
+import frc.robot.commands.ShooterIntake.Shoot_Auto;
 
 
 
@@ -69,6 +70,8 @@ public class RobotContainer {
 	public Command ampPosition;
 	public Command restPosition;
 
+	public Command shootAuto;
+
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
@@ -77,6 +80,7 @@ public class RobotContainer {
 	public Command intake;
 	public Command outtake;
 	public Command shoot;
+	public Command amp;
 	public Command shootManual;
 	public SwerveHoming swerveHomingCommand;
 
@@ -122,6 +126,10 @@ public class RobotContainer {
 		intake = new Intake(shooterIntake);
 		outtake = new Outtake(shooterIntake);
 		shoot = new Shoot(shooterIntake);
+		amp = new Amp(shooterIntake);
+
+		shootAuto = new Shoot_Auto(shooterIntake, armPivot, armBase);
+
 		shootManual = new Shoot_Manual(shooterIntake, () -> xboxController0.getRightTriggerAxis());
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
@@ -138,6 +146,21 @@ public class RobotContainer {
 	};
 
 	private void configureButtonBindings() {
+
+		xboxController0.povUp().onTrue(new InstantCommand() {
+			@Override
+			public void initialize() {
+				swerveSubsystem.zeroHeading();
+			}
+		});
+
+		xboxController0.povDown().onTrue(amp);
+		xboxController0.povDown().onFalse(new InstantCommand() {
+			@Override
+			public void initialize() {
+				amp.cancel();
+			}
+		});
 
 		// Arm Commands
 		xboxController0.povRight().onTrue(gantryManualRaise);
@@ -171,6 +194,8 @@ public class RobotContainer {
 				pivotManualRaise.cancel();
 			}
 		});
+
+		xboxController0.x().onTrue(shootAuto);
 
 		xboxController1.povDown().onTrue(groundPickup);
 		xboxController1.povUp().onTrue(shootPosition);

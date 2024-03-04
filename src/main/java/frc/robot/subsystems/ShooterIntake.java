@@ -13,7 +13,8 @@ import frc.robot.Constants;
 public class ShooterIntake extends SubsystemBase {
 
     public enum ShooterMotorState {
-        ON, 
+        ON,
+        AMP, 
         OFF, 
         REVERSE
     }
@@ -44,13 +45,13 @@ public class ShooterIntake extends SubsystemBase {
         this.upperIntakeMotor.setIdleMode(IdleMode.kCoast);
         this.lowerIntakeMotor.setIdleMode(IdleMode.kCoast);
 
-        this.shooterMotor.setSmartCurrentLimit(120); // TBD
+        this.shooterMotor.setSmartCurrentLimit(80); // TBD
         this.upperIntakeMotor.setSmartCurrentLimit(80); // TBD
         this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
 
         this.shooterMotor.setInverted(true);
-        this.upperIntakeMotor.setInverted(true);
-        this.lowerIntakeMotor.setInverted(false);
+        this.upperIntakeMotor.setInverted(false);
+        this.lowerIntakeMotor.setInverted(true);
 
         this.shooterMotor.getEncoder().setMeasurementPeriod(8);
 
@@ -71,6 +72,10 @@ public class ShooterIntake extends SubsystemBase {
 
         case ON:
             this.shooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
+            break;
+        
+        case AMP:
+            this.shooterMotor.set(Constants.ShooterIntake.AmpForwardSpeed);
             break;
 
         case REVERSE:

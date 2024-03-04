@@ -78,10 +78,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         DriveConstants.kBackRightAbsoluteEncoderOffset);
 
     private final Pigeon2 gyro = new Pigeon2(CanIDs.kPigeonID);
-    
-
-
-    
+        
     private Pose2d updatedPose = new Pose2d();
 
     private final Field2d m_field = new Field2d();

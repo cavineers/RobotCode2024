@@ -127,7 +127,7 @@ public final class Constants {
         public static final int kDriverFieldOrientedButtonIdx = 1;
 
         public static final double kTriggerDeadzone = 0.1;
-        public static final double kDeadband = 0.1;
+        public static final double kDeadband = 0.03;
         public static final double kDriverJoystickTriggerDeadzone = 0.1;
 
     }
@@ -157,13 +157,13 @@ public final class Constants {
         public static double MotorSetPoint = 0;
 
         //Measurements
-        public static final double armPivotBicepLengthMeters = 0.5; //TBD
-        public static final double armPivotForearmLengthMeters = 0.5; //TBD
+        public static final double armPivotBicepLengthMeters = 0.292; //TBD
+        public static final double armPivotForearmLengthMeters = 0.127; //TBD
         public static final double armPivotJointAngleDegrees = 108; //TBD
         public static final double armPivotDistanceFromShooterMeters = Math.sqrt(Math.pow(armPivotBicepLengthMeters, 2) + Math.pow(armPivotForearmLengthMeters, 2) - 2 * (armPivotBicepLengthMeters) * (armPivotForearmLengthMeters) * Math.cos(Math.toRadians(armPivotJointAngleDegrees))); //Law of Cosines
         public static final double armPivotTriangleAngleFromPivotDegrees = Math.toDegrees(Math.asin((armPivotForearmLengthMeters * Math.sin(Math.toRadians(armPivotJointAngleDegrees))) / armPivotDistanceFromShooterMeters)); // Law of Sines
-        public static final double armPivotMinAngleDegrees = -10; //TBD
-        public static final double armPivotMaxAngleDegrees = 110; //TBD
+        public static final double armPivotMinAngleDegrees = 11; //TBD
+        public static final double armPivotMaxAngleDegrees = 155; //TBD
 
         public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
@@ -193,8 +193,8 @@ public final class Constants {
         public static final double DerivitiveTerm = 0.0;
 
         //Measurements
-        public static final double minGantryHeightMeters = 0.3; //TBD
-        public static final double maxGantryHeightMeters = 0.6; //TBD
+        public static final double minGantryHeightMeters = 0.025; //TBD
+        public static final double maxGantryHeightMeters = 0.533; //TBD
         
         public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
         public static final double dRotations = MaxRotations - MinRotations;
@@ -215,7 +215,8 @@ public final class Constants {
 
     public static final class ShooterIntake {
 
-        public static final double ShooterForwardSpeed = .6; // TBD
+        public static final double ShooterForwardSpeed = .85; // TBD
+        public static final double AmpForwardSpeed = .35;
         public static final double ShooterReverseSpeed = -.5; // TBD
         public static final double UpperIntakeForwardSpeed = .7; // TBD
         public static final double LowerIntakeForwardSpeed = .7; // TBD

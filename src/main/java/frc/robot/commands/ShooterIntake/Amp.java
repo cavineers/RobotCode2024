@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Shoot extends Command {
+public class Amp extends Command {
 
     private boolean isDone = false;
     private double m_timestamp = Timer.getFPGATimestamp();
     private ShooterIntake shooterIntake;
 
-    public Shoot(ShooterIntake shooterIntake) {
+    public Amp(ShooterIntake shooterIntake) {
         this.shooterIntake = shooterIntake;
         this.addRequirements(shooterIntake);
     }
@@ -28,15 +28,15 @@ public class Shoot extends Command {
     @Override
     public void execute() {
 
-        SmartDashboard.putString("Shooter", "Shooting");
+        SmartDashboard.putString("Amp", "Amping");
 
-        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
-        Timer.delay(1.5);
+        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.AMP);
+        Timer.delay(1);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
         // shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
         // Timer.delay(.5);
-        // shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
-        Timer.delay(2);
+        // shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REV);
+        Timer.delay(1.5);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
     }
