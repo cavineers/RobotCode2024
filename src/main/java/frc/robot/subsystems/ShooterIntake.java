@@ -142,7 +142,12 @@ public class ShooterIntake extends SubsystemBase {
         return this.lowerIntakeMotor.get();
     }
 
+    public boolean getNoteSensor() {
+        return !this.noteSensor.get();
+    }
+
     public void periodic() {
+        SmartDashboard.putBoolean("INTAKE IR", getNoteSensor());
         SmartDashboard.putNumber("Shooter RPM", getShooterMotorRPM());
         SmartDashboard.putNumber("armPivotTriangleAngleFromPivotDegrees", Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
     }

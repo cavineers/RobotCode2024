@@ -33,7 +33,7 @@ import frc.robot.commands.ShooterIntake.Intake;
 import frc.robot.commands.ShooterIntake.Outtake;
 import frc.robot.commands.ShooterIntake.Shoot;
 import frc.robot.commands.ShooterIntake.Shoot_Manual;
-import frc.robot.commands.ShooterIntake.Shoot_Auto;
+
 
 
 
@@ -77,7 +77,6 @@ public class RobotContainer {
 	public Command intake;
 	public Command outtake;
 	public Command shoot;
-	public Command shootAuto;
 	public Command shootManual;
 	public SwerveHoming swerveHomingCommand;
 
@@ -124,7 +123,6 @@ public class RobotContainer {
 		outtake = new Outtake(shooterIntake);
 		shoot = new Shoot(shooterIntake);
 		shootManual = new Shoot_Manual(shooterIntake, () -> xboxController0.getRightTriggerAxis());
-		shootAuto = new Shoot_Auto(shooterIntake, armPivot, armBase);
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,
@@ -132,6 +130,9 @@ public class RobotContainer {
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverRotAxis),
 					() -> false));
+
+		armPivot.initializeDutyEncoder();
+		armBase.initializeEncoder();
 		configureButtonBindings();
 
 	};
@@ -155,8 +156,8 @@ public class RobotContainer {
 			}
 		});
 
-		xboxController0.x().onTrue(pivotManualLower);
-		xboxController0.x().onFalse(new InstantCommand() {
+		xboxController0.a().onTrue(pivotManualLower);
+		xboxController0.a().onFalse(new InstantCommand() {
 			@Override
 			public void initialize() {
 				pivotManualLower.cancel();
@@ -194,11 +195,11 @@ public class RobotContainer {
 			}
 		});
 
-		xboxController0.rightTrigger(OIConstants.kTriggerDeadzone).onTrue(shootManual);
-		xboxController0.rightTrigger(OIConstants.kTriggerDeadzone).onFalse(new InstantCommand() {
+		xboxController0.b().onTrue(shoot);
+		xboxController0.b().onFalse(new InstantCommand() {
 			@Override
 			public void initialize() {
-				shootManual.cancel();
+				shoot.cancel();
 			}
 		});
 
@@ -246,8 +247,6 @@ public class RobotContainer {
 		// public SwerveDriveSubsystem getSwerveSubsystem() {
 		// return this.swerveSubsystem;
 		// }
-
-		xboxController0.a().onTrue(shootAuto);
 
 	}
 	public SwerveDriveSubsystem getSwerveSubsystem() {

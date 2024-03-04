@@ -27,8 +27,6 @@ public class ArmBase extends SubsystemBase {
     public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
     public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
 
-    private double gantryHeight;
-
     private double motorSetpoint = 0;
 
     // Starts motors in their off state
@@ -39,6 +37,10 @@ public class ArmBase extends SubsystemBase {
         this.baseMotor.setIdleMode(IdleMode.kBrake);
 
         this.baseMotor.setSmartCurrentLimit(51);
+    }
+
+    public void initializeEncoder(){
+        this.motorSetpoint = baseMotor.getEncoder().getPosition();
     }
 
     public double getBaseMotorPosition() {
@@ -58,36 +60,31 @@ public class ArmBase extends SubsystemBase {
     }
 
     public void setSetpointAdd(double s){
-        motorSetpoint += s;
-        if(this.motorSetpoint > Constants.ArmBase.MaxRotations){
+        if((this.motorSetpoint += s) > Constants.ArmBase.MaxRotations){
             this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if(this.motorSetpoint < Constants.ArmBase.MinRotations){
+        }else if((this.motorSetpoint += s)< Constants.ArmBase.MinRotations){
             this.motorSetpoint = Constants.ArmBase.MinRotations;
+        }else{
+            this.motorSetpoint += s;
         }
         
     }
 
     public void setSetpoint(double s){
-        motorSetpoint = s;
-        if(this.motorSetpoint > Constants.ArmBase.MaxRotations){
+       
+        if(s > Constants.ArmBase.MaxRotations){
             this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if(this.motorSetpoint < Constants.ArmBase.MinRotations){
+        }else if(s < Constants.ArmBase.MinRotations){
             this.motorSetpoint = Constants.ArmBase.MinRotations;
+        }else{
+            this.motorSetpoint = s;
         }
         
     }
 
-    public double getGantryHeightMeters() {
-        
-        gantryHeight = (Constants.ArmBase.dHeight * (motorSetpoint/Constants.ArmBase.dRotations)) + Constants.ArmBase.minGantryHeightMeters;
-        
-        return gantryHeight;
-    }
-
     public void periodic() {
         SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
-        SmartDashboard.putNumber("GantryHeightFromGround", getGantryHeightMeters());
-
+        SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
         if (this.motorSetpoint <= Constants.ArmBase.MaxRotations && this.motorSetpoint >= Constants.ArmBase.MinRotations){
             basePid.setSetpoint(motorSetpoint);
             double speed = basePid.calculate(getBaseMotorPosition());
