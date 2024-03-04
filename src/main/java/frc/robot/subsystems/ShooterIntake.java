@@ -32,7 +32,7 @@ public class ShooterIntake extends SubsystemBase {
 
     public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
 
-    public SparkPIDController shooterPID = shooterMotor.getPIDController();
+    public SparkPIDController shooterPID = upperShooterMotor.getPIDController();
 
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
@@ -56,7 +56,7 @@ public class ShooterIntake extends SubsystemBase {
         this.upperIntakeMotor.setInverted(true);
         this.lowerIntakeMotor.setInverted(false);
 
-        this.shooterMotor.getEncoder().setMeasurementPeriod(8);
+        this.upperShooterMotor.getEncoder().setMeasurementPeriod(8);
 
         this.shooterPID.setIZone(0.0);
         this.shooterPID.setOutputRange(-1.0, 1.0);
@@ -163,7 +163,8 @@ public class ShooterIntake extends SubsystemBase {
 
     public void periodic() {
         SmartDashboard.putBoolean("INTAKE IR", getNoteSensor());
-        SmartDashboard.putNumber("Shooter RPM", getShooterMotorRPM());
+        SmartDashboard.putNumber("Upper Shooter RPM", getUpperShooterMotorRPM());
+        SmartDashboard.putNumber("Lower Shooter RPM", getLowerShooterMotorRPM());
         SmartDashboard.putNumber("armPivotTriangleAngleFromPivotDegrees", Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
     }
 
