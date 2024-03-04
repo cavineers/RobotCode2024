@@ -31,13 +31,15 @@ public class ArmPivot extends SubsystemBase {
 
     private double motorSetpoint;
 
+    private double currentArmPivotAngle;
+    private double requiredSetpoint;
+    
     // Motor sparkmax settings
     public ArmPivot() {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
         this.pivotMotor.setSmartCurrentLimit(51);
         this.pivotMotor.setInverted(true);
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
-
     }
 
     public void initializeDutyEncoder(){
@@ -97,6 +99,24 @@ public class ArmPivot extends SubsystemBase {
             motorSetpoint = s;
         }
         
+    }
+
+    public void setArmPivotAngle(Double angle) {
+
+        requiredSetpoint = (angle * Constants.ArmPivot.dRotations) / Constants.ArmPivot.dAngle;
+        setSetpoint(requiredSetpoint);
+
+    }
+
+    public double getArmPivotAngle() {
+
+        currentArmPivotAngle = ((motorSetpoint* Constants.ArmPivot.dAngle) / Constants.ArmPivot.dRotations);
+
+        return currentArmPivotAngle;
+    }
+
+    public double getArmPivotHypToBaseline() {
+        return (getArmPivotAngle() - Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
     }
 
     public void periodic() {

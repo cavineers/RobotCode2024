@@ -27,6 +27,8 @@ public class ArmBase extends SubsystemBase {
     public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
     public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
 
+    private double gantryHeight;
+
     private double motorSetpoint = 0;
 
     // Starts motors in their off state
@@ -80,6 +82,13 @@ public class ArmBase extends SubsystemBase {
             this.motorSetpoint = s;
         }
         
+    }
+
+    public double getGantryHeightMeters() {
+        
+        gantryHeight = (Constants.ArmBase.dHeight * (motorSetpoint/Constants.ArmBase.dRotations)) + Constants.ArmBase.minGantryHeightMeters;
+        
+        return gantryHeight;
     }
 
     public void periodic() {
