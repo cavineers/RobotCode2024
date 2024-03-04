@@ -21,13 +21,13 @@ public class GantryManualLower extends Command {
 
     @Override
     public void execute() {
-        armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
+        this.armBase.setSetpointAdd(-.5);
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        armBase.setBaseMotorState(armBase.baseMotorState.OFF);
+
     }
 
     /*

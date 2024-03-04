@@ -1,6 +1,9 @@
 package frc.robot.commands.ShooterIntake;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterIntake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,8 +29,6 @@ public class Shoot extends Command {
     public void execute() {
 
         SmartDashboard.putString("Shooter", "Shooting");
-        SmartDashboard.putNumber("Shooter RPM", shooterIntake.getUpperShooterMotorRPM());
-        
         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.ON);
         Timer.delay(2.5);
         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);

@@ -19,48 +19,53 @@ public final class Constants {
     }
 
     public static final class CanIDs{
-        public static final int kPigeonID = 23;
 
-        public static final int kFrontLeftDriveCanID = 24;
+        public static final int kFrontLeftDriveCanID = 2;
         public static final int kBackLeftDriveCanID = 8;
-        public static final int kFrontRightDriveCanID = 25;
+        public static final int kFrontRightDriveCanID = 4;
         public static final int kBackRightDriveCanID = 6;
 
-        public static final int kFrontLeftTurningCanID = 3;
+        public static final int kFrontLeftTurningCanID = 1;
         public static final int kBackLeftTurningCanID = 7;
-        public static final int kFrontRightTurningCanID = 13;
+        public static final int kFrontRightTurningCanID = 3;
         public static final int kBackRightTurningCanID = 5;
 
-        public static final int kFrontLeftAbsoluteEncoderPort = 9;
-        public static final int kBackLeftAbsoluteEncoderPort = 12;
-        public static final int kFrontRightAbsoluteEncoderPort = 10;
-        public static final int kBackRightAbsoluteEncoderPort = 11;
-        public static final int PivotCanID = 29;
-        public static final int GantryCANID = 30;
+        public static final int kFrontLeftAbsoluteEncoderPort = 10;
+        public static final int kBackLeftAbsoluteEncoderPort = 11;
+        public static final int kFrontRightAbsoluteEncoderPort = 9;
+        public static final int kBackRightAbsoluteEncoderPort = 12;
 
-        public static final int LeftClimberCanID = 21; 
-        public static final int RightClimberCanID = 22; 
+        public static final int PivotCanID = 18;
+        public static final int GantryCANID = 15;
 
-        public static final int ShooterCanID = 4; 
-        public static final int UpperIntakeCanID = 2; 
-        public static final int LowerIntakeCanID = 1; 
+        public static final int LeftClimberCanID = 19; 
+        public static final int RightClimberCanID = 16; 
+
+        public static final int PDHCanID = 17; 
+
+        public static final int ShooterCanID = 13; 
+        public static final int UpperIntakeCanID = 21; 
+        public static final int LowerIntakeCanID = 20; 
+
+        public static final int kPigeonID = 23;
     }
 
         
 
     public static final class DIO {
         
-        public static final int ArmBoreEncoder = 0;
+        public static final int ArmBoreEncoder = 8;
+
         public static final int GantryLowerLimitSwitch = 1;
         public static final int GantryHigherLimitSwitch = 2;
 
         public static final int LeftClimberTopLimitSwitch = 3; 
         public static final int RightClimberTopLimitSwitch = 4; 
-        public static final int LeftClimberBottomLimitSwitch = 5; 
+        public static final int LeftClimberBottomLimitSwitch = 10; 
         public static final int RightClimberBottomLimitSwitch = 6;
 
-        public static final int NoteSensor = 7;
-        public static final int IntakeSwitch = 8;
+        public static final int NoteSensor = 5;
+        // public static final int IntakeSwitch = 8;
 
     }
 
@@ -91,10 +96,10 @@ public final class Constants {
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
 
-        public static final double kFrontLeftAbsoluteEncoderOffset = .276; //.281 185.97 offset //-5.97 +80.63
-        public static final double kBackLeftAbsoluteEncoderOffset = -.479; //-.472 178.41 //-178.41 -224.03
-        public static final double kFrontRightAbsoluteEncoderOffset = .24; //170.94 //-170.94
-        public static final double kBackRightAbsoluteEncoderOffset = .648;
+        public static final double kFrontLeftAbsoluteEncoderOffset = -.0083+.5; //.281 185.97 offset //-5.97 +80.63
+        public static final double kBackLeftAbsoluteEncoderOffset = -0.0920+.5; //-.472 178.41 //-178.41 -224.03
+        public static final double kFrontRightAbsoluteEncoderOffset = -0.9697; //170.94 //-170.94
+        public static final double kBackRightAbsoluteEncoderOffset = -.723+.5;
          //58.79 //-58.79
         
         // Distance between right and left wheels
@@ -132,18 +137,24 @@ public final class Constants {
         public static final double PivotMotorSpeedForwards = 0.3;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
-        public static final double PivotMotorLowerRotationLimit = 0;
-        public static final double PivotMotorUpperRotationLimit = 27;
+        public static final double PivotMotorLowerRotationLimit = .353;
+        public static final double PivotMotorUpperRotationLimit = 0.736;
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
         public static final double DistancePerRotation = 1;
     
-        public static final double GroundPickupRotations = 10;
-        public static final double RestRotations = 15;
-        public static final double ShootRotations = 20;
-        public static final double SourceRotations = 30;
-        public static final double AmpRotations = 40;
+        public static final double GroundPickupRotations = 5;
+        public static final double RestRotations = 10;
+        public static final double ShootRotations = 15;
+        public static final double SourceRotations = 20;
+        public static final double AmpRotations = 25;
+
+        public static final double ProportionalGain = 1.75; // strength of a correction
+        public static final double IntegralTerm = 0.00; // additive strength over time
+        public static final double DerivitiveTerm = 0.0;
+
+        public static double MotorSetPoint = 0;
     
     }
 
@@ -152,18 +163,22 @@ public final class Constants {
         public static final double SpeedForwards = 0.2;
         public static final double SpeedBackwards = -0.15;
 
-        public static final double MaxRotations = 95;
+        public static final double MaxRotations = 150;
         public static final double MinRotations = 0;
 
         public static final double ArmBaseEncoderDeadzone = 0.4;
 
         public static final double BaseMotorEaseFactor = 0.1;
 
-        public static final double GroundPickupRotations = 15;
-        public static final double RestRotations = 20;
-        public static final double ShootRotations = 25;
-        public static final double SourceRotations = 35;
-        public static final double AmpRotations = 45;
+        public static final double GroundPickupRotations = 10;
+        public static final double RestRotations = 13;
+        public static final double ShootRotations = 18;
+        public static final double SourceRotations = 21;
+        public static final double AmpRotations = 25;
+
+        public static final double ProportionalGain = .03; // strength of a correction
+        public static final double IntegralTerm = 0.00; // additive strength over time
+        public static final double DerivitiveTerm = 0.0;
 
     }
 
@@ -171,17 +186,23 @@ public final class Constants {
 
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
-        public static final double LowerClimberMaxRotations = 4; // TBD
+        public static final double LowerClimberMaxRotations = 0; // TBD
+        public static final double UpperClimberMaxRotations = 100; // TBD
+
+        public static final double ProportionalGain = .03;
+        public static final double IntegralTerm = 0.00;
+        public static final double DerivitiveTerm = 0.0;
+
     }
 
     public static final class ShooterIntake {
 
-        public static final double ShooterForwardSpeed = 1; // TBD
+        public static final double ShooterForwardSpeed = .6; // TBD
         public static final double ShooterReverseSpeed = -.5; // TBD
         public static final double UpperIntakeForwardSpeed = .7; // TBD
         public static final double LowerIntakeForwardSpeed = .7; // TBD
-        public static final double UpperIntakeReverseSpeed = -.3; // TBD
-        public static final double LowerIntakeReverseSpeed = -.3; // TBD
+        public static final double UpperIntakeReverseSpeed = -.7; // TBD
+        public static final double LowerIntakeReverseSpeed = -.7; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }

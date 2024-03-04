@@ -24,13 +24,13 @@ public class PivotManualLower extends Command {
     @Override
     public void execute() {
 
-            armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
+        this.armPivot.setSetpointAdd(-.001);
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+
     }
 
 }

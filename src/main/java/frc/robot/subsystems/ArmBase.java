@@ -4,12 +4,15 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmBase extends SubsystemBase {
+
+    PIDController basePid = new PIDController(Constants.ArmBase.ProportionalGain, Constants.ArmBase.IntegralTerm, Constants.ArmBase.DerivitiveTerm);
 
     public enum BaseMotorState {
         ON, 
@@ -24,6 +27,8 @@ public class ArmBase extends SubsystemBase {
     public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
     public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
 
+    private double motorSetpoint = 0;
+
     // Starts motors in their off state
     public BaseMotorState baseMotorState = BaseMotorState.OFF;
 
@@ -34,42 +39,8 @@ public class ArmBase extends SubsystemBase {
         this.baseMotor.setSmartCurrentLimit(51);
     }
 
-    public void setBaseMotorState(BaseMotorState state) {
-        // set the current state
-        this.baseMotorState = state;
-
-        // set motor state
-        switch (state) {
-        case ON:
-            // On
-            // if (higherGantryLimitSwitch.get() == false) {
-                this.baseMotor.set(Constants.ArmBase.SpeedForwards);
-            // } else {
-            //     this.baseMotor.set(0.0);
-            // }
-                if (this.getBaseMotorPosition() >= Constants.ArmBase.MaxRotations)
-                    this.baseMotor.set(0);
-            break;
-
-        case OFF:
-            // Off
-            this.baseMotor.set(0);
-            break;
-
-        case REVERSED:
-            //Reversed
-            // if (lowerGantryLimitSwitch.get() == false) {
-                this.baseMotor.set(Constants.ArmBase.SpeedBackwards);
-            // } else {
-            //     this.baseMotor.set(0.0);
-            // }
-            if (this.getBaseMotorPosition() <= Constants.ArmBase.MinRotations)
-                this.baseMotor.set(0);
-            break;
-
-        default:
-            this.setBaseMotorState(BaseMotorState.OFF);
-        }
+    public void initializeEncoder(){
+        this.motorSetpoint = baseMotor.getEncoder().getPosition();
     }
 
     public double getBaseMotorPosition() {
@@ -88,8 +59,39 @@ public class ArmBase extends SubsystemBase {
         this.baseMotor.getEncoder().setPosition(position);
     }
 
+    public void setSetpointAdd(double s){
+        if((this.motorSetpoint += s) > Constants.ArmBase.MaxRotations){
+            this.motorSetpoint = Constants.ArmBase.MaxRotations;
+        }else if((this.motorSetpoint += s)< Constants.ArmBase.MinRotations){
+            this.motorSetpoint = Constants.ArmBase.MinRotations;
+        }else{
+            this.motorSetpoint += s;
+        }
+        
+    }
+
+    public void setSetpoint(double s){
+       
+        if(s > Constants.ArmBase.MaxRotations){
+            this.motorSetpoint = Constants.ArmBase.MaxRotations;
+        }else if(s < Constants.ArmBase.MinRotations){
+            this.motorSetpoint = Constants.ArmBase.MinRotations;
+        }else{
+            this.motorSetpoint = s;
+        }
+        
+    }
+
     public void periodic() {
         SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
+        SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
+        if (this.motorSetpoint <= Constants.ArmBase.MaxRotations && this.motorSetpoint >= Constants.ArmBase.MinRotations){
+            basePid.setSetpoint(motorSetpoint);
+            double speed = basePid.calculate(getBaseMotorPosition());
+            SmartDashboard.putNumber("Speed", speed);
+    
+            baseMotor.set(speed);
+        }
     }
 
 }

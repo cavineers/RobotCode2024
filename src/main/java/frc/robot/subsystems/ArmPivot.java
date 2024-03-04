@@ -4,12 +4,15 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmPivot extends SubsystemBase {
+
+    PIDController pivotPid = new PIDController(Constants.ArmPivot.ProportionalGain, Constants.ArmPivot.IntegralTerm, Constants.ArmPivot.DerivitiveTerm);
 
     public enum PivotMotorState {
         ON,
@@ -26,50 +29,19 @@ public class ArmPivot extends SubsystemBase {
     // Through Bore Encoder
     public DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(Constants.DIO.ArmBoreEncoder);
 
+    private double motorSetpoint;
+
     // Motor sparkmax settings
     public ArmPivot() {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
         this.pivotMotor.setSmartCurrentLimit(51);
         this.pivotMotor.setInverted(true);
+        this.motorSetpoint = pivotEncoder.getAbsolutePosition();
 
     }
 
-    public void setPivotMotorState(PivotMotorState state) {
-        // set the current state
-        this.pivotMotorState = state;
-
-        // set motor state
-        switch (state) {
-        case ON:
-            // On
-            this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedForwards);
-            SmartDashboard.putString("PivotMotorState", "On");
-
-            if (this.getPivotMotorPosition() >= Constants.ArmPivot.PivotMotorUpperRotationLimit)
-                this.pivotMotor.set(0);
-
-            break;
-
-        case OFF:
-            // Off
-            this.pivotMotor.set(0);
-            SmartDashboard.putString("PivotMotorState", "Off");
-
-            break;
-
-        case REVERSED:
-            // Reversed
-            this.pivotMotor.set(Constants.ArmPivot.PivotMotorSpeedBackwards);
-            SmartDashboard.putString("PivotMotorState", "Reversed");
-
-            if (this.getPivotMotorPosition() <= Constants.ArmPivot.PivotMotorLowerRotationLimit)
-                this.pivotMotor.set(0);
-
-            break;
-
-        default:
-            this.setPivotMotorState(PivotMotorState.OFF);
-        }
+    public void initializeDutyEncoder(){
+        this.motorSetpoint = pivotEncoder.getAbsolutePosition();
     }
 
     public double getPivotMotorPosition() {
@@ -93,13 +65,50 @@ public class ArmPivot extends SubsystemBase {
         return this.pivotMotor.getEncoder().getPosition();
     }
 
+    public double getPivotAbsolute(){
+        return this.pivotEncoder.getAbsolutePosition();
+    }
+
     public double getPivotEncoderFrequency() {
         return this.pivotEncoder.getFrequency();
     }
 
+    public void setSetpointAdd(double s){
+        if((this.motorSetpoint += s) > Constants.ArmPivot.PivotMotorUpperRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+          
+        }else if((this.motorSetpoint += s) < Constants.ArmPivot.PivotMotorLowerRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+      
+      
+        }else{
+            motorSetpoint += s;
+        }
+        
+    }
+
+    public void setSetpoint(double s){
+        motorSetpoint = s;
+        if(s > Constants.ArmPivot.PivotMotorUpperRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+        }else if(s < Constants.ArmPivot.PivotMotorLowerRotationLimit){
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        }else{
+            motorSetpoint = s;
+        }
+        
+    }
+
     public void periodic() {
 
-        SmartDashboard.putNumber("PivotRot", getPivotMotorPosition());
-
+        SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
+        SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
+        
+        if (this.motorSetpoint <= Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint >= Constants.ArmPivot.PivotMotorLowerRotationLimit){
+            pivotPid.setSetpoint(motorSetpoint);
+            double speed = pivotPid.calculate(getPivotAbsolute());
+            pivotMotor.set(speed);
+        }
+        SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
     }
 }
