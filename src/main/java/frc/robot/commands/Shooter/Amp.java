@@ -1,22 +1,22 @@
-package frc.robot.commands.ShooterIntake;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterIntake;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Amp extends Command {
 
     private boolean isDone = false;
     private double m_timestamp = Timer.getFPGATimestamp();
-    private ShooterIntake shooterIntake;
+    private Shooter shooter;
 
-    public Amp(ShooterIntake shooterIntake) {
-        this.shooterIntake = shooterIntake;
-        this.addRequirements(shooterIntake);
+    public Amp(Shooter shooter) {
+        this.shooter = shooter;
+        this.addRequirements(shooter);
     }
 
     // Set Motor State to ON / OFF
@@ -30,21 +30,13 @@ public class Amp extends Command {
 
         SmartDashboard.putString("Amp", "Amping");
 
-        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.AMP);
-        Timer.delay(1);
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
-        // shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-        // Timer.delay(.5);
-        // shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.REV);
-        Timer.delay(1.5);
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
+        shooter.setShooterMotorState(shooter.shooterMotorState.AMP);
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
+        shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
     }
 
     // @Override

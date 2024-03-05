@@ -1,24 +1,24 @@
-package frc.robot.commands.ShooterIntake;
+package frc.robot.commands.Shooter;
 
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.ShooterIntake;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shoot_Manual extends Command {
 
     private boolean isDone = false;
     private double m_timestamp = Timer.getFPGATimestamp();
-    private ShooterIntake shooterIntake;
+    private Shooter shooter;
     private Supplier<Double> triggerValue;
 
-    public Shoot_Manual(ShooterIntake shooterIntake, Supplier<Double> triggerFunction) {
-        this.shooterIntake = shooterIntake;
+    public Shoot_Manual(Shooter shooter, Supplier<Double> triggerFunction) {
+        this.shooter = shooter;
         this.triggerValue = triggerFunction;
-        this.addRequirements(shooterIntake);
+        this.addRequirements(shooter);
     }
 
     // Set Motor State to ON / OFF
@@ -35,22 +35,18 @@ public class Shoot_Manual extends Command {
         double shooterMotorSpeed = triggerValue.get();
 
         SmartDashboard.putNumber("RightTriggerValue", shooterMotorSpeed);
-        SmartDashboard.putNumber("ShooterMotorSpeed", shooterIntake.getShooterMotorSpeed());
-        SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getUpperIntakeMotorSpeed());
-        SmartDashboard.putNumber("IntakeMotorSpeed", shooterIntake.getLowerIntakeMotorSpeed());
+        SmartDashboard.putNumber("ShooterMotorSpeed", shooter.getShooterMotorSpeed());
 
-        shooterMotorSpeed = shooterMotorSpeed * Constants.ShooterIntake.ShooterForwardSpeed;
+        shooterMotorSpeed = shooterMotorSpeed * Constants.Shooter.ShooterForwardSpeed;
 
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.ON);
 
-        shooterIntake.shooterMotor.set(shooterMotorSpeed);
+        shooter.shooterMotor.set(shooterMotorSpeed);
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-        shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);
+        shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
     }
 
     // @Override

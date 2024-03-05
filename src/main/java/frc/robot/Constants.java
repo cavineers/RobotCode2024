@@ -56,11 +56,11 @@ public final class Constants {
         
         public static final int ArmBoreEncoder = 8;
 
-        public static final int GantryLowerLimitSwitch = 1;
-        public static final int GantryHigherLimitSwitch = 2;
+        public static final int LeftGantryLowerLimitSwitch = 1;
+        public static final int LeftGantryHigherLimitSwitch = 2;
+        public static final int RightGantryLowerLimitSwitch = 3;
+        public static final int RightGantryHigherLimitSwitch = 4;
 
-        public static final int LeftClimberTopLimitSwitch = 3; 
-        public static final int RightClimberTopLimitSwitch = 4; 
         public static final int LeftClimberBottomLimitSwitch = 10; 
         public static final int RightClimberBottomLimitSwitch = 6;
 
@@ -167,9 +167,14 @@ public final class Constants {
 
         public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
+
+        // ROTATIONS
+        public static final double[] armPivotRotationGround = {0,0}; // [min, max] region 1
+        public static final double[] armPivotRotationSwerve = {0,0}; // [min, max] region 2
+        public static final double[] armPivotRotationMidGantry = {0,0}; // [min, max] region 3
+        public static final double[] armPivotRotationUpperGantry = {0,0}; // [min, max] region 4
     
     }
-
     public static final class ArmBase {
 
         public static final double SpeedForwards = 0.2;
@@ -198,6 +203,12 @@ public final class Constants {
         
         public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
         public static final double dRotations = MaxRotations - MinRotations;
+
+        // REGIONS
+        public static final double[] armPivotRegionGround = {0,0}; // [min, max] region 1
+        public static final double[] armPivotRegionSwerve = {0,0}; // [min, max] region 2
+        public static final double[] armPivotRegionMidGantry = {0,0}; // [min, max] region 3
+        public static final double[] armPivotRegionUpperGantry = {0,0}; // [min, max] region 4
     }
 
     public static final class Climber {
@@ -213,17 +224,11 @@ public final class Constants {
 
     }
 
-    public static final class ShooterIntake {
+    public static final class Shooter {
 
         public static final double ShooterForwardSpeed = .85; // TBD
         public static final double AmpForwardSpeed = .35;
         public static final double ShooterReverseSpeed = -.5; // TBD
-        public static final double UpperIntakeForwardSpeed = .7; // TBD
-        public static final double LowerIntakeForwardSpeed = .7; // TBD
-        public static final double UpperIntakeReverseSpeed = -.7; // TBD
-        public static final double LowerIntakeReverseSpeed = -.7; // TBD
-        public static final double UpperIntakeRetractSpeed = -.05; // TBD
-        public static final double LowerIntakeRetractSpeed = -.05; // TBD
 
         public static double kP = 0.01; // Proportional
         public static double kI = 0.3; // Integral
@@ -234,6 +239,15 @@ public final class Constants {
 
         //Measurements
         public static final double shooterAngleFromArmPivotDegrees = 180 - ArmPivot.armPivotJointAngleDegrees;
+    }
+
+    public static final class Intake {
+        public static final double UpperIntakeForwardSpeed = .7; // TBD
+        public static final double LowerIntakeForwardSpeed = .7; // TBD
+        public static final double UpperIntakeReverseSpeed = -.7; // TBD
+        public static final double LowerIntakeReverseSpeed = -.7; // TBD
+        public static final double UpperIntakeRetractSpeed = -.05; // TBD
+        public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }
 
 }

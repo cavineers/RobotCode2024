@@ -10,18 +10,21 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import frc.robot.commands.SwerveCommand;
-import frc.robot.commands.SwerveHoming;
-import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.Constants.OIConstants;
 
 import frc.robot.Robot;
-import frc.robot.subsystems.ShooterIntake;
+
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.ClimberLeft;
 import frc.robot.subsystems.ClimberRight;
+import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.Shooter;
+
+import frc.robot.commands.SwerveCommand;
+import frc.robot.commands.SwerveHoming;
 import frc.robot.commands.Arm.ArmPreset;
 import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
@@ -29,15 +32,11 @@ import frc.robot.commands.Arm.PivotManualLower;
 import frc.robot.commands.Arm.PivotManualRaise;
 import frc.robot.commands.Climber.LowerClimberCommand;
 import frc.robot.commands.Climber.RiseClimberCommand;
-import frc.robot.commands.ShooterIntake.Intake;
-import frc.robot.commands.ShooterIntake.Outtake;
-import frc.robot.commands.ShooterIntake.Shoot;
-import frc.robot.commands.ShooterIntake.Shoot_Manual;
-import frc.robot.commands.ShooterIntake.Amp;
-import frc.robot.commands.ShooterIntake.Shoot_Auto;
-
-
-
+import frc.robot.commands.Intake.Outtake;
+import frc.robot.commands.Intake.IntakeNote;
+import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Shooter.Amp;
+import frc.robot.commands.Shooter.Shoot_Manual;
 
 public class RobotContainer {
 
@@ -48,7 +47,8 @@ public class RobotContainer {
 	private final SwerveDriveSubsystem swerveSubsystem;
     private final VisionSubsystem visionSubsystem;
 
-	private final ShooterIntake shooterIntake;
+	private final Intake intake;
+	private final Shooter shooter;
 
 	private final ClimberLeft climberLeft;
 	private final ClimberRight climberRight;
@@ -77,8 +77,9 @@ public class RobotContainer {
 	public Command lowerRightClimber;
 	public Command riseRightClimber;
 
-	public Command intake;
+	public Command intakeNote;
 	public Command outtake;
+
 	public Command shoot;
 	public Command amp;
 	public Command shootManual;
@@ -90,21 +91,19 @@ public class RobotContainer {
 		armBase = new ArmBase();
 		armPivot = new ArmPivot();
 
-
 		climberLeft = new ClimberLeft();
 		climberRight = new ClimberRight();
 
-		shooterIntake = new ShooterIntake();
+		intake = new Intake();
+		shooter = new Shooter();
 
 		visionSubsystem = new VisionSubsystem();
 		
 		swerveSubsystem = new SwerveDriveSubsystem(visionSubsystem);
 		swerveHomingCommand = new SwerveHoming(swerveSubsystem);
 
-		// First Controller
+		// Controllers
 		xboxController0 = new CommandXboxController(OIConstants.kDriverJoystickPort);
-
-		// Second Driver Buttons
 		xboxController1 = new CommandXboxController(OIConstants.kSecondDriverJoystickPort);
 
 		// Commands
@@ -123,14 +122,14 @@ public class RobotContainer {
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
 		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right");
 
-		intake = new Intake(shooterIntake);
-		outtake = new Outtake(shooterIntake);
-		shoot = new Shoot(shooterIntake);
-		amp = new Amp(shooterIntake);
+		intakeNote = new IntakeNote(intake);
+		outtake = new Outtake(intake);
+		shoot = new Shoot(shooter);
+		amp = new Amp(shooter);
 
-		shootAuto = new Shoot_Auto(shooterIntake, armPivot, armBase);
+		// shootAuto = new Shoot_Auto(shooter, armPivot, armBase);
 
-		shootManual = new Shoot_Manual(shooterIntake, () -> xboxController0.getRightTriggerAxis());
+		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,
@@ -212,11 +211,11 @@ public class RobotContainer {
 			}
 		});
 
-		xboxController0.rightBumper().onTrue(intake);
+		xboxController0.rightBumper().onTrue(intakeNote);
 		xboxController0.rightBumper().onFalse(new InstantCommand() {
 			@Override
 			public void initialize() {
-				intake.cancel();
+				intakeNote.cancel();
 			}
 		});
 

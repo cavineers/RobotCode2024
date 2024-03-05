@@ -24,8 +24,11 @@ public class ArmBase extends SubsystemBase {
     public CANSparkMax baseMotor = new CANSparkMax(Constants.CanIDs.GantryCANID, MotorType.kBrushless);
 
     // Limit Switches
-    public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
-    public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
+    public DigitalInput leftGantryLowerLimitSwitch = new DigitalInput(Constants.DIO.LeftGantryLowerLimitSwitch);
+    public DigitalInput leftGantryHigherLimitSwitch = new DigitalInput(Constants.DIO.LeftGantryHigherLimitSwitch);
+    public DigitalInput rightGantryLowerLimitSwitch = new DigitalInput(Constants.DIO.RightGantryLowerLimitSwitch);
+    public DigitalInput rightGantryHigherLimitSwitch = new DigitalInput(Constants.DIO.RightGantryHigherLimitSwitch);
+
 
     private double gantryHeight;
 
@@ -38,7 +41,7 @@ public class ArmBase extends SubsystemBase {
     public ArmBase() {
         this.baseMotor.setIdleMode(IdleMode.kBrake);
 
-        this.baseMotor.setSmartCurrentLimit(51);
+        this.baseMotor.setSmartCurrentLimit(80);
     }
 
     public void initializeEncoder(){
@@ -91,15 +94,34 @@ public class ArmBase extends SubsystemBase {
         return gantryHeight;
     }
 
+    /** 
+        @return double[] {min, max} minimum and maximum gantry heights for the current region
+    */
+    public double[] getRegionLimits(){
+    
+    }
+
     public void periodic() {
         SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
         SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
-        if (this.motorSetpoint <= Constants.ArmBase.MaxRotations && this.motorSetpoint >= Constants.ArmBase.MinRotations){
-            basePid.setSetpoint(motorSetpoint);
-            double speed = basePid.calculate(getBaseMotorPosition());
-            SmartDashboard.putNumber("Speed", speed);
+
+
+        
+        basePid.setSetpoint(motorSetpoint);
+        double speed = basePid.calculate(getBaseMotorPosition());
+        SmartDashboard.putNumber("Speed", speed);
     
-            baseMotor.set(speed);
+        baseMotor.set(speed);
+
+
+        // LIMIT SWITCHES
+        if (this.leftGantryHigherLimitSwitch.get() == true && this.rightGantryHigherLimitSwitch.get() == true) {
+            setBaseMotorPosition(Constants.ArmBase.MaxRotations);
+            this.motorSetpoint = Constants.ArmBase.MaxRotations;
+
+        } else if (this.leftGantryLowerLimitSwitch.get() == true && this.rightGantryLowerLimitSwitch.get() == true) {
+            setBaseMotorPosition(Constants.ArmBase.MinRotations);
+            this.motorSetpoint = Constants.ArmBase.MinRotations;
         }
     }
 
