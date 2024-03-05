@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class ArmPivot extends SubsystemBase {
 
@@ -19,6 +20,8 @@ public class ArmPivot extends SubsystemBase {
         OFF, 
         REVERSED
     }
+
+    private ArmBase armBase;
 
     // Motor Initialization
     public CANSparkMax pivotMotor = new CANSparkMax(Constants.CanIDs.PivotCanID, MotorType.kBrushless);
@@ -40,6 +43,7 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.setSmartCurrentLimit(51);
         this.pivotMotor.setInverted(true);
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
+        this.armBase = Robot.m_robotContainer.getArmBase();
     }
 
     public void initializeDutyEncoder(){
@@ -124,11 +128,18 @@ public class ArmPivot extends SubsystemBase {
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         
-        if (this.motorSetpoint <= Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint >= Constants.ArmPivot.PivotMotorLowerRotationLimit){
-            pivotPid.setSetpoint(motorSetpoint);
-            double speed = pivotPid.calculate(getPivotAbsolute());
-            pivotMotor.set(speed);
+        double[] limits = this.armBase.getRegionRotationLimits();
+        // Clip setpoints
+        if (this.motorSetpoint > limits[1]) {
+            this.motorSetpoint = limits[1];
+        } else if (this.motorSetpoint < limits[0]) {
+            this.motorSetpoint = limits[0];
         }
+
+        // Set motor speed
+        pivotPid.setSetpoint(motorSetpoint);
+        double speed = pivotPid.calculate(getPivotAbsolute());
+        pivotMotor.set(speed);
         SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
     }
 }

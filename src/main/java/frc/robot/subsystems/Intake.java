@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.subsystems.Blinkin;
 
 public class Intake extends SubsystemBase {
 
@@ -87,6 +88,10 @@ public class Intake extends SubsystemBase {
 
     public void periodic() {
         SmartDashboard.putBoolean("INTAKE IR", getNoteSensor());
+
+        if(getNoteSensor() == true) {
+            Blinkin.lightsOrange();
+        }
     }
 
 }

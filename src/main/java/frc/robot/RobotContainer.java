@@ -279,6 +279,9 @@ public class RobotContainer {
     public VisionSubsystem getVisionSubsystem() {
         return this.visionSubsystem;
     }
+	public ArmBase getArmBase() {
+		return this.armBase;
+	}
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("TestAutoNow");
     }

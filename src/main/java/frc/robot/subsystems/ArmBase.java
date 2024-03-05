@@ -63,6 +63,22 @@ public class ArmBase extends SubsystemBase {
     public void setBaseMotorPosition(double position) {
         this.baseMotor.getEncoder().setPosition(position);
     }
+    
+    public boolean getLeftGantryUpperSwitch() {
+        return this.leftGantryHigherLimitSwitch.get();
+    }
+
+    public boolean getLeftGantryLowerSwitch() {
+        return this.leftGantryLowerLimitSwitch.get();
+    }
+
+    public boolean getRightGantryUpperSwitch() {
+        return this.rightGantryHigherLimitSwitch.get();
+    }
+
+    public boolean getRightGantryLowerSwitch() {
+        return this.rightGantryLowerLimitSwitch.get();
+    }
 
     public void setSetpointAdd(double s){
         if((this.motorSetpoint += s) > Constants.ArmBase.MaxRotations){
@@ -97,32 +113,44 @@ public class ArmBase extends SubsystemBase {
     /** 
         @return double[] {min, max} minimum and maximum gantry heights for the current region
     */
-    public double[] getRegionLimits(){
-    
+    public double[] getRegionRotationLimits(){
+        double position = getBaseMotorPosition();
+
+        if(position >= Constants.ArmBase.ArmPivotRegionGround[0] && position <= Constants.ArmBase.ArmPivotRegionGround[1])
+            return new double[]{Constants.ArmPivot.ArmPivotRotationGround[0], Constants.ArmPivot.ArmPivotRotationGround[1]};
+        else if(position >= Constants.ArmBase.ArmPivotRegionSwerve[0] && position <= Constants.ArmBase.ArmPivotRegionSwerve[1])
+            return new double[]{Constants.ArmPivot.ArmPivotRotationSwerve[0], Constants.ArmPivot.ArmPivotRotationSwerve[1]};
+        else if(position >= Constants.ArmBase.ArmPivotRegionMidGantry[0] && position <= Constants.ArmBase.ArmPivotRegionMidGantry[1])
+            return new double[]{Constants.ArmPivot.ArmPivotRotationMidGantry[0], Constants.ArmPivot.ArmPivotRotationMidGantry[1]};
+        else (position >= Constants.ArmBase.ArmPivotRegionUpperGantry[0] && position <= Constants.ArmBase.ArmPivotRegionUpperGantry[1])
+            return new double[]{Constants.ArmPivot.ArmPivotRotationUpperGantry[0], Constants.ArmPivot.ArmPivotRotationUpperGantry[1]};
     }
 
     public void periodic() {
         SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
         SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
-
-
-        
-        basePid.setSetpoint(motorSetpoint);
+            
+        if (motorSetpoint > Constants.ArmBase.MaxRotations) {
+            motorSetpoint = Constants.ArmBase.MaxRotations;
+        }else if (motorSetpoint < Constants.ArmBase.MinRotations) {
+            motorSetpoint = Constants.ArmBase.MinRotations;
+        }
         double speed = basePid.calculate(getBaseMotorPosition());
         SmartDashboard.putNumber("Speed", speed);
-    
+        
         baseMotor.set(speed);
+        
 
 
         // LIMIT SWITCHES
-        if (this.leftGantryHigherLimitSwitch.get() == true && this.rightGantryHigherLimitSwitch.get() == true) {
+        if (getLeftGantryUpperSwitch() && getRightGantryUpperSwitch()) {
             setBaseMotorPosition(Constants.ArmBase.MaxRotations);
             this.motorSetpoint = Constants.ArmBase.MaxRotations;
 
-        } else if (this.leftGantryLowerLimitSwitch.get() == true && this.rightGantryLowerLimitSwitch.get() == true) {
+        } else if (getLeftGantryLowerSwitch() && getRightGantryLowerSwitch()) {
             setBaseMotorPosition(Constants.ArmBase.MinRotations);
             this.motorSetpoint = Constants.ArmBase.MinRotations;
         }
     }
-
 }
+
