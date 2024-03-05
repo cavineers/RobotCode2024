@@ -137,7 +137,6 @@ public final class Constants {
         public static final double PivotMotorSpeedForwards = 0.3;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
-        public static final double PivotMotorLowerRotationLimit = .353;
         public static final double PivotMotorUpperRotationLimit = 0.736;
     
         public static final double ArmPivotEcoderDeadzone = 0.4;

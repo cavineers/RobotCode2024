@@ -33,6 +33,8 @@ public class ArmPivot extends SubsystemBase {
 
     private double currentArmPivotAngle;
     private double requiredSetpoint;
+
+    public double PivotMotorLowerRotationLimit = .353;
     
     // Motor sparkmax settings
     public ArmPivot() {
@@ -79,8 +81,8 @@ public class ArmPivot extends SubsystemBase {
         if((this.motorSetpoint += s) > Constants.ArmPivot.PivotMotorUpperRotationLimit){
             this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
           
-        }else if((this.motorSetpoint += s) < Constants.ArmPivot.PivotMotorLowerRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        }else if((this.motorSetpoint += s) < PivotMotorLowerRotationLimit){
+            this.motorSetpoint = PivotMotorLowerRotationLimit;
       
       
         }else{
@@ -93,8 +95,8 @@ public class ArmPivot extends SubsystemBase {
         motorSetpoint = s;
         if(s > Constants.ArmPivot.PivotMotorUpperRotationLimit){
             this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-        }else if(s < Constants.ArmPivot.PivotMotorLowerRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        }else if(s < PivotMotorLowerRotationLimit){
+            this.motorSetpoint = PivotMotorLowerRotationLimit;
         }else{
             motorSetpoint = s;
         }
@@ -124,7 +126,7 @@ public class ArmPivot extends SubsystemBase {
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         
-        if (this.motorSetpoint <= Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint >= Constants.ArmPivot.PivotMotorLowerRotationLimit){
+        if (this.motorSetpoint <= Constants.ArmPivot.PivotMotorUpperRotationLimit && this.motorSetpoint >= PivotMotorLowerRotationLimit){
             pivotPid.setSetpoint(motorSetpoint);
             double speed = pivotPid.calculate(getPivotAbsolute());
             pivotMotor.set(speed);
