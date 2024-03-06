@@ -16,6 +16,7 @@ public class Shoot extends Command {
     private Shooter shooter;
     private Intake intake;
     private Timer timer;
+    private Timer timer2;
     private boolean isDone;
 
     public Shoot(Shooter shooter, Intake intake) {
@@ -24,11 +25,13 @@ public class Shoot extends Command {
         this.addRequirements(shooter, intake);
         
         timer = new Timer();
+        timer2 = new Timer();
     }
 
     @Override
     public void initialize() {
         timer.reset();
+        timer2.reset();
         timer.start();
 
         this.isDone = false;
@@ -40,17 +43,19 @@ public class Shoot extends Command {
         SmartDashboard.putString("Shooter", "Shooting");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (timer.get()>1) {
+        if (timer.get()>2) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 
-        if (intake.getNoteSensor()==false) {
-           timer.reset();
-           timer.start();
-           if (timer.get()>0.5){
+        if (intake.getNoteSensor()== false || timer.get()>3) {
+           timer2.start();
+           if (timer2.get()>0.5){
                 this.isDone = true;
            }
         }
+
+        SmartDashboard.putNumber("Timer1", timer.get());
+        SmartDashboard.putNumber("Timer2", timer2.get());
         
     }
 
@@ -59,6 +64,7 @@ public class Shoot extends Command {
         shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
         timer.stop();
+        SmartDashboard.putString("Shooter", "Done Shooting");
     }
 
     @Override

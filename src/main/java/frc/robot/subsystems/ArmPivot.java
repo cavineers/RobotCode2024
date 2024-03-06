@@ -80,29 +80,11 @@ public class ArmPivot extends SubsystemBase {
     }
 
     public void setSetpointAdd(double s){
-        if((this.motorSetpoint += s) > Constants.ArmPivot.PivotMotorUpperRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-          
-        }else if((this.motorSetpoint += s) < Constants.ArmPivot.PivotMotorLowerRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
-      
-      
-        }else{
-            motorSetpoint += s;
-        }
-        
+        motorSetpoint += s;
     }
 
     public void setSetpoint(double s){
         motorSetpoint = s;
-        if(s > Constants.ArmPivot.PivotMotorUpperRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-        }else if(s < Constants.ArmPivot.PivotMotorLowerRotationLimit){
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
-        }else{
-            motorSetpoint = s;
-        }
-        
     }
 
     public void setArmPivotAngle(Double angle) {
@@ -125,17 +107,17 @@ public class ArmPivot extends SubsystemBase {
 
     public void periodic() {
 
-        SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
-        SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
-        
         double[] limits = this.armBase.getRegionRotationLimits();
+        SmartDashboard.putNumber("Pivot Limit Lower", limits[0]);
+        SmartDashboard.putNumber("Pivot Limit Upper", limits[1]);
         // Clip setpoints
         if (this.motorSetpoint > limits[1]) {
             this.motorSetpoint = limits[1];
         } else if (this.motorSetpoint < limits[0]) {
             this.motorSetpoint = limits[0];
         }
-
+        SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
+        SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());

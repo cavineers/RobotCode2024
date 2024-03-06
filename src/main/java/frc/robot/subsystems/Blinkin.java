@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Blinkin extends SubsystemBase {
 
-	static Spark blinkin;
+	public static Spark blinkin;
 
 	public Blinkin() {
 		blinkin = new Spark(0);
@@ -27,7 +27,7 @@ public class Blinkin extends SubsystemBase {
 		blinkin.set(-0.41);
 	}
 
-	public static void lightsOrange() {
+	public void lightsOrange() {
 		blinkin.set(0.65);
 	}
 }

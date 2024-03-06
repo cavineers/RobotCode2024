@@ -8,7 +8,9 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.subsystems.Blinkin;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
+
 
 public class Intake extends SubsystemBase {
 
@@ -26,6 +28,8 @@ public class Intake extends SubsystemBase {
 
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
 
+    private Blinkin blinkin;
+    
     public Intake() {
 
         this.upperIntakeMotor.setIdleMode(IdleMode.kCoast);
@@ -36,7 +40,7 @@ public class Intake extends SubsystemBase {
 
         this.upperIntakeMotor.setInverted(false);
         this.lowerIntakeMotor.setInverted(true);
-
+        this.blinkin = RobotContainer.blinkin;
     }
 
     public void setIntakeMotorState(IntakeMotorState state) {
@@ -90,7 +94,7 @@ public class Intake extends SubsystemBase {
         SmartDashboard.putBoolean("INTAKE IR", getNoteSensor());
 
         if(getNoteSensor() == true) {
-            Blinkin.lightsOrange();
+            this.blinkin.lightsOrange();
         }
     }
 

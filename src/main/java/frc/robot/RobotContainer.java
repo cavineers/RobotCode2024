@@ -17,6 +17,7 @@ import frc.robot.Robot;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.ClimberLeft;
 import frc.robot.subsystems.ClimberRight;
 import frc.robot.subsystems.SwerveDriveSubsystem;
@@ -53,6 +54,8 @@ public class RobotContainer {
 	private final ClimberLeft climberLeft;
 	private final ClimberRight climberRight;
 
+	public static final Blinkin blinkin = new Blinkin();
+
 	// Main Controller Buttons Init
 	public final CommandXboxController xboxController0;
 
@@ -70,7 +73,7 @@ public class RobotContainer {
 	public Command ampPosition;
 	public Command restPosition;
 
-	public Command shootAuto;
+	// public Command shootAuto;
 
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
@@ -102,6 +105,8 @@ public class RobotContainer {
 		swerveSubsystem = new SwerveDriveSubsystem(visionSubsystem);
 		swerveHomingCommand = new SwerveHoming(swerveSubsystem);
 
+		
+
 		// Controllers
 		xboxController0 = new CommandXboxController(OIConstants.kDriverJoystickPort);
 		xboxController1 = new CommandXboxController(OIConstants.kSecondDriverJoystickPort);
@@ -125,7 +130,7 @@ public class RobotContainer {
 		intakeNote = new IntakeNote(intake);
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
-		amp = new Amp(shooter);
+		amp = new Amp(shooter, intake);
 
 		// shootAuto = new Shoot_Auto(shooter, armPivot, armBase);
 
@@ -154,12 +159,6 @@ public class RobotContainer {
 		});
 
 		xboxController0.povDown().onTrue(amp);
-		xboxController0.povDown().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				amp.cancel();
-			}
-		});
 
 		// Arm Commands
 		xboxController0.povRight().onTrue(gantryManualRaise);
@@ -194,7 +193,7 @@ public class RobotContainer {
 			}
 		});
 
-		xboxController0.x().onTrue(shootAuto);
+		// xboxController0.x().onTrue(shootAuto);
 
 		// Shooter-Intake Commands
 		xboxController0.leftBumper().onTrue(outtake);
@@ -214,12 +213,6 @@ public class RobotContainer {
 		});
 
 		xboxController0.b().onTrue(shoot);
-		xboxController0.b().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				shoot.cancel();
-			}
-		});
 
 		xboxController1.povDown().onTrue(groundPickup);
 		xboxController1.povUp().onTrue(shootPosition);
@@ -273,6 +266,8 @@ public class RobotContainer {
 	public ArmBase getArmBase() {
 		return this.armBase;
 	}
+
+	
 
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("TestAutoNow");

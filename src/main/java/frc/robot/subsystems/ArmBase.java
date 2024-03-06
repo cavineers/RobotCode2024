@@ -81,26 +81,14 @@ public class ArmBase extends SubsystemBase {
     }
 
     public void setSetpointAdd(double s){
-        if((this.motorSetpoint += s) > Constants.ArmBase.MaxRotations){
-            this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if((this.motorSetpoint += s)< Constants.ArmBase.MinRotations){
-            this.motorSetpoint = Constants.ArmBase.MinRotations;
-        }else{
-            this.motorSetpoint += s;
-        }
+       this.motorSetpoint += s;
         
     }
 
     public void setSetpoint(double s){
        
-        if(s > Constants.ArmBase.MaxRotations){
-            this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if(s < Constants.ArmBase.MinRotations){
-            this.motorSetpoint = Constants.ArmBase.MinRotations;
-        }else{
-            this.motorSetpoint = s;
-        }
-        
+        this.motorSetpoint = s;
+    
     }
 
     public double getGantryHeightMeters() {
@@ -117,25 +105,32 @@ public class ArmBase extends SubsystemBase {
         double position = getBaseMotorPosition();
 
         if(position >= Constants.ArmBase.ArmPivotRegionGround[0] && position <= Constants.ArmBase.ArmPivotRegionGround[1]) {
+            SmartDashboard.putString("Region", "Ground");
             return new double[]{Constants.ArmPivot.ArmPivotRotationGround[0], Constants.ArmPivot.ArmPivotRotationGround[1]};
         } else if(position >= Constants.ArmBase.ArmPivotRegionSwerve[0] && position <= Constants.ArmBase.ArmPivotRegionSwerve[1]) {
+            SmartDashboard.putString("Region", "Swerve");
             return new double[]{Constants.ArmPivot.ArmPivotRotationSwerve[0], Constants.ArmPivot.ArmPivotRotationSwerve[1]};
         } else if(position >= Constants.ArmBase.ArmPivotRegionMidGantry[0] && position <= Constants.ArmBase.ArmPivotRegionMidGantry[1]) {
+            SmartDashboard.putString("Region", "MidGantry");
             return new double[]{Constants.ArmPivot.ArmPivotRotationMidGantry[0], Constants.ArmPivot.ArmPivotRotationMidGantry[1]};
         } else {
+            SmartDashboard.putString("Region", "UpperGantry");
             return new double[]{Constants.ArmPivot.ArmPivotRotationUpperGantry[0], Constants.ArmPivot.ArmPivotRotationUpperGantry[1]};
         }
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
-        SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
-            
+    
+        
+        // clip the setpoint            
         if (motorSetpoint > Constants.ArmBase.MaxRotations) {
             motorSetpoint = Constants.ArmBase.MaxRotations;
         } else if (motorSetpoint < Constants.ArmBase.MinRotations) {
             motorSetpoint = Constants.ArmBase.MinRotations;
         }
+
+        SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
+        SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
         double speed = basePid.calculate(getBaseMotorPosition());
         SmartDashboard.putNumber("Speed", speed);
         
@@ -144,14 +139,14 @@ public class ArmBase extends SubsystemBase {
 
 
         // LIMIT SWITCHES
-        if (getLeftGantryUpperSwitch() && getRightGantryUpperSwitch()) {
-            setBaseMotorPosition(Constants.ArmBase.MaxRotations);
-            this.motorSetpoint = Constants.ArmBase.MaxRotations;
+        // if (getLeftGantryUpperSwitch() && getRightGantryUpperSwitch()) {
+        //     setBaseMotorPosition(Constants.ArmBase.MaxRotations);
+        //     this.motorSetpoint = Constants.ArmBase.MaxRotations;
 
-        } else if (getLeftGantryLowerSwitch() && getRightGantryLowerSwitch()) {
-            setBaseMotorPosition(Constants.ArmBase.MinRotations);
-            this.motorSetpoint = Constants.ArmBase.MinRotations;
-        }
+        // } else if (getLeftGantryLowerSwitch() && getRightGantryLowerSwitch()) {
+        //     setBaseMotorPosition(Constants.ArmBase.MinRotations);
+        //     this.motorSetpoint = Constants.ArmBase.MinRotations;
+        // }
     }
 }
 

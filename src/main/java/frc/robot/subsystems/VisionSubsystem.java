@@ -25,8 +25,6 @@ public class VisionSubsystem extends SubsystemBase {
     private AprilTagFieldLayout aprilTagFieldLayout;
     private Transform3d robotToCam;
 
-    
-
     // Construct PhotonPoseEstimator
     PhotonPoseEstimator photonPoseEstimator;
     public VisionSubsystem() {
