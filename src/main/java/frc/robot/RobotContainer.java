@@ -196,12 +196,6 @@ public class RobotContainer {
 
 		xboxController0.x().onTrue(shootAuto);
 
-		xboxController1.povDown().onTrue(groundPickup);
-		xboxController1.povUp().onTrue(shootPosition);
-		xboxController1.povLeft().onTrue(ampPosition);
-		xboxController1.povRight().onTrue(sourcePosition);
-		xboxController1.leftBumper().onTrue(restPosition);
-
 		// Shooter-Intake Commands
 		xboxController0.leftBumper().onTrue(outtake);
 		xboxController0.leftBumper().onFalse(new InstantCommand() {
@@ -227,13 +221,11 @@ public class RobotContainer {
 			}
 		});
 
-		// xboxController0.a().onTrue(shoot);
-		// xboxController0.a().onFalse(new InstantCommand() {
-		// 	@Override
-		// 	public void initialize() {
-		// 		shoot.cancel();
-		// 	}
-		// });
+		xboxController1.povDown().onTrue(groundPickup);
+		xboxController1.povUp().onTrue(shootPosition);
+		xboxController1.povLeft().onTrue(ampPosition);
+		xboxController1.povRight().onTrue(sourcePosition);
+		xboxController1.leftBumper().onTrue(restPosition);
 
 		// ClimberCommands
 		xboxController1.a().onTrue(lowerLeftClimber);
@@ -268,23 +260,21 @@ public class RobotContainer {
 			}
 		});
 
-		// public SwerveDriveSubsystem getSwerveSubsystem() {
-		// return this.swerveSubsystem;
-		// }
-
 	}
+
 	public SwerveDriveSubsystem getSwerveSubsystem() {
         return this.swerveSubsystem;
     }
+
     public VisionSubsystem getVisionSubsystem() {
         return this.visionSubsystem;
     }
+
 	public ArmBase getArmBase() {
 		return this.armBase;
 	}
+
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("TestAutoNow");
     }
-
-
 }
