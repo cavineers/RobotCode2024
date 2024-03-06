@@ -124,7 +124,7 @@ public class RobotContainer {
 
 		intakeNote = new IntakeNote(intake);
 		outtake = new Outtake(intake);
-		shoot = new Shoot(shooter);
+		shoot = new Shoot(shooter, intake);
 		amp = new Amp(shooter);
 
 		// shootAuto = new Shoot_Auto(shooter, armPivot, armBase);
