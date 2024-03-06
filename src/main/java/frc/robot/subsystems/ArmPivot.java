@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class ArmPivot extends SubsystemBase {
 
-    PIDController pivotPid = new PIDController(Constants.ArmPivot.ProportionalGain, Constants.ArmPivot.IntegralTerm, Constants.ArmPivot.DerivitiveTerm);
+    private PIDController pivotPid = new PIDController(Constants.ArmPivot.ProportionalGain, Constants.ArmPivot.IntegralTerm, Constants.ArmPivot.DerivitiveTerm);
 
     public enum PivotMotorState {
         ON,
@@ -44,6 +44,9 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.setInverted(true);
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
+
+        this.pivotPid.setTolerance(0.01);
+
     }
 
     public void initializeDutyEncoder(){
@@ -101,8 +104,8 @@ public class ArmPivot extends SubsystemBase {
         return currentArmPivotAngle;
     }
 
-    public double getArmPivotHypToBaseline() {
-        return (getArmPivotAngle() - Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
+    public boolean isAtSetpoint(){
+        return this.pivotPid.atSetpoint();
     }
 
     public void periodic() {

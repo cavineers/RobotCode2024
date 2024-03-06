@@ -21,8 +21,6 @@ public class Shooter extends SubsystemBase {
 
     public CANSparkMax shooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
 
-    public SparkPIDController shooterPID = shooterMotor.getPIDController();
-
     // public DigitalImput m_intake (IR/April Tag stuff (maybe) TBD)
 
     public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
@@ -36,13 +34,6 @@ public class Shooter extends SubsystemBase {
         this.shooterMotor.setInverted(true);
 
         this.shooterMotor.getEncoder().setMeasurementPeriod(8);
-
-        this.shooterPID.setIZone(0.0);
-        this.shooterPID.setOutputRange(-1.0, 1.0);
-        this.shooterPID.setP(Constants.Shooter.kP);
-        this.shooterPID.setI(Constants.Shooter.kI);
-        this.shooterPID.setD(Constants.Shooter.kD);
-        this.shooterPID.setFF(Constants.Shooter.kF);
 
     }
 
@@ -87,8 +78,6 @@ public class Shooter extends SubsystemBase {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("Shooter RPM", getShooterMotorRPM());
-        SmartDashboard.putNumber("armPivotTriangleAngleFromPivotDegrees", Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
     }
 
 }

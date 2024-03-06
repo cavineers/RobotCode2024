@@ -1,187 +1,117 @@
-// package frc.robot.commands.ShooterIntake;
+package frc.robot.commands.Shooter;
 
-// import com.revrobotics.CANSparkBase;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.subsystems.ArmPivot;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-// import edu.wpi.first.networktables.GenericEntry;
-// import edu.wpi.first.wpilibj.Timer;
-// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-// import edu.wpi.first.wpilibj2.command.Command;
-// import frc.robot.Constants;
-// import frc.robot.subsystems.ArmBase;
-// import frc.robot.subsystems.ArmPivot;
-// import frc.robot.subsystems.ShooterIntake;
-// import frc.robot.subsystems.ShooterIntake.IntakeMotorState;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj2.command.InstantCommand;
-// import edu.wpi.first.wpilibj2.command.WaitCommand;
-// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+public class Shoot_Auto extends Command {
 
+    private boolean isDone = false;
+    private Shooter shooter;
+	private Intake intake;
+    private ArmPivot armPivot;
 
+    private double requiredArmPivotAngleDegrees;
+    private double currentShooterAngleFromBaseline;
 
-// public class Shoot_Auto extends Command {
+    private double distanceMeters;
 
-//     private boolean isDone = false;
-//     private double m_timestamp = Timer.getFPGATimestamp();
-//     private ShooterIntake shooterIntake;
-//     private ArmBase armBase;
-//     private ArmPivot armPivot;
+    ShuffleboardTab tab = Shuffleboard.getTab("Robot");
 
-//     private double shooterDistanceFromGroundMeters;
-//     private double shootingHeight;
-//     private double requiredShooterAngle;
-//     private double requiredShooterVelocity;
-//     private double requiredShooterRPM;
-//     private double requiredArmPivotAngleDegrees;
-//     private double currentShooterAngleFromBaseline;
+    private GenericEntry distanceEntry = tab
+        .add("Distance to target (Meters)", 0)
+        .getEntry();
+		
+	private Timer timer;
+    private Timer timer2;
 
-//     private double distanceMeters;
-//     private SequentialCommandGroup autoShootGroup;
+    public Shoot_Auto(Shooter shooter, Intake intake, ArmPivot armPivot) {
+        this.shooter = shooter;
+        this.intake = intake;
+        this.armPivot = armPivot;
+        this.addRequirements(shooter);
+        this.addRequirements(intake);
+        this.addRequirements(armPivot);
 
-//     ShuffleboardTab tab = Shuffleboard.getTab("Robot");
-
-//     private GenericEntry distanceEntry = tab
-//         .add("Distance to target (Meters)", 0)
-//         .getEntry();
-
-//     public Shoot_Auto(ShooterIntake shooterIntake, ArmPivot armPivot, ArmBase armBase) {
-//         this.shooterIntake = shooterIntake;
-//         this.armPivot = armPivot;
-//         this.armBase = armBase;
-//         this.addRequirements(shooterIntake);
-//         this.addRequirements(armPivot);
+		timer = new Timer();
+        timer2 = new Timer();
         
-//     }
+    }
 
-//     // Set Motor State to ON / OFF
-//     @Override
-//     public void initialize() {
-//         this.isDone = false;
+    // Set Motor State to ON / OFF
+    @Override
+    public void initialize() {
+		timer.reset();
+        timer2.reset();
+        timer.start();
 
-//         shootingHeight = (Constants.ShooterIntake.shootingVertexHeightMeters - calculateCurrentShooterHeight());
-//         distanceMeters = distanceEntry.getDouble(0);
+		this.isDone = false;
+    }
 
-//         SmartDashboard.putNumber("Shooting Height", shootingHeight);
-//         SmartDashboard.putString("Shooter", "Shooting");
-//         this.autoShootGroup = new SequentialCommandGroup(
-//             setPivotAngle(),
-//             setShooterPID(),
-//             new WaitCommand(1),
-//             setIntakeState(IntakeMotorState.ON),
-//             new WaitCommand(1),
-//             setShooterState(shooterIntake.shooterMotorState.OFF),
-//             setIntakeState(shooterIntake.intakeMotorState.OFF)
+    @Override
+    public void execute() {
+		
+		SmartDashboard.putString("Shooter", "Auto Shooting");
+
+		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
+        shooter.setShooterMotorState(shooter.shooterMotorState.ON);
+        if (armPivot.isAtSetpoint()) {
+            intake.setIntakeMotorState(intake.intakeMotorState.ON);
+        }
+
+        if (intake.getNoteSensor()== false || timer.get()>3) {
+           timer2.start();
+           if (timer2.get()>0.5){
+                this.isDone = true;
+           }
+        }
+
+        SmartDashboard.putNumber("Timer1", timer.get());
+        SmartDashboard.putNumber("Timer2", timer2.get());
         
-//         );
-//         this.autoShootGroup.schedule();
+    }
 
-//     }
+    @Override
+    public void end(boolean interrupted) {
+		shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
+        intake.setIntakeMotorState(intake.intakeMotorState.OFF);
+        timer.stop();
+        SmartDashboard.putString("Shooter", "Done Auto Shooting");
+    }
 
-//     @Override
-//     public void execute() {
+    public double calculateCurrentShooterAngle() {
 
-//     }
+        currentShooterAngleFromBaseline = 180 - (Constants.ArmPivot.armPivotJointAngleDegrees + armPivot.getArmPivotAngle());
 
-//     @Override
-//     public void end(boolean interrupted) {
-//         shooterIntake.setIntakeMotorState(shooterIntake.intakeMotorState.OFF);
-//         shooterIntake.setShooterMotorState(shooterIntake.shooterMotorState.OFF);    
-//     }
+        return currentShooterAngleFromBaseline;
+    }
 
-//     public InstantCommand setPivotAngle(){
-//         return new InstantCommand() {
-// 			@Override
-// 			public void initialize() {
-//                 armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(calculateRequiredAngle(distanceMeters), distanceMeters));
-// 			}
-// 		};
-//     }
-
-//     public InstantCommand setShooterPID() {
-//         return new InstantCommand() {
-// 			@Override
-// 			public void initialize() {
-//                 setShooterPIDReference(distanceMeters);
-// 			}
-// 		};
-//     }
-
-//     public InstantCommand setIntakeState(ShooterIntake.IntakeMotorState state) {
-//         return new InstantCommand() {
-// 			@Override
-// 			public void initialize() {
-//                 shooterIntake.setIntakeMotorState(state); 
-// 			}
-// 		};
-//     }
-
-//     public InstantCommand setShooterState(ShooterIntake.ShooterMotorState state) {
-//         return new InstantCommand() {
-// 			@Override
-// 			public void initialize() {
-//                 shooterIntake.setShooterMotorState(state); 
-// 			}
-// 		};
-//     }
-    
-//     public double calculateRequiredAngle(Double distance) {
-
-//         requiredShooterAngle = Math.atan(1/(distance/(2*shootingHeight)));
-
-//         SmartDashboard.putNumber("Required Shooter Angle", Math.toDegrees(requiredShooterAngle));
-
-//         return requiredShooterAngle;
-//     }
-
-//     public double calculateRequiredVelocity(Double angle) {
-
-//         requiredShooterVelocity = ((Math.sqrt(2*9.81*shootingHeight))/Math.sin((angle)));
-//         requiredShooterRPM = ((60*requiredShooterVelocity)/(.102*Math.PI));
-
-//         SmartDashboard.putNumber("Required Shooter Velocity", requiredShooterVelocity);
-//         SmartDashboard.putNumber("Required Shooter RPM", requiredShooterRPM);
-
-//         return requiredShooterRPM;
-//     }
-
-//     public double calculateCurrentShooterHeight() {
-
-//         shooterDistanceFromGroundMeters = armBase.getGantryHeightMeters() + (Constants.ArmPivot.armPivotDistanceFromShooterMeters * Math.sin(Math.toRadians(armPivot.getArmPivotHypToBaseline())));
-
-//         return shooterDistanceFromGroundMeters;
-//     }
-
-//     public double calculateCurrentShooterAngle() {
-
-//         currentShooterAngleFromBaseline = 180 - (Constants.ArmPivot.armPivotJointAngleDegrees + armPivot.getArmPivotAngle());
-
-//         return currentShooterAngleFromBaseline;
-//     }
-
-//     public double calculateRequiredArmPivotAngle(Double requiredShooterAngleDegrees, Double distance) {
+    public double calculateRequiredArmPivotAngle(Double distance) {
          
-//         requiredArmPivotAngleDegrees = 180 - (Constants.ArmPivot.armPivotJointAngleDegrees + Math.toDegrees(calculateRequiredAngle(distance)));
+        requiredArmPivotAngleDegrees = -2.9 * Math.pow(1.6, -(distance - 6.8)) - 31 + 90.0;
 
-//         SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
+        SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 
-//         return requiredArmPivotAngleDegrees;
-//     }
-
-//     public void setShooterPIDReference(Double distanceFromSpeaker) {
-//         shooterIntake.shooterPID.setReference(calculateRequiredVelocity(calculateRequiredAngle(distanceFromSpeaker)), CANSparkBase.ControlType.kVelocity);
-//         SmartDashboard.putNumber("ShootPID Val", calculateRequiredVelocity(calculateRequiredAngle(distanceFromSpeaker)));
-//     }
+        return requiredArmPivotAngleDegrees;
+    }
 
 
-//     @Override
-//     public boolean isFinished() {
+    @Override
+    public boolean isFinished() {
         
-//         // if (autoShootGroup.isFinished() == true) {
-//         //     this.isDone = true;
-//         //     SmartDashboard.putString("Shooter", "Finished");
-//         // }
+        // if (autoShootGroup.isFinished() == true) {
+        //     this.isDone = true;
+        //     SmartDashboard.putString("Shooter", "Finished");
+        // }
 
-//         return true;
-//     }
+        return true;
+    }
 
-// }
+}
