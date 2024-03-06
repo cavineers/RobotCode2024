@@ -37,6 +37,7 @@ import frc.robot.commands.Intake.Outtake;
 import frc.robot.commands.Intake.IntakeNote;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.Amp;
+import frc.robot.commands.Shooter.Shoot_Auto;
 import frc.robot.commands.Shooter.Shoot_Manual;
 
 public class RobotContainer {
@@ -84,6 +85,7 @@ public class RobotContainer {
 	public Command outtake;
 
 	public Command shoot;
+	public Command shootAuto;
 	public Command amp;
 	public Command shootManual;
 	public SwerveHoming swerveHomingCommand;
@@ -130,6 +132,7 @@ public class RobotContainer {
 		intakeNote = new IntakeNote(intake);
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
+		shootAuto = new Shoot_Auto(shooter, intake, armPivot);
 		amp = new Amp(shooter, intake);
 
 		// shootAuto = new Shoot_Auto(shooter, armPivot, armBase);
@@ -213,6 +216,8 @@ public class RobotContainer {
 		});
 
 		xboxController0.b().onTrue(shoot);
+
+		xboxController0.x().onTrue(shootAuto);
 
 		xboxController1.povDown().onTrue(groundPickup);
 		xboxController1.povUp().onTrue(shootPosition);

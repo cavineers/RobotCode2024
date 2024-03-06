@@ -58,6 +58,8 @@ public class Shoot_Auto extends Command {
     @Override
     public void execute() {
 		
+		distanceMeters = distanceEntry.getDouble(1);
+
 		SmartDashboard.putString("Shooter", "Auto Shooting");
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
@@ -68,7 +70,7 @@ public class Shoot_Auto extends Command {
 
         if (intake.getNoteSensor()== false || timer.get()>3) {
            timer2.start();
-           if (timer2.get()>0.5){
+           if (timer2.get()>1){
                 this.isDone = true;
            }
         }
@@ -94,6 +96,8 @@ public class Shoot_Auto extends Command {
     }
 
     public double calculateRequiredArmPivotAngle(Double distance) {
+
+		SmartDashboard.putNumber("Distance to Speaker", distance);
          
         requiredArmPivotAngleDegrees = -2.9 * Math.pow(1.6, -(distance - 6.8)) - 31 + 90.0;
 
@@ -105,13 +109,7 @@ public class Shoot_Auto extends Command {
 
     @Override
     public boolean isFinished() {
-        
-        // if (autoShootGroup.isFinished() == true) {
-        //     this.isDone = true;
-        //     SmartDashboard.putString("Shooter", "Finished");
-        // }
-
-        return true;
+        return this.isDone;
     }
 
 }

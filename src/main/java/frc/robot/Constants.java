@@ -170,7 +170,7 @@ public final class Constants {
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
 
         // ROTATIONS
-        public static final double[] ArmPivotRotationGround = {0.35,0.4}; // [min, max] region 1
+        public static final double[] ArmPivotRotationGround = {0.35, 0.4}; // [min, max] region 1
         public static final double[] ArmPivotRotationSwerve = {0.4,0.45}; // [min, max] region 2
         public static final double[] ArmPivotRotationMidGantry = {0.45,0.5}; // [min, max] region 3
         public static final double[] ArmPivotRotationUpperGantry = {0.5,0.55}; // [min, max] region 4

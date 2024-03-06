@@ -45,6 +45,7 @@ public class Shooter extends SubsystemBase {
 
         case ON:
             this.shooterMotor.set(Constants.Shooter.ShooterForwardSpeed);
+            SmartDashboard.putString("Shooter", "Spinning");
             break;
         
         case AMP:
