@@ -116,14 +116,15 @@ public class ArmBase extends SubsystemBase {
     public double[] getRegionRotationLimits(){
         double position = getBaseMotorPosition();
 
-        if(position >= Constants.ArmBase.ArmPivotRegionGround[0] && position <= Constants.ArmBase.ArmPivotRegionGround[1])
+        if(position >= Constants.ArmBase.ArmPivotRegionGround[0] && position <= Constants.ArmBase.ArmPivotRegionGround[1]) {
             return new double[]{Constants.ArmPivot.ArmPivotRotationGround[0], Constants.ArmPivot.ArmPivotRotationGround[1]};
-        else if(position >= Constants.ArmBase.ArmPivotRegionSwerve[0] && position <= Constants.ArmBase.ArmPivotRegionSwerve[1])
+        } else if(position >= Constants.ArmBase.ArmPivotRegionSwerve[0] && position <= Constants.ArmBase.ArmPivotRegionSwerve[1]) {
             return new double[]{Constants.ArmPivot.ArmPivotRotationSwerve[0], Constants.ArmPivot.ArmPivotRotationSwerve[1]};
-        else if(position >= Constants.ArmBase.ArmPivotRegionMidGantry[0] && position <= Constants.ArmBase.ArmPivotRegionMidGantry[1])
+        } else if(position >= Constants.ArmBase.ArmPivotRegionMidGantry[0] && position <= Constants.ArmBase.ArmPivotRegionMidGantry[1]) {
             return new double[]{Constants.ArmPivot.ArmPivotRotationMidGantry[0], Constants.ArmPivot.ArmPivotRotationMidGantry[1]};
-        else (position >= Constants.ArmBase.ArmPivotRegionUpperGantry[0] && position <= Constants.ArmBase.ArmPivotRegionUpperGantry[1])
+        } else {
             return new double[]{Constants.ArmPivot.ArmPivotRotationUpperGantry[0], Constants.ArmPivot.ArmPivotRotationUpperGantry[1]};
+        }
     }
 
     public void periodic() {
@@ -132,7 +133,7 @@ public class ArmBase extends SubsystemBase {
             
         if (motorSetpoint > Constants.ArmBase.MaxRotations) {
             motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if (motorSetpoint < Constants.ArmBase.MinRotations) {
+        } else if (motorSetpoint < Constants.ArmBase.MinRotations) {
             motorSetpoint = Constants.ArmBase.MinRotations;
         }
         double speed = basePid.calculate(getBaseMotorPosition());
