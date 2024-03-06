@@ -89,7 +89,7 @@ public class RobotContainer {
 
 		// Subsystems
 		armBase = new ArmBase();
-		armPivot = new ArmPivot();
+		armPivot = new ArmPivot(armBase);
 
 		climberLeft = new ClimberLeft();
 		climberRight = new ClimberRight();

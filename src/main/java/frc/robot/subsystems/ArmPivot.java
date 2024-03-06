@@ -38,12 +38,12 @@ public class ArmPivot extends SubsystemBase {
     private double requiredSetpoint;
     
     // Motor sparkmax settings
-    public ArmPivot() {
+    public ArmPivot(ArmBase armBase) {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
         this.pivotMotor.setSmartCurrentLimit(51);
         this.pivotMotor.setInverted(true);
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
-        this.armBase = Robot.m_robotContainer.getArmBase();
+        this.armBase = armBase;
     }
 
     public void initializeDutyEncoder(){
