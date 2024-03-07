@@ -123,8 +123,7 @@ public class ArmBase extends SubsystemBase {
         SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
         basePid.setSetpoint(motorSetpoint);
         double speed = basePid.calculate(getBaseMotorPosition());
-        SmartDashboard.putNumber("Speed", speed);
-
+        
         SmartDashboard.putBoolean("hIGHER", getGantryHigherLimitSwitch());
         SmartDashboard.putBoolean("lOWER", getGantryLowerLimitSwitch());
         
@@ -133,11 +132,9 @@ public class ArmBase extends SubsystemBase {
         // LIMIT SWITCHES
         if (getGantryHigherLimitSwitch()) {
             setBaseMotorPosition(Constants.ArmBase.MaxRotations);
-            this.motorSetpoint = Constants.ArmBase.MaxRotations;
 
         } else if (getGantryLowerLimitSwitch()) {
             setBaseMotorPosition(Constants.ArmBase.MinRotations);
-            this.motorSetpoint = Constants.ArmBase.MinRotations;
         }
     }
 }

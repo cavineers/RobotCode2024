@@ -149,7 +149,7 @@ public final class Constants {
         public static final double AmpRotations = 25;
 
         public static final double ProportionalGain = 2.5; // strength of a correction
-        public static final double IntegralTerm = 0.00; // additive strength over time
+        public static final double IntegralTerm = 0; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
         public static double MotorSetPoint = 0;
@@ -171,6 +171,10 @@ public final class Constants {
         public static final double[] ArmPivotRotationSwerve = {0.4,0.45}; // [min, max] region 2
         public static final double[] ArmPivotRotationMidGantry = {0.45,0.5}; // [min, max] region 3
         public static final double[] ArmPivotRotationUpperGantry = {0.34,0.68}; // [min, max] region 4
+
+        public static final double PivotRestMinRotations = 0.34;
+        public static final double PivotNormalMinRotations = 0.39;
+        public static final double PivotGroundMinRotations = 0.353;
     
     }
     public static final class ArmBase {
@@ -207,6 +211,9 @@ public final class Constants {
         public static final double[] ArmPivotRegionSwerve = {1,0}; // [min, max] region 2
         public static final double[] ArmPivotRegionMidGantry = {0,0}; // [min, max] region 3
         public static final double[] ArmPivotRegionUpperGantry = {0,0}; // [min, max] region 4
+
+        public static final double PivotRegionRestMin = 149;
+        public static final double PivotRegionGroundMax = 1;
     }
 
     public static final class Climber {

@@ -108,7 +108,6 @@ public class ClimberRight extends SubsystemBase {
         if (this.motorSetpoint <= Constants.Climber.UpperClimberMaxRotations && this.motorSetpoint >= Constants.Climber.LowerClimberMaxRotations){
             rightClimberPID.setSetpoint(motorSetpoint);
             double speed = rightClimberPID.calculate(getRightClimberMotorPosition());
-            SmartDashboard.putNumber("Speed", speed);
     
             rightClimberMotor.set(speed);
         }

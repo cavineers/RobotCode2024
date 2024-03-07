@@ -36,6 +36,8 @@ public class ArmPivot extends SubsystemBase {
 
     private double currentArmPivotAngle;
     private double requiredSetpoint;
+
+    private double currentMinimumRot;
     
     // Motor sparkmax settings
     public ArmPivot(ArmBase armBase) {
@@ -111,17 +113,37 @@ public class ArmPivot extends SubsystemBase {
         // SmartDashboard.putNumber("Pivot Limit Lower", limits[0]);
         // SmartDashboard.putNumber("Pivot Limit Upper", limits[1]);
         // Clip setpoints
-        if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-        } else if (this.motorSetpoint < Constants.ArmPivot.PivotMotorLowerRotationLimit) {
-            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        if(armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
+            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+            } else if (this.motorSetpoint < Constants.ArmPivot.PivotRestMinRotations) {
+                this.motorSetpoint = Constants.ArmPivot.PivotRestMinRotations;
+                currentMinimumRot = Constants.ArmPivot.PivotRestMinRotations;
+            }
+        } else if(armBase.getBaseMotorPosition() < Constants.ArmBase.PivotRegionGroundMax) {
+            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+            } else if (this.motorSetpoint < Constants.ArmPivot.PivotGroundMinRotations) {
+                this.motorSetpoint = Constants.ArmPivot.PivotGroundMinRotations;
+                currentMinimumRot = Constants.ArmPivot.PivotGroundMinRotations;
+            }
+        } else {
+            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+            } else if (this.motorSetpoint < Constants.ArmPivot.PivotNormalMinRotations) {
+                this.motorSetpoint = Constants.ArmPivot.PivotNormalMinRotations;
+                currentMinimumRot = Constants.ArmPivot.PivotNormalMinRotations;
+            }
         }
+
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());
+        SmartDashboard.putNumber("Speed", speed);
         pivotMotor.set(speed);
         SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
+        SmartDashboard.putNumber("PivotMin", currentMinimumRot);
     }
 }
