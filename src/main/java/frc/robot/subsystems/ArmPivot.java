@@ -42,8 +42,11 @@ public class ArmPivot extends SubsystemBase {
     // Motor sparkmax settings
     public ArmPivot(ArmBase armBase) {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
-        this.pivotMotor.setSmartCurrentLimit(51);
+        this.pivotMotor.setSmartCurrentLimit(80);
+
         this.pivotMotor.setInverted(true);
+        this.pivotPid.setTolerance(Constants.ArmPivot.PivotSetpointTolerance);
+
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
     }
@@ -145,5 +148,9 @@ public class ArmPivot extends SubsystemBase {
         pivotMotor.set(speed);
         SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
         SmartDashboard.putNumber("PivotMin", currentMinimumRot);
+    }
+
+    public boolean atSetpoint() {
+        return this.pivotPid.atSetpoint();
     }
 }

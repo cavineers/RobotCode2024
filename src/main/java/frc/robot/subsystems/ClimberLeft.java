@@ -17,7 +17,7 @@ public class ClimberLeft extends SubsystemBase {
     // Initialize the climber motor
     public CANSparkMax leftClimberMotor = new CANSparkMax(Constants.CanIDs.LeftClimberCanID, MotorType.kBrushless);
 
-    public DigitalInput leftClimberBottomLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberBottomLimitSwitch);
+    public DigitalInput leftClimberLimitSwitch = new DigitalInput(Constants.DIO.LeftClimberLimitSwitch);
 
     // Motor states
     public enum LeftClimberMotorState {
@@ -37,12 +37,12 @@ public class ClimberLeft extends SubsystemBase {
         this.leftClimberMotor.setInverted(false);
 
         // Set the amp limit when specified - TBD
-        this.leftClimberMotor.setSmartCurrentLimit(51);
+        this.leftClimberMotor.setSmartCurrentLimit(80);
     }
 
     public boolean getLimitSwitch() {
         boolean switched;
-        switched = this.leftClimberBottomLimitSwitch.get();
+        switched = this.leftClimberLimitSwitch.get();
         return switched;
     }
 
@@ -101,24 +101,30 @@ public class ClimberLeft extends SubsystemBase {
             this.motorSetpoint = Constants.Climber.LowerClimberMaxRotations;
         }
     }
-
+    double s;
     @Override
     public void periodic() {
+        
 
         if (this.motorSetpoint <= Constants.Climber.UpperClimberMaxRotations && this.motorSetpoint >= Constants.Climber.LowerClimberMaxRotations){
             leftClimberPID.setSetpoint(motorSetpoint);
             double speed = leftClimberPID.calculate(getLeftClimberMotorPosition());
-    
             leftClimberMotor.set(speed);
+            s = speed;
+        }
+
+        if (this.motorSetpoint < Constants.Climber.LowerClimberMaxRotations) {
+            this.motorSetpoint = Constants.Climber.LowerClimberMaxRotations;
         }
 
         if(getLimitSwitch() == true) {
-            setLeftClimberMotorPosition(Constants.Climber.LowerClimberMaxRotations);
-            motorSetpoint = 0;
+            setLeftClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
+            motorSetpoint = getLeftClimberMotorPosition();
         }
 
         SmartDashboard.putNumber("leftClimberPos", getLeftClimberMotorPosition());
         SmartDashboard.putNumber("leftClimberSetPoint", getLeftClimberMotorSetPoint());
         SmartDashboard.putBoolean("leftClimberLimitSwitch", getLimitSwitch());
+        SmartDashboard.putNumber("leftClimberSpeed", s);
     }
 }

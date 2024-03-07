@@ -40,6 +40,7 @@ public class ArmBase extends SubsystemBase {
         this.baseMotor.setIdleMode(IdleMode.kCoast);
 
         this.baseMotor.setSmartCurrentLimit(80);
+        this.basePid.setTolerance(Constants.ArmBase.BaseSetpointTolerance);
     }
 
     public void initializeEncoder(){
@@ -136,6 +137,10 @@ public class ArmBase extends SubsystemBase {
         } else if (getGantryLowerLimitSwitch()) {
             setBaseMotorPosition(Constants.ArmBase.MinRotations);
         }
+    }
+
+    public boolean atSetpoint() {
+        return this.basePid.atSetpoint();
     }
 }
 
