@@ -107,14 +107,14 @@ public class ArmPivot extends SubsystemBase {
 
     public void periodic() {
 
-        double[] limits = this.armBase.getRegionRotationLimits();
-        SmartDashboard.putNumber("Pivot Limit Lower", limits[0]);
-        SmartDashboard.putNumber("Pivot Limit Upper", limits[1]);
+        
+        // SmartDashboard.putNumber("Pivot Limit Lower", limits[0]);
+        // SmartDashboard.putNumber("Pivot Limit Upper", limits[1]);
         // Clip setpoints
-        if (this.motorSetpoint > limits[1]) {
-            this.motorSetpoint = limits[1];
-        } else if (this.motorSetpoint < limits[0]) {
-            this.motorSetpoint = limits[0];
+        if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+        } else if (this.motorSetpoint < Constants.ArmPivot.PivotMotorLowerRotationLimit) {
+            this.motorSetpoint = Constants.ArmPivot.PivotMotorLowerRotationLimit;
         }
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);

@@ -54,17 +54,15 @@ public final class Constants {
 
     public static final class DIO {
         
-        public static final int ArmBoreEncoder = 8;
+        public static final int ArmBoreEncoder = 0;
 
-        public static final int LeftGantryLowerLimitSwitch = 1;
-        public static final int LeftGantryHigherLimitSwitch = 2;
-        public static final int RightGantryLowerLimitSwitch = 3;
-        public static final int RightGantryHigherLimitSwitch = 4;
+        public static final int GantryLowerLimitSwitch = 1;
+        public static final int GantryHigherLimitSwitch = 2;
 
         public static final int LeftClimberBottomLimitSwitch = 10; 
         public static final int RightClimberBottomLimitSwitch = 6;
 
-        public static final int NoteSensor = 5;
+        public static final int NoteSensor = 4;
         // public static final int IntakeSwitch = 8;
 
     }
@@ -127,7 +125,7 @@ public final class Constants {
         public static final int kDriverFieldOrientedButtonIdx = 1;
 
         public static final double kTriggerDeadzone = 0.1;
-        public static final double kDeadband = 0.03;
+        public static final double kDeadband = 0.046;
         public static final double kDriverJoystickTriggerDeadzone = 0.1;
 
     }
@@ -150,7 +148,7 @@ public final class Constants {
         public static final double SourceRotations = 20;
         public static final double AmpRotations = 25;
 
-        public static final double ProportionalGain = 1.75; // strength of a correction
+        public static final double ProportionalGain = 2.5; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -169,10 +167,10 @@ public final class Constants {
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
 
         // ROTATIONS
-        public static final double[] ArmPivotRotationGround = {0.35,0.4}; // [min, max] region 1
+        public static final double[] ArmPivotMaxRotations = {0.35,0.736}; // [min, max] region 1
         public static final double[] ArmPivotRotationSwerve = {0.4,0.45}; // [min, max] region 2
         public static final double[] ArmPivotRotationMidGantry = {0.45,0.5}; // [min, max] region 3
-        public static final double[] ArmPivotRotationUpperGantry = {0.5,0.55}; // [min, max] region 4
+        public static final double[] ArmPivotRotationUpperGantry = {0.34,0.68}; // [min, max] region 4
     
     }
     public static final class ArmBase {
@@ -205,10 +203,10 @@ public final class Constants {
         public static final double dRotations = MaxRotations - MinRotations;
 
         // REGIONS
-        public static final double[] ArmPivotRegionGround = {0,25}; // [min, max] region 1
-        public static final double[] ArmPivotRegionSwerve = {25,50}; // [min, max] region 2
-        public static final double[] ArmPivotRegionMidGantry = {75,100}; // [min, max] region 3
-        public static final double[] ArmPivotRegionUpperGantry = {100,150}; // [min, max] region 4
+        public static final double[] ArmPivotRegionGround = {0,1}; // [min, max] region 1
+        public static final double[] ArmPivotRegionSwerve = {1,0}; // [min, max] region 2
+        public static final double[] ArmPivotRegionMidGantry = {0,0}; // [min, max] region 3
+        public static final double[] ArmPivotRegionUpperGantry = {0,0}; // [min, max] region 4
     }
 
     public static final class Climber {

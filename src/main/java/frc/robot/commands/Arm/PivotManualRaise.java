@@ -23,7 +23,7 @@ public class PivotManualRaise extends Command {
     @Override
     public void execute() {
 
-        this.armPivot.setSetpointAdd(+.001);
+        this.armPivot.setSetpointAdd(+.0025);
 
     }
 
