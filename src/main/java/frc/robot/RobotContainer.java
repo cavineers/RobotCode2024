@@ -133,11 +133,9 @@ public class RobotContainer {
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot);
+		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		amp = new Amp(shooter, intake);
 
-		// shootAuto = new Shoot_Auto(shooter, armPivot, armBase);
-
-		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,
@@ -161,102 +159,32 @@ public class RobotContainer {
 			}
 		});
 
-		xboxController0.povDown().onTrue(amp);
-
 		// Arm Commands
-		xboxController0.povRight().onTrue(gantryManualRaise);
-		xboxController0.povRight().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				gantryManualRaise.cancel();
-			}
-		});
-
-		xboxController0.povLeft().onTrue(gantryManualLower);
-		xboxController0.povLeft().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				gantryManualLower.cancel();
-			}
-		});
-
-		xboxController0.a().onTrue(pivotManualLower);
-		xboxController0.a().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				pivotManualLower.cancel();
-			}
-		});
-
-		xboxController0.y().onTrue(pivotManualRaise);
-		xboxController0.y().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				pivotManualRaise.cancel();
-			}
-		});
-
-		// xboxController0.x().onTrue(shootAuto);
-
+		xboxController0.povRight().whileTrue(gantryManualRaise);
+		xboxController0.povLeft().whileTrue(gantryManualLower);
+		xboxController0.a().whileTrue(pivotManualLower);
+		xboxController0.y().whileTrue(pivotManualRaise);
+		
 		// Shooter-Intake Commands
-		xboxController0.leftBumper().onTrue(outtake);
-		xboxController0.leftBumper().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				outtake.cancel();
-			}
-		});
-
-		xboxController0.rightBumper().onTrue(intakeNote);
-		xboxController0.rightBumper().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				intakeNote.cancel();
-			}
-		});
-
+		xboxController0.leftBumper().whileTrue(outtake);
+		xboxController0.rightBumper().whileTrue(intakeNote);
 		xboxController0.b().onTrue(shoot);
-
 		xboxController0.x().onTrue(shootAuto);
-
+		xboxController0.rightTrigger(Constants.OIConstants.kDriverJoystickTriggerDeadzone).whileTrue(shootManual);
+		xboxController0.povDown().onTrue(amp);
+		
+		//Presets
 		xboxController1.povDown().onTrue(groundPickup);
 		xboxController1.povUp().onTrue(shootPosition);
 		xboxController1.povLeft().onTrue(ampPosition);
 		xboxController1.povRight().onTrue(sourcePosition);
 		xboxController1.leftBumper().onTrue(restPosition);
 
-		// ClimberCommands
-		xboxController1.a().onTrue(lowerLeftClimber);
-		xboxController1.a().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				lowerLeftClimber.cancel();
-			}
-		});
-
-		xboxController1.y().onTrue(riseLeftClimber);
-		xboxController1.y().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				riseLeftClimber.cancel();
-			}
-		});
-
-		xboxController1.x().onTrue(lowerRightClimber);
-		xboxController1.x().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				lowerRightClimber.cancel();
-			}
-		});
-
-		xboxController1.b().onTrue(riseRightClimber);
-		xboxController1.b().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				riseRightClimber.cancel();
-			}
-		});
+		// Climber
+		xboxController1.a().whileTrue(lowerLeftClimber);
+		xboxController1.y().whileTrue(riseLeftClimber);
+		xboxController1.x().whileTrue(lowerRightClimber);
+		xboxController1.b().whileTrue(riseRightClimber);
 
 	}
 
