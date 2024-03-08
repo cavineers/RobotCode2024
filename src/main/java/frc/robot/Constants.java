@@ -19,7 +19,6 @@ public final class Constants {
     }
 
     public static final class CanIDs{
-
         public static final int kFrontLeftDriveCanID = 2;
         public static final int kBackLeftDriveCanID = 8;
         public static final int kFrontRightDriveCanID = 4;
@@ -53,7 +52,6 @@ public final class Constants {
         
 
     public static final class DIO {
-        
         public static final int ArmBoreEncoder = 0;
 
         public static final int GantryLowerLimitSwitch = 1;
@@ -63,19 +61,12 @@ public final class Constants {
         public static final int RightClimberLimitSwitch = 9;
 
         public static final int NoteSensor = 4;
-        // public static final int IntakeSwitch = 8;
-
     }
 
     public static final class DriveConstants {
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = 2;
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
-
-        // public static final int kFrontLeftAbsoluteEncoderPort = 12;
-        // public static final int kBackLeftAbsoluteEncoderPort = 9;
-        // public static final int kFrontRightAbsoluteEncoderPort = 11;
-        // public static final int kBackRightAbsoluteEncoderPort = 10;
 
         public static final boolean kFrontLeftTurningEncoderReversed = true;
         public static final boolean kBackLeftTurningEncoderReversed = true;
@@ -89,16 +80,14 @@ public final class Constants {
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMinSpeedMetersPerSecond = 5 / 3;
-        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond
-                / 4;
+        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
 
         public static final double kFrontLeftAbsoluteEncoderOffset = -.0083+.5; //.281 185.97 offset //-5.97 +80.63
         public static final double kBackLeftAbsoluteEncoderOffset = -0.0920+.5; //-.472 178.41 //-178.41 -224.03
         public static final double kFrontRightAbsoluteEncoderOffset = -0.9697; //170.94 //-170.94
-        public static final double kBackRightAbsoluteEncoderOffset = -.723+.5;
-         //58.79 //-58.79
+        public static final double kBackRightAbsoluteEncoderOffset = -.723+.5; //58.79 //-58.79
         
         // Distance between right and left wheels
         public static final double kTrackWidth = Units.inchesToMeters(25); 
@@ -127,7 +116,6 @@ public final class Constants {
         public static final double kTriggerDeadzone = 0.1;
         public static final double kDeadband = 0.046;
         public static final double kDriverJoystickTriggerDeadzone = 0.1;
-
     }
 
     public static final class ArmPivot {

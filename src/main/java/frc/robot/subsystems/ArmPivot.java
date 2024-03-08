@@ -112,9 +112,6 @@ public class ArmPivot extends SubsystemBase {
 
     public void periodic() {
 
-        
-        // SmartDashboard.putNumber("Pivot Limit Lower", limits[0]);
-        // SmartDashboard.putNumber("Pivot Limit Upper", limits[1]);
         // Clip setpoints
         if(armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
             if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
@@ -134,7 +131,7 @@ public class ArmPivot extends SubsystemBase {
                 currentMinimumRot = Constants.ArmPivot.PivotGroundMinRotations;
                 System.out.println("135");
             } 
-        } else {
+        } else { // between 1 rotation and 149 rotations
             if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
                 this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
             } else if (this.motorSetpoint < Constants.ArmPivot.PivotNormalMinRotations) {
@@ -142,6 +139,13 @@ public class ArmPivot extends SubsystemBase {
                 System.out.println("142");
                 currentMinimumRot = Constants.ArmPivot.PivotNormalMinRotations;
             }
+        }
+
+        // Failsafe
+        if (getPivotAbsolute()<.3) {
+            this.motorSetpoint = getPivotAbsolute();
+        } else if (getPivotAbsolute()>.8) {
+            this.motorSetpoint = getPivotAbsolute();
         }
 
         // Set motor speed

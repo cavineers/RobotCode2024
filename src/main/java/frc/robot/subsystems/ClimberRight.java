@@ -34,7 +34,7 @@ public class ClimberRight extends SubsystemBase {
     public ClimberRight() {
         this.rightClimberMotor.setIdleMode(IdleMode.kBrake);
 
-        this.rightClimberMotor.setInverted(true);
+        this.rightClimberMotor.setInverted(false);
 
         // Set the amp limit when specified - TBD
         this.rightClimberMotor.setSmartCurrentLimit(51);

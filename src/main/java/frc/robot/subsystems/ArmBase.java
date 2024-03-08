@@ -89,27 +89,6 @@ public class ArmBase extends SubsystemBase {
         return gantryHeight;
     }
 
-    /** 
-        @return double[] {min, max} minimum and maximum gantry heights for the current region
-    */
-    // public double[] getRegionRotationLimits(){
-    //     double position = getBaseMotorPosition();
-
-    //     if(position >= Constants.ArmBase.ArmPivotRegionGround[0] && position <= Constants.ArmBase.ArmPivotRegionGround[1]) {
-    //         SmartDashboard.putString("Region", "Ground");
-    //         return new double[]{Constants.ArmPivot.ArmPivotRotationGround[0], Constants.ArmPivot.ArmPivotRotationGround[1]};
-    //     } else if(position >= Constants.ArmBase.ArmPivotRegionSwerve[0] && position <= Constants.ArmBase.ArmPivotRegionSwerve[1]) {
-    //         SmartDashboard.putString("Region", "Swerve");
-    //         return new double[]{Constants.ArmPivot.ArmPivotRotationSwerve[0], Constants.ArmPivot.ArmPivotRotationSwerve[1]};
-    //     } else if(position >= Constants.ArmBase.ArmPivotRegionMidGantry[0] && position <= Constants.ArmBase.ArmPivotRegionMidGantry[1]) {
-    //         SmartDashboard.putString("Region", "MidGantry");
-    //         return new double[]{Constants.ArmPivot.ArmPivotRotationMidGantry[0], Constants.ArmPivot.ArmPivotRotationMidGantry[1]};
-    //     } else {
-    //         SmartDashboard.putString("Region", "UpperGantry");
-    //         return new double[]{Constants.ArmPivot.ArmPivotRotationUpperGantry[0], Constants.ArmPivot.ArmPivotRotationUpperGantry[1]};
-    //     }
-    // }
-
     public void periodic() {
     
         
