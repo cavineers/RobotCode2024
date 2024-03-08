@@ -39,6 +39,8 @@ import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Shooter.Amp;
 import frc.robot.commands.Shooter.Shoot_Auto;
 import frc.robot.commands.Shooter.Shoot_Manual;
+import frc.robot.commands.Shooter.Shoot_Toggle;
+
 
 public class RobotContainer {
 
@@ -74,8 +76,6 @@ public class RobotContainer {
 	public Command ampPosition;
 	public Command restPosition;
 
-	// public Command shootAuto;
-
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
@@ -86,8 +86,9 @@ public class RobotContainer {
 
 	public Command shoot;
 	public Command shootAuto;
-	public Command amp;
 	public Command shootManual;
+	public Command shootToggle;
+	public Command amp;
 	public SwerveHoming swerveHomingCommand;
 
 	public RobotContainer() {
@@ -134,6 +135,7 @@ public class RobotContainer {
 		shoot = new Shoot(shooter, intake);
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
+		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
 
 
@@ -172,6 +174,7 @@ public class RobotContainer {
 		xboxController0.x().onTrue(shootAuto);
 		xboxController0.rightTrigger(Constants.OIConstants.kDriverJoystickTriggerDeadzone).whileTrue(shootManual);
 		xboxController0.povDown().onTrue(amp);
+		xboxController0.start().toggleOnTrue(shootToggle);
 		
 		//Presets
 		xboxController1.povDown().onTrue(groundPickup);
