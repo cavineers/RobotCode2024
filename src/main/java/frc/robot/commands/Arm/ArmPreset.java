@@ -17,7 +17,7 @@ public class ArmPreset extends Command {
     private ArmPivot armPivot;
 
     public ArmPreset(ArmBase armBase, ArmPivot armPivot, double g, double p) {
-        this.addRequirements();
+        this.addRequirements(armBase, armPivot);
 
         this.armBase = armBase;
         this.armPivot = armPivot;
@@ -41,10 +41,28 @@ public class ArmPreset extends Command {
         this.armBase.setSetpoint(gantryRotations);
         this.armPivot.setSetpoint(pivotRotations);
 
+        if (armBase.atSetpoint()) {
+            gantryDone = true;
+        }else{
+            gantryDone = false;
+        }
+
+        if (armPivot.atSetpoint()) {
+            pivotDone = true;
+        }else{
+            pivotDone = false;
+        }
+
     }
 
     @Override
     public void end(boolean interrupted) {
 
+    }
+
+    
+    @Override 
+    public boolean isFinished() {
+        return gantryDone && pivotDone;
     }
 }

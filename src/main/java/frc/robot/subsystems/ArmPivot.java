@@ -36,12 +36,17 @@ public class ArmPivot extends SubsystemBase {
 
     private double currentArmPivotAngle;
     private double requiredSetpoint;
+
+    private double currentMinimumRot;
     
     // Motor sparkmax settings
     public ArmPivot(ArmBase armBase) {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
-        this.pivotMotor.setSmartCurrentLimit(51);
+        this.pivotMotor.setSmartCurrentLimit(80);
+
         this.pivotMotor.setInverted(true);
+        this.pivotPid.setTolerance(Constants.ArmPivot.PivotSetpointTolerance);
+
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
 
@@ -112,21 +117,55 @@ public class ArmPivot extends SubsystemBase {
 
     public void periodic() {
 
-        double[] limits = this.armBase.getRegionRotationLimits();
-        SmartDashboard.putNumber("Pivot Limit Lower", limits[0]);
-        SmartDashboard.putNumber("Pivot Limit Upper", limits[1]);
         // Clip setpoints
-        if (this.motorSetpoint > limits[1]) {
-            this.motorSetpoint = limits[1];
-        } else if (this.motorSetpoint < limits[0]) {
-            this.motorSetpoint = limits[0];
+        if(armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
+            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+                System.out.println("122");
+            } else if (this.motorSetpoint < Constants.ArmPivot.PivotRestMinRotations) {
+                this.motorSetpoint = Constants.ArmPivot.PivotRestMinRotations;
+                currentMinimumRot = Constants.ArmPivot.PivotRestMinRotations;
+                System.out.println("126");
+            }
+        } else if(armBase.getBaseMotorPosition() < Constants.ArmBase.PivotRegionGroundMax) {
+            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+                System.out.println("131");
+            } else if (this.motorSetpoint < Constants.ArmPivot.PivotGroundMinRotations) {
+                this.motorSetpoint = Constants.ArmPivot.PivotGroundMinRotations;
+                currentMinimumRot = Constants.ArmPivot.PivotGroundMinRotations;
+                System.out.println("135");
+            } 
+        } else { // between 1 rotation and 149 rotations
+            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
+                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+            } else if (this.motorSetpoint < Constants.ArmPivot.PivotNormalMinRotations) {
+                this.motorSetpoint = Constants.ArmPivot.PivotNormalMinRotations;
+                System.out.println("142");
+                currentMinimumRot = Constants.ArmPivot.PivotNormalMinRotations;
+            }
         }
-        SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
-        SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
+
+        // Failsafe
+        if (getPivotAbsolute()<.3) {
+            this.motorSetpoint = getPivotAbsolute();
+        } else if (getPivotAbsolute()>.8) {
+            this.motorSetpoint = getPivotAbsolute();
+        }
+
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());
         pivotMotor.set(speed);
+
+        SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
+        SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
+        SmartDashboard.putNumber("Speed", speed);
         SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
+        SmartDashboard.putNumber("PivotMin", currentMinimumRot);
+    }
+
+    public boolean atSetpoint() {
+        return this.pivotPid.atSetpoint();
     }
 }

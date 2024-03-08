@@ -24,10 +24,8 @@ public class ArmBase extends SubsystemBase {
     public CANSparkMax baseMotor = new CANSparkMax(Constants.CanIDs.GantryCANID, MotorType.kBrushless);
 
     // Limit Switches
-    public DigitalInput leftGantryLowerLimitSwitch = new DigitalInput(Constants.DIO.LeftGantryLowerLimitSwitch);
-    public DigitalInput leftGantryHigherLimitSwitch = new DigitalInput(Constants.DIO.LeftGantryHigherLimitSwitch);
-    public DigitalInput rightGantryLowerLimitSwitch = new DigitalInput(Constants.DIO.RightGantryLowerLimitSwitch);
-    public DigitalInput rightGantryHigherLimitSwitch = new DigitalInput(Constants.DIO.RightGantryHigherLimitSwitch);
+    public DigitalInput GantryLowerLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
+    public DigitalInput GantryHigherLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
 
 
     private double gantryHeight;
@@ -39,9 +37,10 @@ public class ArmBase extends SubsystemBase {
 
     // Motor sparkmax settings
     public ArmBase() {
-        this.baseMotor.setIdleMode(IdleMode.kBrake);
+        this.baseMotor.setIdleMode(IdleMode.kCoast);
 
         this.baseMotor.setSmartCurrentLimit(80);
+        this.basePid.setTolerance(Constants.ArmBase.BaseSetpointTolerance);
     }
 
     public void initializeEncoder(){
@@ -64,20 +63,12 @@ public class ArmBase extends SubsystemBase {
         this.baseMotor.getEncoder().setPosition(position);
     }
     
-    public boolean getLeftGantryUpperSwitch() {
-        return this.leftGantryHigherLimitSwitch.get();
+    public boolean getGantryHigherLimitSwitch() {
+        return this.GantryHigherLimitSwitch.get();
     }
 
-    public boolean getLeftGantryLowerSwitch() {
-        return this.leftGantryLowerLimitSwitch.get();
-    }
-
-    public boolean getRightGantryUpperSwitch() {
-        return this.rightGantryHigherLimitSwitch.get();
-    }
-
-    public boolean getRightGantryLowerSwitch() {
-        return this.rightGantryLowerLimitSwitch.get();
+    public boolean getGantryLowerLimitSwitch() {
+        return this.GantryLowerLimitSwitch.get();
     }
 
     public void setSetpointAdd(double s){
@@ -98,27 +89,6 @@ public class ArmBase extends SubsystemBase {
         return gantryHeight;
     }
 
-    /** 
-        @return double[] {min, max} minimum and maximum gantry heights for the current region
-    */
-    public double[] getRegionRotationLimits(){
-        double position = getBaseMotorPosition();
-
-        if(position >= Constants.ArmBase.ArmPivotRegionGround[0] && position <= Constants.ArmBase.ArmPivotRegionGround[1]) {
-            SmartDashboard.putString("Region", "Ground");
-            return new double[]{Constants.ArmPivot.ArmPivotRotationGround[0], Constants.ArmPivot.ArmPivotRotationGround[1]};
-        } else if(position >= Constants.ArmBase.ArmPivotRegionSwerve[0] && position <= Constants.ArmBase.ArmPivotRegionSwerve[1]) {
-            SmartDashboard.putString("Region", "Swerve");
-            return new double[]{Constants.ArmPivot.ArmPivotRotationSwerve[0], Constants.ArmPivot.ArmPivotRotationSwerve[1]};
-        } else if(position >= Constants.ArmBase.ArmPivotRegionMidGantry[0] && position <= Constants.ArmBase.ArmPivotRegionMidGantry[1]) {
-            SmartDashboard.putString("Region", "MidGantry");
-            return new double[]{Constants.ArmPivot.ArmPivotRotationMidGantry[0], Constants.ArmPivot.ArmPivotRotationMidGantry[1]};
-        } else {
-            SmartDashboard.putString("Region", "UpperGantry");
-            return new double[]{Constants.ArmPivot.ArmPivotRotationUpperGantry[0], Constants.ArmPivot.ArmPivotRotationUpperGantry[1]};
-        }
-    }
-
     public void periodic() {
     
         
@@ -129,24 +99,27 @@ public class ArmBase extends SubsystemBase {
             motorSetpoint = Constants.ArmBase.MinRotations;
         }
 
+        basePid.setSetpoint(motorSetpoint);
+        double speed = basePid.calculate(getBaseMotorPosition());
+        
+        SmartDashboard.putBoolean("HigherGantrySwitch", getGantryHigherLimitSwitch());
+        SmartDashboard.putBoolean("LowerGantrySwitch", getGantryLowerLimitSwitch());
         SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
         SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
-        double speed = basePid.calculate(getBaseMotorPosition());
-        SmartDashboard.putNumber("Speed", speed);
         
         baseMotor.set(speed);
         
-
-
         // LIMIT SWITCHES
-        // if (getLeftGantryUpperSwitch() && getRightGantryUpperSwitch()) {
-        //     setBaseMotorPosition(Constants.ArmBase.MaxRotations);
-        //     this.motorSetpoint = Constants.ArmBase.MaxRotations;
+        if (getGantryHigherLimitSwitch()) {
+            setBaseMotorPosition(Constants.ArmBase.MaxRotations);
 
-        // } else if (getLeftGantryLowerSwitch() && getRightGantryLowerSwitch()) {
-        //     setBaseMotorPosition(Constants.ArmBase.MinRotations);
-        //     this.motorSetpoint = Constants.ArmBase.MinRotations;
-        // }
+        } else if (getGantryLowerLimitSwitch()) {
+            setBaseMotorPosition(Constants.ArmBase.MinRotations);
+        }
+    }
+
+    public boolean atSetpoint() {
+        return this.basePid.atSetpoint();
     }
 }
 

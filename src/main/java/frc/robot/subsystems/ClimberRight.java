@@ -17,7 +17,7 @@ public class ClimberRight extends SubsystemBase {
     public CANSparkMax rightClimberMotor = new CANSparkMax(Constants.CanIDs.RightClimberCanID, MotorType.kBrushless);
 
     // Initialize the limit switch
-    public DigitalInput rightClimberBottomLimitSwitch = new DigitalInput(Constants.DIO.RightClimberBottomLimitSwitch);
+    public DigitalInput rightClimberLimitSwitch = new DigitalInput(Constants.DIO.RightClimberLimitSwitch);
 
     // Motor states
     public enum RightClimberMotorState {
@@ -42,8 +42,8 @@ public class ClimberRight extends SubsystemBase {
 
     public boolean getLimitSwitch() {
         boolean switched;
-        switched = this.rightClimberBottomLimitSwitch.get();
-        return switched;
+        switched = this.rightClimberLimitSwitch.get();
+        return !switched;
     }
 
     // Set the motor's position (given in rotations)
@@ -108,18 +108,22 @@ public class ClimberRight extends SubsystemBase {
         if (this.motorSetpoint <= Constants.Climber.UpperClimberMaxRotations && this.motorSetpoint >= Constants.Climber.LowerClimberMaxRotations){
             rightClimberPID.setSetpoint(motorSetpoint);
             double speed = rightClimberPID.calculate(getRightClimberMotorPosition());
-            SmartDashboard.putNumber("Speed", speed);
     
             rightClimberMotor.set(speed);
         }
 
+        if (this.motorSetpoint < Constants.Climber.LowerClimberMaxRotations) {
+            this.motorSetpoint = Constants.Climber.LowerClimberMaxRotations;
+        }
+
         if(getLimitSwitch() == true) {
-            setRightClimberMotorPosition(Constants.Climber.LowerClimberMaxRotations);
-            motorSetpoint = 0;
+            setRightClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
+            motorSetpoint = getRightClimberMotorPosition();
         }
 
         SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
         SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
         SmartDashboard.putBoolean("rightClimberLimitSwitch", getLimitSwitch());
+
     }
 }

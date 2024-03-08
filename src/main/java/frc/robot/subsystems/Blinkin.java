@@ -7,6 +7,7 @@ public class Blinkin extends SubsystemBase {
 
 	public static Spark blinkin;
 
+	//PWM port 0
 	public Blinkin() {
 		blinkin = new Spark(0);
 	}
