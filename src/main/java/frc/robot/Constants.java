@@ -38,8 +38,8 @@ public final class Constants {
         public static final int PivotCanID = 18;
         public static final int GantryCANID = 15;
 
-        public static final int LeftClimberCanID = 33; //19
-        public static final int RightClimberCanID = 34; //16
+        public static final int LeftClimberCanID = 19; //19
+        public static final int RightClimberCanID = 16; //16
 
         public static final int PDHCanID = 17; 
 
@@ -56,10 +56,10 @@ public final class Constants {
         
         public static final int ArmBoreEncoder = 0;
 
-        public static final int GantryLowerLimitSwitch = 10;
+        public static final int GantryLowerLimitSwitch = 1;
         public static final int GantryHigherLimitSwitch = 2;
 
-        public static final int LeftClimberLimitSwitch = 1; 
+        public static final int LeftClimberLimitSwitch = 6; 
         public static final int RightClimberLimitSwitch = 9;
 
         public static final int NoteSensor = 4;
@@ -204,12 +204,6 @@ public final class Constants {
         public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
         public static final double dRotations = MaxRotations - MinRotations;
 
-        // REGIONS
-        public static final double[] ArmPivotRegionGround = {0,1}; // [min, max] region 1
-        public static final double[] ArmPivotRegionSwerve = {1,0}; // [min, max] region 2
-        public static final double[] ArmPivotRegionMidGantry = {0,0}; // [min, max] region 3
-        public static final double[] ArmPivotRegionUpperGantry = {0,0}; // [min, max] region 4
-
         public static final double PivotRegionRestMin = 149;
         public static final double PivotRegionGroundMax = 1;
     }
@@ -218,7 +212,7 @@ public final class Constants {
 
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
-        public static final double LowerClimberMaxRotations = 0; // TBD
+        public static final double LowerClimberMaxRotations = -100; // TBD
         public static final double UpperClimberMaxRotations = 100; // TBD
 
         public static final double ProportionalGain = .03;

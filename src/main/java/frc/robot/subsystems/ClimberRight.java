@@ -34,7 +34,7 @@ public class ClimberRight extends SubsystemBase {
     public ClimberRight() {
         this.rightClimberMotor.setIdleMode(IdleMode.kBrake);
 
-        this.rightClimberMotor.setInverted(false);
+        this.rightClimberMotor.setInverted(true);
 
         // Set the amp limit when specified - TBD
         this.rightClimberMotor.setSmartCurrentLimit(51);
@@ -43,7 +43,7 @@ public class ClimberRight extends SubsystemBase {
     public boolean getLimitSwitch() {
         boolean switched;
         switched = this.rightClimberLimitSwitch.get();
-        return switched;
+        return !switched;
     }
 
     // Set the motor's position (given in rotations)
@@ -124,5 +124,6 @@ public class ClimberRight extends SubsystemBase {
         SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
         SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
         SmartDashboard.putBoolean("rightClimberLimitSwitch", getLimitSwitch());
+
     }
 }

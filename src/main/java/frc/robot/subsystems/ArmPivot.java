@@ -119,33 +119,39 @@ public class ArmPivot extends SubsystemBase {
         if(armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
             if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
                 this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+                System.out.println("122");
             } else if (this.motorSetpoint < Constants.ArmPivot.PivotRestMinRotations) {
                 this.motorSetpoint = Constants.ArmPivot.PivotRestMinRotations;
                 currentMinimumRot = Constants.ArmPivot.PivotRestMinRotations;
+                System.out.println("126");
             }
         } else if(armBase.getBaseMotorPosition() < Constants.ArmBase.PivotRegionGroundMax) {
             if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
                 this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+                System.out.println("131");
             } else if (this.motorSetpoint < Constants.ArmPivot.PivotGroundMinRotations) {
                 this.motorSetpoint = Constants.ArmPivot.PivotGroundMinRotations;
                 currentMinimumRot = Constants.ArmPivot.PivotGroundMinRotations;
-            }
+                System.out.println("135");
+            } 
         } else {
             if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
                 this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
             } else if (this.motorSetpoint < Constants.ArmPivot.PivotNormalMinRotations) {
                 this.motorSetpoint = Constants.ArmPivot.PivotNormalMinRotations;
+                System.out.println("142");
                 currentMinimumRot = Constants.ArmPivot.PivotNormalMinRotations;
             }
         }
 
-        SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
-        SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());
-        SmartDashboard.putNumber("Speed", speed);
         pivotMotor.set(speed);
+
+        SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
+        SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
+        SmartDashboard.putNumber("Speed", speed);
         SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
         SmartDashboard.putNumber("PivotMin", currentMinimumRot);
     }
