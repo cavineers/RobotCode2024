@@ -32,7 +32,6 @@ public class SwerveModule {
 
     private final PIDController turningPidController;
 
-
     private final CANcoder absoluteEncoder;
     private final double absoluteEncoderOffsetDeg;
     private final int id;
@@ -53,8 +52,6 @@ public class SwerveModule {
         // Write these configs to the CANcoder
         absoluteEncoder.getConfigurator().apply(configs);
 
-
-        
         driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
         turningMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
 
@@ -64,7 +61,6 @@ public class SwerveModule {
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
         
-
         driveEncoder = driveMotor.getEncoder();
         turningEncoder = turningMotor.getEncoder();
 
@@ -76,7 +72,6 @@ public class SwerveModule {
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
-
         resetEncoders();
     }
 
@@ -87,8 +82,6 @@ public class SwerveModule {
     public double getEncoderPosition(){
         return turningEncoder.getPosition();
     }
-
-  
 
     public double getDrivePosition() {
         return driveEncoder.getPosition();
@@ -111,7 +104,6 @@ public class SwerveModule {
         turningMotor.setIdleMode(mode);
         driveMotor.setIdleMode(mode);
     }
-
 
     public double getTurningVelocity() {
         return turningEncoder.getVelocity();

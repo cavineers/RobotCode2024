@@ -17,7 +17,7 @@ public class ArmPreset extends Command {
     private ArmPivot armPivot;
 
     public ArmPreset(ArmBase armBase, ArmPivot armPivot, double g, double p) {
-        this.addRequirements();
+        this.addRequirements(armBase, armPivot);
 
         this.armBase = armBase;
         this.armPivot = armPivot;
@@ -38,26 +38,19 @@ public class ArmPreset extends Command {
     public void execute() {
 
 
-        if (armBase.getBaseMotorPosition() >= gantryRotations + Constants.ArmBase.ArmBaseEcoderDeadzone) {
-            armBase.setBaseMotorState(armBase.baseMotorState.REVERSED);
-        } else if (armBase.getBaseMotorPosition() <= gantryRotations - Constants.ArmBase.ArmBaseEcoderDeadzone) {
-            armBase.setBaseMotorState(armBase.baseMotorState.ON);
-        } else {
-            armBase.setBaseMotorState(armBase.baseMotorState.OFF);
+        this.armBase.setSetpoint(gantryRotations);
+        this.armPivot.setSetpoint(pivotRotations);
+
+        if (armBase.atSetpoint()) {
             gantryDone = true;
+        }else{
+            gantryDone = false;
         }
-        
-        if (armPivot.getPivotMotorPosition() >= pivotRotations + Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-            armPivot.setPivotMotorState(armPivot.pivotMotorState.REVERSED);
-        } else if (armPivot.getPivotMotorPosition() <= pivotRotations - Constants.ArmPivot.ArmPivotEcoderDeadzone) {
-            armPivot.setPivotMotorState(armPivot.pivotMotorState.ON);
-        } else {
-            armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+
+        if (armPivot.atSetpoint()) {
             pivotDone = true;
-        }
-        
-        if (gantryDone == true && pivotDone == true) {
-            cancel();
+        }else{
+            pivotDone = false;
         }
 
     }
@@ -65,7 +58,11 @@ public class ArmPreset extends Command {
     @Override
     public void end(boolean interrupted) {
 
-        armBase.setBaseMotorState(armBase.baseMotorState.OFF);
-        armPivot.setPivotMotorState(armPivot.pivotMotorState.OFF);
+    }
+
+    
+    @Override 
+    public boolean isFinished() {
+        return gantryDone && pivotDone;
     }
 }

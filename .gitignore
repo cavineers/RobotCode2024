@@ -176,3 +176,5 @@ bin/
 *.bin
 *.lock
 .gradle/file-system.probe
+ctre_sim/
+*.dat

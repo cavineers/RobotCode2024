@@ -28,58 +28,34 @@ public class LowerClimberCommand extends Command {
     }
 
     @Override
-    public void initialize() {
-
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {
 
         if (climberSide == "left") {
             // Left climber action
-            if (climberLeft.getLimitSwitch("bottom")) {
-                System.out.println("Left off");
-                climberLeft.setLeftClimberMotorState(climberLeft.leftClimberMotorState.OFF);
+            if (climberLeft.getLimitSwitch()) {
                 this.leftLowered = true;
-            } else if (!climberLeft.getLimitSwitch("bottom")) {
+            } else if (!climberLeft.getLimitSwitch()) {
                 System.out.println("Left lowering");
-                climberLeft.setLeftClimberMotorState(climberLeft.leftClimberMotorState.REVERSED);
+                this.climberLeft.setSetpointAdd(-.1);
+                
             }
 
         } else if (climberSide == "right") {
-            // Right climber action
-            if (climberRight.getLimitSwitch("bottom")) {
-                System.out.println("Right off");
-                climberRight.setRightClimberMotorState(climberRight.rightClimberMotorState.OFF);
+            // Left climber action
+            if (climberRight.getLimitSwitch()) {
                 this.rightLowered = true;
-            } else if (!climberRight.getLimitSwitch("bottom")) {
+            } else if (!climberRight.getLimitSwitch()) {
                 System.out.println("Right lowering");
-                climberRight.setRightClimberMotorState(climberRight.rightClimberMotorState.REVERSED);
+                this.climberRight.setSetpointAdd(-.1);
+                
             }
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-        if (climberSide == "left") {
-            climberLeft.setLeftClimberMotorState(ClimberLeft.LeftClimberMotorState.OFF);
-        } else if (climberSide == "right") {
-            climberRight.setRightClimberMotorState(ClimberRight.RightClimberMotorState.OFF);
-        }
-    }
-
-    @Override
-    // Once the two climbers have reached their limit of rotations, the command is
-    // finished
-    public boolean isFinished() {
-
-        boolean finish = false;
-
-        if (climberSide == "left") {
-            finish = this.leftLowered;
-        } else if (climberSide == "right") {
-            finish = this.rightLowered;
-        }
-        return finish;
     }
 }

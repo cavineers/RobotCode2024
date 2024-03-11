@@ -115,6 +115,11 @@ public class VisionSubsystem extends SubsystemBase {
         }
         return 0;
     }
+
+    public double GetXDistanceSpeaker() {
+        
+        return 0;
+    }
     
     public void periodic() {
         if (visionEnabled){

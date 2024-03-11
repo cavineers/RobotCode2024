@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import frc.robot.Constants.CanIDs;
 import org.photonvision.EstimatedRobotPose;
+import edu.wpi.first.wpilibj.Timer;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -77,10 +78,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         DriveConstants.kBackRightAbsoluteEncoderOffset);
 
     private final Pigeon2 gyro = new Pigeon2(CanIDs.kPigeonID);
-    
-
-
-    
+        
     private Pose2d updatedPose = new Pose2d();
 
     private final Field2d m_field = new Field2d();
@@ -286,6 +284,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
         SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
         SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
+
+        SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
     }
     
     public void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
