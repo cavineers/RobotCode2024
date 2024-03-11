@@ -210,8 +210,6 @@ public class RobotContainer {
 		return this.armBase;
 	}
 
-	
-
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("TestAutoNow");
     }

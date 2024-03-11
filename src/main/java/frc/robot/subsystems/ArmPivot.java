@@ -156,11 +156,14 @@ public class ArmPivot extends SubsystemBase {
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());
+        SmartDashboard.putNumber("PivotSpeed", speed);
+        if (speed < -.1) {
+            speed = -.1;
+        }
         pivotMotor.set(speed);
 
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
-        SmartDashboard.putNumber("Speed", speed);
         SmartDashboard.putNumber("PivotMin", currentMinimumRot);
     }
 
