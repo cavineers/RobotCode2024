@@ -65,10 +65,11 @@ public class Shoot_Auto extends Command {
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
         if (armPivot.isAtSetpoint() && timer.get()>2) {
+            SmartDashboard.putBoolean("Is At Setpoint", true);
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 
-        if (intake.getNoteSensor()== false || timer.get()>3) {
+        if (intake.getNoteSensor()== false || timer.get()>5) {
            timer2.start();
            if (timer2.get()>1){
                 this.isDone = true;
@@ -99,7 +100,7 @@ public class Shoot_Auto extends Command {
 
 		SmartDashboard.putNumber("Distance to Speaker", distance);
          
-        requiredArmPivotAngleDegrees = -2.97 * Math.pow(1.6, -(distance - 6.8)) - 31 + 90.0;
+        requiredArmPivotAngleDegrees = -1.8 * Math.pow(1.655, -(distance - 7.29)) - 31.3 + 90.0;
 
         SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 

@@ -50,7 +50,7 @@ public class ArmPivot extends SubsystemBase {
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
 
-        this.pivotPid.setTolerance(0.01);
+        this.pivotPid.setTolerance(0.05);
 
     }
 
@@ -161,7 +161,6 @@ public class ArmPivot extends SubsystemBase {
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         SmartDashboard.putNumber("Speed", speed);
-        SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
         SmartDashboard.putNumber("PivotMin", currentMinimumRot);
     }
 
