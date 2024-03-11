@@ -136,13 +136,13 @@ public final class Constants {
 
         public static final double PivotSetpointTolerance = 0.02;
     
-        public static final double GroundPickupRotations = 5;
+        public static final double GroundPickupRotations = 0.45;
         public static final double RestRotations = 10;
         public static final double ShootRotations = 15;
         public static final double SourceRotations = 20;
         public static final double AmpRotations = 25;
 
-        public static final double ProportionalGain = 2.5; // strength of a correction
+        public static final double ProportionalGain = 3; // strength of a correction
         public static final double IntegralTerm = 0; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -158,7 +158,7 @@ public final class Constants {
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
 
         public static final double PivotRestMinRotations = 0.34;
-        public static final double PivotNormalMinRotations = 0.39;
+        public static final double PivotNormalMinRotations = 0.41;
         public static final double PivotGroundMinRotations = 0.353;
     
     }
@@ -167,7 +167,7 @@ public final class Constants {
         public static final double SpeedForwards = 0.2;
         public static final double SpeedBackwards = -0.15;
 
-        public static final double MaxRotations = 150;
+        public static final double MaxRotations = 151;
         public static final double MinRotations = 0;
 
         public static final double ArmBaseEncoderDeadzone = 0.4;
