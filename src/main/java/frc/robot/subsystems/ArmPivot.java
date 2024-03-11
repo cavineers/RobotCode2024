@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class ArmPivot extends SubsystemBase {
 
-    PIDController pivotPid = new PIDController(Constants.ArmPivot.ProportionalGain, Constants.ArmPivot.IntegralTerm, Constants.ArmPivot.DerivitiveTerm);
+    private PIDController pivotPid = new PIDController(Constants.ArmPivot.ProportionalGain, Constants.ArmPivot.IntegralTerm, Constants.ArmPivot.DerivitiveTerm);
 
     public enum PivotMotorState {
         ON,
@@ -49,6 +49,9 @@ public class ArmPivot extends SubsystemBase {
 
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
+
+        this.pivotPid.setTolerance(0.05);
+
     }
 
     public void initializeDutyEncoder(){
@@ -94,8 +97,10 @@ public class ArmPivot extends SubsystemBase {
 
     public void setArmPivotAngle(Double angle) {
 
-        requiredSetpoint = (angle * Constants.ArmPivot.dRotations) / Constants.ArmPivot.dAngle;
+        requiredSetpoint = ((Constants.ArmPivot.dRotations * (angle - Constants.ArmPivot.armPivotMinAngleDegrees)) / Constants.ArmPivot.dAngle) + Constants.ArmPivot.PivotMotorLowerRotationLimit;
         setSetpoint(requiredSetpoint);
+
+        SmartDashboard.putNumber("Set Setpoint", requiredSetpoint);
 
     }
 
@@ -106,8 +111,8 @@ public class ArmPivot extends SubsystemBase {
         return currentArmPivotAngle;
     }
 
-    public double getArmPivotHypToBaseline() {
-        return (getArmPivotAngle() - Constants.ArmPivot.armPivotTriangleAngleFromPivotDegrees);
+    public boolean isAtSetpoint(){
+        return this.pivotPid.atSetpoint();
     }
 
     public void periodic() {
@@ -156,7 +161,6 @@ public class ArmPivot extends SubsystemBase {
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         SmartDashboard.putNumber("Speed", speed);
-        SmartDashboard.putNumber("Setpoint", this.motorSetpoint);
         SmartDashboard.putNumber("PivotMin", currentMinimumRot);
     }
 

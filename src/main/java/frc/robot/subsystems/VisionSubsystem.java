@@ -43,6 +43,11 @@ public class VisionSubsystem extends SubsystemBase {
         // if testing without april tags set up
         return Optional.empty();
     }
+
+    public double GetXDistanceSpeaker() {
+        
+        return 0;
+    }
     
     public void periodic() {
         

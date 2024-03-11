@@ -6,6 +6,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
 
+    public static final class FieldConstants {
+        public static final double heightToSpeakerPointMeters = 2.1336;
+    }
+
     public static final class ModuleConstants {
         public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
         public static final double kDriveMotorGearRatio = 1 / 6.75;
@@ -123,8 +127,8 @@ public final class Constants {
         public static final double PivotMotorSpeedForwards = 0.3;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
-        public static final double PivotMotorLowerRotationLimit = .353;
-        public static final double PivotMotorUpperRotationLimit = 0.736;
+        public static final double PivotMotorLowerRotationLimit = .353; //Required For Auto Shoot
+        public static final double PivotMotorUpperRotationLimit = 0.736; //Required For Auto Shoot
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
@@ -145,13 +149,10 @@ public final class Constants {
         public static double MotorSetPoint = 0;
 
         //Measurements
-        public static final double armPivotBicepLengthMeters = 0.292; //TBD
-        public static final double armPivotForearmLengthMeters = 0.127; //TBD
-        public static final double armPivotJointAngleDegrees = 108; //TBD
-        public static final double armPivotDistanceFromShooterMeters = Math.sqrt(Math.pow(armPivotBicepLengthMeters, 2) + Math.pow(armPivotForearmLengthMeters, 2) - 2 * (armPivotBicepLengthMeters) * (armPivotForearmLengthMeters) * Math.cos(Math.toRadians(armPivotJointAngleDegrees))); //Law of Cosines
-        public static final double armPivotTriangleAngleFromPivotDegrees = Math.toDegrees(Math.asin((armPivotForearmLengthMeters * Math.sin(Math.toRadians(armPivotJointAngleDegrees))) / armPivotDistanceFromShooterMeters)); // Law of Sines
-        public static final double armPivotMinAngleDegrees = 11; //TBD
-        public static final double armPivotMaxAngleDegrees = 155; //TBD
+        public static final double armPivotRadiusMeters = .38; //Required For Auto Shoot
+        public static final double armPivotJointAngleDegrees = 108; //Required For Auto Shoot
+        public static final double armPivotMinAngleDegrees = 11; //Required For Auto Shoot
+        public static final double armPivotMaxAngleDegrees = 155; ////Required For Auto Shoot
 
         public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;

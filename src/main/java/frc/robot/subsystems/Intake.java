@@ -52,6 +52,7 @@ public class Intake extends SubsystemBase {
         case ON:
             this.upperIntakeMotor.set(Constants.Intake.UpperIntakeForwardSpeed);
             this.lowerIntakeMotor.set(Constants.Intake.LowerIntakeForwardSpeed);
+            SmartDashboard.putString("Intake", "Intaking");
             break;
 
         case REVERSE:
