@@ -7,9 +7,11 @@ import frc.robot.subsystems.Intake;
 public class FeedNote extends Command {
 
     private Intake intake;
+    private boolean isDone = false;
 
     public FeedNote(Intake intake) {
         this.intake = intake;
+        this.isDone = false;
         this.addRequirements(intake);
     }
 
@@ -25,5 +27,6 @@ public class FeedNote extends Command {
     public void end(boolean interrupted) {
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
     }
+
 
 }

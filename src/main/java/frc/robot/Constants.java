@@ -128,7 +128,7 @@ public final class Constants {
         public static final double PivotMotorSpeedBackwards = -0.1;
     
         public static final double PivotMotorLowerRotationLimit = .353; //Required For Auto Shoot
-        public static final double PivotMotorUpperRotationLimit = 0.736; //Required For Auto Shoot
+        public static final double PivotMotorUpperRotationLimit = 0.742; //Required For Auto Shoot
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
@@ -151,8 +151,8 @@ public final class Constants {
         //Measurements
         public static final double armPivotRadiusMeters = .38; //Required For Auto Shoot
         public static final double armPivotJointAngleDegrees = 108; //Required For Auto Shoot
-        public static final double armPivotMinAngleDegrees = 11; //Required For Auto Shoot
-        public static final double armPivotMaxAngleDegrees = 155; ////Required For Auto Shoot
+        public static final double armPivotMinAngleDegrees = 10; //Required For Auto Shoot
+        public static final double armPivotMaxAngleDegrees = 153; ////Required For Auto Shoot
 
         public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
