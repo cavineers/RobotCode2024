@@ -72,11 +72,13 @@ public class RobotContainer {
 	public Command pivotManualRaise;
 	public Command pivotManualLower;
 	public Command groundPickup;
-	public Command shootPosition;
+	public Command shootClosePosition;
 	public Command sourcePosition;
 	public Command ampPosition;
 	public Command restPosition;
+	public Command shootGround;
 
+	// public Command shootAuto;
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
@@ -122,7 +124,8 @@ public class RobotContainer {
 		pivotManualRaise = new PivotManualRaise(armPivot);
 		pivotManualLower = new PivotManualLower(armPivot);
 		groundPickup = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
-		shootPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootRotations);
+		shootClosePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootCloseRotations);
+		shootGround = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootGroundRotations);
 		sourcePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.SourceRotations, Constants.ArmPivot.SourceRotations);
 		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
 		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
@@ -182,7 +185,7 @@ public class RobotContainer {
 		
 		//Presets
 		xboxController1.povDown().onTrue(groundPickup);
-		xboxController1.povUp().onTrue(shootPosition);
+		xboxController1.povUp().onTrue(shootClosePosition);
 		xboxController1.povLeft().onTrue(ampPosition);
 		xboxController1.povRight().onTrue(sourcePosition);
 		xboxController1.leftBumper().onTrue(restPosition);
