@@ -100,7 +100,7 @@ public class Shoot_Auto extends Command {
 
 		SmartDashboard.putNumber("Distance to Speaker", distance);
          
-        requiredArmPivotAngleDegrees = -1.7 * Math.pow(1.638, -(distance - 7.47)) - 31.65 + 90.0;
+        requiredArmPivotAngleDegrees = (-1.4 * (Math.pow(1.686, -(distance - 6.7)))) - 29.4 + 90.0;
 
         SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 

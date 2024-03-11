@@ -36,6 +36,7 @@ import frc.robot.commands.Climber.RiseClimberCommand;
 import frc.robot.commands.Intake.Outtake;
 import frc.robot.commands.Intake.IntakeNote;
 import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Intake.FeedNote;
 import frc.robot.commands.Shooter.Amp;
 import frc.robot.commands.Shooter.Shoot_Auto;
 import frc.robot.commands.Shooter.Shoot_Manual;
@@ -83,6 +84,7 @@ public class RobotContainer {
 
 	public Command intakeNote;
 	public Command outtake;
+	public Command feedNote;
 
 	public Command shoot;
 	public Command shootAuto;
@@ -137,6 +139,7 @@ public class RobotContainer {
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
+		feedNote = new FeedNote(intake);
 
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
@@ -175,6 +178,7 @@ public class RobotContainer {
 		xboxController0.rightTrigger(Constants.OIConstants.kDriverJoystickTriggerDeadzone).whileTrue(shootManual);
 		xboxController0.povDown().onTrue(amp);
 		xboxController0.start().toggleOnTrue(shootToggle);
+		xboxController0.back().whileTrue(feedNote);
 		
 		//Presets
 		xboxController1.povDown().onTrue(groundPickup);
