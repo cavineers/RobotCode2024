@@ -118,33 +118,19 @@ public class ArmPivot extends SubsystemBase {
     public void periodic() {
 
         // Clip setpoints
-        if(armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
-            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
-                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-                System.out.println("122");
-            } else if (this.motorSetpoint < Constants.ArmPivot.PivotRestMinRotations) {
-                this.motorSetpoint = Constants.ArmPivot.PivotRestMinRotations;
-                currentMinimumRot = Constants.ArmPivot.PivotRestMinRotations;
-                System.out.println("126");
-            }
-        } else if(armBase.getBaseMotorPosition() < Constants.ArmBase.PivotRegionGroundMax) {
-            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
-                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-                System.out.println("131");
-            } else if (this.motorSetpoint < Constants.ArmPivot.PivotGroundMinRotations) {
-                this.motorSetpoint = Constants.ArmPivot.PivotGroundMinRotations;
-                currentMinimumRot = Constants.ArmPivot.PivotGroundMinRotations;
-                System.out.println("135");
-            } 
+        double minRotation;
+        double maxRotation = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+
+        if (armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
+            minRotation = Constants.ArmPivot.PivotRestMinRotations;
+        } else if (armBase.getBaseMotorPosition() < Constants.ArmBase.PivotRegionGroundMax) {
+            minRotation = Constants.ArmPivot.PivotGroundMinRotations;
         } else { // between 1 rotation and 149 rotations
-            if (this.motorSetpoint > Constants.ArmPivot.PivotMotorUpperRotationLimit) {
-                this.motorSetpoint = Constants.ArmPivot.PivotMotorUpperRotationLimit;
-            } else if (this.motorSetpoint < Constants.ArmPivot.PivotNormalMinRotations) {
-                this.motorSetpoint = Constants.ArmPivot.PivotNormalMinRotations;
-                System.out.println("142");
-                currentMinimumRot = Constants.ArmPivot.PivotNormalMinRotations;
-            }
+            minRotation = Constants.ArmPivot.PivotNormalMinRotations;
         }
+
+        this.motorSetpoint = Math.max(minRotation, Math.min(maxRotation, this.motorSetpoint));
+        currentMinimumRot = minRotation;
 
         // Failsafe
         if (getPivotAbsolute()<.3) {
