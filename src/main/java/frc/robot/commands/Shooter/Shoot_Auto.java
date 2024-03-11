@@ -64,7 +64,7 @@ public class Shoot_Auto extends Command {
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (armPivot.isAtSetpoint()) {
+        if (armPivot.isAtSetpoint() && timer.get()>2) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 

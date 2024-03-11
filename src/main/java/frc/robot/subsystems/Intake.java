@@ -88,7 +88,7 @@ public class Intake extends SubsystemBase {
     }
 
     public boolean getNoteSensor() {
-        return !this.noteSensor.get();
+        return this.noteSensor.get();
     }
 
     public void periodic() {
