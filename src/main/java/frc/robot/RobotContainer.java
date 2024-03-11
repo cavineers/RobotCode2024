@@ -1,8 +1,11 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
@@ -112,6 +115,8 @@ public class RobotContainer {
 	public Command shootManual;
 	public SwerveHoming swerveHomingCommand;
 
+	public SendableChooser<Command> autoChooser; 
+
 
 
 	public RobotContainer() {
@@ -187,6 +192,10 @@ public class RobotContainer {
 					() -> -driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
 					() -> false));
 		configureButtonBindings();
+
+
+		autoChooser = AutoBuilder.buildAutoChooser();
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 
 	};
 
@@ -309,7 +318,7 @@ public class RobotContainer {
         return this.visionSubsystem;
     }
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("Center2P");
+		return autoChooser.getSelected();
     }
 
 

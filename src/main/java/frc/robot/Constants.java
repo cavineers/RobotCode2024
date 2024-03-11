@@ -38,8 +38,8 @@ public final class Constants {
         public static final int kFrontRightAbsoluteEncoderPort = 9;
         public static final int kBackRightAbsoluteEncoderPort = 12;
 
-        public static final int PivotCanID = 15;
-        public static final int GantryCANID = 100000;
+        public static final int PivotCanID = 102;
+        public static final int GantryCANID = 101;
 
         public static final int LeftClimberCanID = 21; 
         public static final int RightClimberCanID = 14; 
@@ -127,7 +127,7 @@ public final class Constants {
         public static final int kDriverFieldOrientedButtonIdx = 1;
 
         public static final double kTriggerDeadzone = 0.1;
-        public static final double kDeadband = 0.01;
+        public static final double kDeadband = 0.05;
         public static final double kDriverJoystickTriggerDeadzone = 0.01;
 
     }

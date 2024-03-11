@@ -32,7 +32,6 @@ public class SwerveModule {
 
     private final PIDController turningPidController;
 
-    private final PIDController test; 
 
     private final CANcoder absoluteEncoder;
     private final double absoluteEncoderOffsetDeg;
@@ -77,8 +76,6 @@ public class SwerveModule {
         turningPidController = new PIDController(ModuleConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
-        test = new PIDController(0.03, 0, 0);
-        test.enableContinuousInput(0, 360);
 
         resetEncoders();
     }

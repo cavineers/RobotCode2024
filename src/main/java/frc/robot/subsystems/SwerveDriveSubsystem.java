@@ -126,8 +126,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         }
     }
 
-    private Optional<EstimatedRobotPose> getVisionPose(){
-        return visionSubsystem.getRobotPoseFieldRelative();
+
+    private boolean hasTags(){
+        return visionSubsystem.getRobotPoseFromFrontCam().isPresent() || visionSubsystem.getRobotPoseFromLeftCam().isPresent() || visionSubsystem.getRobotPoseFromRightCam().isPresent();
     }
     private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
         DriveConstants.SwerveKinematics,
@@ -139,15 +140,30 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     private Pose2d updatePoseWithVision(){
 
         Pose2d currentPose = poseEstimator.update(getRotation2d(), getPositions());
-        Optional<EstimatedRobotPose> visionPose = this.getVisionPose();
-        if (visionPose.isEmpty()) {
+        if (this.hasTags()) {
+            SmartDashboard.putBoolean("Has Tags", true);
+        }else{
             SmartDashboard.putBoolean("Has Tags", false);
-            return currentPose;
         }
-        SmartDashboard.putBoolean("Has Tags", true);
-        Pose2d visionPose2d = visionPose.get().estimatedPose.toPose2d();
-        poseEstimator.addVisionMeasurement(visionPose2d, visionPose.get().timestampSeconds);
-        SmartDashboard.putNumber("Rotation", visionPose2d.getRotation().getDegrees());
+        
+        Optional<EstimatedRobotPose> visionPoseFront = visionSubsystem.getRobotPoseFromFrontCam();
+        Optional<EstimatedRobotPose> visionPoseLeft = visionSubsystem.getRobotPoseFromLeftCam();
+        Optional<EstimatedRobotPose> visionPoseRight = visionSubsystem.getRobotPoseFromRightCam();
+
+
+        // Add vision measurements
+        if (visionPoseFront.isPresent())
+            poseEstimator.addVisionMeasurement(visionPoseFront.get().estimatedPose.toPose2d(), visionPoseFront.get().timestampSeconds);
+        if (visionPoseLeft.isPresent())
+            poseEstimator.addVisionMeasurement(visionPoseLeft.get().estimatedPose.toPose2d(), visionPoseLeft.get().timestampSeconds);
+        if (visionPoseRight.isPresent())
+            poseEstimator.addVisionMeasurement(visionPoseRight.get().estimatedPose.toPose2d(), visionPoseRight.get().timestampSeconds);
+
+  
+        SmartDashboard.putNumber("POSE Rotation", poseEstimator.getEstimatedPosition().getRotation().getDegrees());
+        SmartDashboard.putNumber("POSE X", poseEstimator.getEstimatedPosition().getX());
+        SmartDashboard.putNumber("POSE Y", poseEstimator.getEstimatedPosition().getY());
+        
         //For some reason the rotation aspect of vision is not working
         var returnValue = poseEstimator.getEstimatedPosition();
 
@@ -176,7 +192,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRelativeSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                new PIDConstants(2.50, 0.0, 0.0), // Translation PID constants
                 new PIDConstants(2.50, 0.0, 0.0), // Rotation PID constants
                 4.5, // Max module speed, in m/s
                 Units.inchesToMeters(17.25), // Drive base radius in meters. Distance from robot center to furthest module.

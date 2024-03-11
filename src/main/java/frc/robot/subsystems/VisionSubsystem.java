@@ -7,6 +7,7 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.proto.Photon;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -24,30 +25,76 @@ import frc.robot.Robot;
 
 public class VisionSubsystem extends SubsystemBase {
 
-    private PhotonCamera camera;
+    private PhotonCamera cameraFront;
+    private PhotonCamera cameraLeft;
+    private PhotonCamera cameraRight;
+
     private AprilTagFieldLayout aprilTagFieldLayout;
     private Transform3d robotToCam;
+
+    private boolean visionEnabled = false;
 
     
 
     // Construct PhotonPoseEstimator
-    PhotonPoseEstimator photonPoseEstimator;
+    PhotonPoseEstimator photonPoseEstimatorFront;
+    PhotonPoseEstimator photonPoseEstimatorLeft;
+    PhotonPoseEstimator photonPoseEstimatorRight;
     public VisionSubsystem() {
-        camera = new PhotonCamera("PhotonCam1");
+        if (visionEnabled){
+        cameraFront = new PhotonCamera("CameraFront");
+        cameraLeft = new PhotonCamera("CameraLeft");
+        cameraRight = new PhotonCamera("CameraRight");
+
         try {
             aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
         } catch (IOException e) {}
-        robotToCam = new Transform3d(new Translation3d(0, -0.13, 0), new Rotation3d(0,0, 2.966)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
-        photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camera, robotToCam);
-        
-    }
+        robotToCam = new Transform3d(new Translation3d(0, -0.13, 0), new Rotation3d(0,0, 0)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.        
+        photonPoseEstimatorFront = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraFront, robotToCam);
+        photonPoseEstimatorRight = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraRight, robotToCam);
+        photonPoseEstimatorLeft = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraLeft, robotToCam);
 
-    public Optional<EstimatedRobotPose> getRobotPoseFieldRelative(){
-        //photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-        //return photonPoseEstimator.update(); 
-        // if testing without april tags set up
-        return Optional.empty();
+
+        // If no tags are found use the most confident tag reading
+        photonPoseEstimatorFront.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+        photonPoseEstimatorRight.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+        photonPoseEstimatorLeft.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+        }
     }
+    /**
+     * Gets the robot pose from the front camera
+     * @return Optional<EstimatedRobotPose> The robot pose from the front camera
+     */
+    public Optional<EstimatedRobotPose> getRobotPoseFromFrontCam(){
+
+        if (!this.visionEnabled)
+            return Optional.empty();
+
+        return photonPoseEstimatorFront.update(); 
+    }
+    /**
+     * Gets the robot pose from the left camera
+     * @return Optional<EstimatedRobotPose> The robot pose from the left camera
+     */
+    public Optional<EstimatedRobotPose> getRobotPoseFromLeftCam(){
+
+        if (!this.visionEnabled)
+            return Optional.empty();
+
+        return photonPoseEstimatorLeft.update(); 
+    }
+    /**
+     * Gets the robot pose from the right camera
+     * @return Optional<EstimatedRobotPose> The robot pose from the right camera
+     */
+    public Optional<EstimatedRobotPose> getRobotPoseFromRightCam(){
+
+        if (!this.visionEnabled)
+            return Optional.empty();
+
+        return photonPoseEstimatorRight.update(); 
+    }
+    
 
      /**
      * @return double The X distance from you alliances speaker
@@ -70,6 +117,8 @@ public class VisionSubsystem extends SubsystemBase {
     }
     
     public void periodic() {
-        
+        if (visionEnabled){
+        SmartDashboard.putNumber("Distance from Speaker", getDistanceFromSpeaker());
+        }
     }
 }
