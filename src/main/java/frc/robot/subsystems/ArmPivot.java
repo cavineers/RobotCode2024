@@ -106,7 +106,7 @@ public class ArmPivot extends SubsystemBase {
 
     public double getArmPivotAngle() {
 
-        currentArmPivotAngle = ((motorSetpoint* Constants.ArmPivot.dAngle) / Constants.ArmPivot.dRotations);
+        currentArmPivotAngle = (((Constants.ArmPivot.dAngle * (getPivotAbsolute() - Constants.ArmPivot.PivotMotorLowerRotationLimit)) / Constants.ArmPivot.dRotations) + Constants.ArmPivot.armPivotMinAngleDegrees);
 
         return currentArmPivotAngle;
     }
@@ -162,6 +162,7 @@ public class ArmPivot extends SubsystemBase {
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
         SmartDashboard.putNumber("Speed", speed);
         SmartDashboard.putNumber("PivotMin", currentMinimumRot);
+        SmartDashboard.putNumber("Arm Angle", getArmPivotAngle());
     }
 
     public boolean atSetpoint() {

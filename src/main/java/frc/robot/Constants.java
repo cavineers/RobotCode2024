@@ -7,7 +7,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 public final class Constants {
 
     public static final class FieldConstants {
-        public static final double heightToSpeakerPointMeters = 2.1336;
+        public static final double heightToSpeakerPointInches = 84;
     }
 
     public static final class ModuleConstants {
@@ -149,7 +149,7 @@ public final class Constants {
         public static double MotorSetPoint = 0;
 
         //Measurements
-        public static final double armPivotRadiusMeters = .38; //Required For Auto Shoot
+        public static final double armPivotRadiusInches = 15.5; //Required For Auto Shoot
         public static final double armPivotJointAngleDegrees = 108; //Required For Auto Shoot
         public static final double armPivotMinAngleDegrees = 10; //Required For Auto Shoot
         public static final double armPivotMaxAngleDegrees = 153; ////Required For Auto Shoot
@@ -187,10 +187,10 @@ public final class Constants {
         public static final double DerivitiveTerm = 0.0;
 
         //Measurements
-        public static final double minGantryHeightMeters = 0.025; //TBD
-        public static final double maxGantryHeightMeters = 0.533; //TBD
+        public static final double minGantryHeightInches = 12; //TBD
+        // public static final double maxGantryHeightMeters = 0.533; //TBD
         
-        public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
+        // public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
         public static final double dRotations = MaxRotations - MinRotations;
 
         public static final double PivotRegionRestMin = 149;
@@ -219,9 +219,7 @@ public final class Constants {
         public static double kI = 0.3; // Integral
         public static double kD = 0.01; // Derivative
         public static double kF = 0.000204; // Feed Forward
-
-        public static final double shootingVertexHeightMeters = 2.0574;
-
+        
         //Measurements
         public static final double shooterAngleFromArmPivotDegrees = 180 - ArmPivot.armPivotJointAngleDegrees;
     }

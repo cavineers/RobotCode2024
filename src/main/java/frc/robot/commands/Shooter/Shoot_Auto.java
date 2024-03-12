@@ -26,7 +26,7 @@ public class Shoot_Auto extends Command {
     ShuffleboardTab tab = Shuffleboard.getTab("Robot");
 
     private GenericEntry distanceEntry = tab
-        .add("Distance to target (Meters)", 0)
+        .add("Distance to target (Inches)", 0)
         .getEntry();
 		
 	private Timer timer;
