@@ -33,7 +33,7 @@ public class VisionSubsystem extends SubsystemBase {
     private Transform3d robotToCam;
 
     private boolean visionEnabled = false;
-
+    private boolean autoShoot = false;
     
 
     // Construct PhotonPoseEstimator
@@ -97,28 +97,40 @@ public class VisionSubsystem extends SubsystemBase {
     
 
      /**
-     * @return double The X distance from you alliances speaker
-     *  Always Positive
+     * @return Whether the robot is capable of performing the auto shoot command
+     *
      */
 
+    public boolean autoShootCapable(){
+        return this.autoShoot;
+    }
+    /**
+     * @return The distance from the speaker, always positive, returns 0 if no alliance is present or some other issue occured
+     * Clarify the autoShootCapable() method to ensure that the bot is capable of performing the auto shoot.
+     */
     public double getDistanceFromSpeaker(){
         // Check alliance
         Pose2d currentPose = Robot.m_robotContainer.getSwerveSubsystem().getPose();
-        if (!DriverStation.getAlliance().isPresent())
+        if (!DriverStation.getAlliance().isPresent()){
+            this.autoShoot = false;
             return 0;
-
+        }
+        double x1 = currentPose.getX();
+        double y1 = currentPose.getY();
+    
+        double x2, y2;
+    
         if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-            return Math.abs((currentPose.getX() - Constants.VisionConstants.blueSpeakerX));
+            x2 = Constants.VisionConstants.blueSpeakerX;
+            y2 = Constants.VisionConstants.blueSpeakerY;
+        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+            x2 = Constants.VisionConstants.redSpeakerX;
+            y2 = Constants.VisionConstants.redSpeakerY;
+        } else {
+            return 0;
         }
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
-            return Math.abs((currentPose.getX() - Constants.VisionConstants.redSpeakerX));
-        }
-        return 0;
-    }
-
-    public double GetXDistanceSpeaker() {
-        
-        return 0;
+    
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
     
     public void periodic() {
