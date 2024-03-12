@@ -256,6 +256,8 @@ public final class Constants {
         
         public static final double blueSpeakerX = Units.inchesToMeters(-1.5);
         public static final double redSpeakerX = Units.inchesToMeters(652.73);
+        public static final double blueSpeakerY = Units.inchesToMeters(218.42);
+        public static final double redSpeakerY = Units.inchesToMeters(218.42);
     }
 
 
