@@ -47,39 +47,37 @@ public class ArmPreset extends Command {
         this.armBase.setSetpoint(gantryRotations);
         this.armPivot.setSetpoint(pivotRotations);
 
-        if (armBase.atSetpoint()) {
-            gantryDone = true;
-            System.out.println("GantryDONE");
-        }else{
-            gantryDone = false;
-        }
-
-        if (this.atGoalSetpoint()) {
-            pivotDone = true;
-            System.out.println("PivotDONE");
-        }else{
-            pivotDone = false;
-        }
-
     }
 
-    private boolean atGoalSetpoint(){
+    private boolean atPivotGoalSetpoint(){
         if (Math.abs(this.armPivot.getPivotAbsolute() - this.pivotRotations) < Constants.ArmPivot.PivotSetpointTolerance){
+            return true;
+        }
+        System.out.println("CURRENT PIVOT: " + this.armPivot.getPivotAbsolute() + "\n CURRENT STATE: " + (this.armPivot.getPivotAbsolute() - this.pivotRotations));
+        return false;
+    }
+
+    private boolean atGantryGoalSetpoint(){
+        if (Math.abs(this.armBase.getBaseMotorPosition() - this.gantryRotations) < 0.1){
             System.out.println(this.armPivot.getPivotAbsolute() - this.pivotRotations);
             return true;
-    }
+        }
         System.out.println("CURRENT PIVOT: " + this.armPivot.getPivotAbsolute() + "\n CURRENT STATE: " + (this.armPivot.getPivotAbsolute() - this.pivotRotations));
         return false;
     }
 
     @Override
     public void end(boolean interrupted) {
-
+        if (!interrupted){
+            // Ensure the arm is at the correct position
+            this.armBase.setSetpoint(gantryRotations);
+            this.armPivot.setSetpoint(pivotRotations);
+        }
     }
 
     
     @Override 
     public boolean isFinished() {
-        return gantryDone && pivotDone;
+        return this.atGantryGoalSetpoint() && this.atPivotGoalSetpoint();
     }
 }
