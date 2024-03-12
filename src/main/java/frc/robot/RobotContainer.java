@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -161,7 +162,9 @@ public class RobotContainer {
 
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
+
 		configureButtonBindings();
+		configureNamedCommands();
 
 
 		autoChooser = AutoBuilder.buildAutoChooser();
@@ -206,6 +209,23 @@ public class RobotContainer {
 		xboxController1.y().whileTrue(riseLeftClimber);
 		xboxController1.x().whileTrue(lowerRightClimber);
 		xboxController1.b().whileTrue(riseRightClimber);
+
+	}
+
+	private void configureNamedCommands(){
+		NamedCommands.registerCommand("groundPickup", groundPickup);
+		NamedCommands.registerCommand("shootClosePosition", shootClosePosition);
+		NamedCommands.registerCommand("shootGround", shootGround);
+		NamedCommands.registerCommand("sourcePosition", sourcePosition);
+		NamedCommands.registerCommand("ampPosition", ampPosition);
+		NamedCommands.registerCommand("restPosition", restPosition);
+	    NamedCommands.registerCommand("intakeNote", intakeNote);
+		NamedCommands.registerCommand("outtake", outtake);
+		NamedCommands.registerCommand("feedNote", feedNote);
+		NamedCommands.registerCommand("shoot", shoot);
+		NamedCommands.registerCommand("shootAuto", shootAuto);
+		NamedCommands.registerCommand("amp", amp);
+
 
 	}
 
