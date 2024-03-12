@@ -128,7 +128,7 @@ public final class Constants {
         public static final double PivotMotorSpeedBackwards = -0.1;
     
         public static final double PivotMotorLowerRotationLimit = .353; //Required For Auto Shoot
-        public static final double PivotMotorUpperRotationLimit = 0.742; //Required For Auto Shoot
+        public static final double PivotMotorUpperRotationLimit = 0.736; //Required For Auto Shoot
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
@@ -136,11 +136,12 @@ public final class Constants {
 
         public static final double PivotSetpointTolerance = 0.02;
     
-        public static final double GroundPickupRotations = 0.45;
-        public static final double RestRotations = 10;
-        public static final double ShootRotations = 15;
-        public static final double SourceRotations = 20;
-        public static final double AmpRotations = 25;
+        public static final double GroundPickupRotations = 0.353;
+        public static final double RestRotations = 0.342;
+        public static final double ShootCloseRotations = 0.401;
+        public static final double ShootGroundRotations = 0.413;
+        public static final double SourceRotations = 0.6138;
+        public static final double AmpRotations = 0.644;
 
         public static final double ProportionalGain = 3; // strength of a correction
         public static final double IntegralTerm = 0; // additive strength over time
@@ -176,11 +177,12 @@ public final class Constants {
 
         public static final double BaseSetpointTolerance = 1;
 
-        public static final double GroundPickupRotations = 10;
-        public static final double RestRotations = 13;
-        public static final double ShootRotations = 18;
-        public static final double SourceRotations = 21;
-        public static final double AmpRotations = 25;
+        public static final double GroundPickupRotations = 0;
+        public static final double RestRotations = 151;
+        public static final double ShootRotations = 151;
+        public static final double ShootGroundRotations = 0;
+        public static final double SourceRotations = 0;
+        public static final double AmpRotations = 151;
 
         public static final double ProportionalGain = .03; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
