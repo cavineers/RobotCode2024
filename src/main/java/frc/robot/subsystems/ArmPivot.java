@@ -50,8 +50,6 @@ public class ArmPivot extends SubsystemBase {
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
 
-        this.pivotPid.setTolerance(0.03);
-
     }
 
     public void initializeDutyEncoder(){
