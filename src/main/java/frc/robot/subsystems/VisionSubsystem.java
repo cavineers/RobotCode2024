@@ -16,6 +16,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -104,8 +105,64 @@ public class VisionSubsystem extends SubsystemBase {
     public boolean autoShootCapable(){
         return this.autoShoot;
     }
+
     /**
-     * @return The distance from the speaker, always positive, returns 0 if no alliance is present or some other issue occured
+     * Gets the distance from the alliance's speaker, +x is to the right, -x to the left
+     * @return The distance from the speaker, returns 0 if no alliance is present or some other issue occured
+     */
+
+    private double getXDistanceFromSpeaker(){
+        // Check alliance
+        Pose2d currentPose = Robot.m_robotContainer.getSwerveSubsystem().getPose();
+        if (!DriverStation.getAlliance().isPresent()){
+            this.autoShoot = false;
+            return 0;
+        }
+        double x1 = currentPose.getX();
+    
+        double x2;
+    
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+            x2 = Constants.VisionConstants.blueSpeakerX;
+        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+            x2 = Constants.VisionConstants.redSpeakerX;
+        } else {
+            return 0;
+        }
+    
+        return x2 - x1;
+    }
+
+    /**
+     * Gets the distance from the alliance's speaker, +y is up, -y down
+     * @return The distance from the speaker, returns 0 if no alliance is present or some other issue occured
+     */
+    private double getYDistanceFromSpeaker(){
+        // Check alliance
+        Pose2d currentPose = Robot.m_robotContainer.getSwerveSubsystem().getPose();
+        if (!DriverStation.getAlliance().isPresent()){
+            this.autoShoot = false;
+            return 0;
+        }
+        double y1 = currentPose.getY();
+    
+        double y2;
+    
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+            y2 = Constants.VisionConstants.blueSpeakerY;
+        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+            y2 = Constants.VisionConstants.redSpeakerY;
+        } else {
+            return 0;
+        }
+    
+        return y2 - y1;
+    }
+    
+
+
+    /**
+     * @return The distance from the speaker (INCHES), always positive, returns 0 if no alliance is present or some other issue occured
      * Clarify the autoShootCapable() method to ensure that the bot is capable of performing the auto shoot.
      */
     public double getDistanceFromSpeaker(){
@@ -120,17 +177,17 @@ public class VisionSubsystem extends SubsystemBase {
     
         double x2, y2;
     
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-            x2 = Constants.VisionConstants.blueSpeakerX;
-            y2 = Constants.VisionConstants.blueSpeakerY;
-        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
-            x2 = Constants.VisionConstants.redSpeakerX;
-            y2 = Constants.VisionConstants.redSpeakerY;
-        } else {
+        x2 = getXDistanceFromSpeaker();
+        y2 = getYDistanceFromSpeaker();
+
+        double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
+            this.autoShoot = false;
             return 0;
         }
-    
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        
+        this.autoShoot = true;
+        return Units.metersToInches(dist);
     }
     
     public void periodic() {
