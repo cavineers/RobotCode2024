@@ -24,7 +24,8 @@ public class Intake extends SubsystemBase {
     public CANSparkMax upperIntakeMotor = new CANSparkMax(Constants.CanIDs.UpperIntakeCanID, MotorType.kBrushless);
     public CANSparkMax lowerIntakeMotor = new CANSparkMax(Constants.CanIDs.LowerIntakeCanID, MotorType.kBrushless);
 
-    public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
+    public DigitalInput noteSensorLeft = new DigitalInput(Constants.DIO.NoteSensorLeft);
+    public DigitalInput noteSensorRight = new DigitalInput(Constants.DIO.NoteSensorRight);
 
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
 
@@ -88,7 +89,7 @@ public class Intake extends SubsystemBase {
     }
 
     public boolean getNoteSensor() {
-        return !this.noteSensor.get();
+        return (!this.noteSensorLeft.get() || !this.noteSensorRight.get());
     }
 
     public void periodic() {
