@@ -64,8 +64,8 @@ public final class Constants {
         public static final int LeftClimberLimitSwitch = 6; 
         public static final int RightClimberLimitSwitch = 9;
 
-        public static final int NoteSensorLeft = 4;
-        public static final int NoteSensorRight = 5;
+        public static final int NoteSensorLeft = 5;
+        public static final int NoteSensorRight = 4;
     }
 
     public static final class DriveConstants {
