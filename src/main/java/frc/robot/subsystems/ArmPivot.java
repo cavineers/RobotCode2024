@@ -100,7 +100,6 @@ public class ArmPivot extends SubsystemBase {
         requiredSetpoint = ((Constants.ArmPivot.dRotations * (angle - Constants.ArmPivot.armPivotMinAngleDegrees)) / Constants.ArmPivot.dAngle) + Constants.ArmPivot.PivotMotorLowerRotationLimit;
         setSetpoint(requiredSetpoint);
 
-        SmartDashboard.putNumber("Set Setpoint", requiredSetpoint);
 
     }
 

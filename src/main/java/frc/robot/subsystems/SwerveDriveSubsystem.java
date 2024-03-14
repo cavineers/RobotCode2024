@@ -148,25 +148,34 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         Optional<EstimatedRobotPose> visionPoseLeft = visionSubsystem.getRobotPoseFromLeftCam();
         Optional<EstimatedRobotPose> visionPoseRight = visionSubsystem.getRobotPoseFromRightCam();
 
-        SmartDashboard.putNumber("VISION X", visionPoseFront.get().estimatedPose.toPose2d().getX());
+        if (visionPoseFront.isPresent()){
+            SmartDashboard.putBoolean("Is Present", true);
+            System.out.println("HAS VISION");
+
+        }else{
+              SmartDashboard.putBoolean("Is Present", false);
+        }
         // Add vision measurements
-        if (visionPoseFront.isPresent())
+        if (!visionPoseFront.isEmpty()){
+            SmartDashboard.putNumber("VISION X", visionPoseFront.get().estimatedPose.toPose2d().getX());
+            SmartDashboard.putNumber("VISION Y", visionPoseFront.get().estimatedPose.toPose2d().getY());
+            SmartDashboard.putNumber("VISION ROTATION", visionPoseFront.get().estimatedPose.toPose2d().getRotation().getDegrees());
             poseEstimator.addVisionMeasurement(visionPoseFront.get().estimatedPose.toPose2d(), visionPoseFront.get().timestampSeconds);
-        if (visionPoseLeft.isPresent())
+        }
+        if (!visionPoseLeft.isEmpty()){
             poseEstimator.addVisionMeasurement(visionPoseLeft.get().estimatedPose.toPose2d(), visionPoseLeft.get().timestampSeconds);
-        if (visionPoseRight.isPresent())
+        }
+        if (!visionPoseRight.isEmpty()){
             poseEstimator.addVisionMeasurement(visionPoseRight.get().estimatedPose.toPose2d(), visionPoseRight.get().timestampSeconds);
+        }
 
   
         SmartDashboard.putNumber("POSE Rotation", poseEstimator.getEstimatedPosition().getRotation().getDegrees());
         SmartDashboard.putNumber("POSE X", poseEstimator.getEstimatedPosition().getX());
         SmartDashboard.putNumber("POSE Y", poseEstimator.getEstimatedPosition().getY());
         
-        //For some reason the rotation aspect of vision is not working
-        var returnValue = poseEstimator.getEstimatedPosition();
-
-        //returnValue = new Pose2d(returnValue.getX(), returnValue.getY(), new Rotation2d(getHeading() * Math.PI / 180));
-        return returnValue;
+       
+        return poseEstimator.getEstimatedPosition();
     }
 
     public SwerveDriveSubsystem(VisionSubsystem visionSubsystem) {
@@ -280,10 +289,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         m_field.setRobotPose(getPose());
         SmartDashboard.putData("Field", m_field);
         SmartDashboard.putNumber("Heading", getHeading());
-        SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());
-        SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
-        SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
-        SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
+       
 
         SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
     }

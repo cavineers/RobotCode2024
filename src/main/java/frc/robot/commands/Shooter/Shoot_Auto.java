@@ -76,8 +76,6 @@ public class Shoot_Auto extends Command {
            }
         }
 
-        SmartDashboard.putNumber("Timer1", timer.get());
-        SmartDashboard.putNumber("Timer2", timer2.get());
         
     }
 
@@ -98,11 +96,9 @@ public class Shoot_Auto extends Command {
 
     public double calculateRequiredArmPivotAngle(Double distance) {
 
-		SmartDashboard.putNumber("Distance to Speaker", distance);
          
         requiredArmPivotAngleDegrees = (-1.4 * (Math.pow(1.686, -(distance - 6.7)))) - 29.4 + 90.0;
 
-        SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 
         return requiredArmPivotAngleDegrees;
     }

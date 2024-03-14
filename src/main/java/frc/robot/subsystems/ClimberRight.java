@@ -121,9 +121,7 @@ public class ClimberRight extends SubsystemBase {
             motorSetpoint = getRightClimberMotorPosition();
         }
 
-        SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
-        SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
-        SmartDashboard.putBoolean("rightClimberLimitSwitch", getLimitSwitch());
+     
 
     }
 }

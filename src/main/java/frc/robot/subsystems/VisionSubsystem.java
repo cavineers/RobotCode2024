@@ -7,6 +7,7 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.PhotonUtils;
 import org.photonvision.proto.Photon;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
@@ -32,7 +33,7 @@ public class VisionSubsystem extends SubsystemBase {
     private PhotonCamera cameraRight;
 
     private AprilTagFieldLayout aprilTagFieldLayout;
-    private Transform3d robotToCam;
+    private Transform3d robotToCamFront;
 
     private boolean visionEnabled = true;
     private boolean autoShoot = false;
@@ -46,22 +47,22 @@ public class VisionSubsystem extends SubsystemBase {
     public VisionSubsystem() {
         if (visionEnabled){
         cameraFront = new PhotonCamera("CameraFront");
-        cameraLeft = new PhotonCamera("CameraLeft");
-        cameraRight = new PhotonCamera("CameraRight");
+        // cameraLeft = new PhotonCamera("CameraLeft");
+        // cameraRight = new PhotonCamera("CameraRight");
 
         try {
             aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
         } catch (IOException e) {}
-        robotToCam = new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0,0, Units.degreesToRadians(14))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.        
-        photonPoseEstimatorFront = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraFront, robotToCam);
-        photonPoseEstimatorRight = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraRight, robotToCam);
-        photonPoseEstimatorLeft = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraLeft, robotToCam);
+        robotToCamFront = new Transform3d(new Translation3d(Units.inchesToMeters(16),0 , 0.46), new Rotation3d(Units.degreesToRadians(0),Units.degreesToRadians(-14), 0)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.        
+        photonPoseEstimatorFront = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraFront, robotToCamFront);
+        // photonPoseEstimatorRight = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraRight, robotToCam);
+        // photonPoseEstimatorLeft = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraLeft, robotToCam);
 
 
         // If no tags are found use the most confident tag reading
         photonPoseEstimatorFront.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
-        photonPoseEstimatorRight.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
-        photonPoseEstimatorLeft.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+        // photonPoseEstimatorRight.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+        // photonPoseEstimatorLeft.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
         }
     }
     /**
@@ -73,7 +74,8 @@ public class VisionSubsystem extends SubsystemBase {
         if (!this.visionEnabled)
             return Optional.empty();
 
-        return photonPoseEstimatorFront.update(); 
+        Optional<EstimatedRobotPose> pose = photonPoseEstimatorFront.update();
+        return pose;
     }
     /**
      * Gets the robot pose from the left camera
@@ -84,7 +86,7 @@ public class VisionSubsystem extends SubsystemBase {
         if (!this.visionEnabled)
             return Optional.empty();
 
-        return photonPoseEstimatorLeft.update(); 
+        return photonPoseEstimatorFront.update(); 
     }
     /**
      * Gets the robot pose from the right camera
@@ -95,7 +97,7 @@ public class VisionSubsystem extends SubsystemBase {
         if (!this.visionEnabled)
             return Optional.empty();
 
-        return photonPoseEstimatorRight.update(); 
+        return photonPoseEstimatorFront.update(); 
     }
     
 
@@ -186,8 +188,11 @@ public class VisionSubsystem extends SubsystemBase {
         } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
             y2 = Constants.VisionConstants.redSpeakerY;
         } else {
+            this.autoShoot = false;
             return 0;
+
         }
+        this.autoShoot = true;
     
         return y2 - y1;
     }
@@ -199,28 +204,49 @@ public class VisionSubsystem extends SubsystemBase {
      * Clarify the autoShootCapable() method to ensure that the bot is capable of performing the auto shoot.
      */
     public double getDistanceFromSpeaker(){
-        // Check alliance
-        Pose2d currentPose = Robot.m_robotContainer.getSwerveSubsystem().getPose();
-        if (!DriverStation.getAlliance().isPresent()){
-            this.autoShoot = false;
-            return 0;
-        }
-        double x1 = currentPose.getX();
-        double y1 = currentPose.getY();
+        // // Check alliance
+        // Pose2d currentPose = Robot.m_robotContainer.getSwerveSubsystem().getPose();
+        // if (!DriverStation.getAlliance().isPresent()){
+        //     this.autoShoot = false;
+        //     return 0;
+        // }
+        // double x1 = currentPose.getX();
+        // double y1 = currentPose.getY();
     
-        double x2, y2;
+        // double x2, y2;
     
-        x2 = getXDistanceFromSpeaker();
-        y2 = getYDistanceFromSpeaker();
+        // x2 = getXDistanceFromSpeaker();
+        // y2 = getYDistanceFromSpeaker();
+        // System.out.println(x2 + " - " + x1 + " = " + (x2 - x1));
 
-        double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
+        // double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        // if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
+        //     this.autoShoot = false;
+        //     return 0;
+        // }
+        
+        // this.autoShoot = true;
+        // return Units.metersToInches(dist);
+        int id;
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+            id = 8; 
+        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+            id = 4;
+        } else {
             this.autoShoot = false;
             return 0;
         }
-        
-        this.autoShoot = true;
-        return Units.metersToInches(dist);
+        var result = cameraFront.getLatestResult();
+
+        for (PhotonTrackedTarget tag : result.getTargets()) {
+            if (tag.getFiducialId() == id) {
+                this.autoShoot = true;
+                var translations = tag.getBestCameraToTarget();
+                return Math.sqrt(Math.pow(translations.getX(), 2) + Math.pow(translations.getY(), 2) + Math.pow(translations.getZ(), 2));
+            }
+        }
+        this.autoShoot = false;
+        return 0;
     }
     
     public void periodic() {
