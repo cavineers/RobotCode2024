@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.cameraserver.CameraServer;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +37,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_robotContainer.swerveHomingCommand.schedule();
     m_robotContainer.getSwerveSubsystem().zeroHeading();
+    
+    CameraServer.startAutomaticCapture();
   }
 
   /**
