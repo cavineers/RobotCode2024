@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
     }
     m_robotContainer.swerveHomingCommand.schedule();
     m_robotContainer.getSwerveSubsystem().toggleIdleMode(IdleMode.kCoast);
+    m_robotContainer.teleopSetup();
     // m_robotContainer.getSwerveSubsystem().zeroHeading();
   }
 
