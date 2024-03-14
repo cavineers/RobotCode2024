@@ -36,22 +36,31 @@ public class RiseClimberCommand extends Command {
 
         if (climberSide == "left") {
             // Left climber action
-            if (climberLeft.getLeftClimberSetPoint() >= Constants.Climber.UpperClimberMaxRotations) {
-                this.leftLowered = true;
+            if(climberLeft.getLimitSwitch() == false) {
+                if (climberLeft.getLeftClimberSetPoint() >= Constants.Climber.UpperClimberMaxRotations) {
+                    this.leftLowered = true;
+                } else {
+                    System.out.println("Left Rising");
+                    this.climberLeft.setSetpointAdd(.1);
+                }
             } else {
-                System.out.println("Left Rising");
-                this.climberLeft.setSetpointAdd(.1);
+                climberLeft.setLeftClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
+                climberLeft.setSetpoint(Constants.Climber.UpperClimberMaxRotations);
             }
 
         } else if (climberSide == "right") {
             // Left climber action
-            if (climberRight.getRightClimberSetPoint() >= Constants.Climber.UpperClimberMaxRotations) {
-                this.leftLowered = true;
+            if(climberRight.getLimitSwitch() == false) {
+                if (climberRight.getRightClimberSetPoint() >= Constants.Climber.UpperClimberMaxRotations) {
+                    this.leftLowered = true;
+                } else {
+                    System.out.println("Left Rising");
+                    this.climberRight.setSetpointAdd(.1);
+                }
             } else {
-                System.out.println("Left Rising");
-                this.climberRight.setSetpointAdd(.1);
+                climberRight.setRightClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
+                climberRight.setSetpoint(Constants.Climber.UpperClimberMaxRotations);
             }
-
         }
     }
 

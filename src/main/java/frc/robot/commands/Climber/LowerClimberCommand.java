@@ -35,23 +35,10 @@ public class LowerClimberCommand extends Command {
 
         if (climberSide == "left") {
             // Left climber action
-            if (climberLeft.getLimitSwitch()) {
-                this.leftLowered = true;
-            } else if (!climberLeft.getLimitSwitch()) {
-                System.out.println("Left lowering");
                 this.climberLeft.setSetpointAdd(-.1);
-                
-            }
-
         } else if (climberSide == "right") {
             // Left climber action
-            if (climberRight.getLimitSwitch()) {
-                this.rightLowered = true;
-            } else if (!climberRight.getLimitSwitch()) {
-                System.out.println("Right lowering");
-                this.climberRight.setSetpointAdd(-.1);
-                
-            }
+                this.climberRight.setSetpointAdd(-.1);  
         }
     }
 
