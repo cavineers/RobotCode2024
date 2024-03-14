@@ -59,7 +59,7 @@ public final class Constants {
         public static final int ArmBoreEncoder = 0;
 
         public static final int GantryLowerLimitSwitch = 1;
-        public static final int GantryHigherLimitSwitch = 2;
+        public static final int GantryHigherLimitSwitch = 8;
 
         public static final int LeftClimberLimitSwitch = 6; 
         public static final int RightClimberLimitSwitch = 9;
