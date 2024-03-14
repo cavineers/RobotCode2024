@@ -8,6 +8,7 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.proto.Photon;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -35,6 +36,7 @@ public class VisionSubsystem extends SubsystemBase {
 
     private boolean visionEnabled = true;
     private boolean autoShoot = false;
+    private boolean autoRotate = false;
     
 
     // Construct PhotonPoseEstimator
@@ -132,6 +134,36 @@ public class VisionSubsystem extends SubsystemBase {
     
         return x2 - x1;
     }
+    /**
+     * Clarify with this.autoRotate to ensure that the bot is capable of performing the auto rotate.
+     * @return returns the angle to speaker, returns 0 if no alliance is present or some other issue occured
+     */
+    public double getAngleToSpeaker(){
+        var result = cameraFront.getLatestResult();
+
+
+        if (result.hasTargets()) {
+            int id;
+            // Calculate angular turn power
+            // -1.0 required to ensure positive PID controller effort _increases_ yaw
+            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+                id = 8; // POSSIBLY CHANGE
+            } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+                id = 4;
+            } else {
+                return 0;
+            }
+
+            for (PhotonTrackedTarget tag : result.getTargets()) {
+                if (tag.getFiducialId() == id) {
+                    this.autoRotate = true;
+                    return tag.getYaw();
+                }
+            }
+            this.autoRotate = false;
+            return 0;
+        }
+        return 0;
 
     /**
      * Gets the distance from the alliance's speaker, +y is up, -y down
@@ -193,7 +225,21 @@ public class VisionSubsystem extends SubsystemBase {
     public void periodic() {
         if (visionEnabled){
             SmartDashboard.putNumber("Distance from Speaker", getDistanceFromSpeaker());
-        
+
+            if (autoShootCapable()){
+                SmartDashboard.putBoolean("AutoShoot Capable", true);
+            } else {
+                SmartDashboard.putBoolean("AutoShoot Capable", false);
+            }
+
+            if (autoRotate){
+                SmartDashboard.putBoolean("AutoRotate Capable", true);
+            } else {
+                SmartDashboard.putBoolean("AutoRotate Capable", false);
+            }
         }
+
+
     }
+    
 }
