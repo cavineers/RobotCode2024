@@ -53,13 +53,11 @@ public class ArmPreset extends Command {
         if (Math.abs(this.armPivot.getPivotAbsolute() - this.pivotRotations) < Constants.ArmPivot.PivotSetpointTolerance){
             return true;
         }
-        System.out.println("CURRENT PIVOT: " + this.armPivot.getPivotAbsolute() + "\n CURRENT STATE: " + (this.armPivot.getPivotAbsolute() - this.pivotRotations));
         return false;
     }
 
     private boolean atGantryGoalSetpoint(){
         if (Math.abs(this.armBase.getBaseMotorPosition() - this.gantryRotations) < 0.1){
-            System.out.println(this.armPivot.getPivotAbsolute() - this.pivotRotations);
             return true;
         }
         System.out.println("CURRENT PIVOT: " + this.armPivot.getPivotAbsolute() + "\n CURRENT STATE: " + (this.armPivot.getPivotAbsolute() - this.pivotRotations));
