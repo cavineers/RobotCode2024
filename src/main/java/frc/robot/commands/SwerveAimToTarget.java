@@ -75,13 +75,15 @@ public class SwerveAimToTarget extends Command {
 		if (DriverStation.getAlliance().isPresent() == true){
 			Alliance team = DriverStation.getAlliance().get();
 			if (team == Alliance.Blue){
-				turnController.setSetpoint(0);
-			} else {
 				turnController.setSetpoint(180);
+			} else {
+				turnController.setSetpoint(0);
 			}
-		}
+		}else{
+            return;
+        }
 		double turningSpeed = turnController.calculate(swerveSubsystem.getPose().getRotation().getDegrees());
-		
+		SmartDashboard.putNumber("TurningJoystick Input", turningSpeed);
         turningSpeed = turningLimiter.calculate(turningSpeed)
             * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
@@ -96,7 +98,11 @@ public class SwerveAimToTarget extends Command {
         // chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
         
         // Convert chassis speeds to individual module states
-        swerveSubsystem.driveRelativeSpeeds(chassisSpeeds);
+
+        // UNCOMMENT TO ACTUALLY ALLOW DRIVINGS
+        // swerveSubsystem.driveRelativeSpeeds(chassisSpeeds);
+
+
     }
 
     @Override

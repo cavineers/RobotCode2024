@@ -148,7 +148,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         Optional<EstimatedRobotPose> visionPoseLeft = visionSubsystem.getRobotPoseFromLeftCam();
         Optional<EstimatedRobotPose> visionPoseRight = visionSubsystem.getRobotPoseFromRightCam();
 
-
+        SmartDashboard.putNumber("VISION X", visionPoseFront.get().estimatedPose.toPose2d().getX());
         // Add vision measurements
         if (visionPoseFront.isPresent())
             poseEstimator.addVisionMeasurement(visionPoseFront.get().estimatedPose.toPose2d(), visionPoseFront.get().timestampSeconds);

@@ -33,7 +33,7 @@ public class VisionSubsystem extends SubsystemBase {
     private AprilTagFieldLayout aprilTagFieldLayout;
     private Transform3d robotToCam;
 
-    private boolean visionEnabled = false;
+    private boolean visionEnabled = true;
     private boolean autoShoot = false;
     
 
@@ -50,7 +50,7 @@ public class VisionSubsystem extends SubsystemBase {
         try {
             aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
         } catch (IOException e) {}
-        robotToCam = new Transform3d(new Translation3d(0, -0.13, 0), new Rotation3d(0,0, 0)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.        
+        robotToCam = new Transform3d(new Translation3d(0, 0, 0), new Rotation3d(0,0, Units.degreesToRadians(14))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.        
         photonPoseEstimatorFront = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraFront, robotToCam);
         photonPoseEstimatorRight = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraRight, robotToCam);
         photonPoseEstimatorLeft = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraLeft, robotToCam);
@@ -192,7 +192,8 @@ public class VisionSubsystem extends SubsystemBase {
     
     public void periodic() {
         if (visionEnabled){
-        SmartDashboard.putNumber("Distance from Speaker", getDistanceFromSpeaker());
+            SmartDashboard.putNumber("Distance from Speaker", getDistanceFromSpeaker());
+        
         }
     }
 }
