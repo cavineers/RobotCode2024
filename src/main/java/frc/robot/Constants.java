@@ -62,12 +62,13 @@ public final class Constants {
         public static final int ArmBoreEncoder = 0;
 
         public static final int GantryLowerLimitSwitch = 1;
-        public static final int GantryHigherLimitSwitch = 2;
+        public static final int GantryHigherLimitSwitch = 8;
 
         public static final int LeftClimberLimitSwitch = 6; 
         public static final int RightClimberLimitSwitch = 9;
 
-        public static final int NoteSensor = 4;
+        public static final int NoteSensorLeft = 5;
+        public static final int NoteSensorRight = 4;
     }
 
     public static final class DriveConstants {
@@ -210,7 +211,7 @@ public final class Constants {
         public static final double LowerClimberMaxRotations = -100; // TBD
         public static final double UpperClimberMaxRotations = 100; // TBD
 
-        public static final double ProportionalGain = .03;
+        public static final double ProportionalGain = .17;
         public static final double IntegralTerm = 0.00;
         public static final double DerivitiveTerm = 0.0;
     }

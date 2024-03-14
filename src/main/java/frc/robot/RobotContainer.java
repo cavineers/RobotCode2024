@@ -133,7 +133,7 @@ public class RobotContainer {
 		pivotManualLower = new PivotManualLower(armPivot);
 		groundPickup = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
 		shootClosePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootCloseRotations);
-		shootGround = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootGroundRotations);
+		shootGround = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootGroundRotations, Constants.ArmPivot.ShootGroundRotations);
 		sourcePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.SourceRotations, Constants.ArmPivot.SourceRotations);
 		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
 		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
@@ -203,6 +203,7 @@ public class RobotContainer {
 		xboxController1.povLeft().onTrue(ampPosition);
 		xboxController1.povRight().onTrue(sourcePosition);
 		xboxController1.leftBumper().onTrue(restPosition);
+		xboxController1.rightBumper().onTrue(shootGround);
 
 		// Climber
 		xboxController1.a().whileTrue(lowerLeftClimber);
@@ -241,9 +242,12 @@ public class RobotContainer {
 		return this.armBase;
 	}
 
-	
-
     public Command getAutonomousCommand() {
 		return autoChooser.getSelected();
     }
+
+	public void teleopSetup(){
+		armPivot.initializeDutyEncoder();
+		armBase.initializeEncoder();
+	}
 }
