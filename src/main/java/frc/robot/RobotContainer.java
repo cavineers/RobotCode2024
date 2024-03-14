@@ -214,4 +214,9 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("TestAutoNow");
     }
+
+	public void teleopSetup(){
+		armPivot.initializeDutyEncoder();
+		armBase.initializeEncoder();
+	}
 }
