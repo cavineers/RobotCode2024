@@ -164,6 +164,7 @@ public class VisionSubsystem extends SubsystemBase {
             return 0;
         }
         return 0;
+    }
 
     /**
      * Gets the distance from the alliance's speaker, +y is up, -y down
@@ -225,18 +226,24 @@ public class VisionSubsystem extends SubsystemBase {
     public void periodic() {
         if (visionEnabled){
             SmartDashboard.putNumber("Distance from Speaker", getDistanceFromSpeaker());
-
             if (autoShootCapable()){
                 SmartDashboard.putBoolean("AutoShoot Capable", true);
+                SmartDashboard.putNumber("X DISTANCE TO TAG", getXDistanceFromSpeaker());
             } else {
                 SmartDashboard.putBoolean("AutoShoot Capable", false);
             }
 
             if (autoRotate){
                 SmartDashboard.putBoolean("AutoRotate Capable", true);
+                SmartDashboard.putNumber("Angle to Speaker", getAngleToSpeaker());
             } else {
                 SmartDashboard.putBoolean("AutoRotate Capable", false);
+                SmartDashboard.putNumber("Angle to Speaker", 0);
             }
+
+            
+
+
         }
 
 
