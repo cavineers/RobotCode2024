@@ -53,7 +53,7 @@ public class VisionSubsystem extends SubsystemBase {
         try {
             aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
         } catch (IOException e) {}
-        robotToCamFront = new Transform3d(new Translation3d(Units.inchesToMeters(16),0 , 0.46), new Rotation3d(Units.degreesToRadians(0),Units.degreesToRadians(-14), 0)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.        
+        robotToCamFront = new Transform3d(new Translation3d(Units.inchesToMeters(16),0 , 0.46), new Rotation3d(Units.degreesToRadians(180),Units.degreesToRadians(-14), 0)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.        
         photonPoseEstimatorFront = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraFront, robotToCamFront);
         // photonPoseEstimatorRight = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraRight, robotToCam);
         // photonPoseEstimatorLeft = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, cameraLeft, robotToCam);
