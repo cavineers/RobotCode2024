@@ -24,8 +24,11 @@ public class ArmBase extends SubsystemBase {
     public CANSparkMax baseMotor = new CANSparkMax(Constants.CanIDs.GantryCANID, MotorType.kBrushless);
 
     // Limit Switches
-    public DigitalInput lowerGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
-    public DigitalInput higherGantryLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
+    public DigitalInput GantryLowerLimitSwitch = new DigitalInput(Constants.DIO.GantryLowerLimitSwitch);
+    public DigitalInput GantryHigherLimitSwitch = new DigitalInput(Constants.DIO.GantryHigherLimitSwitch);
+
+
+    private double gantryHeight;
 
     private double motorSetpoint = 0;
 
@@ -34,9 +37,10 @@ public class ArmBase extends SubsystemBase {
 
     // Motor sparkmax settings
     public ArmBase() {
-        this.baseMotor.setIdleMode(IdleMode.kBrake);
+        this.baseMotor.setIdleMode(IdleMode.kCoast);
 
-        this.baseMotor.setSmartCurrentLimit(51);
+        this.baseMotor.setSmartCurrentLimit(80);
+        this.basePid.setTolerance(Constants.ArmBase.BaseSetpointTolerance);
     }
 
     public void initializeEncoder(){
@@ -58,40 +62,64 @@ public class ArmBase extends SubsystemBase {
     public void setBaseMotorPosition(double position) {
         this.baseMotor.getEncoder().setPosition(position);
     }
+    
+    public boolean getGantryHigherLimitSwitch() {
+        return this.GantryHigherLimitSwitch.get();
+    }
+
+    public boolean getGantryLowerLimitSwitch() {
+        return this.GantryLowerLimitSwitch.get();
+    }
 
     public void setSetpointAdd(double s){
-        if((this.motorSetpoint += s) > Constants.ArmBase.MaxRotations){
-            this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if((this.motorSetpoint += s)< Constants.ArmBase.MinRotations){
-            this.motorSetpoint = Constants.ArmBase.MinRotations;
-        }else{
-            this.motorSetpoint += s;
-        }
+       this.motorSetpoint += s;
         
     }
 
     public void setSetpoint(double s){
        
-        if(s > Constants.ArmBase.MaxRotations){
-            this.motorSetpoint = Constants.ArmBase.MaxRotations;
-        }else if(s < Constants.ArmBase.MinRotations){
-            this.motorSetpoint = Constants.ArmBase.MinRotations;
-        }else{
-            this.motorSetpoint = s;
-        }
+        this.motorSetpoint = s;
+    
+    }
+
+    public double getGantryHeightMeters() {
         
+        gantryHeight = (Constants.ArmBase.dHeight * (motorSetpoint/Constants.ArmBase.dRotations)) + Constants.ArmBase.minGantryHeightMeters;
+        
+        return gantryHeight;
     }
 
     public void periodic() {
+    
+        
+        // clip the setpoint            
+        if (motorSetpoint > Constants.ArmBase.MaxRotations) {
+            motorSetpoint = Constants.ArmBase.MaxRotations;
+        } else if (motorSetpoint < Constants.ArmBase.MinRotations) {
+            motorSetpoint = Constants.ArmBase.MinRotations;
+        }
+
+        basePid.setSetpoint(motorSetpoint);
+        double speed = basePid.calculate(getBaseMotorPosition());
+        
+        SmartDashboard.putBoolean("HigherGantrySwitch", getGantryHigherLimitSwitch());
+        SmartDashboard.putBoolean("LowerGantrySwitch", getGantryLowerLimitSwitch());
         SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
         SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
-        if (this.motorSetpoint <= Constants.ArmBase.MaxRotations && this.motorSetpoint >= Constants.ArmBase.MinRotations){
-            basePid.setSetpoint(motorSetpoint);
-            double speed = basePid.calculate(getBaseMotorPosition());
-            SmartDashboard.putNumber("Speed", speed);
-    
-            baseMotor.set(speed);
+        
+        baseMotor.set(speed);
+        
+        // LIMIT SWITCHES
+        if (getGantryHigherLimitSwitch()) {
+            setBaseMotorPosition(Constants.ArmBase.MaxRotations);
+
+        } else if (getGantryLowerLimitSwitch()) {
+            setBaseMotorPosition(Constants.ArmBase.MinRotations);
         }
     }
 
+    public boolean atSetpoint() {
+        return this.basePid.atSetpoint();
+    }
 }
+

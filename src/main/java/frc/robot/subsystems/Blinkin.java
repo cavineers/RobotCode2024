@@ -5,8 +5,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Blinkin extends SubsystemBase {
 
-	Spark blinkin;
+	public static Spark blinkin;
 
+	//PWM port 0
 	public Blinkin() {
 		blinkin = new Spark(0);
 	}
@@ -25,5 +26,9 @@ public class Blinkin extends SubsystemBase {
 
 	public void lightsOcean() {
 		blinkin.set(-0.41);
+	}
+
+	public void lightsOrange() {
+		blinkin.set(0.65);
 	}
 }

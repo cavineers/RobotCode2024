@@ -25,8 +25,6 @@ public class VisionSubsystem extends SubsystemBase {
     private AprilTagFieldLayout aprilTagFieldLayout;
     private Transform3d robotToCam;
 
-    
-
     // Construct PhotonPoseEstimator
     PhotonPoseEstimator photonPoseEstimator;
     public VisionSubsystem() {
@@ -44,6 +42,11 @@ public class VisionSubsystem extends SubsystemBase {
         //return photonPoseEstimator.update(); 
         // if testing without april tags set up
         return Optional.empty();
+    }
+
+    public double GetXDistanceSpeaker() {
+        
+        return 0;
     }
     
     public void periodic() {

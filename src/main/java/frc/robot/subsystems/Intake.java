@@ -8,14 +8,11 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
-public class ShooterIntake extends SubsystemBase {
 
-    public enum ShooterMotorState {
-        ON, 
-        OFF, 
-        REVERSE
-    }
+public class Intake extends SubsystemBase {
 
     public enum IntakeMotorState {
         ON, 
@@ -24,52 +21,27 @@ public class ShooterIntake extends SubsystemBase {
         RETRACT
     }
 
-    public CANSparkMax shooterMotor = new CANSparkMax(Constants.CanIDs.ShooterCanID, MotorType.kBrushless);
     public CANSparkMax upperIntakeMotor = new CANSparkMax(Constants.CanIDs.UpperIntakeCanID, MotorType.kBrushless);
     public CANSparkMax lowerIntakeMotor = new CANSparkMax(Constants.CanIDs.LowerIntakeCanID, MotorType.kBrushless);
 
-    public DigitalInput noteSensor = new DigitalInput(Constants.DIO.NoteSensor);
+    public DigitalInput noteSensorLeft = new DigitalInput(Constants.DIO.NoteSensorLeft);
+    public DigitalInput noteSensorRight = new DigitalInput(Constants.DIO.NoteSensorRight);
 
-    public ShooterMotorState shooterMotorState = ShooterMotorState.OFF;
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
 
-    public ShooterIntake() {
+    private Blinkin blinkin;
+    
+    public Intake() {
 
-        this.shooterMotor.setIdleMode(IdleMode.kCoast);
         this.upperIntakeMotor.setIdleMode(IdleMode.kCoast);
         this.lowerIntakeMotor.setIdleMode(IdleMode.kCoast);
 
-        this.shooterMotor.setSmartCurrentLimit(120); // TBD
         this.upperIntakeMotor.setSmartCurrentLimit(80); // TBD
         this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
 
-        this.shooterMotor.setInverted(true);
         this.upperIntakeMotor.setInverted(false);
         this.lowerIntakeMotor.setInverted(true);
-        
-    }
-
-    public void setShooterMotorState(ShooterMotorState state) {
-
-        this.shooterMotorState = state;
-
-        switch (state) {
-
-        case ON:
-            this.shooterMotor.set(Constants.ShooterIntake.ShooterForwardSpeed);
-            break;
-
-        case REVERSE:
-            this.shooterMotor.set(Constants.ShooterIntake.ShooterReverseSpeed);
-            break;
-
-        case OFF:
-            this.shooterMotor.set(0.0);
-            break;
-
-        default:
-            this.setShooterMotorState(ShooterMotorState.OFF);
-        }
+        this.blinkin = RobotContainer.blinkin;
     }
 
     public void setIntakeMotorState(IntakeMotorState state) {
@@ -79,18 +51,19 @@ public class ShooterIntake extends SubsystemBase {
         switch (state) {
 
         case ON:
-            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeForwardSpeed);
-            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeForwardSpeed);
+            this.upperIntakeMotor.set(Constants.Intake.UpperIntakeForwardSpeed);
+            this.lowerIntakeMotor.set(Constants.Intake.LowerIntakeForwardSpeed);
+            SmartDashboard.putString("Intake", "Intaking");
             break;
 
         case REVERSE:
-            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeReverseSpeed);
-            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeReverseSpeed);
+            this.upperIntakeMotor.set(Constants.Intake.UpperIntakeReverseSpeed);
+            this.lowerIntakeMotor.set(Constants.Intake.LowerIntakeReverseSpeed);
             break;
 
         case RETRACT:
-            this.upperIntakeMotor.set(Constants.ShooterIntake.UpperIntakeRetractSpeed);
-            this.lowerIntakeMotor.set(Constants.ShooterIntake.LowerIntakeRetractSpeed);
+            this.upperIntakeMotor.set(Constants.Intake.UpperIntakeRetractSpeed);
+            this.lowerIntakeMotor.set(Constants.Intake.LowerIntakeRetractSpeed);
             break;
 
         case OFF:
@@ -100,24 +73,11 @@ public class ShooterIntake extends SubsystemBase {
 
         default:
             this.setIntakeMotorState(IntakeMotorState.OFF);
-
         }
-    }
-
-    public ShooterMotorState getShooterMotorState() {
-        return this.shooterMotorState;
     }
 
     public IntakeMotorState getIntakeMotorState() {
         return this.intakeMotorState;
-    }
-
-    public double getShooterMotorRPM() {
-        return shooterMotor.getEncoder().getVelocity();
-    }
-
-    public double getShooterMotorSpeed() {
-        return this.shooterMotor.get();
     }
 
     public double getUpperIntakeMotorSpeed() {
@@ -129,11 +89,15 @@ public class ShooterIntake extends SubsystemBase {
     }
 
     public boolean getNoteSensor() {
-        return !this.noteSensor.get();
+        return (!this.noteSensorLeft.get() || !this.noteSensorRight.get());
     }
 
     public void periodic() {
         SmartDashboard.putBoolean("INTAKE IR", getNoteSensor());
+
+        if(getNoteSensor() == true) {
+            this.blinkin.lightsOrange();
+        }
     }
 
 }

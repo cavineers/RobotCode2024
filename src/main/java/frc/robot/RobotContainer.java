@@ -10,18 +10,22 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import frc.robot.commands.SwerveCommand;
-import frc.robot.commands.SwerveHoming;
-import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.Constants.OIConstants;
 
 import frc.robot.Robot;
-import frc.robot.subsystems.ShooterIntake;
+
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ArmBase;
 import frc.robot.subsystems.ArmPivot;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.ClimberLeft;
 import frc.robot.subsystems.ClimberRight;
+import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.Shooter;
+
+import frc.robot.commands.SwerveCommand;
+import frc.robot.commands.SwerveHoming;
 import frc.robot.commands.Arm.ArmPreset;
 import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
@@ -29,13 +33,14 @@ import frc.robot.commands.Arm.PivotManualLower;
 import frc.robot.commands.Arm.PivotManualRaise;
 import frc.robot.commands.Climber.LowerClimberCommand;
 import frc.robot.commands.Climber.RiseClimberCommand;
-import frc.robot.commands.ShooterIntake.Intake;
-import frc.robot.commands.ShooterIntake.Outtake;
-import frc.robot.commands.ShooterIntake.Shoot;
-import frc.robot.commands.ShooterIntake.Shoot_Manual;
-
-
-
+import frc.robot.commands.Intake.Outtake;
+import frc.robot.commands.Intake.IntakeNote;
+import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Intake.FeedNote;
+import frc.robot.commands.Shooter.Amp;
+import frc.robot.commands.Shooter.Shoot_Auto;
+import frc.robot.commands.Shooter.Shoot_Manual;
+import frc.robot.commands.Shooter.Shoot_Toggle;
 
 
 public class RobotContainer {
@@ -47,10 +52,13 @@ public class RobotContainer {
 	private final SwerveDriveSubsystem swerveSubsystem;
     private final VisionSubsystem visionSubsystem;
 
-	private final ShooterIntake shooterIntake;
+	private final Intake intake;
+	private final Shooter shooter;
 
 	private final ClimberLeft climberLeft;
 	private final ClimberRight climberRight;
+
+	public static final Blinkin blinkin = new Blinkin();
 
 	// Main Controller Buttons Init
 	public final CommandXboxController xboxController0;
@@ -64,43 +72,50 @@ public class RobotContainer {
 	public Command pivotManualRaise;
 	public Command pivotManualLower;
 	public Command groundPickup;
-	public Command shootPosition;
+	public Command shootClosePosition;
 	public Command sourcePosition;
 	public Command ampPosition;
 	public Command restPosition;
+	public Command shootGround;
 
+	// public Command shootAuto;
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
 	public Command riseRightClimber;
 
-	public Command intake;
+	public Command intakeNote;
 	public Command outtake;
+	public Command feedNote;
+
 	public Command shoot;
+	public Command shootAuto;
 	public Command shootManual;
+	public Command shootToggle;
+	public Command amp;
 	public SwerveHoming swerveHomingCommand;
 
 	public RobotContainer() {
 
 		// Subsystems
 		armBase = new ArmBase();
-		armPivot = new ArmPivot();
-
+		armPivot = new ArmPivot(armBase);
 
 		climberLeft = new ClimberLeft();
 		climberRight = new ClimberRight();
 
-		shooterIntake = new ShooterIntake();
+		intake = new Intake();
+		shooter = new Shooter();
 
 		visionSubsystem = new VisionSubsystem();
 		
 		swerveSubsystem = new SwerveDriveSubsystem(visionSubsystem);
 		swerveHomingCommand = new SwerveHoming(swerveSubsystem);
 
-		// First Controller
-		xboxController0 = new CommandXboxController(OIConstants.kDriverJoystickPort);
+		
 
-		// Second Driver Buttons
+		// Controllers
+		xboxController0 = new CommandXboxController(OIConstants.kDriverJoystickPort);
 		xboxController1 = new CommandXboxController(OIConstants.kSecondDriverJoystickPort);
 
 		// Commands
@@ -109,7 +124,8 @@ public class RobotContainer {
 		pivotManualRaise = new PivotManualRaise(armPivot);
 		pivotManualLower = new PivotManualLower(armPivot);
 		groundPickup = new ArmPreset(armBase, armPivot, Constants.ArmBase.GroundPickupRotations, Constants.ArmPivot.GroundPickupRotations);
-		shootPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootRotations);
+		shootClosePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootRotations, Constants.ArmPivot.ShootCloseRotations);
+		shootGround = new ArmPreset(armBase, armPivot, Constants.ArmBase.ShootGroundRotations, Constants.ArmPivot.ShootGroundRotations);
 		sourcePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.SourceRotations, Constants.ArmPivot.SourceRotations);
 		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
 		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
@@ -119,10 +135,15 @@ public class RobotContainer {
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
 		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right");
 
-		intake = new Intake(shooterIntake);
-		outtake = new Outtake(shooterIntake);
-		shoot = new Shoot(shooterIntake);
-		shootManual = new Shoot_Manual(shooterIntake, () -> xboxController0.getRightTriggerAxis());
+		intakeNote = new IntakeNote(intake);
+		outtake = new Outtake(intake);
+		shoot = new Shoot(shooter, intake);
+		shootAuto = new Shoot_Auto(shooter, intake, armPivot);
+		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
+		shootToggle = new Shoot_Toggle(shooter);
+		amp = new Amp(shooter, intake);
+		feedNote = new FeedNote(intake);
+
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,
@@ -139,125 +160,63 @@ public class RobotContainer {
 
 	private void configureButtonBindings() {
 
+		xboxController0.povUp().onTrue(new InstantCommand() {
+			@Override
+			public void initialize() {
+				swerveSubsystem.zeroHeading();
+			}
+		});
+
 		// Arm Commands
-		xboxController0.povRight().onTrue(gantryManualRaise);
-		xboxController0.povRight().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				gantryManualRaise.cancel();
-			}
-		});
-
-		xboxController0.povLeft().onTrue(gantryManualLower);
-		xboxController0.povLeft().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				gantryManualLower.cancel();
-			}
-		});
-
-		xboxController0.a().onTrue(pivotManualLower);
-		xboxController0.a().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				pivotManualLower.cancel();
-			}
-		});
-
-		xboxController0.y().onTrue(pivotManualRaise);
-		xboxController0.y().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				pivotManualRaise.cancel();
-			}
-		});
-
+		xboxController0.povRight().whileTrue(gantryManualRaise);
+		xboxController0.povLeft().whileTrue(gantryManualLower);
+		xboxController0.a().whileTrue(pivotManualLower);
+		xboxController0.y().whileTrue(pivotManualRaise);
+		
+		// Shooter-Intake Commands
+		xboxController0.leftBumper().whileTrue(outtake);
+		xboxController0.rightBumper().whileTrue(intakeNote);
+		xboxController0.b().onTrue(shoot);
+		xboxController0.x().onTrue(shootAuto);
+		xboxController0.rightTrigger(Constants.OIConstants.kDriverJoystickTriggerDeadzone).whileTrue(shootManual);
+		xboxController0.povDown().onTrue(amp);
+		xboxController0.start().toggleOnTrue(shootToggle);
+		xboxController0.back().whileTrue(feedNote);
+		
+		//Presets
 		xboxController1.povDown().onTrue(groundPickup);
-		xboxController1.povUp().onTrue(shootPosition);
+		xboxController1.povUp().onTrue(shootClosePosition);
 		xboxController1.povLeft().onTrue(ampPosition);
 		xboxController1.povRight().onTrue(sourcePosition);
 		xboxController1.leftBumper().onTrue(restPosition);
+		xboxController1.rightBumper().onTrue(shootGround);
 
-		// Shooter-Intake Commands
-		xboxController0.leftBumper().onTrue(outtake);
-		xboxController0.leftBumper().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				outtake.cancel();
-			}
-		});
-
-		xboxController0.rightBumper().onTrue(intake);
-		xboxController0.rightBumper().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				intake.cancel();
-			}
-		});
-
-		xboxController0.b().onTrue(shoot);
-		xboxController0.b().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				shoot.cancel();
-			}
-		});
-
-		// xboxController0.a().onTrue(shoot);
-		// xboxController0.a().onFalse(new InstantCommand() {
-		// 	@Override
-		// 	public void initialize() {
-		// 		shoot.cancel();
-		// 	}
-		// });
-
-		// ClimberCommands
-		xboxController1.a().onTrue(lowerLeftClimber);
-		xboxController1.a().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				lowerLeftClimber.cancel();
-			}
-		});
-
-		xboxController1.y().onTrue(riseLeftClimber);
-		xboxController1.y().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				riseLeftClimber.cancel();
-			}
-		});
-
-		xboxController1.x().onTrue(lowerRightClimber);
-		xboxController1.x().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				lowerRightClimber.cancel();
-			}
-		});
-
-		xboxController1.b().onTrue(riseRightClimber);
-		xboxController1.b().onFalse(new InstantCommand() {
-			@Override
-			public void initialize() {
-				riseRightClimber.cancel();
-			}
-		});
-
-		// public SwerveDriveSubsystem getSwerveSubsystem() {
-		// return this.swerveSubsystem;
-		// }
+		// Climber
+		xboxController1.a().whileTrue(lowerLeftClimber);
+		xboxController1.y().whileTrue(riseLeftClimber);
+		xboxController1.x().whileTrue(lowerRightClimber);
+		xboxController1.b().whileTrue(riseRightClimber);
 
 	}
+
 	public SwerveDriveSubsystem getSwerveSubsystem() {
         return this.swerveSubsystem;
     }
+
     public VisionSubsystem getVisionSubsystem() {
         return this.visionSubsystem;
     }
+
+	public ArmBase getArmBase() {
+		return this.armBase;
+	}
+
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("TestAutoNow");
     }
 
-
+	public void teleopSetup(){
+		armPivot.initializeDutyEncoder();
+		armBase.initializeEncoder();
+	}
 }
