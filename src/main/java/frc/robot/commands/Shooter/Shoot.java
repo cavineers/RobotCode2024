@@ -42,16 +42,21 @@ public class Shoot extends Command {
 
         SmartDashboard.putString("Shooter", "Shooting");
 
-        shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (timer.get()>2) {
+        if (shooter.getShooterMotorState() != shooter.shooterMotorState.ON) {
+            shooter.setShooterMotorState(shooter.shooterMotorState.ON);
+            if (timer.get()>2) {
+                intake.setIntakeMotorState(intake.intakeMotorState.ON);
+            }
+
+        } else {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 
         if (intake.getNoteSensor()== false || timer.get()>3) {
-           timer2.start();
-           if (timer2.get()>0.5){
-                this.isDone = true;
-           }
+            timer2.start();
+            if (timer2.get()>0.5){
+                    this.isDone = true;
+            }
         }
 
         SmartDashboard.putNumber("Timer1", timer.get());

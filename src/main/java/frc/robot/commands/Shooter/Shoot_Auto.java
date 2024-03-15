@@ -62,12 +62,18 @@ public class Shoot_Auto extends Command {
 		SmartDashboard.putString("Shooter", "Auto Shooting");
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distance));
-        shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (armPivot.isAtSetpoint() && timer.get()>2) {
-            SmartDashboard.putBoolean("Is At Setpoint", true);
+
+        if (shooter.getShooterMotorState() != shooter.shooterMotorState.ON) {
+            shooter.setShooterMotorState(shooter.shooterMotorState.ON);
+            if (armPivot.isAtSetpoint() && timer.get()>2) {
+                SmartDashboard.putBoolean("Is At Setpoint", true);
+                intake.setIntakeMotorState(intake.intakeMotorState.ON);
+            }
+
+        } else {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
-
+        
         if (intake.getNoteSensor()== false || timer.get()>5) {
            timer2.start();
            if (timer2.get()>1){
