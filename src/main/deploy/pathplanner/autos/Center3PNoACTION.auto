@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3824529647827148,
+      "y": 5.55
+    },
+    "rotation": 179.96604345059157
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle2Piece.1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle2Piece.2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

@@ -35,7 +35,7 @@ public class ArmPivot extends SubsystemBase {
     private double motorSetpoint;
 
     private double currentArmPivotAngle;
-    private double requiredSetpoint;
+
 
     private double currentMinimumRot;
     
@@ -94,10 +94,9 @@ public class ArmPivot extends SubsystemBase {
     }
 
     public void setArmPivotAngle(Double angle) {
-
-        requiredSetpoint = ((Constants.ArmPivot.dRotations * (angle - Constants.ArmPivot.armPivotMinAngleDegrees)) / Constants.ArmPivot.dAngle) + Constants.ArmPivot.PivotMotorLowerRotationLimit;
+        double requiredSetpoint = ((Constants.ArmPivot.dRotations * (angle - Constants.ArmPivot.armPivotMinAngleDegrees)) / Constants.ArmPivot.dAngle) + Constants.ArmPivot.PivotMotorLowerRotationLimit;
         setSetpoint(requiredSetpoint);
-
+        System.out.println("REQUIRED SETPOINT : " + requiredSetpoint);
 
     }
 

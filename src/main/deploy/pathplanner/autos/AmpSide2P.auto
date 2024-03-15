@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3824529647827148,
-      "y": 5.55
+      "x": 0.778353750705719,
+      "y": 6.720042705535889
     },
-    "rotation": 179.96604345059157
+    "rotation": -120.5036416353159
   },
   "command": {
     "type": "sequential",
@@ -30,47 +30,34 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Middle2Piece.1"
-                }
-              },
               {
                 "type": "named",
                 "data": {
                   "name": "intakeNote"
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left3Piece.1"
+                }
               }
             ]
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Middle2Piece.2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shootGround"
-                }
-              }
-            ]
+            "pathName": "Left3Piece.2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "shootAuto"
           }
         }
       ]

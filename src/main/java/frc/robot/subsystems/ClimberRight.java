@@ -43,7 +43,7 @@ public class ClimberRight extends SubsystemBase {
     public boolean getLimitSwitch() {
         boolean switched;
         switched = this.rightClimberLimitSwitch.get();
-        return !switched;
+        return switched;
     }
 
     // Set the motor's position (given in rotations)
@@ -124,6 +124,5 @@ public class ClimberRight extends SubsystemBase {
         SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
         SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
         SmartDashboard.putBoolean("rightClimberLimitSwitch", getLimitSwitch());
-
     }
 }

@@ -18,6 +18,7 @@ public class Shoot extends Command {
     private Timer timer;
     private Timer timer2;
     private boolean isDone;
+    private boolean alreadyRunnning;
 
     public Shoot(Shooter shooter, Intake intake) {
         this.shooter = shooter;
@@ -33,6 +34,11 @@ public class Shoot extends Command {
         timer.reset();
         timer2.reset();
         timer.start();
+        if (shooter.getShooterMotorState() != shooter.shooterMotorState.ON) {
+            this.alreadyRunnning = false;
+        }else{
+            this.alreadyRunnning = true;
+        }
 
         this.isDone = false;
     }
@@ -42,15 +48,11 @@ public class Shoot extends Command {
 
         SmartDashboard.putString("Shooter", "Shooting");
 
-        if (shooter.getShooterMotorState() != shooter.shooterMotorState.ON) {
-            shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-            if (timer.get()>2) {
-                intake.setIntakeMotorState(intake.intakeMotorState.ON);
-            }
-
-        } else {
+        shooter.setShooterMotorState(shooter.shooterMotorState.ON);
+        if (timer.get()>2 || this.alreadyRunnning) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
+        
 
         if (intake.getNoteSensor()== false || timer.get()>3) {
             timer2.start();

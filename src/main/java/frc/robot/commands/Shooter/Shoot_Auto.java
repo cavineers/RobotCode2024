@@ -1,6 +1,9 @@
 package frc.robot.commands.Shooter;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmPivot;
@@ -15,25 +18,31 @@ public class Shoot_Auto extends Command {
     private Shooter shooter;
 	private Intake intake;
     private ArmPivot armPivot;
-    private VisionSubsystem visionSubsystem;
 
     private double requiredArmPivotAngleDegrees;
     private double currentShooterAngleFromBaseline;
 
-    private double distance;
-    private boolean alreadyRunnning;
+    private double distanceMeters;
+
+    ShuffleboardTab tab = Shuffleboard.getTab("Robot");
+
+    private GenericEntry distanceEntry = tab
+        .add("Distance to target (Meters)", 0)
+        .getEntry();
 		
 	private Timer timer;
     private Timer timer2;
 
-    public Shoot_Auto(Shooter shooter, Intake intake, ArmPivot armPivot, VisionSubsystem visionSubsystem) {
+    private VisionSubsystem visionSubsystem;
+
+    public Shoot_Auto(Shooter shooter, Intake intake, ArmPivot armPivot,VisionSubsystem visionSubsystem) {
         this.shooter = shooter;
         this.intake = intake;
         this.armPivot = armPivot;
-        this.visionSubsystem = visionSubsystem;
         this.addRequirements(shooter);
         this.addRequirements(intake);
         this.addRequirements(armPivot);
+        this.visionSubsystem = visionSubsystem;
 
 		timer = new Timer();
         timer2 = new Timer();
@@ -46,14 +55,6 @@ public class Shoot_Auto extends Command {
 		timer.reset();
         timer2.reset();
         timer.start();
-        if (shooter.getShooterMotorState() != shooter.shooterMotorState.ON) {
-            this.alreadyRunnning = false;
-        }else{
-            this.alreadyRunnning = true;
-        }
-        
-
-        
 
 		this.isDone = false;
     }
@@ -61,28 +62,17 @@ public class Shoot_Auto extends Command {
     @Override
     public void execute() {
 		
-		distance = visionSubsystem.getDistanceFromSpeaker();
-
-        if (!visionSubsystem.autoShootCapable()){
-            this.isDone = true;
-            return;
-        }
+		distanceMeters = visionSubsystem.getDistanceFromSpeaker();
 
 		SmartDashboard.putString("Shooter", "Auto Shooting");
 
-		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distance));
-
-        if (!this.alreadyRunnning) {
-            shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-            if (armPivot.isAtSetpoint() && timer.get()>2) {
-                SmartDashboard.putBoolean("Is At Setpoint", true);
-                intake.setIntakeMotorState(intake.intakeMotorState.ON);
-            }
-
-        } else if (armPivot.isAtSetpoint()){
+		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
+        shooter.setShooterMotorState(shooter.shooterMotorState.ON);
+        if (armPivot.isAtSetpoint() && timer.get()>2) {
+            SmartDashboard.putBoolean("Is At Setpoint", true);
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
-        
+
         if (intake.getNoteSensor()== false || timer.get()>5) {
            timer2.start();
            if (timer2.get()>1){
@@ -90,6 +80,8 @@ public class Shoot_Auto extends Command {
            }
         }
 
+        SmartDashboard.putNumber("Timer1", timer.get());
+        SmartDashboard.putNumber("Timer2", timer2.get());
         
     }
 
@@ -110,9 +102,11 @@ public class Shoot_Auto extends Command {
 
     public double calculateRequiredArmPivotAngle(Double distance) {
 
+		SmartDashboard.putNumber("Distance to Speaker", distance);
          
-        requiredArmPivotAngleDegrees = (-1.4 * (Math.pow(1.686, -(distance - 6.7)))) - 32 + 90.0;
+        requiredArmPivotAngleDegrees = (-1.4 * (Math.pow(1.686, -(distance - 6.7)))) - 29.4 + 90.0;
 
+        SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 
         return requiredArmPivotAngleDegrees;
     }

@@ -164,8 +164,8 @@ public class RobotContainer {
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
 					swerveSubsystem,
-					() -> -xboxController0.getRawAxis(OIConstants.kDriverYAxis),
-					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
+					() -> xboxController0.getRawAxis(OIConstants.kDriverYAxis),
+					() -> xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverRotAxis),
 					() -> false));
 			 
@@ -173,8 +173,8 @@ public class RobotContainer {
 		swerveAimToTarget = new SwerveAimToTarget(
 					swerveSubsystem,
 					visionSubsystem,
-					() -> -xboxController0.getRawAxis(OIConstants.kDriverYAxis),
-					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
+					() -> xboxController0.getRawAxis(OIConstants.kDriverYAxis),
+					() -> xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> false);
 
 		armPivot.initializeDutyEncoder();

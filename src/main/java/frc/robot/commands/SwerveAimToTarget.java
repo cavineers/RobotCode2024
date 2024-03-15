@@ -91,7 +91,7 @@ public class SwerveAimToTarget extends Command {
         
         // Field relative Speeds
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-            xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+            xSpeed, ySpeed, turningSpeed, swerveSubsystem.getGyroRotation2d());
 
         // Robot Relative Speeds
         // chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);

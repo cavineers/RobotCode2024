@@ -92,15 +92,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
      * @return the current heading of the robot using SwervePoseEstimator + Vision
      */
     public Rotation2d getRotation2d(){
-        return this.poseEstimator.getEstimatedPosition().getRotation();
+        return Rotation2d.fromDegrees(Math.IEEEremainder(this.poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 360));
     }
 
+    public double signedToUnsigned(double angle) {
+        return Math.IEEEremainder((angle + 360), 360);
+    }
     /**
      * 
      * @return the current rotation of the robot using Gyro
      */
     public Rotation2d getGyroRotation2d(){
-        return Rotation2d.fromDegrees(Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360));
+        return gyro.getRotation2d();
     }
 
     /**
@@ -171,6 +174,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   
         SmartDashboard.putNumber("POSE Rotation", poseEstimator.getEstimatedPosition().getRotation().getDegrees());
+        SmartDashboard.putNumber("ROTATION GYRO", getGyroRotation2d().getDegrees());
         SmartDashboard.putNumber("POSE X", poseEstimator.getEstimatedPosition().getX());
         SmartDashboard.putNumber("POSE Y", poseEstimator.getEstimatedPosition().getY());
         
@@ -199,8 +203,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             this::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRelativeSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                new PIDConstants(2.50, 0.0, 0.0), // Translation PID constants
-                new PIDConstants(2.50, 0.0, 0.0), // Rotation PID constants
+                new PIDConstants(2.5, 0.0, 0.0), // Translation PID constants
+                new PIDConstants(2.5, 0.0, 0.0), // Rotation PID constants
                 4.5, // Max module speed, in m/s
                 Units.inchesToMeters(17.25), // Drive base radius in meters. Distance from robot center to furthest module.
                 new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -220,10 +224,20 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     private boolean successZeroHeading = false;
-    
+ 
     public void zeroHeading() {
-        Pose2d newPoseWithNoHeading = new Pose2d(getPose().getTranslation(), new Rotation2d());
-        poseEstimator.resetPosition(getGyroRotation2d(), getPositions(), newPoseWithNoHeading);
+        if (ally.isPresent() && ally.get() == Alliance.Red){
+            gyro.reset();
+            Pose2d newPoseWithNoHeading = new Pose2d(getPose().getTranslation(), new Rotation2d(180));
+            poseEstimator.resetPosition(getGyroRotation2d(), getPositions(), newPoseWithNoHeading);
+        }else{
+            gyro.reset();
+            Pose2d newPoseWithNoHeading = new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(0));
+            poseEstimator.resetPosition(getGyroRotation2d(), getPositions(), newPoseWithNoHeading);
+        }
+        
+        
+        
         
         // Optional<EstimatedRobotPose> currentPose = visionSubsystem.getRobotPoseFieldRelative(); 
         // if (currentPose.isEmpty() == false){
@@ -263,7 +277,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
     public void resetOdometry(Pose2d pose) {
         System.out.println("**RESET ODOMETERY TO THE PRESET STARTING POSE**");
-
+        gyro.setYaw(pose.getRotation().getDegrees());
         poseEstimator.resetPosition(getGyroRotation2d(), getPositions(), pose);
     }
 
@@ -290,7 +304,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         this.updatedPose = this.updatePoseWithVision();
         m_field.setRobotPose(getPose());
         SmartDashboard.putData("Field", m_field);
-        SmartDashboard.putNumber("Heading", getHeading());
+        SmartDashboard.putNumber("Heading", getGyroRotation2d().getDegrees());
        
 
         SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
