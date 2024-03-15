@@ -87,21 +87,25 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return 360 - val;
     }
 
-    public double getHeading(){ // Right Hand Rule with Offset
-        
-        double gyroAngle = Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
-        return gyroAngle;
-    }
-
+    /**
+     * 
+     * @return the current heading of the robot using SwervePoseEstimator + Vision
+     */
     public Rotation2d getRotation2d(){
-
-        return Rotation2d.fromDegrees(getHeading());
+        return this.poseEstimator.getEstimatedPosition().getRotation();
     }
 
-    private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
-        DriveConstants.SwerveKinematics, 
-        getRotation2d(), 
-        getPositions());
+    /**
+     * 
+     * @return the current rotation of the robot using Gyro
+     */
+    public Rotation2d getGyroRotation2d(){
+        return Rotation2d.fromDegrees(Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360));
+    }
+
+    public double getHeading(){
+        return Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
+    }
 
     public double getFLAbsolutePosition(){
         return frontLeft.getAbsolutePosition();
@@ -116,28 +120,19 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return backLeft.getAbsolutePosition();
     }
 
-    private Boolean flipField(){
-        if (ally.get() == DriverStation.Alliance.Red){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
     private boolean hasTags(){
         return visionSubsystem.getRobotPoseFromFrontCam().isPresent() || visionSubsystem.getRobotPoseFromLeftCam().isPresent() || visionSubsystem.getRobotPoseFromRightCam().isPresent();
     }
     private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
         DriveConstants.SwerveKinematics,
-        getRotation2d(),
+        getGyroRotation2d(),
         getPositions(),
         new Pose2d()
         );
 
     private Pose2d updatePoseWithVision(){
 
-        Pose2d currentPose = poseEstimator.update(getRotation2d(), getPositions());
+        poseEstimator.update(getGyroRotation2d(), getPositions());
         if (this.hasTags()) {
             SmartDashboard.putBoolean("Has Tags", true);
         }else{
@@ -262,7 +257,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         System.out.println("**RESET ODOMETERY TO THE PRESET STARTING POSE**");
 
-        poseEstimator.resetPosition(getRotation2d(), getPositions(), pose);
+        poseEstimator.resetPosition(getGyroRotation2d(), getPositions(), pose);
     }
 
     public void stopModules() {
