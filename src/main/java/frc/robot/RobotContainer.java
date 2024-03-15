@@ -96,7 +96,9 @@ public class RobotContainer {
 	public Command shoot;
 	public Command shootAuto;
 	public Command shootManual;
-	public Command shootRevWheels;
+	public Command shootStart;
+	public Command shootStop;
+
 	public Command shootToggle;
 	public Command amp;
 	public SwerveHoming swerveHomingCommand;
@@ -149,7 +151,8 @@ public class RobotContainer {
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot, visionSubsystem);
-		shootRevWheels = new ShootRevWheels(shooter);
+		shootStart = new ShootRevWheels(shooter, true);
+		shootStop = new ShootRevWheels(shooter, false);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
@@ -228,7 +231,8 @@ public class RobotContainer {
 		NamedCommands.registerCommand("feedNote", feedNote);
 		NamedCommands.registerCommand("shoot", shoot);
 		NamedCommands.registerCommand("shootAuto", shootAuto);
-		NamedCommands.registerCommand("shootToggle", );
+		NamedCommands.registerCommand("shootToggleOn", shootStart);
+		NamedCommands.registerCommand("shootToggleOff", shootStop);
 		NamedCommands.registerCommand("amp", amp);
 	}
 

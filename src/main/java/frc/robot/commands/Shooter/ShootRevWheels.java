@@ -15,26 +15,32 @@ public class ShootRevWheels extends Command {
     private double timestamp;
     private Shooter shooter;
     private boolean isDone;
+    private boolean state;
 
-    public ShootRevWheels(Shooter shooter) {
+    public ShootRevWheels(Shooter shooter, boolean state) {
         this.shooter = shooter;
+        this.state = state;
         this.addRequirements(shooter);
 
     }
 
     @Override
     public void initialize() {
-        this.isDone = false;
+        if (state == true){
+            shooter.setShooterMotorState(shooter.shooterMotorState.ON);
+        }else{
+            shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
+        }
+        this.isDone = true;
     }
 
     @Override
     public void execute() {
-        shooter.setShooterMotorState(shooter.shooterMotorState.ON);
+        
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
     }
 
     @Override
