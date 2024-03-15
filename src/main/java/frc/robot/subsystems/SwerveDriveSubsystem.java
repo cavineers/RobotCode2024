@@ -103,8 +103,13 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360));
     }
 
+    /**
+     * 
+     * @return the current heading of the robot using PoseEstimator + Vision
+     */
+
     public double getHeading(){
-        return Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
+        return getRotation2d().getDegrees();
     }
 
     public double getFLAbsolutePosition(){
