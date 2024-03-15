@@ -40,6 +40,7 @@ import frc.robot.commands.Climber.RiseClimberCommand;
 import frc.robot.commands.Intake.Outtake;
 import frc.robot.commands.Intake.IntakeNote;
 import frc.robot.commands.Shooter.Shoot;
+import frc.robot.commands.Shooter.ShootRevWheels;
 import frc.robot.commands.Intake.FeedNote;
 import frc.robot.commands.Shooter.Amp;
 import frc.robot.commands.Shooter.Shoot_Auto;
@@ -95,6 +96,7 @@ public class RobotContainer {
 	public Command shoot;
 	public Command shootAuto;
 	public Command shootManual;
+	public Command shootRevWheels;
 	public Command shootToggle;
 	public Command amp;
 	public SwerveHoming swerveHomingCommand;
@@ -147,6 +149,7 @@ public class RobotContainer {
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot, visionSubsystem);
+		shootRevWheels = new ShootRevWheels(shooter);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
@@ -225,6 +228,7 @@ public class RobotContainer {
 		NamedCommands.registerCommand("feedNote", feedNote);
 		NamedCommands.registerCommand("shoot", shoot);
 		NamedCommands.registerCommand("shootAuto", shootAuto);
+		NamedCommands.registerCommand("shootToggle", );
 		NamedCommands.registerCommand("amp", amp);
 	}
 
