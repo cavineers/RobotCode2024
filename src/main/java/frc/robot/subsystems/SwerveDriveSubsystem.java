@@ -89,7 +89,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     public double getHeading(){ // Right Hand Rule with Offset
         
-        double gyroAngle = Math.IEEEremainder(gyro.getYaw().getValueAsDouble(), 360);
+        double gyroAngle = Math.IEEEremainder(gyro.getAngle(), 360);
         return gyroAngle;
     }
 
