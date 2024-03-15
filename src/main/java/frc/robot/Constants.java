@@ -148,7 +148,7 @@ public final class Constants {
         public static final double SourceRotations = 0.6138;
         public static final double AmpRotations = 0.644;
 
-        public static final double ProportionalGain = 3; // strength of a correction
+        public static final double ProportionalGain = 3.4; // strength of a correction
         public static final double IntegralTerm = 0; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -234,8 +234,8 @@ public final class Constants {
     }
 
     public static final class Intake {
-        public static final double UpperIntakeForwardSpeed = .7; // TBD
-        public static final double LowerIntakeForwardSpeed = .7; // TBD
+        public static final double UpperIntakeForwardSpeed = .75; // TBD
+        public static final double LowerIntakeForwardSpeed = .5; // TBD
         public static final double UpperIntakeReverseSpeed = -.7; // TBD
         public static final double LowerIntakeReverseSpeed = -.7; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
