@@ -29,7 +29,7 @@ public class SwerveAimToTarget extends Command {
     private final Supplier<Boolean> fieldOrientedFunction;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
-    private final PIDController turnController = new PIDController(0.1, 0, 0);
+    private final PIDController turnController = new PIDController(0.022, 0, 0.0);
 
 
     public SwerveAimToTarget(SwerveDriveSubsystem swerveSubsystem, VisionSubsystem visionSubsystem,
@@ -62,6 +62,7 @@ public class SwerveAimToTarget extends Command {
         // Get real-time joystick inputs
         double xSpeed = xSpdFunction.get();
         double ySpeed = ySpdFunction.get();
+        
 
         // Apply deadband -- compensated for when the joystick value does not return to exactly zero
         xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
@@ -98,7 +99,7 @@ public class SwerveAimToTarget extends Command {
         // Convert chassis speeds to individual module states
 
         // UNCOMMENT TO ACTUALLY ALLOW DRIVINGS
-        // swerveSubsystem.driveRelativeSpeeds(chassisSpeeds);
+        swerveSubsystem.driveRelativeSpeeds(chassisSpeeds);
 
 
     }

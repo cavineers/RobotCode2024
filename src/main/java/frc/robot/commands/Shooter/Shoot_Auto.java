@@ -21,6 +21,7 @@ public class Shoot_Auto extends Command {
     private double currentShooterAngleFromBaseline;
 
     private double distance;
+    private boolean alreadyRunnning;
 		
 	private Timer timer;
     private Timer timer2;
@@ -45,6 +46,14 @@ public class Shoot_Auto extends Command {
 		timer.reset();
         timer2.reset();
         timer.start();
+        if (shooter.getShooterMotorState() != shooter.shooterMotorState.ON) {
+            this.alreadyRunnning = false;
+        }else{
+            this.alreadyRunnning = true;
+        }
+        
+
+        
 
 		this.isDone = false;
     }
@@ -63,14 +72,14 @@ public class Shoot_Auto extends Command {
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distance));
 
-        if (shooter.getShooterMotorState() != shooter.shooterMotorState.ON) {
+        if (!this.alreadyRunnning) {
             shooter.setShooterMotorState(shooter.shooterMotorState.ON);
             if (armPivot.isAtSetpoint() && timer.get()>2) {
                 SmartDashboard.putBoolean("Is At Setpoint", true);
                 intake.setIntakeMotorState(intake.intakeMotorState.ON);
             }
 
-        } else {
+        } else if (armPivot.isAtSetpoint()){
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
         
