@@ -121,6 +121,12 @@ public class ClimberLeft extends SubsystemBase {
             setLeftClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
             motorSetpoint = getLeftClimberMotorPosition();
         }
+        
+
+        SmartDashboard.putNumber("LeftClimberPos", getLeftClimberMotorPosition());
+        SmartDashboard.putNumber("LeftClimberSetPoint", getLeftClimberMotorSetPoint());
+        SmartDashboard.putBoolean("LeftClimberLimitSwitch", getLimitSwitch());
+
 
     }
 }
