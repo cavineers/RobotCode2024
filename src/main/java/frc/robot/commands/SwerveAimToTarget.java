@@ -79,7 +79,7 @@ public class SwerveAimToTarget extends Command {
 	
 
 		
-		double turningSpeed = turnController.calculate(swerveSubsystem.getPose().getRotation().getDegrees());
+		double turningSpeed = turnController.calculate(swerveSubsystem.getRotation2d().getDegrees());
 		SmartDashboard.putNumber("TurningJoystick Input", turningSpeed);
         turningSpeed = turningLimiter.calculate(turningSpeed)
             * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
