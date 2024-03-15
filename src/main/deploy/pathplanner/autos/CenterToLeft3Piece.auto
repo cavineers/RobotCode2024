@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": null
           }
         },
         {
@@ -32,7 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": null
           }
         },
         {
@@ -62,7 +62,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": null
           }
         }
       ]
