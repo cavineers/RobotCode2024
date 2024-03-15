@@ -27,7 +27,7 @@ import frc.robot.subsystems.ClimberRight;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.Shooter;
-
+import frc.robot.commands.SwerveAimToTarget;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.commands.SwerveHoming;
 import frc.robot.commands.Arm.ArmPreset;
@@ -102,6 +102,7 @@ public class RobotContainer {
 	public Command shootToggle;
 	public Command amp;
 	public SwerveHoming swerveHomingCommand;
+	public SwerveAimToTarget swerveAimToTarget;
 
 	public SendableChooser<Command> autoChooser; 
 
@@ -157,6 +158,8 @@ public class RobotContainer {
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
 		feedNote = new FeedNote(intake);
+		
+
 
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
@@ -165,6 +168,14 @@ public class RobotContainer {
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverRotAxis),
 					() -> false));
+			 
+
+		swerveAimToTarget = new SwerveAimToTarget(
+					swerveSubsystem,
+					visionSubsystem,
+					() -> -xboxController0.getRawAxis(OIConstants.kDriverYAxis),
+					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
+					() -> false);
 
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
@@ -202,6 +213,7 @@ public class RobotContainer {
 		xboxController0.povDown().onTrue(amp);
 		xboxController0.start().toggleOnTrue(shootToggle);
 		xboxController0.back().whileTrue(feedNote);
+		xboxController0.rightStick().toggleOnTrue(swerveAimToTarget);
 		
 		//Presets
 		xboxController1.povDown().onTrue(groundPickup);
@@ -217,6 +229,8 @@ public class RobotContainer {
 		xboxController1.x().whileTrue(lowerRightClimber);
 		xboxController1.b().whileTrue(riseRightClimber);
 
+		
+
 	}
 
 	private void configureNamedCommands(){
@@ -231,8 +245,8 @@ public class RobotContainer {
 		NamedCommands.registerCommand("feedNote", feedNote);
 		NamedCommands.registerCommand("shoot", shoot);
 		NamedCommands.registerCommand("shootAuto", shootAuto);
-		NamedCommands.registerCommand("shootToggleOn", shootStart);
-		NamedCommands.registerCommand("shootToggleOff", shootStop);
+		NamedCommands.registerCommand("toggleShootOn", shootStart);
+		NamedCommands.registerCommand("toggleShootOff", shootStop);
 		NamedCommands.registerCommand("amp", amp);
 	}
 

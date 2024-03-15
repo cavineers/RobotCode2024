@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SwerveAimToTarget extends Command {
 
     private final SwerveDriveSubsystem swerveSubsystem;
-
+    private final VisionSubsystem visionSubsystem;
     private final Supplier<Double> xSpdFunction, ySpdFunction;
     private final Supplier<Boolean> fieldOrientedFunction;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
@@ -32,10 +32,11 @@ public class SwerveAimToTarget extends Command {
     private final PIDController turnController = new PIDController(0.1, 0, 0);
 
 
-    public SwerveAimToTarget(SwerveDriveSubsystem swerveSubsystem,
+    public SwerveAimToTarget(SwerveDriveSubsystem swerveSubsystem, VisionSubsystem visionSubsystem,
             Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction,
             Supplier<Boolean> fieldOrientedFunction) {
         this.swerveSubsystem = swerveSubsystem;
+        this.visionSubsystem = visionSubsystem;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
 
@@ -79,7 +80,7 @@ public class SwerveAimToTarget extends Command {
 	
 
 		
-		double turningSpeed = turnController.calculate(swerveSubsystem.getRotation2d().getDegrees());
+		double turningSpeed = turnController.calculate(swerveSubsystem.getRotation2d().getDegrees(), visionSubsystem.getAngleToSpeaker());
 		SmartDashboard.putNumber("TurningJoystick Input", turningSpeed);
         turningSpeed = turningLimiter.calculate(turningSpeed)
             * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;

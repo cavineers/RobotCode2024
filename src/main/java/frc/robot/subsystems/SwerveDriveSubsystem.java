@@ -220,8 +220,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     private boolean successZeroHeading = false;
+    
     public void zeroHeading() {
-        gyro.reset();
+        Pose2d newPoseWithNoHeading = new Pose2d(getPose().getTranslation(), new Rotation2d());
+        poseEstimator.resetPosition(getGyroRotation2d(), getPositions(), newPoseWithNoHeading);
         
         // Optional<EstimatedRobotPose> currentPose = visionSubsystem.getRobotPoseFieldRelative(); 
         // if (currentPose.isEmpty() == false){

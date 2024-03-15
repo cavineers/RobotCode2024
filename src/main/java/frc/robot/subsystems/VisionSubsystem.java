@@ -37,7 +37,7 @@ public class VisionSubsystem extends SubsystemBase {
 
     private boolean visionEnabled = true;
     private boolean autoShoot = false;
-    private boolean autoRotate = false;
+    private boolean autoRotate = true;
     
 
     // Construct PhotonPoseEstimator
@@ -141,31 +141,7 @@ public class VisionSubsystem extends SubsystemBase {
      * @return returns the angle to speaker, returns 0 if no alliance is present or some other issue occured
      */
     public double getAngleToSpeaker(){
-        var result = cameraFront.getLatestResult();
-
-
-        if (result.hasTargets()) {
-            int id;
-            // Calculate angular turn power
-            // -1.0 required to ensure positive PID controller effort _increases_ yaw
-            if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-                id = 8; // POSSIBLY CHANGE
-            } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
-                id = 4;
-            } else {
-                return 0;
-            }
-
-            for (PhotonTrackedTarget tag : result.getTargets()) {
-                if (tag.getFiducialId() == id) {
-                    this.autoRotate = true;
-                    return tag.getYaw();
-                }
-            }
-            this.autoRotate = false;
-            return 0;
-        }
-        return 0;
+        return Units.radiansToDegrees(Math.atan2(getYDistanceFromSpeaker(), getXDistanceFromSpeaker()));
     }
 
     /**
