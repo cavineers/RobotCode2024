@@ -262,7 +262,7 @@ public final class Constants {
 
         // Auto shoot maximum and minimums in meters
         public static double shootDistanceMinimum = 0.5;
-        public static double shootDistanceMaximum = 8;
+        public static double shootDistanceMaximum = 4.57;
     }
 
 

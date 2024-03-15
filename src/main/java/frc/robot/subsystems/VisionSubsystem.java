@@ -200,61 +200,62 @@ public class VisionSubsystem extends SubsystemBase {
 
 
     /**
-     * @return The distance from the speaker (INCHES), always positive, returns 0 if no alliance is present or some other issue occured
+     * @return The distance (2d distance straight line) from the speaker (INCHES), always positive, returns 0 if no alliance is present or some other issue occured
      * Clarify the autoShootCapable() method to ensure that the bot is capable of performing the auto shoot.
      */
     public double getDistanceFromSpeaker(){
-        // // Check alliance
-        // Pose2d currentPose = Robot.m_robotContainer.getSwerveSubsystem().getPose();
-        // if (!DriverStation.getAlliance().isPresent()){
-        //     this.autoShoot = false;
-        //     return 0;
-        // }
-        // double x1 = currentPose.getX();
-        // double y1 = currentPose.getY();
-    
-        // double x2, y2;
-    
-        // x2 = getXDistanceFromSpeaker();
-        // y2 = getYDistanceFromSpeaker();
-        // System.out.println(x2 + " - " + x1 + " = " + (x2 - x1));
-
-        // double dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        // if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
-        //     this.autoShoot = false;
-        //     return 0;
-        // }
-        
-        // this.autoShoot = true;
-        // return Units.metersToInches(dist);
-        int id;
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-            id = 8; 
-        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
-            id = 4;
-        } else {
+        // Check alliance
+        Pose2d currentPose = Robot.m_robotContainer.getSwerveSubsystem().getPose();
+        if (!DriverStation.getAlliance().isPresent()){
             this.autoShoot = false;
+            System.out.println("ERROR: NO DRIVER STATION ALLIANCE ");
+
             return 0;
         }
-        var result = cameraFront.getLatestResult();
 
-        for (PhotonTrackedTarget tag : result.getTargets()) {
-            if (tag.getFiducialId() == id) {
-                this.autoShoot = true;
-                var translations = tag.getBestCameraToTarget();
-                return Math.sqrt(Math.pow(translations.getX(), 2) + Math.pow(translations.getY(), 2) + Math.pow(translations.getZ(), 2));
-            }
+        double x2, y2;
+        x2 = getXDistanceFromSpeaker();
+        y2 = getYDistanceFromSpeaker();
+
+        double dist = Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2));
+        SmartDashboard.putNumber("Distance from Speaker", dist);
+        if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
+            this.autoShoot = false;
+            return 0;
+        
         }
-        this.autoShoot = false;
-        return 0;
+        
+        this.autoShoot = true;
+        return Units.metersToInches(dist);
+        // int id;
+        // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+        //     id = 8; 
+        // } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+        //     id = 4;
+        // } else {
+        //     this.autoShoot = false;
+        //     return 0;
+        // }
+        // var result = cameraFront.getLatestResult();
+
+        // for (PhotonTrackedTarget tag : result.getTargets()) {
+        //     if (tag.getFiducialId() == id) {
+        //         this.autoShoot = true;
+        //         var translations = tag.getBestCameraToTarget();
+        //         return Math.sqrt(Math.pow(translations.getX(), 2) + Math.pow(translations.getY(), 2) + Math.pow(translations.getZ(), 2));
+        //     }
+        // }
+        // this.autoShoot = false;
+        // return 0;
     }
     
     public void periodic() {
         if (visionEnabled){
-            SmartDashboard.putNumber("Distance from Speaker", getDistanceFromSpeaker());
+            // SmartDashboard.putNumber("Distance from Speaker", getDistanceFromSpeaker());
+            getDistanceFromSpeaker();
             if (autoShootCapable()){
                 SmartDashboard.putBoolean("AutoShoot Capable", true);
-                SmartDashboard.putNumber("X DISTANCE TO TAG", getXDistanceFromSpeaker());
+                SmartDashboard.putNumber("X DISTANCE TO TAG", getDistanceFromSpeaker());
             } else {
                 SmartDashboard.putBoolean("AutoShoot Capable", false);
             }

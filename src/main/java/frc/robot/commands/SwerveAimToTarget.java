@@ -3,6 +3,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
+
 import java.lang.Math;
 import java.util.function.Supplier;
 
@@ -27,6 +29,9 @@ public class SwerveAimToTarget extends Command {
     private final Supplier<Boolean> fieldOrientedFunction;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
+    private final PIDController turnController = new PIDController(0.1, 0, 0);
+
+
     public SwerveAimToTarget(SwerveDriveSubsystem swerveSubsystem,
             Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction,
             Supplier<Boolean> fieldOrientedFunction) {
@@ -38,6 +43,10 @@ public class SwerveAimToTarget extends Command {
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+
+    	// Create PID controller for turning to target
+		turnController.setTolerance(0.1);
+		
         addRequirements(swerveSubsystem);
     }
 
@@ -67,21 +76,9 @@ public class SwerveAimToTarget extends Command {
             ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
         }
 
-		// Create PID controller for turning to target
-		PIDController turnController = new PIDController(1, 0, 0);
-		turnController.setTolerance(0.1);
+	
+
 		
-		//Check team to see if we need to be at 0 or 180
-		if (DriverStation.getAlliance().isPresent() == true){
-			Alliance team = DriverStation.getAlliance().get();
-			if (team == Alliance.Blue){
-				turnController.setSetpoint(180);
-			} else {
-				turnController.setSetpoint(0);
-			}
-		}else{
-            return;
-        }
 		double turningSpeed = turnController.calculate(swerveSubsystem.getPose().getRotation().getDegrees());
 		SmartDashboard.putNumber("TurningJoystick Input", turningSpeed);
         turningSpeed = turningLimiter.calculate(turningSpeed)
