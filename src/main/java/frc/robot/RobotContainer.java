@@ -31,6 +31,8 @@ import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
 import frc.robot.commands.Arm.PivotManualLower;
 import frc.robot.commands.Arm.PivotManualRaise;
+import frc.robot.commands.Climber.AutoLowerClimber;
+import frc.robot.commands.Climber.AutoRiseClimber;
 import frc.robot.commands.Climber.LowerClimberCommand;
 import frc.robot.commands.Climber.RiseClimberCommand;
 import frc.robot.commands.Intake.Outtake;
@@ -83,6 +85,8 @@ public class RobotContainer {
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
 	public Command riseRightClimber;
+	public Command autoRiseClimber;
+	public Command autoLowerClimber;
 
 	public Command intakeNote;
 	public Command outtake;
@@ -134,6 +138,8 @@ public class RobotContainer {
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
 		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right");
+		autoLowerClimber = new AutoLowerClimber(climberLeft, climberRight);
+		autoRiseClimber = new AutoRiseClimber(climberLeft, climberRight);
 
 		intakeNote = new IntakeNote(intake);
 		outtake = new Outtake(intake);
@@ -196,6 +202,8 @@ public class RobotContainer {
 		xboxController1.y().whileTrue(riseLeftClimber);
 		xboxController1.x().whileTrue(lowerRightClimber);
 		xboxController1.b().whileTrue(riseRightClimber);
+		xboxController1.leftStick().onTrue(autoRiseClimber);
+		xboxController1.rightStick().onTrue(autoLowerClimber);
 
 	}
 
