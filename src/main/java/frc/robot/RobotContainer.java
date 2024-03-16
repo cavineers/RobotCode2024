@@ -151,7 +151,7 @@ public class RobotContainer {
 		intakeNote = new IntakeNote(intake);
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
-		shootAuto = new Shoot_Auto(shooter, intake, armPivot);
+		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
