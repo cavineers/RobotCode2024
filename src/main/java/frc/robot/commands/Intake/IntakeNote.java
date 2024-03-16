@@ -7,10 +7,16 @@ import frc.robot.subsystems.Intake;
 public class IntakeNote extends Command {
 
     private Intake intake;
+    private boolean isDone;
 
     public IntakeNote(Intake intake) {
         this.intake = intake;
         this.addRequirements(intake);
+    }
+
+    @Override
+    public void initialize() {
+        this.isDone = false;
     }
 
     @Override
@@ -20,6 +26,7 @@ public class IntakeNote extends Command {
         if (intake.getNoteSensor() == false) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         } else {
+            this.isDone = true;
             intake.setIntakeMotorState(intake.intakeMotorState.OFF);
         }
 
@@ -28,6 +35,11 @@ public class IntakeNote extends Command {
     @Override
     public void end(boolean interrupted) {
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return isDone;
     }
 
 }
