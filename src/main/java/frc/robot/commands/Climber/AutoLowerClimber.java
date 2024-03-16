@@ -28,8 +28,8 @@ public class AutoLowerClimber extends Command {
     public void execute() {
 
             // Left climber action
-            climberLeft.setSetpoint(Constants.Climber.LowerClimberMaxRotations + 7.5);
-			climberRight.setSetpoint(Constants.Climber.LowerClimberMaxRotations + 7.5);
+            climberLeft.setSetpoint(Constants.Climber.LowerClimberMaxRotations + 2);
+			climberRight.setSetpoint(Constants.Climber.LowerClimberMaxRotations + 2);
     }
 
     @Override
