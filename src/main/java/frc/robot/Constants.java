@@ -1,7 +1,10 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
@@ -237,5 +240,29 @@ public final class Constants {
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }
+
+    public static final class VisionConstants {
+        public static final Transform3d LeftCamera = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-11.88), Units.inchesToMeters(-6.88), Units.inchesToMeters(31.09)),
+            new Rotation3d(0, Math.toRadians(10.62), Math.toRadians(-45)));
+        
+        public static final Transform3d RightCamera = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-11.88), Units.inchesToMeters(-6.88), Units.inchesToMeters(31.09)),
+            new Rotation3d(0, Math.toRadians(10.62), Math.toRadians(-45)));
+
+         public static final Transform3d FrontCamera = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-11.88), Units.inchesToMeters(-6.88), Units.inchesToMeters(31.09)),
+            new Rotation3d(0, Math.toRadians(10.62), Math.toRadians(-45)));
+        
+        public static final double blueSpeakerX = Units.inchesToMeters(-1.5);
+        public static final double redSpeakerX = Units.inchesToMeters(652.73);
+        public static final double blueSpeakerY = Units.inchesToMeters(218.42);
+        public static final double redSpeakerY = Units.inchesToMeters(218.42);
+
+        // Auto shoot maximum and minimums in meters
+        public static double shootDistanceMinimum = 0.5;
+        public static double shootDistanceMaximum = 4.57;
+    }
+
 
 }

@@ -1,8 +1,12 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
@@ -99,6 +103,9 @@ public class RobotContainer {
 	public Command amp;
 	public SwerveHoming swerveHomingCommand;
 
+	public SendableChooser<Command> autoChooser; 
+	
+
 	public RobotContainer() {
 
 		// Subsystems
@@ -161,6 +168,10 @@ public class RobotContainer {
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
 		configureButtonBindings();
+		configureNamedCommands();
+		
+		autoChooser = AutoBuilder.buildAutoChooser();
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 
 	};
 
@@ -206,6 +217,19 @@ public class RobotContainer {
 		xboxController1.rightStick().onTrue(autoLowerClimber);
 
 	}
+	private void configureNamedCommands(){
+		NamedCommands.registerCommand("groundPickup", groundPickup);
+		NamedCommands.registerCommand("shootClosePosition", shootClosePosition);
+		NamedCommands.registerCommand("shootGround", shootGround);
+		NamedCommands.registerCommand("sourcePosition", sourcePosition);
+		NamedCommands.registerCommand("ampPosition", ampPosition);
+		NamedCommands.registerCommand("restPosition", restPosition);
+	    NamedCommands.registerCommand("intakeNote", intakeNote);
+		NamedCommands.registerCommand("outtake", outtake);
+		NamedCommands.registerCommand("feedNote", feedNote);
+		NamedCommands.registerCommand("shoot", shoot);
+		NamedCommands.registerCommand("amp", amp);
+	}
 
 	public SwerveDriveSubsystem getSwerveSubsystem() {
         return this.swerveSubsystem;
@@ -220,8 +244,9 @@ public class RobotContainer {
 	}
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("TestAutoNow");
+		return autoChooser.getSelected();
     }
+    
 
 	public void teleopSetup(){
 		armPivot.initializeDutyEncoder();

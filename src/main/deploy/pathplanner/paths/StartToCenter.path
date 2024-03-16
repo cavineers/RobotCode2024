@@ -41,13 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "MoveArmDown"
+                "name": null
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "StartIntake"
+                "name": null
               }
             }
           ]
