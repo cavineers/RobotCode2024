@@ -224,6 +224,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     }
 
     private boolean successZeroHeading = false;
+
+    public void initZeroHeading() {
+        gyro.reset();
+        gyro.setYaw(180);
+    }
     public void zeroHeading() {
         gyro.reset();
         

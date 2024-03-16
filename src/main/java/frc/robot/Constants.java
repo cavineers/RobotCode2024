@@ -142,12 +142,12 @@ public final class Constants {
     
         public static final double GroundPickupRotations = 0.353;
         public static final double RestRotations = 0.342;
-        public static final double ShootCloseRotations = 0.401;
-        public static final double ShootGroundRotations = 0.413;
+        public static final double ShootCloseRotations = 0.41; //0.401
+        public static final double ShootGroundRotations = 0.42;
         public static final double SourceRotations = 0.6138;
         public static final double AmpRotations = 0.644;
 
-        public static final double ProportionalGain = 3.2; // strength of a correction
+        public static final double ProportionalGain = 3.22; // strength of a correction
         public static final double IntegralTerm = 0; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -188,7 +188,7 @@ public final class Constants {
         public static final double SourceRotations = 0;
         public static final double AmpRotations = 151;
 
-        public static final double ProportionalGain = .03; // strength of a correction
+        public static final double ProportionalGain = .035; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 

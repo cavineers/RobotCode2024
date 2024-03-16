@@ -58,6 +58,9 @@ public class SwerveModule {
         driveMotor.setIdleMode(IdleMode.kCoast);
         turningMotor.setIdleMode(IdleMode.kCoast);
 
+        driveMotor.setSmartCurrentLimit(40);
+        turningMotor.setSmartCurrentLimit(40);
+
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
         
