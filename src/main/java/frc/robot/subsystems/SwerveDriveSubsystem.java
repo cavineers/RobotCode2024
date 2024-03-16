@@ -288,14 +288,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         m_field.setRobotPose(this.updatedPose);
         SmartDashboard.putData("Field", m_field);
         SmartDashboard.putNumber("Heading", getHeading());
-       
+        // SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());
+        // SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
+        // SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
+        // SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
 
-        SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
+        // SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
     }
     
     public void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
         SwerveModuleState[] states = DriveConstants.SwerveKinematics.toSwerveModuleStates(relativeSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+        // SmartDashboard.putString("StateFL", states[0].toString());
         
         frontLeft.setDesiredState(states[0]);
         frontRight.setDesiredState(states[1]);

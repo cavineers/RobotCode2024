@@ -30,12 +30,12 @@ public class Shoot_Manual extends Command {
     @Override
     public void execute() {
 
-        SmartDashboard.putString("Shooter", "Shooting Manual");
+        // SmartDashboard.putString("Shooter", "Shooting Manual");
 
         double shooterMotorSpeed = triggerValue.get();
 
-        SmartDashboard.putNumber("RightTriggerValue", shooterMotorSpeed);
-        SmartDashboard.putNumber("ShooterMotorSpeed", shooter.getShooterMotorSpeed());
+        // SmartDashboard.putNumber("RightTriggerValue", shooterMotorSpeed);
+        // SmartDashboard.putNumber("ShooterMotorSpeed", shooter.getShooterMotorSpeed());
 
         shooterMotorSpeed = shooterMotorSpeed * Constants.Shooter.ShooterForwardSpeed;
 

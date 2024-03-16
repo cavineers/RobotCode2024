@@ -15,7 +15,7 @@ public class IntakeNote extends Command {
 
     @Override
     public void execute() {
-        SmartDashboard.putString("Intake", "Intaking");
+        // SmartDashboard.putString("Intake", "Intaking");
 
         if (intake.getNoteSensor() == false) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);

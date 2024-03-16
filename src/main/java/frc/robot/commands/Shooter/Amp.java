@@ -40,7 +40,7 @@ public class Amp extends Command {
 
     @Override
     public void execute() {
-        SmartDashboard.putString("Amp", "Amping");
+        // SmartDashboard.putString("Amp", "Amping");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.AMP);
         if (timer.get()>1) {
@@ -58,7 +58,7 @@ public class Amp extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        SmartDashboard.putString("Amp", "Finished");
+        // SmartDashboard.putString("Amp", "Finished");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);

@@ -17,7 +17,7 @@ public class FeedNote extends Command {
 
     @Override
     public void execute() {
-        SmartDashboard.putString("Intake", "Feeding");
+        // SmartDashboard.putString("Intake", "Feeding");
 
         intake.setIntakeMotorState(intake.intakeMotorState.ON);
 

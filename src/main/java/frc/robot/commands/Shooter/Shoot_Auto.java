@@ -60,7 +60,7 @@ public class Shoot_Auto extends Command {
 		
 		distanceMeters = distanceEntry.getDouble(1);
 
-		SmartDashboard.putString("Shooter", "Auto Shooting");
+		// SmartDashboard.putString("Shooter", "Auto Shooting");
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
@@ -76,8 +76,8 @@ public class Shoot_Auto extends Command {
            }
         }
 
-        SmartDashboard.putNumber("Timer1", timer.get());
-        SmartDashboard.putNumber("Timer2", timer2.get());
+        // SmartDashboard.putNumber("Timer1", timer.get());
+        // SmartDashboard.putNumber("Timer2", timer2.get());
         
     }
 
@@ -86,7 +86,7 @@ public class Shoot_Auto extends Command {
 		shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
         timer.stop();
-        SmartDashboard.putString("Shooter", "Done Auto Shooting");
+        // SmartDashboard.putString("Shooter", "Done Auto Shooting");
     }
 
     public double calculateCurrentShooterAngle() {
