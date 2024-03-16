@@ -16,7 +16,7 @@ public class Outtake extends Command {
     @Override
     public void execute() {
 
-        SmartDashboard.putString("Intake", "Outtaking");
+        // SmartDashboard.putString("Intake", "Outtaking");
 
         intake.setIntakeMotorState(intake.intakeMotorState.REVERSE);
     }

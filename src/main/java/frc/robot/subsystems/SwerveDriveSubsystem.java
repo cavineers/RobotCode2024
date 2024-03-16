@@ -151,7 +151,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Has Tags", true);
         Pose2d visionPose2d = visionPose.get().estimatedPose.toPose2d();
         poseEstimator.addVisionMeasurement(visionPose2d, visionPose.get().timestampSeconds);
-        SmartDashboard.putNumber("Rotation", visionPose2d.getRotation().getDegrees());
+        // SmartDashboard.putNumber("Rotation", visionPose2d.getRotation().getDegrees());
         //For some reason the rotation aspect of vision is not working
         var returnValue = poseEstimator.getEstimatedPosition();
 
@@ -257,18 +257,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         m_field.setRobotPose(this.updatedPose);
         SmartDashboard.putData("Field", m_field);
         SmartDashboard.putNumber("Heading", getHeading());
-        SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());
-        SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
-        SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
-        SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
+        // SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());
+        // SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
+        // SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
+        // SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
 
-        SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
+        // SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
     }
     
     public void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
         SwerveModuleState[] states = DriveConstants.SwerveKinematics.toSwerveModuleStates(relativeSpeeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
-        SmartDashboard.putString("StateFL", states[0].toString());
+        // SmartDashboard.putString("StateFL", states[0].toString());
         
         frontLeft.setDesiredState(states[0]);
         frontRight.setDesiredState(states[1]);

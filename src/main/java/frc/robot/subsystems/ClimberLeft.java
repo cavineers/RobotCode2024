@@ -124,6 +124,6 @@ public class ClimberLeft extends SubsystemBase {
         SmartDashboard.putNumber("leftClimberPos", getLeftClimberMotorPosition());
         SmartDashboard.putNumber("leftClimberSetPoint", getLeftClimberMotorSetPoint());
         SmartDashboard.putBoolean("leftClimberLimitSwitch", getLimitSwitch());
-        SmartDashboard.putNumber("leftClimberSpeed", s);
+        // SmartDashboard.putNumber("leftClimberSpeed", s);
     }
 }

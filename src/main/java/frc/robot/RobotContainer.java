@@ -156,7 +156,7 @@ public class RobotContainer {
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverYAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverRotAxis),
-					() -> false));
+					() -> !xboxController0.leftStick().getAsBoolean()));
 
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
