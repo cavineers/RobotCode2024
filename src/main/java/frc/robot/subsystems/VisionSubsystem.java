@@ -202,7 +202,7 @@ public class VisionSubsystem extends SubsystemBase {
         }
         
         this.autoShoot = true;
-        return Units.metersToInches(dist);
+        return dist;
         // int id;
         // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
         //     id = 8; 
