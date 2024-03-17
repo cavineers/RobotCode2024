@@ -27,7 +27,7 @@ import frc.robot.subsystems.ClimberRight;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.Shooter;
-
+import frc.robot.commands.SwerveAimToTarget;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.commands.SwerveHoming;
 import frc.robot.commands.Arm.ArmPreset;
@@ -101,6 +101,7 @@ public class RobotContainer {
 	public Command shootManual;
 	public Command shootToggle;
 	public Command amp;
+	public Command swerveAimToTarget;
 	public SwerveHoming swerveHomingCommand;
 
 	public SendableChooser<Command> autoChooser; 
@@ -156,6 +157,7 @@ public class RobotContainer {
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
 		feedNote = new FeedNote(intake);
+		
 
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
@@ -164,6 +166,11 @@ public class RobotContainer {
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverRotAxis),
 					() -> !xboxController0.leftStick().getAsBoolean()));
+
+		swerveAimToTarget = new SwerveAimToTarget(swerveSubsystem, visionSubsystem, 
+					() -> -xboxController0.getRawAxis(OIConstants.kDriverYAxis),
+					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
+					() -> !xboxController0.leftStick().getAsBoolean());
 
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
