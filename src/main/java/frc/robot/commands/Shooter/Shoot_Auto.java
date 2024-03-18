@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmPivot;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,19 +24,16 @@ public class Shoot_Auto extends Command {
 
     private double distanceMeters;
 
-    ShuffleboardTab tab = Shuffleboard.getTab("Robot");
-
-    private GenericEntry distanceEntry = tab
-        .add("Distance to target (Meters)", 0)
-        .getEntry();
+    private VisionSubsystem visionSubsystem;
 		
 	private Timer timer;
     private Timer timer2;
 
-    public Shoot_Auto(Shooter shooter, Intake intake, ArmPivot armPivot) {
+    public Shoot_Auto(Shooter shooter, Intake intake, ArmPivot armPivot, VisionSubsystem visionSubsystem) {
         this.shooter = shooter;
         this.intake = intake;
         this.armPivot = armPivot;
+        this.visionSubsystem = visionSubsystem;
         this.addRequirements(shooter);
         this.addRequirements(intake);
         this.addRequirements(armPivot);
@@ -58,9 +56,9 @@ public class Shoot_Auto extends Command {
     @Override
     public void execute() {
 		
-		distanceMeters = distanceEntry.getDouble(1);
+		distanceMeters = visionSubsystem.getDistanceFromSpeaker();
 
-		SmartDashboard.putString("Shooter", "Auto Shooting");
+		// SmartDashboard.putString("Shooter", "Auto Shooting");
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
@@ -76,8 +74,8 @@ public class Shoot_Auto extends Command {
            }
         }
 
-        SmartDashboard.putNumber("Timer1", timer.get());
-        SmartDashboard.putNumber("Timer2", timer2.get());
+        // SmartDashboard.putNumber("Timer1", timer.get());
+        // SmartDashboard.putNumber("Timer2", timer2.get());
         
     }
 
@@ -86,7 +84,7 @@ public class Shoot_Auto extends Command {
 		shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
         timer.stop();
-        SmartDashboard.putString("Shooter", "Done Auto Shooting");
+        // SmartDashboard.putString("Shooter", "Done Auto Shooting");
     }
 
     public double calculateCurrentShooterAngle() {

@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     // Container
     m_robotContainer = new RobotContainer();
     m_robotContainer.swerveHomingCommand.schedule();
-    m_robotContainer.getSwerveSubsystem().zeroHeading();
+    m_robotContainer.getSwerveSubsystem().initZeroHeading();
     
     CameraServer.startAutomaticCapture();
   }
@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.swerveHomingCommand.schedule();
-    m_robotContainer.getSwerveSubsystem().toggleIdleMode(IdleMode.kCoast);
+    m_robotContainer.getSwerveSubsystem().toggleIdleMode(IdleMode.kBrake);
     m_robotContainer.teleopSetup();
     // m_robotContainer.getSwerveSubsystem().zeroHeading();
   }

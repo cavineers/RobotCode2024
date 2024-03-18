@@ -30,7 +30,7 @@ public class Shoot_Toggle extends Command {
     @Override
     public void execute() {
 
-        SmartDashboard.putString("Shooter", "Shooter ON");
+        // SmartDashboard.putString("Shooter", "Shooter ON");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
                 
@@ -39,7 +39,7 @@ public class Shoot_Toggle extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
-        SmartDashboard.putString("Shooter", "Shooter OFF");
+        // SmartDashboard.putString("Shooter", "Shooter OFF");
     }
 
     @Override

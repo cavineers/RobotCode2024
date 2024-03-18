@@ -1,8 +1,12 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OIConstants;
@@ -23,7 +27,7 @@ import frc.robot.subsystems.ClimberRight;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.Shooter;
-
+import frc.robot.commands.SwerveAimToTarget;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.commands.SwerveHoming;
 import frc.robot.commands.Arm.ArmPreset;
@@ -31,6 +35,8 @@ import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
 import frc.robot.commands.Arm.PivotManualLower;
 import frc.robot.commands.Arm.PivotManualRaise;
+import frc.robot.commands.Climber.AutoLowerClimber;
+import frc.robot.commands.Climber.AutoRiseClimber;
 import frc.robot.commands.Climber.LowerClimberCommand;
 import frc.robot.commands.Climber.RiseClimberCommand;
 import frc.robot.commands.Intake.Outtake;
@@ -83,6 +89,8 @@ public class RobotContainer {
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
 	public Command riseRightClimber;
+	public Command autoRiseClimber;
+	public Command autoLowerClimber;
 
 	public Command intakeNote;
 	public Command outtake;
@@ -93,7 +101,11 @@ public class RobotContainer {
 	public Command shootManual;
 	public Command shootToggle;
 	public Command amp;
+	public Command swerveAimToTarget;
 	public SwerveHoming swerveHomingCommand;
+
+	public SendableChooser<Command> autoChooser; 
+	
 
 	public RobotContainer() {
 
@@ -134,15 +146,18 @@ public class RobotContainer {
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
 		riseRightClimber = new RiseClimberCommand(climberLeft, climberRight, "right");
+		autoLowerClimber = new AutoLowerClimber(climberLeft, climberRight);
+		autoRiseClimber = new AutoRiseClimber(climberLeft, climberRight);
 
-		intakeNote = new IntakeNote(intake);
+		intakeNote = new IntakeNote(intake, shooter);
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
-		shootAuto = new Shoot_Auto(shooter, intake, armPivot);
+		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
 		feedNote = new FeedNote(intake);
+		
 
 
 		swerveSubsystem.setDefaultCommand(new SwerveCommand(
@@ -150,11 +165,20 @@ public class RobotContainer {
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverYAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
 					() -> -xboxController0.getRawAxis(OIConstants.kDriverRotAxis),
-					() -> false));
+					() -> !xboxController0.leftStick().getAsBoolean()));
+
+		swerveAimToTarget = new SwerveAimToTarget(swerveSubsystem, visionSubsystem, 
+					() -> -xboxController0.getRawAxis(OIConstants.kDriverYAxis),
+					() -> -xboxController0.getRawAxis(OIConstants.kDriverXAxis),
+					() -> !xboxController0.leftStick().getAsBoolean());
 
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
 		configureButtonBindings();
+		configureNamedCommands();
+		
+		autoChooser = AutoBuilder.buildAutoChooser();
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 
 	};
 
@@ -196,7 +220,22 @@ public class RobotContainer {
 		xboxController1.y().whileTrue(riseLeftClimber);
 		xboxController1.x().whileTrue(lowerRightClimber);
 		xboxController1.b().whileTrue(riseRightClimber);
+		xboxController1.leftStick().onTrue(autoRiseClimber);
+		xboxController1.rightStick().onTrue(autoLowerClimber);
 
+	}
+	private void configureNamedCommands(){
+		NamedCommands.registerCommand("groundPickup", groundPickup);
+		NamedCommands.registerCommand("shootClosePosition", shootClosePosition);
+		NamedCommands.registerCommand("shootGround", shootGround);
+		NamedCommands.registerCommand("sourcePosition", sourcePosition);
+		NamedCommands.registerCommand("ampPosition", ampPosition);
+		NamedCommands.registerCommand("restPosition", restPosition);
+	    NamedCommands.registerCommand("intakeNote", intakeNote);
+		NamedCommands.registerCommand("outtake", outtake);
+		NamedCommands.registerCommand("feedNote", feedNote);
+		NamedCommands.registerCommand("shoot", shoot);
+		NamedCommands.registerCommand("amp", amp);
 	}
 
 	public SwerveDriveSubsystem getSwerveSubsystem() {
@@ -212,8 +251,9 @@ public class RobotContainer {
 	}
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("TestAutoNow");
+		return autoChooser.getSelected();
     }
+    
 
 	public void teleopSetup(){
 		armPivot.initializeDutyEncoder();

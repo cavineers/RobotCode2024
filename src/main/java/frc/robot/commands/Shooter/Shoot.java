@@ -40,10 +40,10 @@ public class Shoot extends Command {
     @Override
     public void execute() {
 
-        SmartDashboard.putString("Shooter", "Shooting");
+        // SmartDashboard.putString("Shooter", "Shooting");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (timer.get()>2) {
+        if (timer.get()>1) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 
@@ -54,8 +54,8 @@ public class Shoot extends Command {
            }
         }
 
-        SmartDashboard.putNumber("Timer1", timer.get());
-        SmartDashboard.putNumber("Timer2", timer2.get());
+        // SmartDashboard.putNumber("Timer1", timer.get());
+        // SmartDashboard.putNumber("Timer2", timer2.get());
         
     }
 
@@ -64,7 +64,7 @@ public class Shoot extends Command {
         shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
         timer.stop();
-        SmartDashboard.putString("Shooter", "Done Shooting");
+        // SmartDashboard.putString("Shooter", "Done Shooting");
     }
 
     @Override

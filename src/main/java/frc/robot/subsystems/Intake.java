@@ -33,11 +33,11 @@ public class Intake extends SubsystemBase {
     
     public Intake() {
 
-        this.upperIntakeMotor.setIdleMode(IdleMode.kCoast);
-        this.lowerIntakeMotor.setIdleMode(IdleMode.kCoast);
+        this.upperIntakeMotor.setIdleMode(IdleMode.kBrake);
+        this.lowerIntakeMotor.setIdleMode(IdleMode.kBrake);
 
-        this.upperIntakeMotor.setSmartCurrentLimit(80); // TBD
-        this.lowerIntakeMotor.setSmartCurrentLimit(80); // TBD
+        this.upperIntakeMotor.setSmartCurrentLimit(35); // TBD
+        this.lowerIntakeMotor.setSmartCurrentLimit(35); // TBD
 
         this.upperIntakeMotor.setInverted(false);
         this.lowerIntakeMotor.setInverted(true);
@@ -53,7 +53,7 @@ public class Intake extends SubsystemBase {
         case ON:
             this.upperIntakeMotor.set(Constants.Intake.UpperIntakeForwardSpeed);
             this.lowerIntakeMotor.set(Constants.Intake.LowerIntakeForwardSpeed);
-            SmartDashboard.putString("Intake", "Intaking");
+            // SmartDashboard.putString("Intake", "Intaking");
             break;
 
         case REVERSE:

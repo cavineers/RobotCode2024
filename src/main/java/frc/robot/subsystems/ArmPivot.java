@@ -98,7 +98,7 @@ public class ArmPivot extends SubsystemBase {
         requiredSetpoint = ((Constants.ArmPivot.dRotations * (angle - Constants.ArmPivot.armPivotMinAngleDegrees)) / Constants.ArmPivot.dAngle) + Constants.ArmPivot.PivotMotorLowerRotationLimit;
         setSetpoint(requiredSetpoint);
 
-        SmartDashboard.putNumber("Set Setpoint", requiredSetpoint);
+        // SmartDashboard.putNumber("Set Setpoint", requiredSetpoint);
 
     }
 
@@ -140,15 +140,15 @@ public class ArmPivot extends SubsystemBase {
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());
-        SmartDashboard.putNumber("PivotSpeed", speed);
-        if (speed < -.1) {
-            speed = -.1;
+        // SmartDashboard.putNumber("PivotSpeed", speed);
+        if (speed < -.19) {
+            speed = -.19;
         }
         pivotMotor.set(speed);
 
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
-        SmartDashboard.putNumber("PivotMin", currentMinimumRot);
+        // SmartDashboard.putNumber("PivotMin", currentMinimumRot);
     }
 
     public boolean atSetpoint() {
