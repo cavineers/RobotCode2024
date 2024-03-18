@@ -43,7 +43,7 @@ public class Shoot extends Command {
         // SmartDashboard.putString("Shooter", "Shooting");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (timer.get()>.75) {
+        if (timer.get()>1) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 

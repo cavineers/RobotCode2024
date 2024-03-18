@@ -53,7 +53,7 @@ public class Shooter extends SubsystemBase {
             break;
 
         case REVERSE:
-            this.shooterMotor.set(Constants.Shooter.ShooterReverseSpeed);
+            this.shooterMotor.set(-.1);
             break;
 
         case OFF:

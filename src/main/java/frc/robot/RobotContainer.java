@@ -149,7 +149,7 @@ public class RobotContainer {
 		autoLowerClimber = new AutoLowerClimber(climberLeft, climberRight);
 		autoRiseClimber = new AutoRiseClimber(climberLeft, climberRight);
 
-		intakeNote = new IntakeNote(intake);
+		intakeNote = new IntakeNote(intake, shooter);
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);

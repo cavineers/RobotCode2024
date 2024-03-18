@@ -233,10 +233,10 @@ public final class Constants {
     }
 
     public static final class Intake {
-        public static final double UpperIntakeForwardSpeed = .7; // TBD
-        public static final double LowerIntakeForwardSpeed = .7; // TBD
-        public static final double UpperIntakeReverseSpeed = -.7; // TBD
-        public static final double LowerIntakeReverseSpeed = -.7; // TBD
+        public static final double UpperIntakeForwardSpeed = .77; // TBD
+        public static final double LowerIntakeForwardSpeed = .77; // TBD
+        public static final double UpperIntakeReverseSpeed = -.77; // TBD
+        public static final double LowerIntakeReverseSpeed = -.77; // TBD
         public static final double UpperIntakeRetractSpeed = -.05; // TBD
         public static final double LowerIntakeRetractSpeed = -.05; // TBD
     }
