@@ -1,5 +1,5 @@
 {
-    "version": "v0.2.2",
+    "version": "v0.3",
     "robotConfiguration": {
         "mass": 61.73998083590995,
         "rotationalInertia": 6,
@@ -306,6 +306,7 @@
                     "timestamp": 2.766352325397809
                 }
             ],
+            "trajectoryWaypoints": [],
             "constraints": [
                 {
                     "scope": [
@@ -329,7 +330,9 @@
             "usesControlIntervalGuessing": true,
             "defaultControlIntervalCount": 40,
             "usesDefaultFieldObstacles": true,
-            "circleObstacles": []
+            "circleObstacles": [],
+            "eventMarkers": [],
+            "isTrajectoryStale": true
         },
         "AMP3Piece": {
             "waypoints": [
@@ -385,7 +388,7 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 12
+                    "controlIntervalCount": 9
                 },
                 {
                     "x": 7.785355567932129,
@@ -1312,7 +1315,35 @@
             "usesControlIntervalGuessing": true,
             "defaultControlIntervalCount": 40,
             "usesDefaultFieldObstacles": true,
-            "circleObstacles": []
+            "circleObstacles": [],
+            "eventMarkers": [
+                {
+                    "name": "Marker",
+                    "target": 5,
+                    "targetTimestamp": null,
+                    "offset": -1,
+                    "command": {
+                        "type": "parallel",
+                        "data": {
+                            "commands": [
+                                {
+                                    "type": "named",
+                                    "data": {
+                                        "name": "groundPickup"
+                                    }
+                                },
+                                {
+                                    "type": "named",
+                                    "data": {
+                                        "name": ""
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "isTrajectoryStale": true
         }
     },
     "splitTrajectoriesAtStopPoints": true,
