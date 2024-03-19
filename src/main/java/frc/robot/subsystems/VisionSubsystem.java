@@ -203,26 +203,7 @@ public class VisionSubsystem extends SubsystemBase {
         
         this.autoShoot = true;
         return dist;
-        // int id;
-        // if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
-        //     id = 8; 
-        // } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
-        //     id = 4;
-        // } else {
-        //     this.autoShoot = false;
-        //     return 0;
-        // }
-        // var result = cameraFront.getLatestResult();
 
-        // for (PhotonTrackedTarget tag : result.getTargets()) {
-        //     if (tag.getFiducialId() == id) {
-        //         this.autoShoot = true;
-        //         var translations = tag.getBestCameraToTarget();
-        //         return Math.sqrt(Math.pow(translations.getX(), 2) + Math.pow(translations.getY(), 2) + Math.pow(translations.getZ(), 2));
-        //     }
-        // }
-        // this.autoShoot = false;
-        // return 0;
     }
     
     public void periodic() {
@@ -243,6 +224,7 @@ public class VisionSubsystem extends SubsystemBase {
                 SmartDashboard.putBoolean("AutoRotate Capable", false);
                 SmartDashboard.putNumber("Angle to Speaker", 0);
             }
+            SmartDashboard.putNumber("Distance to Speaker", getDistanceFromSpeaker());
 
             
 

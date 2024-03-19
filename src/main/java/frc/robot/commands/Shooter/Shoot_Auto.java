@@ -50,8 +50,40 @@ public class Shoot_Auto extends Command {
 		timer = new Timer();
         timer2 = new Timer();
 
+        this.interpolatePivotAngleMap = new InterpolatingDoubleTreeMap();
+        this.interpolateShooterSpeedMap = new InterpolatingDoubleTreeMap();
+
+        initMaps();
 
         
+    }
+
+    private void initMaps(){
+        // PIVOT ANGLE MAP
+        interpolatePivotAngleMap.put(0.0, 0.0);
+        interpolatePivotAngleMap.put(1.0, 1.0);
+        interpolatePivotAngleMap.put(2.0, 2.0);
+        interpolatePivotAngleMap.put(3.0, 3.0);
+        interpolatePivotAngleMap.put(4.0, 4.0);
+        interpolatePivotAngleMap.put(5.0, 5.0);
+        interpolatePivotAngleMap.put(6.0, 6.0);
+        interpolatePivotAngleMap.put(7.0, 7.0);
+        interpolatePivotAngleMap.put(8.0, 8.0);
+        interpolatePivotAngleMap.put(9.0, 9.0);
+
+        // SHOOTER SPEED MAP
+
+        interpolateShooterSpeedMap.put(0.0, 0.0);
+        interpolateShooterSpeedMap.put(1.0, 1.0);
+        interpolateShooterSpeedMap.put(2.0, 2.0);
+        interpolateShooterSpeedMap.put(3.0, 3.0);
+        interpolateShooterSpeedMap.put(4.0, 4.0);
+        interpolateShooterSpeedMap.put(5.0, 5.0);
+        interpolateShooterSpeedMap.put(6.0, 6.0);
+        interpolateShooterSpeedMap.put(7.0, 7.0);
+        interpolateShooterSpeedMap.put(8.0, 8.0);
+
+
     }
 
     // Set Motor State to ON / OFF
@@ -73,7 +105,7 @@ public class Shoot_Auto extends Command {
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (armPivot.isAtSetpoint() && timer.get()>2) {
+        if (armPivot.isAtSetpoint() && timer.get()>interpolateShooterSpeedMap.get(distanceMeters)){
             SmartDashboard.putBoolean("Is At Setpoint", true);
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
@@ -107,9 +139,9 @@ public class Shoot_Auto extends Command {
 
     public double calculateRequiredArmPivotAngle(Double distance) {
 
-		SmartDashboard.putNumber("Distance to Speaker", distance);
-         
-        requiredArmPivotAngleDegrees = (-1.4 * (Math.pow(1.686, -(distance - 6.7)))) - 29.4 + 90.0;
+        // requiredArmPivotAngleDegrees = (-1.4 * (Math.pow(1.686, -(distance - 6.7)))) - 29.4 + 90.0;
+
+        requiredArmPivotAngleDegrees = interpolatePivotAngleMap.get(distance);
 
         SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 
