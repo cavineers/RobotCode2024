@@ -235,6 +235,7 @@ public class RobotContainer {
 		NamedCommands.registerCommand("outtake", outtake);
 		NamedCommands.registerCommand("feedNote", feedNote);
 		NamedCommands.registerCommand("shoot", shoot);
+		NamedCommands.registerCommand("shootAuto", shootAuto);
 		NamedCommands.registerCommand("amp", amp);
 	}
 

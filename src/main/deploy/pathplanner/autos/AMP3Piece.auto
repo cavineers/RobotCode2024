@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7974945306777954,
-      "y": 6.705162525177002
+      "x": 0.7955461740493774,
+      "y": 6.696406364440918
     },
     "rotation": -120.32113697747288
   },
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP2Piece.1"
+                  "pathName": "AMP3Piece.1"
                 }
               },
               {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP2Piece.2"
+                  "pathName": "AMP3Piece.2"
                 }
               },
               {
@@ -80,22 +80,28 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP2Piece.3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "groundPickup"
+                  "pathName": "AMP3Piece.3"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMP3Piece.4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoShoot"
           }
         }
       ]
