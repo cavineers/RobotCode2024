@@ -12,6 +12,10 @@ import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.io.ObjectInputStream.GetField;
+
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+
 public class Shoot_Auto extends Command {
 
     private boolean isDone = false;
@@ -29,6 +33,11 @@ public class Shoot_Auto extends Command {
 	private Timer timer;
     private Timer timer2;
 
+    private InterpolatingDoubleTreeMap interpolatePivotAngleMap;
+    private InterpolatingDoubleTreeMap interpolateShooterSpeedMap;
+
+ 
+
     public Shoot_Auto(Shooter shooter, Intake intake, ArmPivot armPivot, VisionSubsystem visionSubsystem) {
         this.shooter = shooter;
         this.intake = intake;
@@ -40,6 +49,8 @@ public class Shoot_Auto extends Command {
 
 		timer = new Timer();
         timer2 = new Timer();
+
+
         
     }
 

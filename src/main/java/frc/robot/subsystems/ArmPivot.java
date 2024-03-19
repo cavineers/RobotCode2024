@@ -5,7 +5,10 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -39,6 +42,11 @@ public class ArmPivot extends SubsystemBase {
 
     private double currentMinimumRot;
     
+    private GenericEntry pivotAngleGetter;
+
+    private Boolean isTesting = true; // set this to true if you want to take the values from shuffle
+
+    private ShuffleboardTab tab = Shuffleboard.getTab("Shooter Params");
     // Motor sparkmax settings
     public ArmPivot(ArmBase armBase) {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
@@ -49,6 +57,10 @@ public class ArmPivot extends SubsystemBase {
 
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
+
+        
+
+        this.pivotAngleGetter = tab.add("Arm Pivot Angle", 0.353).getEntry();
 
     }
 
@@ -118,6 +130,9 @@ public class ArmPivot extends SubsystemBase {
         // Clip setpoints
         double minRotation;
         double maxRotation = Constants.ArmPivot.PivotMotorUpperRotationLimit;
+
+        if (isTesting)
+            motorSetpoint = pivotAngleGetter.getDouble(0.353);
 
         if (armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
             minRotation = Constants.ArmPivot.PivotRestMinRotations;
