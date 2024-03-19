@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7955461740493774,
-      "y": 6.696406364440918
+      "x": 1.4010045528411863,
+      "y": 5.575
     },
-    "rotation": -120.32113697747288
+    "rotation": 179.96604345059157
   },
   "command": {
     "type": "sequential",
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP3Piece.1"
+                  "pathName": "Center3PieceAmpSide.1"
                 }
               },
               {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP3Piece.2"
+                  "pathName": "Center3PieceAmpSide.2"
                 }
               },
               {
@@ -74,28 +74,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AMP3Piece.3"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intakeNote"
+            "pathName": "Center3PieceAmpSide.3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "AMP3Piece.4"
+            "pathName": "Center3PieceAmpSide.4"
           }
         },
         {
