@@ -5,10 +5,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -41,22 +38,6 @@ public class ArmPivot extends SubsystemBase {
     private double requiredSetpoint;
 
     private double currentMinimumRot;
-
-    private double currentP;
-    private double currentI;
-    private double currentD;
-
-    ShuffleboardTab tab = Shuffleboard.getTab("Pivot");
-
-    private GenericEntry pEntry = tab.add("P", 0).getEntry();
-
-    private GenericEntry iEntry = tab
-        .add("I", 0)
-        .getEntry();
-
-    private GenericEntry dEntry = tab
-        .add("D", 0)
-        .getEntry();
     
     // Motor sparkmax settings
     public ArmPivot(ArmBase armBase) {
@@ -68,13 +49,6 @@ public class ArmPivot extends SubsystemBase {
 
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
-
-        this.currentP = Constants.ArmPivot.ProportionalGain;
-        this.currentI = Constants.ArmPivot.IntegralTerm;
-        this.currentD = Constants.ArmPivot.DerivitiveTerm;
-
-        
-         
 
     }
 
@@ -145,23 +119,6 @@ public class ArmPivot extends SubsystemBase {
         double minRotation;
         double maxRotation = Constants.ArmPivot.PivotMotorUpperRotationLimit;
 
-        if (this.currentP != pEntry.getDouble(0.0)) {
-            this.currentP = pEntry.getDouble(0.0);
-            pivotPid.setP(this.currentP);
-        }
-
-        if (this.currentI != iEntry.getDouble(0.0)){
-            this.currentI = iEntry.getDouble(0.0);
-            pivotPid.setI(this.currentI);
-        }
-
-        if (this.currentD != dEntry.getDouble(0.0)){
-            this.currentD = dEntry.getDouble(0.0);
-            pivotPid.setD(this.currentD);
-        }
-
-
-
         if (armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
             minRotation = Constants.ArmPivot.PivotRestMinRotations;
         } else if (armBase.getBaseMotorPosition() < Constants.ArmBase.PivotRegionGroundMax) {
@@ -191,10 +148,6 @@ public class ArmPivot extends SubsystemBase {
 
         SmartDashboard.putNumber("PivotRot", getPivotAbsolute());
         SmartDashboard.putNumber("PIVOT SETPOINT", motorSetpoint);
-
-        tab.add("Pivot Rotation", getPivotAbsolute());
-        tab.add("Pivot Setpoint", motorSetpoint);
-        tab.add("Pivot Speed", speed);
         // SmartDashboard.putNumber("PivotMin", currentMinimumRot);
     }
 
