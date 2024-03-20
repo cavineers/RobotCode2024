@@ -19,6 +19,9 @@ public class Shoot extends Command {
     private Timer timer2;
     private boolean isDone;
 
+    private ShuffleboardTab tab = Shuffleboard.getTab("Shooter Params");
+    private GenericEntry shooterWaitGetter;
+
     public Shoot(Shooter shooter, Intake intake) {
         this.shooter = shooter;
         this.intake = intake;
@@ -26,6 +29,7 @@ public class Shoot extends Command {
         
         timer = new Timer();
         timer2 = new Timer();
+        this.shooterWaitGetter = tab.add("Shooter Wait Time", 2).getEntry();
     }
 
     @Override
@@ -43,7 +47,7 @@ public class Shoot extends Command {
         // SmartDashboard.putString("Shooter", "Shooting");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (timer.get()>1) {
+        if (timer.get()>shooterWaitGetter.getDouble(2)) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 

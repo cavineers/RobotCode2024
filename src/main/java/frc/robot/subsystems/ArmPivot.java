@@ -5,7 +5,10 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -39,16 +42,25 @@ public class ArmPivot extends SubsystemBase {
 
     private double currentMinimumRot;
     
+    private GenericEntry pivotAngleGetter;
+
+    private Boolean isTesting = false; // set this to true if you want to take the values from shuffle
+
+    private ShuffleboardTab tab = Shuffleboard.getTab("Shooter Params");
     // Motor sparkmax settings
     public ArmPivot(ArmBase armBase) {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
-        this.pivotMotor.setSmartCurrentLimit(80);
+        this.pivotMotor.setSmartCurrentLimit(40);
 
         this.pivotMotor.setInverted(true);
         this.pivotPid.setTolerance(Constants.ArmPivot.PivotSetpointTolerance);
 
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
+
+        
+
+        this.pivotAngleGetter = tab.add("Arm Pivot Angle", 0.353).getEntry();
 
     }
 
@@ -119,6 +131,9 @@ public class ArmPivot extends SubsystemBase {
         double minRotation;
         double maxRotation = Constants.ArmPivot.PivotMotorUpperRotationLimit;
 
+        if (isTesting)
+            motorSetpoint = pivotAngleGetter.getDouble(0.353);
+
         if (armBase.getBaseMotorPosition() > Constants.ArmBase.PivotRegionRestMin) {
             minRotation = Constants.ArmPivot.PivotRestMinRotations;
         } else if (armBase.getBaseMotorPosition() < Constants.ArmBase.PivotRegionGroundMax) {
@@ -140,7 +155,7 @@ public class ArmPivot extends SubsystemBase {
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());
-        // SmartDashboard.putNumber("PivotSpeed", speed);
+        SmartDashboard.putNumber("PivotSpeed", speed);
         if (speed < -.19) {
             speed = -.19;
         }

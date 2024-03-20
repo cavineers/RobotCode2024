@@ -37,7 +37,7 @@ public class ClimberLeft extends SubsystemBase {
         this.leftClimberMotor.setInverted(false);
 
         // Set the amp limit when specified - TBD
-        this.leftClimberMotor.setSmartCurrentLimit(80);
+        this.leftClimberMotor.setSmartCurrentLimit(40);
     }
 
     public boolean getLimitSwitch() {
@@ -121,9 +121,9 @@ public class ClimberLeft extends SubsystemBase {
             setLeftClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
         }
 
-        SmartDashboard.putNumber("leftClimberPos", getLeftClimberMotorPosition());
-        SmartDashboard.putNumber("leftClimberSetPoint", getLeftClimberMotorSetPoint());
-        SmartDashboard.putBoolean("leftClimberLimitSwitch", getLimitSwitch());
+        // SmartDashboard.putNumber("leftClimberPos", getLeftClimberMotorPosition());
+        // SmartDashboard.putNumber("leftClimberSetPoint", getLeftClimberMotorSetPoint());
+        // SmartDashboard.putBoolean("leftClimberLimitSwitch", getLimitSwitch());
         // SmartDashboard.putNumber("leftClimberSpeed", s);
     }
 }
