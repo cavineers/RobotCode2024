@@ -44,7 +44,7 @@ public class ArmPivot extends SubsystemBase {
     
     private GenericEntry pivotAngleGetter;
 
-    private Boolean isTesting = true; // set this to true if you want to take the values from shuffle
+    private Boolean isTesting = false; // set this to true if you want to take the values from shuffle
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter Params");
     // Motor sparkmax settings
@@ -155,7 +155,7 @@ public class ArmPivot extends SubsystemBase {
         // Set motor speed
         pivotPid.setSetpoint(motorSetpoint);
         double speed = pivotPid.calculate(getPivotAbsolute());
-        // SmartDashboard.putNumber("PivotSpeed", speed);
+        SmartDashboard.putNumber("PivotSpeed", speed);
         if (speed < -.19) {
             speed = -.19;
         }

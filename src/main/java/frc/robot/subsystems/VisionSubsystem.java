@@ -195,15 +195,14 @@ public class VisionSubsystem extends SubsystemBase {
 
         double dist = Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2));
         SmartDashboard.putNumber("Distance from Speaker", dist);
-        if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
-            this.autoShoot = false;
-            return 0;
+        // if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
+        //     this.autoShoot = false;
+        //     return 0;
         
-        }
+        // }
         
         this.autoShoot = true;
-        return dist;
-
+        return Units.metersToInches(dist);
     }
     
     public void periodic() {

@@ -38,8 +38,7 @@ public class Shooter extends SubsystemBase {
 
         this.shooterMotor.setIdleMode(IdleMode.kCoast);
 
-        this.shooterMotor.setSmartCurrentLimit(35); // TBD
-
+        this.shooterMotor.setSmartCurrentLimit(80); // TBD
         this.shooterMotor.setInverted(true);
 
         this.shooterMotor.getEncoder().setMeasurementPeriod(8);
