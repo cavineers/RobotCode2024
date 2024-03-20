@@ -50,7 +50,7 @@ public class ArmPivot extends SubsystemBase {
     // Motor sparkmax settings
     public ArmPivot(ArmBase armBase) {
         this.pivotMotor.setIdleMode(IdleMode.kBrake);
-        this.pivotMotor.setSmartCurrentLimit(80);
+        this.pivotMotor.setSmartCurrentLimit(40);
 
         this.pivotMotor.setInverted(true);
         this.pivotPid.setTolerance(Constants.ArmPivot.PivotSetpointTolerance);

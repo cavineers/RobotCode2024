@@ -39,7 +39,7 @@ public class ArmBase extends SubsystemBase {
     public ArmBase() {
         this.baseMotor.setIdleMode(IdleMode.kCoast);
 
-        this.baseMotor.setSmartCurrentLimit(80);
+        this.baseMotor.setSmartCurrentLimit(40);
         this.basePid.setTolerance(Constants.ArmBase.BaseSetpointTolerance);
     }
 
