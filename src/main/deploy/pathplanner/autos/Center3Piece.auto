@@ -84,12 +84,6 @@
           "data": {
             "pathName": "Center3PieceAmpSide.4"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shootAuto"
-          }
         }
       ]
     }
