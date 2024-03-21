@@ -130,7 +130,7 @@ public class Shoot_Auto extends Command {
 
     public double calculateRequiredArmPivotAngle(Double distance) {
 
-        requiredArmPivotAngleDegrees = -0.00224 * Math.pow((distanceInches-161.0), 2.0) - 37.0 + 90;
+        requiredArmPivotAngleDegrees = 78.9 * (Math.pow(Math.sin(Math.toRadians((0.503 * distanceInches) + 1.7)), 0.5)) - 115 + 90;
 
         //requiredArmPivotAngleDegrees = interpolatePivotAngleMap.get(distance);
 
