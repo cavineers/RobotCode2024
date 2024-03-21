@@ -30,6 +30,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.commands.SwerveAimToTarget;
 import frc.robot.commands.SwerveCommand;
 import frc.robot.commands.SwerveHoming;
+import frc.robot.commands.Arm.Aimbot;
 import frc.robot.commands.Arm.ArmPreset;
 import frc.robot.commands.Arm.GantryManualLower;
 import frc.robot.commands.Arm.GantryManualRaise;
@@ -44,7 +45,6 @@ import frc.robot.commands.Intake.IntakeNote;
 import frc.robot.commands.Shooter.Shoot;
 import frc.robot.commands.Intake.FeedNote;
 import frc.robot.commands.Shooter.Amp;
-import frc.robot.commands.Shooter.Shoot_Auto;
 import frc.robot.commands.Shooter.Shoot_Manual;
 import frc.robot.commands.Shooter.Shoot_Toggle;
 
@@ -84,7 +84,7 @@ public class RobotContainer {
 	public Command restPosition;
 	public Command shootGround;
 
-	// public Command shootAuto;
+	// public Command aimbot;
 	public Command lowerLeftClimber;
 	public Command riseLeftClimber;
 	public Command lowerRightClimber;
@@ -97,7 +97,7 @@ public class RobotContainer {
 	public Command feedNote;
 
 	public Command shoot;
-	public Command shootAuto;
+	public Command aimbot;
 	public Command shootManual;
 	public Command shootToggle;
 	public Command amp;
@@ -141,6 +141,7 @@ public class RobotContainer {
 		sourcePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.SourceRotations, Constants.ArmPivot.SourceRotations);
 		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
 		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
+		aimbot = new Aimbot(armPivot, visionSubsystem);
 
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
@@ -152,7 +153,6 @@ public class RobotContainer {
 		intakeNote = new IntakeNote(intake, shooter);
 		outtake = new Outtake(intake);
 		shoot = new Shoot(shooter, intake);
-		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
 		amp = new Amp(shooter, intake);
@@ -201,7 +201,7 @@ public class RobotContainer {
 		xboxController0.leftBumper().whileTrue(outtake);
 		xboxController0.rightBumper().whileTrue(intakeNote);
 		xboxController0.b().onTrue(shoot);
-		xboxController0.x().onTrue(shootAuto);
+		xboxController0.x().toggleOnTrue(aimbot);
 		xboxController0.rightTrigger(Constants.OIConstants.kDriverJoystickTriggerDeadzone).whileTrue(shootManual);
 		xboxController0.povDown().onTrue(amp);
 		xboxController0.start().toggleOnTrue(shootToggle);
