@@ -145,7 +145,7 @@ public class RobotContainer {
 
 		// AUTO PRESETS
 
-		armShootAutoCenterPosition = new ArmPreset(armBase, armPivot, 0, 0.4495);
+		armShootAutoCenterPosition = new ArmPreset(armBase, armPivot, 0, 0.4525);
 
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");

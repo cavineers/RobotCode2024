@@ -199,15 +199,5 @@
       "timestamp": 1.8816468955156154
     }
   ],
-  "eventMarkers": [
-    {
-      "timestamp": 1.1316468955156154,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "shootGround"
-        }
-      }
-    }
-  ]
+  "eventMarkers": []
 }
