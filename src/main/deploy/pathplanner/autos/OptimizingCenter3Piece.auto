@@ -1,0 +1,137 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.4010045528411863,
+      "y": 5.575
+    },
+    "rotation": 179.96604345059157
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootGround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "toggleShooterOn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "feedNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "groundPickup"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center3PieceFarOPTIMIZED.1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootCenterAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "feedNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center3PieceFarOPTIMIZED.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "groundPickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "toggleShooterOff"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center3PieceFarOPTIMIZED.3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootGround"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": true
+}

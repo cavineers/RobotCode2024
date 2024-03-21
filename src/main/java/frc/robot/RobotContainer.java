@@ -105,6 +105,10 @@ public class RobotContainer {
 	public Command swerveAimToTarget;
 	public SwerveHoming swerveHomingCommand;
 
+	public Command shooterToggleAutoOn;
+	public Command shooterToggleAutoOff;
+
+
 	public SendableChooser<Command> autoChooser; 
 	
 
@@ -145,7 +149,7 @@ public class RobotContainer {
 
 		// AUTO PRESETS
 
-		armShootAutoCenterPosition = new ArmPreset(armBase, armPivot, 0, 0.4525);
+		armShootAutoCenterPosition = new ArmPreset(armBase, armPivot, 0, 0.47); // .4525
 
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
@@ -160,6 +164,9 @@ public class RobotContainer {
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
+
+		shooterToggleAutoOn = shooter.toggleShooterCommand(true);
+		shooterToggleAutoOff = shooter.toggleShooterCommand(false);
 		amp = new Amp(shooter, intake);
 		feedNote = new FeedNote(intake);
 		
@@ -243,6 +250,8 @@ public class RobotContainer {
 		NamedCommands.registerCommand("shootAuto", shootAuto);
 		NamedCommands.registerCommand("amp", amp);
 		NamedCommands.registerCommand("shootCenterAuto", armShootAutoCenterPosition);
+		NamedCommands.registerCommand("toggleShooterOn", shooterToggleAutoOn);
+		NamedCommands.registerCommand("toggleShooterOff", shooterToggleAutoOff);
 	}
 
 	public SwerveDriveSubsystem getSwerveSubsystem() {

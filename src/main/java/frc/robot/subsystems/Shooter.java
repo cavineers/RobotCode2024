@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkFlex;
@@ -15,6 +17,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.subsystems.Shooter.ShooterMotorState;
+
 import com.revrobotics.CANSparkFlex;
 
 public class Shooter extends SubsystemBase {
@@ -75,7 +79,17 @@ public class Shooter extends SubsystemBase {
         }
     }
 
-
+    public Command toggleShooterCommand(boolean on){
+        if (on){
+            return new InstantCommand(() -> {
+                this.setShooterMotorState(ShooterMotorState.ON);
+            });
+        } else {
+            return new InstantCommand(() -> {
+                this.setShooterMotorState(ShooterMotorState.OFF);
+            });
+        }
+    }
     public ShooterMotorState getShooterMotorState() {
         return this.shooterMotorState;
     }
