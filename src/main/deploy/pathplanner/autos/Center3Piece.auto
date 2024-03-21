@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center3PieceAmpSide.1"
+                  "pathName": "Center3PieceFarShotAmpSide.1"
                 }
               },
               {
@@ -49,13 +49,50 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "shootCenterAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center3PieceAmpSide.2"
+                  "pathName": "Center3PieceFarShotAmpSide.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "groundPickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center3PieceFarShotAmpSide.3"
                 }
               },
               {
@@ -71,18 +108,6 @@
           "type": "named",
           "data": {
             "name": "shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center3PieceAmpSide.3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center3PieceAmpSide.4"
           }
         }
       ]

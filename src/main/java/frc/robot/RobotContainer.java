@@ -91,6 +91,7 @@ public class RobotContainer {
 	public Command riseRightClimber;
 	public Command autoRiseClimber;
 	public Command autoLowerClimber;
+	public Command armShootAutoCenterPosition;
 
 	public Command intakeNote;
 	public Command outtake;
@@ -141,6 +142,10 @@ public class RobotContainer {
 		sourcePosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.SourceRotations, Constants.ArmPivot.SourceRotations);
 		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
 		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
+
+		// AUTO PRESETS
+
+		armShootAutoCenterPosition = new ArmPreset(armBase, armPivot, 0, 0.4495);
 
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
@@ -237,6 +242,7 @@ public class RobotContainer {
 		NamedCommands.registerCommand("shoot", shoot);
 		NamedCommands.registerCommand("shootAuto", shootAuto);
 		NamedCommands.registerCommand("amp", amp);
+		NamedCommands.registerCommand("shootCenterAuto", armShootAutoCenterPosition);
 	}
 
 	public SwerveDriveSubsystem getSwerveSubsystem() {
