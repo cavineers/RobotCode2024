@@ -104,7 +104,7 @@ public class ArmBase extends SubsystemBase {
         
         SmartDashboard.putBoolean("HigherGantrySwitch", getGantryHigherLimitSwitch());
         SmartDashboard.putBoolean("LowerGantrySwitch", getGantryLowerLimitSwitch());
-        // SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
+        SmartDashboard.putNumber("Gantry Speed", speed);
         // SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
         
         baseMotor.set(speed);
