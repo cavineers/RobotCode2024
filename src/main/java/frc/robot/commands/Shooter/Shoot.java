@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,10 +23,13 @@ public class Shoot extends Command {
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter Params");
     private GenericEntry shooterWaitGetter;
 
-    public Shoot(Shooter shooter, Intake intake) {
+    private Blinkin blinkIn;
+
+    public Shoot(Shooter shooter, Intake intake, Blinkin blinkIn) {
         this.shooter = shooter;
         this.intake = intake;
         this.addRequirements(shooter, intake);
+        this.blinkIn = blinkIn;
         
         timer = new Timer();
         timer2 = new Timer();
@@ -39,13 +43,14 @@ public class Shoot extends Command {
         timer.start();
 
         this.isDone = false;
+        blinkIn.endToEnd();
+
     }
 
     @Override
     public void execute() {
 
         // SmartDashboard.putString("Shooter", "Shooting");
-
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
         if (timer.get()>.75) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
@@ -68,6 +73,7 @@ public class Shoot extends Command {
         shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
         timer.stop();
+        blinkIn.lightsDefault();
         // SmartDashboard.putString("Shooter", "Done Shooting");
     }
 

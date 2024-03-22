@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.Timer;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -16,13 +17,15 @@ public class IntakeNote extends Command {
 
     private int count;
 
-    public IntakeNote(Intake intake, Shooter shooter) {
+    private Blinkin blinkIn;
+
+    public IntakeNote(Intake intake, Shooter shooter, Blinkin blinkIn) {
         this.intake = intake;
         this.shooter = shooter;
         this.addRequirements(intake);
         //this.addRequirements(shooter);
         this.count = 0;
-
+        this.blinkIn = blinkIn;
     }
 
     @Override
@@ -52,7 +55,13 @@ public class IntakeNote extends Command {
     @Override
     public void end(boolean interrupted) {
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
+        this.blinkIn.lightsOrange();
         //shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
+        if (interrupted){
+            this.blinkIn.lightsDefault();
+        }else{
+            this.blinkIn.lightsOrange();
+        }
     }
 
     @Override

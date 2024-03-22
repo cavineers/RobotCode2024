@@ -64,8 +64,6 @@ public class RobotContainer {
 	private final ClimberLeft climberLeft;
 	private final ClimberRight climberRight;
 
-	public static final Blinkin blinkin = new Blinkin();
-
 	// Main Controller Buttons Init
 	public final CommandXboxController xboxController0;
 
@@ -111,17 +109,22 @@ public class RobotContainer {
 
 	public SendableChooser<Command> autoChooser; 
 	
+	private Blinkin blinkIn;
+	
 
 	public RobotContainer() {
 
 		// Subsystems
+		
 		armBase = new ArmBase();
 		armPivot = new ArmPivot(armBase);
+
+		blinkIn = new Blinkin();
 
 		climberLeft = new ClimberLeft();
 		climberRight = new ClimberRight();
 
-		intake = new Intake();
+		intake = new Intake(blinkIn);
 		shooter = new Shooter();
 
 		visionSubsystem = new VisionSubsystem();
@@ -158,9 +161,9 @@ public class RobotContainer {
 		autoLowerClimber = new AutoLowerClimber(climberLeft, climberRight);
 		autoRiseClimber = new AutoRiseClimber(climberLeft, climberRight);
 
-		intakeNote = new IntakeNote(intake, shooter);
+		intakeNote = new IntakeNote(intake, shooter, blinkIn);
 		outtake = new Outtake(intake);
-		shoot = new Shoot(shooter, intake);
+		shoot = new Shoot(shooter, intake, blinkIn);
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);

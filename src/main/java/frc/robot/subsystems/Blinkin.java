@@ -17,7 +17,11 @@ public class Blinkin extends SubsystemBase {
 	public void lightsRainbow() {
 		blinkinLeft.set(-0.99);
 		blinkinRight.set(-0.99);
+	}
 
+	public void lightsDefault() {
+		blinkinLeft.set(-0.39);
+		blinkinRight.set(-0.39);
 	}
 
 	public void lightsFire() {
@@ -38,5 +42,10 @@ public class Blinkin extends SubsystemBase {
 	public void lightsOrange() {
 		blinkinLeft.set(0.65);
 		blinkinRight.set(0.65);
+	}
+
+	public void endToEnd(){
+		blinkinLeft.set(.47);
+		blinkinRight.set(.47);
 	}
 }
