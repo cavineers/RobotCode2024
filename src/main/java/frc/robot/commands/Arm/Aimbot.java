@@ -25,10 +25,14 @@ public class Aimbot extends Command {
 
     private ShuffleboardTab robot = Shuffleboard.getTab("Robot");
 
-    private GenericEntry distanceInchesEntry = robot
-        .add("DistanceInches", 12)
+    private GenericEntry distanceInchesSliderEntry = robot
+        .add("Distance Slider", 12)
         .withWidget(BuiltInWidgets.kNumberSlider)
         .withProperties(Map.of("min", 12, "max", 150))
+        .getEntry();
+    
+    private GenericEntry distanceInchesDoubleEntry = robot
+        .add("Distance", 12.0)
         .getEntry();
 		
     public Aimbot(ArmPivot armPivot, VisionSubsystem visionSubsystem) {
@@ -46,7 +50,7 @@ public class Aimbot extends Command {
     @Override
     public void execute() {
 		
-		distanceInches = distanceInchesEntry.getDouble(12);
+		distanceInches = distanceInchesSliderEntry.getDouble(12);
 
 		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceInches));
         
@@ -64,6 +68,7 @@ public class Aimbot extends Command {
          
         requiredArmPivotAngleDegrees = 78.9 * (Math.pow(Math.sin(((Math.PI * 0.503 * distanceInches) + 3.9) / 180), .5)) -116.67;
 
+        distanceInchesDoubleEntry.setDouble(requiredArmPivotAngleDegrees);
         SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 
         return requiredArmPivotAngleDegrees;
