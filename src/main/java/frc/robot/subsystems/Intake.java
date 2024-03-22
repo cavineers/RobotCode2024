@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase {
 
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
 
-    private Blinkin blinkin;
+    public Blinkin blinkin = new Blinkin();
     
     public Intake() {
 

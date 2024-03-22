@@ -5,30 +5,38 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Blinkin extends SubsystemBase {
 
-	public static Spark blinkin;
+	public static Spark blinkinLeft;
+	public static Spark blinkinRight;
 
 	//PWM port 0
 	public Blinkin() {
-		blinkin = new Spark(0);
+		blinkinLeft = new Spark(0);
+		blinkinRight = new Spark(1);
 	}
 
 	public void lightsRainbow() {
-		blinkin.set(-0.99);
+		blinkinLeft.set(-0.99);
+		blinkinRight.set(-0.99);
+
 	}
 
 	public void lightsFire() {
-		blinkin.set(-0.59);
+		blinkinLeft.set(-0.59);
+		blinkinRight.set(-0.59);
 	}
 
 	public void lightsChase() {
-		blinkin.set(0.01);
+		blinkinLeft.set(0.01);
+		blinkinRight.set(0.01);
 	}
 
 	public void lightsOcean() {
-		blinkin.set(-0.41);
+		blinkinLeft.set(-0.41);
+		blinkinRight.set(-0.41);
 	}
 
 	public void lightsOrange() {
-		blinkin.set(0.65);
+		blinkinLeft.set(0.65);
+		blinkinRight.set(0.65);
 	}
 }
