@@ -2059,7 +2059,7 @@
                 {
                     "name": "Marker",
                     "target": 2,
-                    "targetTimestamp": 1.6332317372131986,
+                    "targetTimestamp": null,
                     "offset": 0.25,
                     "command": {
                         "type": "parallel",
@@ -2741,7 +2741,7 @@
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         },
         "Center3PieceFarOPTIMIZED": {
             "waypoints": [
