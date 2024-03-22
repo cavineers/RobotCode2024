@@ -55,12 +55,9 @@ public class IntakeNote extends Command {
     @Override
     public void end(boolean interrupted) {
         intake.setIntakeMotorState(intake.intakeMotorState.OFF);
-        this.blinkIn.lightsOrange();
-        //shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
-        if (interrupted){
-            this.blinkIn.lightsDefault();
-        }else{
-            this.blinkIn.lightsOrange();
+        
+        if(intake.getNoteSensor()) {
+            blinkIn.lightsOrange();
         }
     }
 

@@ -43,7 +43,7 @@ public class Shoot extends Command {
         timer.start();
 
         this.isDone = false;
-        blinkIn.endToEnd();
+        blinkIn.lightsFire();
 
     }
 
