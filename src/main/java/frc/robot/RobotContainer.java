@@ -91,6 +91,7 @@ public class RobotContainer {
 	public Command riseRightClimber;
 	public Command autoRiseClimber;
 	public Command autoLowerClimber;
+	public Command armShootAutoCenterPosition;
 
 	public Command intakeNote;
 	public Command outtake;
@@ -103,6 +104,10 @@ public class RobotContainer {
 	public Command amp;
 	public Command swerveAimToTarget;
 	public SwerveHoming swerveHomingCommand;
+
+	public Command shooterToggleAutoOn;
+	public Command shooterToggleAutoOff;
+
 
 	public SendableChooser<Command> autoChooser; 
 	
@@ -142,6 +147,10 @@ public class RobotContainer {
 		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
 		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
 
+		// AUTO PRESETS
+
+		armShootAutoCenterPosition = new ArmPreset(armBase, armPivot, 0, 0.47); // .4525
+
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
@@ -155,6 +164,9 @@ public class RobotContainer {
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
+
+		shooterToggleAutoOn = shooter.toggleShooterCommand(true);
+		shooterToggleAutoOff = shooter.toggleShooterCommand(false);
 		amp = new Amp(shooter, intake);
 		feedNote = new FeedNote(intake);
 		
@@ -235,7 +247,11 @@ public class RobotContainer {
 		NamedCommands.registerCommand("outtake", outtake);
 		NamedCommands.registerCommand("feedNote", feedNote);
 		NamedCommands.registerCommand("shoot", shoot);
+		NamedCommands.registerCommand("shootAuto", shootAuto);
 		NamedCommands.registerCommand("amp", amp);
+		NamedCommands.registerCommand("shootCenterAuto", armShootAutoCenterPosition);
+		NamedCommands.registerCommand("toggleShooterOn", shooterToggleAutoOn);
+		NamedCommands.registerCommand("toggleShooterOff", shooterToggleAutoOff);
 	}
 
 	public SwerveDriveSubsystem getSwerveSubsystem() {

@@ -44,7 +44,7 @@ public class Shoot_Toggle extends Command {
 
     @Override
     public boolean isFinished(){
-        return this.isDone;
+        return true;
     }
 
 }

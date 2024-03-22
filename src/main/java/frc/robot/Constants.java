@@ -131,8 +131,8 @@ public final class Constants {
         public static final double PivotMotorSpeedForwards = 0.3;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
-        public static final double PivotMotorLowerRotationLimit = .353; //Required For Auto Shoot
-        public static final double PivotMotorUpperRotationLimit = 0.736; //Required For Auto Shoot
+        public static final double PivotMotorLowerRotationLimit = .353 - 0.007; //Required For Auto Shoot
+        public static final double PivotMotorUpperRotationLimit = 0.736 - 0.007; //Required For Auto Shoot
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
@@ -140,14 +140,14 @@ public final class Constants {
 
         public static final double PivotSetpointTolerance = 0.02;
     
-        public static final double GroundPickupRotations = 0.353;
-        public static final double RestRotations = 0.342;
-        public static final double ShootCloseRotations = 0.41; //0.401
-        public static final double ShootGroundRotations = 0.42;
-        public static final double SourceRotations = 0.6138;
-        public static final double AmpRotations = 0.644;
+        public static final double GroundPickupRotations = 0.353 - 0.007;
+        public static final double RestRotations = 0.342 - 0.007;
+        public static final double ShootCloseRotations = 0.41 - 0.007; //0.401
+        public static final double ShootGroundRotations = 0.42 - 0.007;
+        public static final double SourceRotations = 0.6138 - 0.007;
+        public static final double AmpRotations = 0.644 - 0.007;
 
-        public static final double ProportionalGain = 3.22; // strength of a correction
+        public static final double ProportionalGain = 3.4; // strength of a correction
         public static final double IntegralTerm = 0; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -162,9 +162,9 @@ public final class Constants {
         public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
 
-        public static final double PivotRestMinRotations = 0.34;
-        public static final double PivotNormalMinRotations = 0.41;
-        public static final double PivotGroundMinRotations = 0.353;
+        public static final double PivotRestMinRotations = 0.34 - 0.007;
+        public static final double PivotNormalMinRotations = 0.41 - 0.007;
+        public static final double PivotGroundMinRotations = 0.353 - 0.007;
     
     }
     public static final class ArmBase {
@@ -188,7 +188,7 @@ public final class Constants {
         public static final double SourceRotations = 0;
         public static final double AmpRotations = 151;
 
-        public static final double ProportionalGain = .035; // strength of a correction
+        public static final double ProportionalGain = .1; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -260,8 +260,8 @@ public final class Constants {
         public static final double redSpeakerY = Units.inchesToMeters(218.42);
 
         // Auto shoot maximum and minimums in meters
-        public static double shootDistanceMinimum = 0.5;
-        public static double shootDistanceMaximum = 4.57;
+        public static double shootDistanceMinimum = Units.metersToInches(0.5);
+        public static double shootDistanceMaximum = Units.metersToInches(4.57);
     }
 
 

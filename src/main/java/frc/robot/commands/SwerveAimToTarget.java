@@ -32,17 +32,15 @@ public class SwerveAimToTarget extends Command {
     private final PIDController turnController = new PIDController(0.022, 0, 0.0);
 
 
-    public SwerveAimToTarget(SwerveDriveSubsystem swerveSubsystem, 
-			VisionSubsystem visionSubsystem,
-            Supplier<Double> xSpdFunction, 
-			Supplier<Double> ySpdFunction,
+    public SwerveAimToTarget(SwerveDriveSubsystem swerveSubsystem, VisionSubsystem visionSubsystem,
+            Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction,
             Supplier<Boolean> fieldOrientedFunction) {
         this.swerveSubsystem = swerveSubsystem;
         this.visionSubsystem = visionSubsystem;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
-        this.fieldOrientedFunction = fieldOrientedFunction;
 
+        this.fieldOrientedFunction = fieldOrientedFunction;
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
@@ -109,7 +107,7 @@ public class SwerveAimToTarget extends Command {
     @Override
     public void end(boolean interrupted) {
         swerveSubsystem.stopModules();
-        swerveSubsystem.toggleIdleMode(IdleMode.kBrake);
+        swerveSubsystem.toggleIdleMode(IdleMode.kCoast);
     }
 
     @Override

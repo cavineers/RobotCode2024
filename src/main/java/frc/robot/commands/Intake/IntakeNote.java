@@ -14,16 +14,21 @@ public class IntakeNote extends Command {
     private Shooter shooter;
     private boolean isDone;
 
+    private int count;
+
     public IntakeNote(Intake intake, Shooter shooter) {
         this.intake = intake;
         this.shooter = shooter;
         this.addRequirements(intake);
         //this.addRequirements(shooter);
+        this.count = 0;
+
     }
 
     @Override
     public void initialize() {
         this.isDone = false;
+        this.count = 0;
     }
 
     @Override
@@ -32,11 +37,14 @@ public class IntakeNote extends Command {
 
         if (intake.getNoteSensor() == false) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
+            this.count = 0;
             //shooter.setShooterMotorState(shooter.shooterMotorState.REVERSE);
-        } else {
+        } else if (count >= 2) {
             intake.setIntakeMotorState(intake.intakeMotorState.OFF);
             this.isDone = true;
             //shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
+        }else{
+            count++;
         }
 
     }

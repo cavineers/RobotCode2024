@@ -39,7 +39,7 @@ public class ArmBase extends SubsystemBase {
     public ArmBase() {
         this.baseMotor.setIdleMode(IdleMode.kCoast);
 
-        this.baseMotor.setSmartCurrentLimit(80);
+        this.baseMotor.setSmartCurrentLimit(40);
         this.basePid.setTolerance(Constants.ArmBase.BaseSetpointTolerance);
     }
 
@@ -104,7 +104,7 @@ public class ArmBase extends SubsystemBase {
         
         SmartDashboard.putBoolean("HigherGantrySwitch", getGantryHigherLimitSwitch());
         SmartDashboard.putBoolean("LowerGantrySwitch", getGantryLowerLimitSwitch());
-        // SmartDashboard.putNumber("GantryRot", getBaseMotorPosition());
+        SmartDashboard.putNumber("Gantry Speed", speed);
         // SmartDashboard.putNumber("Gantry SETPOINT", motorSetpoint);
         
         baseMotor.set(speed);
