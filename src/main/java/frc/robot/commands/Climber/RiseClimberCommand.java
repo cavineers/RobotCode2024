@@ -40,7 +40,7 @@ public class RiseClimberCommand extends Command {
                 this.leftLowered = true;
             } else {
                 System.out.println("Left Rising");
-                this.climberLeft.setSetpointAdd(.1);
+                this.climberLeft.setSetpointAdd(.4);
             }
 
         } else if (climberSide == "right") {
@@ -49,7 +49,7 @@ public class RiseClimberCommand extends Command {
                 this.leftLowered = true;
             } else {
                 System.out.println("Left Rising");
-                this.climberRight.setSetpointAdd(.1);
+                this.climberRight.setSetpointAdd(.4);
             }
 
         }

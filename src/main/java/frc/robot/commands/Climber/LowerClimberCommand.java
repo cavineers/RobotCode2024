@@ -39,7 +39,7 @@ public class LowerClimberCommand extends Command {
                 this.leftLowered = true;
             } else if (!climberLeft.getLimitSwitch()) {
                 System.out.println("Left lowering");
-                this.climberLeft.setSetpointAdd(-.1);
+                this.climberLeft.setSetpointAdd(-.4);
                 
             }
 
@@ -49,7 +49,7 @@ public class LowerClimberCommand extends Command {
                 this.rightLowered = true;
             } else if (!climberRight.getLimitSwitch()) {
                 System.out.println("Right lowering");
-                this.climberRight.setSetpointAdd(-.1);
+                this.climberRight.setSetpointAdd(-.4);
                 
             }
         }
