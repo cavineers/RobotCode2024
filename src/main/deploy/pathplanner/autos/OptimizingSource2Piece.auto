@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7949203848838806,
-      "y": 4.402229309082031
+      "x": 0.7946118116378784,
+      "y": 4.395465850830078
     },
     "rotation": 120.32113697747288
   },
@@ -12,15 +12,28 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "shootGround"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootGround"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "toggleShooterOn"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "feedNote"
           }
         },
         {
@@ -61,7 +74,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shootGround"
+                  "name": "shootClosePosition"
                 }
               }
             ]
