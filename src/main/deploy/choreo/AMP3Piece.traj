@@ -1234,37 +1234,5 @@
       "timestamp": 12.115094333219355
     }
   ],
-  "eventMarkers": [
-    {
-      "timestamp": 6.761974567538909,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "groundPickup"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "intakeNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "timestamp": 11.365094333219355,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "shootGround"
-        }
-      }
-    }
-  ]
+  "eventMarkers": []
 }

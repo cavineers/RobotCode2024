@@ -505,28 +505,5 @@
       "timestamp": 4.857394140985797
     }
   ],
-  "eventMarkers": [
-    {
-      "timestamp": 3.182046041647009,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "groundPickup"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "intakeNote"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+  "eventMarkers": []
 }
