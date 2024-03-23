@@ -170,7 +170,7 @@ public class RobotContainer {
 
 		shooterToggleAutoOn = shooter.toggleShooterCommand(true);
 		shooterToggleAutoOff = shooter.toggleShooterCommand(false);
-		amp = new Amp(shooter, intake);
+		amp = new Amp(shooter, intake, blinkIn);
 		feedNote = new FeedNote(intake);
 		
 

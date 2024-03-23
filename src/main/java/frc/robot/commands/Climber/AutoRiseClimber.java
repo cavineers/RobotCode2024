@@ -28,17 +28,17 @@ public class AutoRiseClimber extends Command {
     public void execute() {
 
             // Left climber action
-            if (climberLeft.getLimitSwitch() == false) {
-                this.climberLeft.setSetpoint(Constants.Climber.UpperClimberMaxRotations);
-            } else {
-                this.climberLeft.setLeftClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
-            }
+            // if (climberLeft.getLimitSwitch() == false) {
+            //     this.climberLeft.setSetpoint(Constants.Climber.UpperClimberMaxRotations);
+            // } else {
+            //     this.climberLeft.setLeftClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
+            // }
 
-			if (climberRight.getLimitSwitch() == false) {
-                this.climberRight.setSetpoint(Constants.Climber.UpperClimberMaxRotations);
-            } else {
-                this.climberRight.setRightClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
-            }
+			// if (climberRight.getLimitSwitch() == false) {
+            //     this.climberRight.setSetpoint(Constants.Climber.UpperClimberMaxRotations);
+            // } else {
+            //     this.climberRight.setRightClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
+            // }
     }
 
     @Override

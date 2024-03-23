@@ -40,11 +40,11 @@ public class ClimberLeft extends SubsystemBase {
         this.leftClimberMotor.setSmartCurrentLimit(40);
     }
 
-    public boolean getLimitSwitch() {
-        boolean switched;
-        switched = this.leftClimberLimitSwitch.get();
-        return !switched;
-    }
+    // public boolean getLimitSwitch() {
+    //     boolean switched;
+    //     switched = this.leftClimberLimitSwitch.get();
+    //     return !switched;
+    // }
 
     // Set the motor's position (given in rotations)
     public void setLeftClimberMotorPosition(double position) {
@@ -117,12 +117,12 @@ public class ClimberLeft extends SubsystemBase {
             this.motorSetpoint = Constants.Climber.LowerClimberMaxRotations;
         }
 
-        if(getLimitSwitch() == true) {
-            setLeftClimberMotorPosition(Constants.Climber.UpperClimberMaxRotations);
+        if (this.motorSetpoint > Constants.Climber.UpperClimberMaxRotations) {
+            this.motorSetpoint = Constants.Climber.UpperClimberMaxRotations;
         }
 
-        // SmartDashboard.putNumber("leftClimberPos", getLeftClimberMotorPosition());
-        // SmartDashboard.putNumber("leftClimberSetPoint", getLeftClimberMotorSetPoint());
+        SmartDashboard.putNumber("leftClimberPos", getLeftClimberMotorPosition());
+        SmartDashboard.putNumber("leftClimberSetPoint", getLeftClimberMotorSetPoint());
         // SmartDashboard.putBoolean("leftClimberLimitSwitch", getLimitSwitch());
         // SmartDashboard.putNumber("leftClimberSpeed", s);
     }

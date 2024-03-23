@@ -208,7 +208,7 @@ public final class Constants {
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
         public static final double LowerClimberMaxRotations = 0; // TBD
-        public static final double UpperClimberMaxRotations = 59; // TBD
+        public static final double UpperClimberMaxRotations = 150; // TBD
 
         public static final double ProportionalGain = .05;
         public static final double IntegralTerm = 0.00; 
