@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7974945306777954,
-      "y": 6.705162525177002
+      "x": 0.7473373413085938,
+      "y": 6.741130352020264
     },
     "rotation": -120.32113697747288
   },
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP2Piece.1"
+                  "pathName": "AMP2PieceNOINTAKE.1"
                 }
               },
               {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP2Piece.2"
+                  "pathName": "AMP2PieceNOINTAKE.2"
                 }
               },
               {
