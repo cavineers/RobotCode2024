@@ -142,8 +142,8 @@ public final class Constants {
     
         public static final double GroundPickupRotations = 0.353 - 0.007;
         public static final double RestRotations = 0.342 - 0.007;
-        public static final double ShootCloseRotations = 0.41 - 0.007; //0.401
-        public static final double ShootGroundRotations = 0.42 - 0.007;
+        public static final double ShootCloseRotations = 0.415 - 0.007; //0.401
+        public static final double ShootGroundRotations = 0.42;
         public static final double SourceRotations = 0.6138 - 0.007;
         public static final double AmpRotations = 0.644 - 0.007;
 
