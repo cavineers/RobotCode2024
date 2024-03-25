@@ -20,12 +20,6 @@
                 "data": {
                   "name": "shootGround"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "toggleShooterOn"
-                }
               }
             ]
           }
@@ -33,7 +27,13 @@
         {
           "type": "named",
           "data": {
-            "name": "feedNote"
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "toggleShooterOn"
           }
         },
         {
@@ -99,12 +99,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "toggleShooterOff"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -117,7 +111,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shootGround"
+                  "name": "shootCenterAuto"
                 }
               }
             ]
@@ -126,7 +120,19 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "feedNote"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "toggleShooterOff"
           }
         }
       ]
