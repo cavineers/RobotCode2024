@@ -295,11 +295,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         m_field.setRobotPose(this.updatedPose);
         SmartDashboard.putData("Field", m_field);
         SmartDashboard.putNumber("Heading", getHeading());
-        SmartDashboard.putNumber("Pose X", this.updatedPose.getX());
-        // SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());
-        // SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
-        // SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
-        // SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
+        // SmartDashboard.putNumber("Pose X", this.updatedPose.getX());
+        SmartDashboard.putNumber("FLAbsolute", getFLAbsolutePosition());
+        SmartDashboard.putNumber("FRAbsolute", getFRAbsolutePosition());
+        SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
+        SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
 
         // SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
     }
