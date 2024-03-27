@@ -84,7 +84,7 @@ public class Shoot_Auto extends Command {
 		armPivot.setArmPivotAngle(interpolatePivotAngleMap.get(distanceInches));
         //armPivot.setSetpoint(interpolatePivotAngleMap.get(distanceMeters));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (armPivot.isAtSetpoint() && timer.get()>1){
+        if (armPivot.isAtSetpoint() && timer.get()>1.2){
             SmartDashboard.putBoolean("Is At Setpoint", true);
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
