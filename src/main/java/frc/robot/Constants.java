@@ -147,9 +147,9 @@ public final class Constants {
         public static final double SourceRotations = 0.6138 - 0.007;
         public static final double AmpRotations = 0.644 - 0.007;
 
-        public static final double ProportionalGain = 3.75; // strength of a correction
+        public static final double ProportionalGain = 3.4; // strength of a correction
         public static final double IntegralTerm = 0; // additive strength over time
-        public static final double DerivitiveTerm = 0.0;
+        public static final double DerivitiveTerm = 0;
 
         public static double MotorSetPoint = 0;
 
