@@ -34,7 +34,6 @@ public class Shoot_Auto extends Command {
     private Timer timer2;
 
     private InterpolatingDoubleTreeMap interpolatePivotAngleMap;
-    private InterpolatingDoubleTreeMap interpolateShooterSpeedMap;
 
  
 
@@ -51,7 +50,6 @@ public class Shoot_Auto extends Command {
         timer2 = new Timer();
 
         this.interpolatePivotAngleMap = new InterpolatingDoubleTreeMap();
-        this.interpolateShooterSpeedMap = new InterpolatingDoubleTreeMap();
 
         initMaps();
 
@@ -60,18 +58,8 @@ public class Shoot_Auto extends Command {
 
     private void initMaps(){
         // PIVOT ANGLE MAP
-        interpolatePivotAngleMap.put(2.42, 0.455);
-        interpolatePivotAngleMap.put(2.83, 0.455);
-        interpolatePivotAngleMap.put(1.97, 0.43);
-        interpolatePivotAngleMap.put(2.35, 0.435);
-        interpolatePivotAngleMap.put(2.78, .45);
-
-        // SHOOTER SPEED interpolateShooterSpeedMap
-        interpolateShooterSpeedMap.put(2.42, 1.0);
-        interpolateShooterSpeedMap.put(2.83, 1.0);
-        interpolateShooterSpeedMap.put(1.97, 0.75);
-        interpolateShooterSpeedMap.put(2.35, 0.75);
-        interpolateShooterSpeedMap.put(2.78, 1.0);
+        interpolatePivotAngleMap.put(0.1, 0.455);
+        
     }
 
     // Set Motor State to ON / OFF
@@ -92,8 +80,8 @@ public class Shoot_Auto extends Command {
         SmartDashboard.putNumber("DISTANCE TO AUTO SHOT", distanceInches);
 
 		// SmartDashboard.putString("Shooter", "Auto Shooting");
-
-		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceInches));
+        SmartDashboard.putNumber("AUTO SHOOT PIVOT SETPOINT", interpolatePivotAngleMap.get(distanceInches));
+		armPivot.setArmPivotAngle(interpolatePivotAngleMap.get(distanceInches));
         //armPivot.setSetpoint(interpolatePivotAngleMap.get(distanceMeters));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
         if (armPivot.isAtSetpoint() && timer.get()>1){
