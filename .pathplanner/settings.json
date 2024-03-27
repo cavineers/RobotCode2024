@@ -4,6 +4,7 @@
   "holonomicMode": true,
   "pathFolders": [
     "CenterToLeft3PiecePaths",
+    "Center3Piece",
     "RightToOuterRight2"
   ],
   "autoFolders": [
