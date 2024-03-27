@@ -44,7 +44,7 @@ public class ArmPivot extends SubsystemBase {
     
     private GenericEntry pivotAngleGetter;
 
-    private Boolean isTesting = true; // set this to true if you want to take the values from shuffle
+    private Boolean isTesting = false; // set this to true if you want to take the values from shuffle
 
     private ShuffleboardTab tab = Shuffleboard.getTab("Shooter Params");
     // Motor sparkmax settings

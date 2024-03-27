@@ -58,7 +58,13 @@ public class Shoot_Auto extends Command {
 
     private void initMaps(){
         // PIVOT ANGLE MAP
-        interpolatePivotAngleMap.put(0.1, 0.455);
+        interpolatePivotAngleMap.put(56.82, 0.425);
+        interpolatePivotAngleMap.put(62.4, 0.437);
+        interpolatePivotAngleMap.put(73.25, 0.447);
+        interpolatePivotAngleMap.put(85.08, 0.457);
+        interpolatePivotAngleMap.put(95.48, 0.46);
+        interpolatePivotAngleMap.put(105.94, 0.47);
+        interpolatePivotAngleMap.put(122.36, 0.475);
         
     }
 
@@ -72,6 +78,14 @@ public class Shoot_Auto extends Command {
 		this.isDone = false;
     }
 
+    private boolean atPivotGoalSetpoint(double rots){
+        if (Math.abs(this.armPivot.getPivotAbsolute() - rots) < 0.03){
+            System.out.println("DONE");
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void execute() {
 		
@@ -82,9 +96,9 @@ public class Shoot_Auto extends Command {
 		// SmartDashboard.putString("Shooter", "Auto Shooting");
         SmartDashboard.putNumber("AUTO SHOOT PIVOT SETPOINT", interpolatePivotAngleMap.get(distanceInches));
 		armPivot.setArmPivotAngle(interpolatePivotAngleMap.get(distanceInches));
-        //armPivot.setSetpoint(interpolatePivotAngleMap.get(distanceMeters));
+        armPivot.setSetpoint(interpolatePivotAngleMap.get(distanceInches));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (armPivot.isAtSetpoint() && timer.get()>1.2){
+        if (this.atPivotGoalSetpoint(interpolatePivotAngleMap.get(distanceInches)) && timer.get()>1.2){
             SmartDashboard.putBoolean("Is At Setpoint", true);
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
