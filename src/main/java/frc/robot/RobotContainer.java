@@ -252,6 +252,7 @@ public class RobotContainer {
 		NamedCommands.registerCommand("shootCenterAuto", armShootAutoCenterPosition);
 		NamedCommands.registerCommand("toggleShooterOn", shooterToggleAutoOn);
 		NamedCommands.registerCommand("toggleShooterOff", shooterToggleAutoOff);
+		NamedCommands.registerCommand("swerveAimToTarget", swerveAimToTarget);
 	}
 
 	public SwerveDriveSubsystem getSwerveSubsystem() {

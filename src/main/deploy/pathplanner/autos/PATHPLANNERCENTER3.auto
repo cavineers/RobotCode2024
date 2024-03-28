@@ -26,12 +26,6 @@
         {
           "type": "named",
           "data": {
-            "name": "toggleShooterOn"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "groundPickup"
           }
         },
@@ -57,13 +51,51 @@
         {
           "type": "named",
           "data": {
-            "name": "shootCenterAuto"
+            "name": "shootAuto"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "feedNote"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterAmp"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "groundPickup"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "swerveAimToTarget"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootAuto"
+                }
+              }
+            ]
           }
         }
       ]
