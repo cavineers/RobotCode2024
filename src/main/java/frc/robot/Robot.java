@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_robotContainer.swerveHomingCommand.schedule();
     m_robotContainer.getSwerveSubsystem().initZeroHeading();
-    
+    m_robotContainer.checkSystemStartup();
     CameraServer.startAutomaticCapture();
   }
 

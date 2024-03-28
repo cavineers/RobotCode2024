@@ -31,4 +31,8 @@ public class Blinkin extends SubsystemBase {
 	public void lightsOrange() {
 		blinkin.set(0.65);
 	}
+
+	public void lightsGreen(){
+		blinkin.set(0.77);
+	}
 }

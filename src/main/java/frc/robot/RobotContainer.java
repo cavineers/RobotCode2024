@@ -276,4 +276,12 @@ public class RobotContainer {
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
 	}
+
+	public void checkSystemStartup(){
+		if (armBase.getGantryHigherLimitSwitch()){
+			blinkin.lightsGreen();
+		}else{
+			System.out.println("Gantry Limit Switch Not Pressed");
+		}
+	}
 }
