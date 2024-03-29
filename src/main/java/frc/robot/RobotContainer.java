@@ -211,6 +211,7 @@ public class RobotContainer {
 		xboxController0.povLeft().whileTrue(gantryManualLower);
 		xboxController0.a().whileTrue(pivotManualLower);
 		xboxController0.y().whileTrue(pivotManualRaise);
+		xboxController0.rightStick().toggleOnTrue(swerveAimToTarget);
 		
 		// Shooter-Intake Commands
 		xboxController0.leftBumper().whileTrue(outtake);

@@ -194,7 +194,7 @@ public class VisionSubsystem extends SubsystemBase {
         y2 = getYDistanceFromSpeaker();
 
         double dist = Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2));
-        SmartDashboard.putNumber("Distance from Speaker", dist);
+        SmartDashboard.putNumber("Distance from Speaker", Units.metersToInches(dist));
         // if ((dist < Constants.VisionConstants.shootDistanceMinimum) || (dist > Constants.VisionConstants.shootDistanceMaximum)){
         //     this.autoShoot = false;
         //     return 0;
