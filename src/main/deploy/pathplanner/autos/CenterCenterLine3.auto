@@ -61,41 +61,28 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "OutAmp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeNote"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "groundPickup"
+                  "pathName": "OutToCenterLine"
                 }
               }
             ]
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AmpCenter"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "shootAuto"
-                }
-              }
-            ]
+            "name": "shootGround"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterLineToOut"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootAuto"
           }
         }
       ]

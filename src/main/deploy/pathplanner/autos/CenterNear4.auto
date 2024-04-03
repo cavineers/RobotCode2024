@@ -80,19 +80,57 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "deadline",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "AmpCenter"
+                  "name": "shootAuto"
                 }
               },
               {
                 "type": "named",
                 "data": {
+                  "name": "swerveAimToTarget"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpSource"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
                   "name": "shootAuto"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "swerveAimToTarget"
                 }
               }
             ]
