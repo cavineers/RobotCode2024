@@ -110,6 +110,8 @@ public class RobotContainer {
 	public SendableChooser<Command> autoChooser; 
 	
 	private Blinkin blinkIn;
+
+	private boolean botEnabled;
 	
 
 	public RobotContainer() {
@@ -194,6 +196,7 @@ public class RobotContainer {
 		
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto Chooser", autoChooser);
+		botEnabled = false;
 
 	};
 
@@ -278,5 +281,17 @@ public class RobotContainer {
 	public void teleopSetup(){
 		armPivot.initializeDutyEncoder();
 		armBase.initializeEncoder();
+	}
+
+	public void enableBot(){
+		botEnabled = true;
+	}
+
+	public void disableBot(){
+		botEnabled = false;
+	}
+
+	public boolean isBotEnabled(){
+		return botEnabled;
 	}
 }

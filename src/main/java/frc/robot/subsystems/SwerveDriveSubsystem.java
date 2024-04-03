@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Robot;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -169,6 +170,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("VISION X", visionPoseFront.get().estimatedPose.toPose2d().getX());
             SmartDashboard.putNumber("VISION Y", visionPoseFront.get().estimatedPose.toPose2d().getY());
             SmartDashboard.putNumber("VISION ROTATION", visionPoseFront.get().estimatedPose.toPose2d().getRotation().getDegrees());
+            SmartDashboard.putNumber("POSE ROTATION", this.getPose().getRotation().getDegrees());
             poseEstimator.addVisionMeasurement(visionPoseFront.get().estimatedPose.toPose2d(), visionPoseFront.get().timestampSeconds);
         }
         // if (!visionPoseLeft.isEmpty()){
@@ -206,7 +208,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
             this::driveRelativeSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                 new PIDConstants(4, 0.0, 0.0), // Translation PID constants
-                new PIDConstants(3, 0.0, 0.0), // Rotation PID constants
+                new PIDConstants(4, 0.0, 0.0), // Rotation PID constants
                 4.5, // Max module speed, in m/s
                 Units.inchesToMeters(17.25), // Drive base radius in meters. Distance from robot center to furthest module.
                 new ReplanningConfig() // Default path replanning config. See the API for the options here
@@ -304,7 +306,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("BLAbsolute", getBLAbsolutePosition());
         SmartDashboard.putNumber("BRAbsolute", getBRAbsolutePosition());
 
+        SmartDashboard.putBoolean("BOT ENABLED", Robot.m_robotContainer.isBotEnabled());
+
         // SmartDashboard.putNumber("Timer", Timer.getFPGATimestamp());
+
     }
     
     public void driveRelativeSpeeds(ChassisSpeeds relativeSpeeds){
@@ -313,6 +318,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         // SmartDashboard.putString("StateFL", states[0].toString());
         
         frontLeft.setDesiredState(states[0]);
+        SmartDashboard.putNumber("Front Left Rads", frontLeft.getAbsolutePosition()*360);
+        SmartDashboard.putNumber("FL GOAL RADS", states[0].angle.getDegrees());
+
         frontRight.setDesiredState(states[1]);
         backLeft.setDesiredState(states[2]);
         backRight.setDesiredState(states[3]);

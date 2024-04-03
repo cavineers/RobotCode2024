@@ -8,36 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2270825603162687,
-        "y": 5.5401068102630555
+        "x": 2.9563916486350683,
+        "y": 5.4627220585395175
       },
       "isLocked": false,
       "linkedName": "CenterOut"
     },
     {
       "anchor": {
-        "x": 2.0284230328938864,
-        "y": 5.55
+        "x": 2.8947847158704403,
+        "y": 6.4839214417567135
       },
       "prevControl": {
-        "x": 1.8502932092468627,
-        "y": 5.3285990150254845
-      },
-      "nextControl": {
-        "x": 2.1898154108003336,
-        "y": 5.750597691640185
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.6445423805638946,
-        "y": 6.569200449536277
-      },
-      "prevControl": {
-        "x": 2.1146866593177394,
-        "y": 5.875231602542291
+        "x": 2.9016081197074985,
+        "y": 5.576889676191764
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -120.0,
+    "rotation": -90.51810635764022,
     "rotateFast": true
   },
   "reversed": false,
-  "folder": "Center3Piece",
+  "folder": null,
   "previewStartingState": {
     "rotation": 180.0,
     "velocity": 0
