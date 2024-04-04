@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7949203848838806,
-      "y": 4.402229309082031
+      "x": 1.3572018618094204,
+      "y": 5.553298892992617
     },
-    "rotation": 120.32113697747288
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",
@@ -30,22 +30,28 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "SOURCE2Piece.1"
-                }
-              },
               {
                 "type": "named",
                 "data": {
                   "name": "intakeNote"
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterOut"
+                }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootAuto"
           }
         },
         {
@@ -55,27 +61,46 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SOURCE2Piece.2"
+                  "pathName": "CenterAmp"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "shootGround"
+                  "name": "intakeNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "groundPickup"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "shoot"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AmpCenter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootAuto"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
   "folder": null,
-  "choreoAuto": true
+  "choreoAuto": false
 }

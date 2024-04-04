@@ -64,8 +64,6 @@ public class RobotContainer {
 	private final ClimberLeft climberLeft;
 	private final ClimberRight climberRight;
 
-	public static final Blinkin blinkin = new Blinkin();
-
 	// Main Controller Buttons Init
 	public final CommandXboxController xboxController0;
 
@@ -91,6 +89,7 @@ public class RobotContainer {
 	public Command riseRightClimber;
 	public Command autoRiseClimber;
 	public Command autoLowerClimber;
+	public Command armShootAutoCenterPosition;
 
 	public Command intakeNote;
 	public Command outtake;
@@ -104,19 +103,28 @@ public class RobotContainer {
 	public Command swerveAimToTarget;
 	public SwerveHoming swerveHomingCommand;
 
+	public Command shooterToggleAutoOn;
+	public Command shooterToggleAutoOff;
+
+
 	public SendableChooser<Command> autoChooser; 
+	
+	private Blinkin blinkIn;
 	
 
 	public RobotContainer() {
 
 		// Subsystems
+		
 		armBase = new ArmBase();
 		armPivot = new ArmPivot(armBase);
+
+		blinkIn = new Blinkin();
 
 		climberLeft = new ClimberLeft();
 		climberRight = new ClimberRight();
 
-		intake = new Intake();
+		intake = new Intake(blinkIn);
 		shooter = new Shooter();
 
 		visionSubsystem = new VisionSubsystem();
@@ -142,6 +150,10 @@ public class RobotContainer {
 		ampPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.AmpRotations, Constants.ArmPivot.AmpRotations);
 		restPosition = new ArmPreset(armBase, armPivot, Constants.ArmBase.RestRotations, Constants.ArmPivot.RestRotations);
 
+		// AUTO PRESETS
+
+		armShootAutoCenterPosition = new ArmPreset(armBase, armPivot, 0, 0.47); // .4525
+
 		lowerLeftClimber = new LowerClimberCommand(climberLeft, climberRight, "left");
 		riseLeftClimber = new RiseClimberCommand(climberLeft, climberRight, "left");
 		lowerRightClimber = new LowerClimberCommand(climberLeft, climberRight, "right");
@@ -149,13 +161,16 @@ public class RobotContainer {
 		autoLowerClimber = new AutoLowerClimber(climberLeft, climberRight);
 		autoRiseClimber = new AutoRiseClimber(climberLeft, climberRight);
 
-		intakeNote = new IntakeNote(intake, shooter);
+		intakeNote = new IntakeNote(intake, shooter, blinkIn);
 		outtake = new Outtake(intake);
-		shoot = new Shoot(shooter, intake);
+		shoot = new Shoot(shooter, intake, blinkIn);
 		shootAuto = new Shoot_Auto(shooter, intake, armPivot,visionSubsystem);
 		shootManual = new Shoot_Manual(shooter, () -> xboxController0.getRightTriggerAxis());
 		shootToggle = new Shoot_Toggle(shooter);
-		amp = new Amp(shooter, intake);
+
+		shooterToggleAutoOn = shooter.toggleShooterCommand(true);
+		shooterToggleAutoOff = shooter.toggleShooterCommand(false);
+		amp = new Amp(shooter, intake, blinkIn);
 		feedNote = new FeedNote(intake);
 		
 
@@ -196,6 +211,7 @@ public class RobotContainer {
 		xboxController0.povLeft().whileTrue(gantryManualLower);
 		xboxController0.a().whileTrue(pivotManualLower);
 		xboxController0.y().whileTrue(pivotManualRaise);
+		xboxController0.rightStick().toggleOnTrue(swerveAimToTarget);
 		
 		// Shooter-Intake Commands
 		xboxController0.leftBumper().whileTrue(outtake);
@@ -235,7 +251,11 @@ public class RobotContainer {
 		NamedCommands.registerCommand("outtake", outtake);
 		NamedCommands.registerCommand("feedNote", feedNote);
 		NamedCommands.registerCommand("shoot", shoot);
+		NamedCommands.registerCommand("shootAuto", shootAuto);
 		NamedCommands.registerCommand("amp", amp);
+		NamedCommands.registerCommand("shootCenterAuto", armShootAutoCenterPosition);
+		NamedCommands.registerCommand("toggleShooterOn", shooterToggleAutoOn);
+		NamedCommands.registerCommand("toggleShooterOff", shooterToggleAutoOff);
 	}
 
 	public SwerveDriveSubsystem getSwerveSubsystem() {

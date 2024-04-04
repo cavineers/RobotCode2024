@@ -12,6 +12,10 @@ import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.io.ObjectInputStream.GetField;
+
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+
 public class Shoot_Auto extends Command {
 
     private boolean isDone = false;
@@ -22,12 +26,16 @@ public class Shoot_Auto extends Command {
     private double requiredArmPivotAngleDegrees;
     private double currentShooterAngleFromBaseline;
 
-    private double distanceMeters;
+    private double distanceInches;
 
     private VisionSubsystem visionSubsystem;
 		
 	private Timer timer;
     private Timer timer2;
+
+    private InterpolatingDoubleTreeMap interpolatePivotAngleMap;
+
+ 
 
     public Shoot_Auto(Shooter shooter, Intake intake, ArmPivot armPivot, VisionSubsystem visionSubsystem) {
         this.shooter = shooter;
@@ -40,6 +48,23 @@ public class Shoot_Auto extends Command {
 
 		timer = new Timer();
         timer2 = new Timer();
+
+        this.interpolatePivotAngleMap = new InterpolatingDoubleTreeMap();
+
+        initMaps();
+
+        
+    }
+
+    private void initMaps(){
+        // PIVOT ANGLE MAP
+        interpolatePivotAngleMap.put(56.82, 0.425);
+        interpolatePivotAngleMap.put(62.4, 0.437);
+        interpolatePivotAngleMap.put(73.25, 0.447);
+        interpolatePivotAngleMap.put(85.08, 0.457);
+        interpolatePivotAngleMap.put(95.48, 0.46);
+        interpolatePivotAngleMap.put(105.94, 0.47);
+        interpolatePivotAngleMap.put(122.36, 0.475);
         
     }
 
@@ -53,16 +78,27 @@ public class Shoot_Auto extends Command {
 		this.isDone = false;
     }
 
+    private boolean atPivotGoalSetpoint(double rots){
+        if (Math.abs(this.armPivot.getPivotAbsolute() - rots) < 0.03){
+            System.out.println("DONE");
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void execute() {
 		
-		distanceMeters = visionSubsystem.getDistanceFromSpeaker();
+		distanceInches = visionSubsystem.getDistanceFromSpeaker();
+
+        SmartDashboard.putNumber("DISTANCE TO AUTO SHOT", distanceInches);
 
 		// SmartDashboard.putString("Shooter", "Auto Shooting");
-
-		armPivot.setArmPivotAngle(calculateRequiredArmPivotAngle(distanceMeters));
+        SmartDashboard.putNumber("AUTO SHOOT PIVOT SETPOINT", interpolatePivotAngleMap.get(distanceInches));
+		armPivot.setArmPivotAngle(interpolatePivotAngleMap.get(distanceInches));
+        armPivot.setSetpoint(interpolatePivotAngleMap.get(distanceInches));
         shooter.setShooterMotorState(shooter.shooterMotorState.ON);
-        if (armPivot.isAtSetpoint() && timer.get()>2) {
+        if (this.atPivotGoalSetpoint(interpolatePivotAngleMap.get(distanceInches)) && timer.get()>1.2){
             SmartDashboard.putBoolean("Is At Setpoint", true);
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
@@ -96,9 +132,9 @@ public class Shoot_Auto extends Command {
 
     public double calculateRequiredArmPivotAngle(Double distance) {
 
-		SmartDashboard.putNumber("Distance to Speaker", distance);
-         
-        requiredArmPivotAngleDegrees = (-1.4 * (Math.pow(1.686, -(distance - 6.7)))) - 29.4 + 90.0;
+        requiredArmPivotAngleDegrees = 78.9 * (Math.pow(Math.sin(Math.toRadians((0.503 * distanceInches) + 1.7)), 0.5)) - 115 + 90;
+
+        //requiredArmPivotAngleDegrees = interpolatePivotAngleMap.get(distance);
 
         SmartDashboard.putNumber("Required Arm Angle", requiredArmPivotAngleDegrees);
 

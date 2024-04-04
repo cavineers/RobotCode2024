@@ -30,8 +30,10 @@ public class Intake extends SubsystemBase {
     public IntakeMotorState intakeMotorState = IntakeMotorState.OFF;
 
     private Blinkin blinkin;
+
+    private boolean alreadySet;
     
-    public Intake() {
+    public Intake(Blinkin blinkin) {
 
         this.upperIntakeMotor.setIdleMode(IdleMode.kBrake);
         this.lowerIntakeMotor.setIdleMode(IdleMode.kBrake);
@@ -41,7 +43,8 @@ public class Intake extends SubsystemBase {
 
         this.upperIntakeMotor.setInverted(false);
         this.lowerIntakeMotor.setInverted(true);
-        this.blinkin = RobotContainer.blinkin;
+        this.blinkin = blinkin;
+        this.alreadySet = false;
     }
 
     public void setIntakeMotorState(IntakeMotorState state) {
@@ -95,9 +98,6 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putBoolean("INTAKE IR", getNoteSensor());
 
-        if(getNoteSensor() == true) {
-            this.blinkin.lightsOrange();
-        }
     }
 
 }

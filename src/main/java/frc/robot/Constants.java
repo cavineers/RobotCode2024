@@ -92,10 +92,10 @@ public final class Constants {
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
 
-        public static final double kFrontLeftAbsoluteEncoderOffset = -.0083+.5; //.281 185.97 offset //-5.97 +80.63
-        public static final double kBackLeftAbsoluteEncoderOffset = -0.0920+.5; //-.472 178.41 //-178.41 -224.03
-        public static final double kFrontRightAbsoluteEncoderOffset = -0.9697; //170.94 //-170.94
-        public static final double kBackRightAbsoluteEncoderOffset = -.723+.5; //58.79 //-58.79
+        public static final double kFrontLeftAbsoluteEncoderOffset = -.0083+.5-.003; 
+        public static final double kBackLeftAbsoluteEncoderOffset = -0.0920+.5-.0025; 
+        public static final double kFrontRightAbsoluteEncoderOffset = -0.9697+.0032; 
+        public static final double kBackRightAbsoluteEncoderOffset = -.723+.5; 
         
         // Distance between right and left wheels
         public static final double kTrackWidth = Units.inchesToMeters(25); 
@@ -131,25 +131,25 @@ public final class Constants {
         public static final double PivotMotorSpeedForwards = 0.3;
         public static final double PivotMotorSpeedBackwards = -0.1;
     
-        public static final double PivotMotorLowerRotationLimit = .353; //Required For Auto Shoot
-        public static final double PivotMotorUpperRotationLimit = 0.736; //Required For Auto Shoot
+        public static final double PivotMotorLowerRotationLimit = .353 - 0.007; //Required For Auto Shoot
+        public static final double PivotMotorUpperRotationLimit = 0.736 - 0.007; //Required For Auto Shoot
     
         public static final double ArmPivotEcoderDeadzone = 0.4;
     
         public static final double DistancePerRotation = 1;
 
-        public static final double PivotSetpointTolerance = 0.02;
+        public static final double PivotSetpointTolerance = 0.025;
     
-        public static final double GroundPickupRotations = 0.353;
-        public static final double RestRotations = 0.342;
+        public static final double GroundPickupRotations = 0.353 - 0.007;
+        public static final double RestRotations = 0.337;
         public static final double ShootCloseRotations = 0.41; //0.401
         public static final double ShootGroundRotations = 0.42;
-        public static final double SourceRotations = 0.6138;
-        public static final double AmpRotations = 0.644;
+        public static final double SourceRotations = 0.6138 - 0.007;
+        public static final double AmpRotations = 0.644 - 0.007;
 
-        public static final double ProportionalGain = 3.22; // strength of a correction
+        public static final double ProportionalGain = 3.4; // strength of a correction
         public static final double IntegralTerm = 0; // additive strength over time
-        public static final double DerivitiveTerm = 0.0;
+        public static final double DerivitiveTerm = 0;
 
         public static double MotorSetPoint = 0;
 
@@ -162,9 +162,9 @@ public final class Constants {
         public static final double dAngle = armPivotMaxAngleDegrees - armPivotMinAngleDegrees;
         public static final double dRotations = PivotMotorUpperRotationLimit - PivotMotorLowerRotationLimit;
 
-        public static final double PivotRestMinRotations = 0.34;
-        public static final double PivotNormalMinRotations = 0.41;
-        public static final double PivotGroundMinRotations = 0.353;
+        public static final double PivotRestMinRotations = 0.337;
+        public static final double PivotNormalMinRotations = 0.41 - 0.007;
+        public static final double PivotGroundMinRotations = .35;
     
     }
     public static final class ArmBase {
@@ -172,7 +172,7 @@ public final class Constants {
         public static final double SpeedForwards = 0.2;
         public static final double SpeedBackwards = -0.15;
 
-        public static final double MaxRotations = 151;
+        public static final double MaxRotations = 65.47;
         public static final double MinRotations = 0;
 
         public static final double ArmBaseEncoderDeadzone = 0.4;
@@ -181,14 +181,14 @@ public final class Constants {
 
         public static final double BaseSetpointTolerance = 1;
 
-        public static final double GroundPickupRotations = 0;
-        public static final double RestRotations = 151;
-        public static final double ShootRotations = 151;
-        public static final double ShootGroundRotations = 0;
-        public static final double SourceRotations = 0;
-        public static final double AmpRotations = 151;
+        public static final double GroundPickupRotations = MinRotations;
+        public static final double RestRotations = MaxRotations;
+        public static final double ShootRotations = MaxRotations;
+        public static final double ShootGroundRotations = MinRotations;
+        public static final double SourceRotations = MinRotations;
+        public static final double AmpRotations = MaxRotations;
 
-        public static final double ProportionalGain = .035; // strength of a correction
+        public static final double ProportionalGain = .07; // strength of a correction
         public static final double IntegralTerm = 0.00; // additive strength over time
         public static final double DerivitiveTerm = 0.0;
 
@@ -199,8 +199,8 @@ public final class Constants {
         public static final double dHeight = maxGantryHeightMeters - minGantryHeightMeters;
         public static final double dRotations = MaxRotations - MinRotations;
 
-        public static final double PivotRegionRestMin = 149;
-        public static final double PivotRegionGroundMax = 1;
+        public static final double PivotRegionRestMin = MaxRotations-1;
+        public static final double PivotRegionGroundMax = MinRotations+1;
     }
 
     public static final class Climber {
@@ -208,7 +208,7 @@ public final class Constants {
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
         public static final double LowerClimberMaxRotations = 0; // TBD
-        public static final double UpperClimberMaxRotations = 59; // TBD
+        public static final double UpperClimberMaxRotations = 150; // TBD
 
         public static final double ProportionalGain = .05;
         public static final double IntegralTerm = 0.00; 
@@ -260,8 +260,8 @@ public final class Constants {
         public static final double redSpeakerY = Units.inchesToMeters(218.42);
 
         // Auto shoot maximum and minimums in meters
-        public static double shootDistanceMinimum = 0.5;
-        public static double shootDistanceMaximum = 4.57;
+        public static double shootDistanceMinimum = Units.metersToInches(0.5);
+        public static double shootDistanceMaximum = Units.metersToInches(4.57);
     }
 
 

@@ -2,62 +2,19 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7974945306777954,
-      "y": 6.705162525177002
+      "x": 1.4010045528411863,
+      "y": 5.575
     },
-    "rotation": -120.32113697747288
+    "rotation": 179.96604345059157
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "shootGround"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "groundPickup"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AMP2Piece.1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeNote"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "AMP2Piece.2"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -74,13 +31,56 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "toggleShooterOn"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "groundPickup"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP2Piece.3"
+                  "pathName": "Center3PieceFarOPTIMIZED.1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootCenterAuto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "feedNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center3PieceFarOPTIMIZED.2"
                 }
               },
               {
@@ -96,6 +96,43 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center3PieceFarOPTIMIZED.3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootCenterAuto"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "feedNote"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "toggleShooterOff"
           }
         }
       ]

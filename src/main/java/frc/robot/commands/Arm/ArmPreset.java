@@ -60,7 +60,6 @@ public class ArmPreset extends Command {
         if (Math.abs(this.armBase.getBaseMotorPosition() - this.gantryRotations) < 0.1){
             return true;
         }
-        System.out.println("CURRENT PIVOT: " + this.armPivot.getPivotAbsolute() + "\n CURRENT STATE: " + (this.armPivot.getPivotAbsolute() - this.pivotRotations));
         return false;
     }
 
