@@ -159,8 +159,8 @@ public class ArmPivot extends SubsystemBase {
         if (Robot.m_robotContainer.isBotEnabled()){
             speed = pivotPid.calculate(getPivotAbsolute());
             
-            if (speed < -.1) {
-                speed = -.1;
+            if (speed < -.2) {
+                speed = -.2;
             }
             
         }else{

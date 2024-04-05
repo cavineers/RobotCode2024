@@ -138,12 +138,12 @@ public final class Constants {
     
         public static final double DistancePerRotation = 1;
 
-        public static final double PivotSetpointTolerance = 0.023;
+        public static final double PivotSetpointTolerance = 0.027;
     
-        public static final double GroundPickupRotations = 0.353;
-        public static final double RestRotations = 0.337;
-        public static final double ShootCloseRotations = 0.41; //0.401
-        public static final double ShootGroundRotations = 0.42;
+        public static final double GroundPickupRotations = 0.357;
+        public static final double RestRotations = 0.339;
+        public static final double ShootCloseRotations = 0.41 + .02; //0.401
+        public static final double ShootGroundRotations = 0.42 + .02;
         public static final double SourceRotations = 0.6138 - 0.007;
         public static final double AmpRotations = 0.644 - 0.007;
 
