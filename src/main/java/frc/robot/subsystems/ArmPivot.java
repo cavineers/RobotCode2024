@@ -53,7 +53,8 @@ public class ArmPivot extends SubsystemBase {
         this.pivotMotor.setSmartCurrentLimit(40);
 
         this.pivotMotor.setInverted(true);
-        this.pivotPid.setTolerance(Constants.ArmPivot.PivotSetpointTolerance);
+        this.pivotPid.setTolerance(0.0175);
+        this.pivotPid.setIntegratorRange(-.1, .1);
 
         this.motorSetpoint = pivotEncoder.getAbsolutePosition();
         this.armBase = armBase;
@@ -158,10 +159,12 @@ public class ArmPivot extends SubsystemBase {
         if (Robot.m_robotContainer.isBotEnabled()){
             speed = pivotPid.calculate(getPivotAbsolute());
             
-            if (speed < -.19) {
-                speed = -.19;
+            if (speed < -.1) {
+                speed = -.1;
             }
             
+        }else{
+            pivotPid.reset();
         }
         SmartDashboard.putNumber("PivotSpeed", speed);
         pivotMotor.set(speed);

@@ -1,0 +1,79 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.74,
+      "y": 4.38
+    },
+    "rotation": 120.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "shootGround"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceToCenterLineLowest"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootGround"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterLineLowestToSource"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SourceToCenterSecondLineLowest"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootGround"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterSecondLineLowestToSource"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.390323700335275,
-        "y": 6.984547673598073
+        "x": 2.4022509677808785,
+        "y": 7.010943914636357
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.478050956460134,
-        "y": 6.930880247119135
+        "x": 2.4899782239057373,
+        "y": 6.957276488157419
       },
       "isLocked": false,
       "linkedName": "AmpNear"
     },
     {
       "anchor": {
-        "x": 0.7699241065062796,
-        "y": 6.708514646462399
+        "x": 0.748892036326531,
+        "y": 6.726262762508295
       },
       "prevControl": {
-        "x": 1.6245741069215884,
-        "y": 7.754049225393771
+        "x": 1.6035420367418398,
+        "y": 7.771797341439667
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

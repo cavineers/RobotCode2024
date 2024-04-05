@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 2.41,
-        "y": 5.5401068102630555
+        "y": 5.5573
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.9563916486350683,
-        "y": 5.4627220585395175
+        "y": 5.479915248276462
       },
       "isLocked": false,
       "linkedName": "CenterOut"
