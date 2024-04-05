@@ -62,7 +62,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CenterSecondLineLowestToSource"
+            "pathName": "SourceToCenterSecondLineLowest"
           }
         },
         {
