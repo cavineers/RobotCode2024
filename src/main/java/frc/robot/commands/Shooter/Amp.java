@@ -50,7 +50,7 @@ public class Amp extends Command {
         // SmartDashboard.putString("Amp", "Amping");
 
         shooter.setShooterMotorState(shooter.shooterMotorState.AMP);
-        if (timer.get()>1) {
+        if (timer.get()>.6) {
             intake.setIntakeMotorState(intake.intakeMotorState.ON);
         }
 
