@@ -138,7 +138,7 @@ public final class Constants {
     
         public static final double DistancePerRotation = 1;
 
-        public static final double PivotSetpointTolerance = 0.021;
+        public static final double PivotSetpointTolerance = 0.023;
     
         public static final double GroundPickupRotations = 0.353;
         public static final double RestRotations = 0.337;
