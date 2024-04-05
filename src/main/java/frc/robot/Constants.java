@@ -138,16 +138,16 @@ public final class Constants {
     
         public static final double DistancePerRotation = 1;
 
-        public static final double PivotSetpointTolerance = 0.027;
+        public static final double PivotSetpointTolerance = 0.025;
     
         public static final double GroundPickupRotations = 0.357;
         public static final double RestRotations = 0.339;
-        public static final double ShootCloseRotations = 0.41 + .02; //0.401
-        public static final double ShootGroundRotations = 0.42 + .02;
+        public static final double ShootCloseRotations = 0.425; //0.401
+        public static final double ShootGroundRotations = 0.415;
         public static final double SourceRotations = 0.6138 - 0.007;
         public static final double AmpRotations = 0.644 - 0.007;
 
-        public static final double ProportionalGain = 3.55; // strength of a correction
+        public static final double ProportionalGain = 3.6; // strength of a correction
         public static final double IntegralTerm = 0.01; // additive strength over time
         public static final double DerivitiveTerm = 0;
 
