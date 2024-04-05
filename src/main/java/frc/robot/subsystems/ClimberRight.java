@@ -116,8 +116,8 @@ public class ClimberRight extends SubsystemBase {
             this.motorSetpoint = Constants.Climber.LowerClimberMaxRotations;
         }
 
-        // SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
-        // SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
+        SmartDashboard.putNumber("rightClimberPos", getRightClimberMotorPosition());
+        SmartDashboard.putNumber("rightClimberSetPoint", getRightClimberMotorSetPoint());
         // SmartDashboard.putBoolean("rightClimberLimitSwitch", getLimitSwitch());
 
     }
