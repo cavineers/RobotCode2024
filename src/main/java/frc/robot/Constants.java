@@ -140,15 +140,23 @@ public final class Constants {
 
         public static final double PivotSetpointTolerance = 0.025;
     
-        public static final double GroundPickupRotations = 0.353 - 0.007;
-        public static final double RestRotations = 0.337;
-        public static final double ShootCloseRotations = 0.41; //0.401
+        public static final double GroundPickupRotations = 0.353;
+        public static final double RestRotations = 0.34;
+        public static final double ShootCloseRotations = 0.43; //0.401
         public static final double ShootGroundRotations = 0.42;
         public static final double SourceRotations = 0.6138 - 0.007;
         public static final double AmpRotations = 0.644 - 0.007;
 
-        public static final double ProportionalGain = 3.4; // strength of a correction
-        public static final double IntegralTerm = 0; // additive strength over time
+
+        // public static final double GroundPickupRotations = 0.353 - 0.007;
+        // public static final double RestRotations = 0.337;
+        // public static final double ShootCloseRotations = 0.41; //0.401
+        // public static final double ShootGroundRotations = 0.42;
+        // public static final double SourceRotations = 0.6138 - 0.007;
+        // public static final double AmpRotations = 0.644 - 0.007;
+
+        public static final double ProportionalGain = 3.55; // strength of a correction
+        public static final double IntegralTerm = 0.01; // additive strength over time
         public static final double DerivitiveTerm = 0;
 
         public static double MotorSetPoint = 0;
@@ -208,7 +216,7 @@ public final class Constants {
         public static final double ClimberExtensionSpeed = 20; // TBD
         public static final double ClimberExtensionSpeedRev = -20; // TBD
         public static final double LowerClimberMaxRotations = 0; // TBD
-        public static final double UpperClimberMaxRotations = 150; // TBD
+        public static final double UpperClimberMaxRotations = 122; // TBD
 
         public static final double ProportionalGain = .05;
         public static final double IntegralTerm = 0.00; 

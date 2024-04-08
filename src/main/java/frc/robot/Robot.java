@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    m_robotContainer.disableBot();
   }
 
   @Override
@@ -82,6 +83,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.swerveHomingCommand.schedule();
     m_robotContainer.getSwerveSubsystem().toggleIdleMode(IdleMode.kBrake);
     m_robotContainer.getAutonomousCommand().schedule();
+    m_robotContainer.enableBot();
   }
 
   /** This function is called periodically during autonomous. */
@@ -102,6 +104,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.getSwerveSubsystem().toggleIdleMode(IdleMode.kBrake);
     m_robotContainer.teleopSetup();
     // m_robotContainer.getSwerveSubsystem().zeroHeading();
+    m_robotContainer.enableBot();
   }
 
   /** This function is called periodically during operator control. */
