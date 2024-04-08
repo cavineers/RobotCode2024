@@ -3,37 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3609205881404298,
-        "y": 5.57
+        "x": 0.748892036326531,
+        "y": 6.726262762508295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8609205881404298,
-        "y": 5.57
+        "x": 1.4920549389142723,
+        "y": 8.306113128210725
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpStart"
     },
     {
       "anchor": {
-        "x": 2.41,
-        "y": 5.5573
+        "x": 7.785846171856464,
+        "y": 7.442155253726846
       },
       "prevControl": {
-        "x": 2.058803270148913,
-        "y": 5.567384120627279
+        "x": 6.412325066108815,
+        "y": 7.654450658859795
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "CenterOut"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": 180.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -43,10 +49,10 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "CenterPaths",
+  "folder": "AmpSidePaths",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -120.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

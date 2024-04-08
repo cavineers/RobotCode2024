@@ -34,11 +34,11 @@ public class LowerClimberCommand extends Command {
     public void execute() {
 
         if (climberSide == "left") {
-            this.climberLeft.setSetpointAdd(-.5);
+            this.climberLeft.setSetpointAdd(-2);
 
         } else if (climberSide == "right") {
 
-            this.climberRight.setSetpointAdd(-.5);
+            this.climberRight.setSetpointAdd(-2);
                 
         }
         }

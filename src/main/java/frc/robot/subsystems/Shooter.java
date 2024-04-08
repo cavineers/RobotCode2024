@@ -63,7 +63,7 @@ public class Shooter extends SubsystemBase {
             break;
         
         case AMP:
-            this.shooterMotor.set(Constants.Shooter.AmpForwardSpeed);
+            this.shooterMotor.set(.8);
             break;
 
         case REVERSE:

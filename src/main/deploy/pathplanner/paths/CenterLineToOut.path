@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3609205881404298,
-        "y": 5.57
+        "x": 7.8,
+        "y": 4.0976532505305086
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8609205881404298,
-        "y": 5.57
+        "x": 5.700000000000001,
+        "y": 4.0976532505305086
+      },
+      "isLocked": false,
+      "linkedName": "CenterLineNote3"
+    },
+    {
+      "anchor": {
+        "x": 5.271634559382677,
+        "y": 4.0976532505305086
+      },
+      "prevControl": {
+        "x": 5.506643959736499,
+        "y": 3.964969696039928
+      },
+      "nextControl": {
+        "x": 4.311075641925295,
+        "y": 4.6399735631392165
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +36,8 @@
         "y": 5.5573
       },
       "prevControl": {
-        "x": 2.058803270148913,
-        "y": 5.567384120627279
+        "x": 4.5104103075768744,
+        "y": 5.5573
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +48,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -48,5 +64,5 @@
     "rotation": 180.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
