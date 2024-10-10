@@ -43,9 +43,17 @@ public class IntakeNote extends Command {
             this.count = 0;
             //shooter.setShooterMotorState(shooter.shooterMotorState.REVERSE);
         } else if (count >= 2) {
-            intake.setIntakeMotorState(intake.intakeMotorState.OFF);
-            this.isDone = true;
-            //shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
+
+            //Ignore gaurd if shooter is spinning
+            if (shooter.getShooterMotorSpeed() != 0) {
+                intake.setIntakeMotorState(intake.intakeMotorState.ON);
+                this.count = 0;
+            } else {
+                intake.setIntakeMotorState(intake.intakeMotorState.OFF);
+                this.isDone = true;
+                //shooter.setShooterMotorState(shooter.shooterMotorState.OFF);
+            }
+            
         }else{
             count++;
         }

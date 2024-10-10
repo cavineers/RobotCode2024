@@ -217,8 +217,8 @@ public class RobotContainer {
 		xboxController0.rightStick().toggleOnTrue(swerveAimToTarget);
 		
 		// Shooter-Intake Commands
-		xboxController0.leftBumper().whileTrue(outtake);
-		xboxController0.rightBumper().whileTrue(intakeNote);
+		xboxController0.leftBumper().whileTrue(intakeNote);
+		xboxController0.rightBumper().whileTrue(outtake);
 		xboxController0.b().onTrue(shoot);
 		xboxController0.x().onTrue(shootAuto);
 		xboxController0.rightTrigger(Constants.OIConstants.kDriverJoystickTriggerDeadzone).whileTrue(shootManual);

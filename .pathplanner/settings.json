@@ -6,8 +6,8 @@
     "AmpSidePaths",
     "CenterPaths",
     "CenterToLeft3PiecePaths",
-    "SourceSidePaths",
-    "RightToOuterRight2"
+    "RightToOuterRight2",
+    "SourceSidePaths"
   ],
   "autoFolders": [
     "CenterStarting"
